@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutrición Antiinflamatoria — MORAIMA 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e25d5d;--orange:#f4a03f;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Montserrat',sans-serif;background:linear-gradient(160deg,#071e30 0%,#0a2942 50%,#0d3a5c 100%);min-height:100vh;color:#fff;display:flex;align-items:flex-start;justify-content:center;padding:16px;}
+  .screen{display:none;width:100%;max-width:460px;}
+  .screen.active{display:flex;flex-direction:column;align-items:center;}
+  .logo-bar{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;text-align:center;}
+  .module-tag{background:rgba(93,173,226,0.18);border:1px solid rgba(93,173,226,0.35);border-radius:20px;padding:4px 14px;font-size:10px;letter-spacing:2px;color:var(--sky);text-transform:uppercase;margin-bottom:18px;}
+  h1{font-size:22px;font-weight:800;text-align:center;line-height:1.3;margin-bottom:8px;}
+  .subtitle{font-size:12px;color:rgba(255,255,255,0.55);text-align:center;margin-bottom:20px;line-height:1.7;}
+  .btn-primary{width:100%;padding:15px;border-radius:50px;background:linear-gradient(135deg,var(--sky),#2e86c1);color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;border:none;cursor:pointer;margin-top:14px;transition:transform 0.15s,box-shadow 0.15s;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(93,173,226,0.35);}
+  .btn-outline{width:100%;padding:13px;border-radius:50px;background:transparent;border:2px solid rgba(93,173,226,0.4);color:var(--sky);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;transition:all 0.2s;}
+  .btn-outline:hover{border-color:var(--sky);background:rgba(93,173,226,0.1);}
+  .btn-ghost{background:transparent;border:none;color:rgba(255,255,255,0.4);font-family:'Montserrat',sans-serif;font-size:12px;cursor:pointer;padding:8px;margin-top:8px;}
+
+  /* ── NAV MENU ── */
+  .nav-row{display:flex;gap:6px;width:100%;margin-bottom:20px;}
+  .nav-btn{flex:1;padding:10px 6px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.55);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center;letter-spacing:.5px;}
+  .nav-btn.active{background:var(--navy);border-color:var(--sky);color:#fff;}
+
+  /* ── GAME CARDS ── */
+  .game-area{position:relative;width:100%;height:320px;margin-bottom:24px;}
+  .food-card{
+    position:absolute;inset:0;border-radius:24px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:30px;text-align:center;
+    transition:transform 0.35s ease, opacity 0.3s ease;
+    cursor:pointer;user-select:none;
+  }
+  .food-card.hidden{opacity:0;pointer-events:none;transform:scale(0.9);}
+  .card-emoji{font-size:72px;margin-bottom:12px;line-height:1;}
+  .card-name{font-size:22px;font-weight:800;margin-bottom:6px;}
+  .card-hint{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+  .card-answer{display:none;margin-top:14px;padding:12px 18px;border-radius:14px;font-size:12px;line-height:1.6;}
+  .card-answer.visible{display:block;}
+  .answer-inflama{background:rgba(226,93,93,0.15);border:1px solid rgba(226,93,93,0.3);}
+  .answer-sana{background:rgba(93,226,140,0.15);border:1px solid rgba(93,226,140,0.3);}
+  .answer-ambos{background:rgba(244,208,63,0.12);border:1px solid rgba(244,208,63,0.25);}
+
+  .game-btns{display:flex;gap:12px;width:100%;margin-bottom:10px;}
+  .btn-inflama{flex:1;padding:14px;border-radius:50px;background:rgba(226,93,93,0.2);border:2px solid var(--red);color:var(--red);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+  .btn-inflama:hover{background:rgba(226,93,93,0.3);}
+  .btn-sana{flex:1;padding:14px;border-radius:50px;background:rgba(93,226,140,0.2);border:2px solid var(--green);color:var(--green);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+  .btn-sana:hover{background:rgba(93,226,140,0.3);}
+  .btn-inflama:disabled,.btn-sana:disabled{opacity:0.4;cursor:default;}
+
+  .game-progress{display:flex;align-items:center;gap:10px;width:100%;margin-bottom:20px;}
+  .gp-bar{flex:1;height:5px;background:rgba(255,255,255,0.1);border-radius:5px;overflow:hidden;}
+  .gp-fill{height:100%;background:var(--gold);border-radius:5px;transition:width 0.4s ease;}
+  .gp-label{font-size:11px;color:rgba(255,255,255,0.5);white-space:nowrap;}
+
+  .score-strip{display:flex;gap:10px;width:100%;margin-bottom:20px;}
+  .score-chip{flex:1;text-align:center;padding:10px;border-radius:12px;background:rgba(255,255,255,0.06);}
+  .score-chip-val{font-size:20px;font-weight:800;}
+  .score-chip-label{font-size:9px;color:rgba(255,255,255,0.45);letter-spacing:1px;margin-top:2px;}
+
+  /* ── PANTRY ── */
+  .pantry-section{width:100%;margin-bottom:20px;}
+  .pantry-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;padding:6px 12px;border-radius:8px;font-weight:700;}
+  .pantry-title.inflama{color:var(--red);background:rgba(226,93,93,0.1);}
+  .pantry-title.sana{color:var(--green);background:rgba(93,226,140,0.1);}
+  .pantry-grid{display:flex;flex-wrap:wrap;gap:7px;}
+  .pantry-chip{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;}
+  .pantry-chip.inflama{background:rgba(226,93,93,0.15);border:1px solid rgba(226,93,93,0.3);color:var(--red);}
+  .pantry-chip.sana{background:rgba(93,226,140,0.15);border:1px solid rgba(93,226,140,0.3);color:var(--green);}
+  .empty-pantry{font-size:12px;color:rgba(255,255,255,0.3);text-align:center;padding:16px;}
+
+  /* ── RECIPES ── */
+  .meal-tabs{display:flex;gap:6px;width:100%;margin-bottom:18px;overflow-x:auto;padding-bottom:4px;}
+  .meal-tab{padding:8px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.5);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;flex-shrink:0;}
+  .meal-tab.active{background:var(--navy);border-color:var(--sky);color:#fff;}
+
+  .recipe-grid{display:flex;flex-direction:column;gap:14px;width:100%;}
+  .recipe-card{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:0;overflow:hidden;cursor:pointer;transition:all 0.2s;}
+  .recipe-card:hover{border-color:var(--sky);transform:translateY(-2px);}
+  .recipe-card-header{padding:18px 18px 12px;}
+  .recipe-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px;}
+  .recipe-icon{font-size:42px;line-height:1;flex-shrink:0;}
+  .recipe-meta{flex:1;}
+  .recipe-name{font-size:15px;font-weight:800;line-height:1.3;margin-bottom:4px;}
+  .recipe-tags{display:flex;flex-wrap:wrap;gap:5px;}
+  .recipe-tag{padding:2px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.5px;}
+  .tag-keto{background:rgba(244,160,63,0.2);color:var(--orange);}
+  .tag-anti{background:rgba(93,226,140,0.2);color:var(--green);}
+  .tag-rapida{background:rgba(93,173,226,0.2);color:var(--sky);}
+  .tag-vegana{background:rgba(93,226,140,0.15);color:#7de89e;}
+  .recipe-score-row{display:flex;align-items:center;gap:10px;}
+  .recipe-score-bar{flex:1;height:5px;background:rgba(255,255,255,0.1);border-radius:5px;overflow:hidden;}
+  .recipe-score-fill{height:100%;border-radius:5px;}
+  .recipe-score-num{font-size:11px;font-weight:700;color:var(--green);}
+
+  /* RECIPE DETAIL */
+  .recipe-detail{display:none;padding:14px 18px 18px;border-top:1px solid rgba(255,255,255,0.08);}
+  .recipe-detail.open{display:block;}
+  .detail-section{font-size:9px;letter-spacing:2px;color:var(--sky);text-transform:uppercase;margin:12px 0 7px;}
+  .ingredients-list{display:flex;flex-wrap:wrap;gap:7px;}
+  .ing-pill{padding:5px 12px;border-radius:20px;background:rgba(93,173,226,0.12);border:1px solid rgba(93,173,226,0.2);font-size:11px;color:rgba(255,255,255,0.85);}
+  .steps-list{counter-reset:step;}
+  .step-item{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
+  .step-num{width:22px;height:22px;border-radius:50%;background:var(--navy);border:1.5px solid var(--sky);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--sky);flex-shrink:0;margin-top:1px;}
+  .step-text{font-size:12px;line-height:1.65;color:rgba(255,255,255,0.78);}
+  .why-box{background:rgba(244,208,63,0.07);border:1px solid rgba(244,208,63,0.2);border-radius:12px;padding:12px 14px;margin-top:10px;}
+  .why-box p{font-size:11px;color:rgba(244,208,63,0.85);line-height:1.6;}
+  .swap-box{background:rgba(93,226,140,0.07);border:1px solid rgba(93,226,140,0.2);border-radius:12px;padding:10px 14px;margin-top:8px;}
+  .swap-box p{font-size:11px;color:rgba(93,226,140,0.85);line-height:1.6;}
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1: WELCOME -->
+<div class="screen active" id="screen-welcome">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Módulo 4 · Alimentación · Días 10-12</div>
+  <div style="font-size:56px;margin-bottom:14px;text-align:center;">🥗</div>
+  <h1>Aprende a comer<br><span style="color:var(--green)">contra la inflamación</span></h1>
+  <p class="subtitle">Primero descubre qué alimentos inflaman tu cuerpo sin que lo sepas. Luego crea recetas que activamente lo sanan. La diferencia entre sentirte bien y sentirte increíble está en la cocina.</p>
+
+  <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:16px;width:100%;margin-bottom:6px;">
+    <div style="display:flex;gap:14px;align-items:center;">
+      <div style="font-size:32px;">🎮</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Fase 1 · Aprende</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.55);">Juego ¿Inflama o Sana? — clasifica alimentos y descubre la verdad detrás de cada uno</div>
+      </div>
+    </div>
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:14px 0;"></div>
+    <div style="display:flex;gap:14px;align-items:center;">
+      <div style="font-size:32px;">👩‍🍳</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Fase 2 · Crea</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.55);">Más de 20 recetas antiinflamatorias keto-equilibrio, categorizadas por comida del día</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-primary" onclick="showScreen('screen-game');startGame()">🎮 Empezar con el juego →</button>
+  <button class="btn-outline" onclick="showScreen('screen-recipes');renderRecipes('todo')">👩‍🍳 Ver recetas directamente</button>
+</div>
+
+<!-- SCREEN 2: GAME -->
+<div class="screen" id="screen-game">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">¿Inflama o Sana?</div>
+
+  <div class="score-strip">
+    <div class="score-chip"><div class="score-chip-val" id="g-correct" style="color:var(--green)">0</div><div class="score-chip-label">CORRECTO</div></div>
+    <div class="score-chip"><div class="score-chip-val" id="g-wrong"   style="color:var(--red)">0</div><div class="score-chip-label">INCORRECTO</div></div>
+    <div class="score-chip"><div class="score-chip-val" id="g-left"    style="color:var(--gold)">20</div><div class="score-chip-label">RESTANTES</div></div>
+  </div>
+
+  <div class="game-progress">
+    <div class="gp-bar"><div class="gp-fill" id="gp-fill" style="width:0%"></div></div>
+    <div class="gp-label" id="gp-label">1/20</div>
+  </div>
+
+  <div class="game-area">
+    <div class="food-card" id="food-card" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.12);">
+      <div class="card-emoji" id="card-emoji">🥑</div>
+      <div class="card-name"  id="card-name">Cargando...</div>
+      <div class="card-hint"  id="card-hint">¿Crees que inflama o sana?</div>
+      <div class="card-answer" id="card-answer"></div>
+    </div>
+  </div>
+
+  <div class="game-btns">
+    <button class="btn-inflama" id="btn-inflama" onclick="guess('inflama')">🔴 Inflama</button>
+    <button class="btn-sana"    id="btn-sana"    onclick="guess('sana')">🟢 Sana</button>
+  </div>
+  <button class="btn-ghost" id="btn-next-card" onclick="nextCard()" style="display:none">Siguiente →</button>
+  <button class="btn-ghost" onclick="showScreen('screen-welcome')">← Inicio</button>
+</div>
+
+<!-- SCREEN 3: GAME RESULTS -->
+<div class="screen" id="screen-game-results">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Resultado del juego</div>
+
+  <div style="font-size:64px;text-align:center;margin-bottom:10px;" id="gr-emoji">🏆</div>
+  <div style="font-size:22px;font-weight:800;text-align:center;margin-bottom:6px;" id="gr-grade"></div>
+  <div style="font-size:12px;color:rgba(255,255,255,0.55);text-align:center;margin-bottom:24px;line-height:1.7;" id="gr-sub"></div>
+
+  <div class="score-strip">
+    <div class="score-chip"><div class="score-chip-val" id="gr-correct" style="color:var(--green)">0</div><div class="score-chip-label">CORRECTOS</div></div>
+    <div class="score-chip"><div class="score-chip-val" id="gr-pct"     style="color:var(--gold)">0%</div><div class="score-chip-label">PRECISIÓN</div></div>
+    <div class="score-chip"><div class="score-chip-val" id="gr-streak"  style="color:var(--sky)">0</div><div class="score-chip-label">RACHA</div></div>
+  </div>
+
+  <div style="width:100%;margin-bottom:20px;">
+    <div class="pantry-title inflama" style="margin-bottom:8px;">🔴 Aprendiste — estos inflaman</div>
+    <div class="pantry-grid" id="gr-inflama-list"></div>
+    <div class="pantry-title sana" style="margin-top:14px;margin-bottom:8px;">🟢 Aprendiste — estos sanan</div>
+    <div class="pantry-grid" id="gr-sana-list"></div>
+  </div>
+
+  <button class="btn-primary" onclick="showScreen('screen-recipes');renderRecipes('todo')">👩‍🍳 Ahora a crear recetas →</button>
+  <button class="btn-outline"  onclick="startGame()">🔄 Jugar de nuevo</button>
+  <button class="btn-ghost"    onclick="showScreen('screen-welcome')">← Inicio</button>
+</div>
+
+<!-- SCREEN 4: RECIPES -->
+<div class="screen" id="screen-recipes">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Recetas Antiinflamatorias</div>
+  <h1 style="font-size:18px;margin-bottom:6px;">Tu cocina<br><span style="color:var(--green)">es tu farmacia</span></h1>
+  <p style="font-size:11px;color:rgba(255,255,255,0.5);text-align:center;margin-bottom:18px;">Todas las recetas siguen el protocolo keto-equilibrio antiinflamatorio de epimedik</p>
+
+  <div class="meal-tabs" id="meal-tabs">
+    <button class="meal-tab active" onclick="renderRecipes('todo');setTab(this)">✨ Todas</button>
+    <button class="meal-tab" onclick="renderRecipes('desayuno');setTab(this)">🌅 Desayuno</button>
+    <button class="meal-tab" onclick="renderRecipes('almuerzo');setTab(this)">🍽 Almuerzo</button>
+    <button class="meal-tab" onclick="renderRecipes('cena');setTab(this)">🌙 Cena</button>
+    <button class="meal-tab" onclick="renderRecipes('bebida');setTab(this)">🥤 Bebidas</button>
+    <button class="meal-tab" onclick="renderRecipes('snack');setTab(this)">🌰 Snacks</button>
+  </div>
+
+  <div class="recipe-grid" id="recipe-grid"></div>
+  <button class="btn-ghost" onclick="showScreen('screen-welcome')" style="margin-top:20px;">← Inicio</button>
+</div>
+
+<script>
+// ══ GAME DATA ═════════════════════════════════════════════════════
+const FOODS = [
+  { emoji:'🍞', name:'Pan blanco',         type:'inflama', explanation:'Harina refinada dispara la glucosa rápido → insulina alta → inflamación. El gluten además aumenta la permeabilidad intestinal en muchas personas.' },
+  { emoji:'🥑', name:'Aguacate',           type:'sana',    explanation:'Rico en omega-9 y luteína. Reduce la IL-6 y el TNF-α. La grasa del aguacate también mejora la absorción de carotenoides de otros alimentos.' },
+  { emoji:'🥤', name:'Refresco / Soda',    type:'inflama', explanation:'El azúcar en exceso activa el NF-κB, el "interruptor maestro" de la inflamación. Una lata tiene hasta 40g de azúcar = 10 cucharadas.' },
+  { emoji:'🫐', name:'Blueberries',        type:'sana',    explanation:'Las antocianinas inhiben enzimas inflamatorias COX-2 con efectividad comparable a algunos AINEs. Bajo índice glucémico, perfectas en keto.' },
+  { emoji:'🍟', name:'Papas fritas',       type:'inflama', explanation:'Doble ataque: aceites omega-6 oxidados + acrilamida (formada al freír). Ambos son potentes activadores de inflamación sistémica.' },
+  { emoji:'🧄', name:'Ajo',               type:'sana',    explanation:'La alicina inhibe NF-κB y reduce proteína C-reactiva (PCR). Comerlo crudo o en los últimos minutos de cocción preserva sus propiedades.' },
+  { emoji:'🥛', name:'Leche de vaca',      type:'ambos',   explanation:'Controversial. En personas con intolerancia a la caseína A1, inflama. En otros, es neutra. La leche de almendras o coco es mejor opción antiinflamatoria.' },
+  { emoji:'🟡', name:'Cúrcuma',            type:'sana',    explanation:'La curcumina bloquea el NF-κB directamente. Estudios clínicos confirman reducción de PCR e IL-6. Siempre combinar con pimienta negra (piperina).' },
+  { emoji:'🍊', name:'Jugo de naranja',    type:'inflama', explanation:'Sin fibra, el azúcar llega rápido a sangre. La fructosa en exceso activa la síntesis de ácido úrico → inflamación articular y sistémica.' },
+  { emoji:'🐟', name:'Salmón salvaje',     type:'sana',    explanation:'El EPA y DHA son los precursores de las resolvinas — moléculas que literalmente "apagan" la respuesta inflamatoria. 2 porciones/semana reducen la PCR.' },
+  { emoji:'🌾', name:'Cereales de caja',   type:'inflama', explanation:'Azúcar disfrazada de "integral". Los cereales procesados tienen hasta 25g de azúcar por porción + aditivos que alteran la microbiota intestinal.' },
+  { emoji:'🥦', name:'Brócoli',            type:'sana',    explanation:'El sulforafano activa los genes NRF2 — el sistema de detoxificación celular. También inhibe el H. pylori y reduce marcadores de inflamación gástrica.' },
+  { emoji:'🍕', name:'Pizza industrial',   type:'inflama', explanation:'Triplete inflamatorio: gluten + lácteos + aceites procesados + sodio alto. Uno de los alimentos más inflamatorios de la dieta occidental.' },
+  { emoji:'🫚', name:'Jengibre fresco',    type:'sana',    explanation:'Los gingeroles inhiben los mismos mecanismos que el ibuprofeno. En dolor articular, 2g/día equivalen a 400mg de ibuprofeno según estudios comparativos.' },
+  { emoji:'🥩', name:'Carne roja procesada',type:'inflama',explanation:'Las carnes procesadas (embutidos, salchichas) tienen nitritos y grasas saturadas trans que activan la cascada inflamatoria. No aplica igual a carne fresca magra.' },
+  { emoji:'🫒', name:'Aceite de oliva extra virgen',type:'sana',explanation:'El oleocantal actúa como antiinflamatorio natural. 50ml/día reducen la PCR comparablemente al ibuprofeno en algunos estudios.' },
+  { emoji:'🍬', name:'Dulces / Azúcar',    type:'inflama', explanation:'El azúcar activa los AGEs (productos de glicación avanzada) que dañan proteínas y ADN. También alimenta bacterias inflamatorias en el intestino.' },
+  { emoji:'🌿', name:'Espinaca cruda',     type:'sana',    explanation:'Quercetina y kaempferol inhiben histaminas y prostaglandinas inflamatorias. Alta en magnesio, cofactor en más de 300 reacciones antiinflamatorias.' },
+  { emoji:'🧈', name:'Margarina',          type:'inflama', explanation:'Las grasas trans de la margarina industrial son de las más inflamatorias que existen. Incrementan LDL oxidado y reducen HDL protector.' },
+  { emoji:'🍫', name:'Cacao 70%+ puro',   type:'sana',    explanation:'Los flavonoles del cacao (especialmente epicatequina) reducen la PCR y mejoran la función endotelial. El chocolate con leche no tiene este efecto.' },
+];
+
+// ══ RECIPES ═══════════════════════════════════════════════════════
+const RECIPES = [
+  // DESAYUNOS
+  {
+    emoji:'🥑', name:'Tostada Keto de Aguacate y Huevo', category:'desayuno', score:92,
+    tags:['keto','anti','rapida'],
+    time:'10 min', servings:'1',
+    ingredients:['🥑 Aguacate maduro', '🥚 2 huevos', '🍋 Limón', '🌶 Pimienta negra', '🧂 Sal marina', '🫚 Jengibre rallado (opcional)', '🌿 Hojas de rúcula'],
+    steps:['Abre el aguacate, retira el hueso y haz puré la mitad con limón, sal y pimienta.','Cocina los huevos al gusto (pochados o revueltos — ambos conservan mejor sus nutrientes que fritos).','Sirve el puré de aguacate como base, encima los huevos, hojas de rúcula y un toque de jengibre rallado.','Opcional: semillas de chía o cáñamo por encima para omega-3 extra.'],
+    why:'El aguacate + huevo da grasas buenas + proteína completa. La combinación evita el pico de insulina matutino y mantiene saciedad 4-5 horas.',
+    swap:'Sin aguacate: puré de espinaca con ajo. Sin gluten: sirve en rodajas de pepino o batata asada.'
+  },
+  {
+    emoji:'🫐', name:'Smoothie Bowl Antiinflamatorio', category:'desayuno', score:95,
+    tags:['anti','vegana','rapida'],
+    time:'8 min', servings:'1',
+    ingredients:['🫐 Blueberries congeladas (1 taza)', '🥑 ½ aguacate', '🥥 Leche de coco sin azúcar', '🟡 ½ cdta cúrcuma', '🍂 Canela de Ceilán', '🌱 Semillas de chía', '🌰 Nueces picadas'],
+    steps:['Licúa los blueberries, aguacate y leche de coco hasta obtener consistencia espesa.','Vierte en un tazón profundo.','Decora con semillas de chía, nueces, una pizca de cúrcuma y canela.','Consume inmediatamente — los antioxidantes de los blueberries se oxidan al aire.'],
+    why:'Este bowl tiene uno de los índices antiinflamatorios más altos posibles en el desayuno. Las antocianinas de los blueberries más los omega-3 de chía y nueces activan múltiples vías de resolución inflamatoria.',
+    swap:'Sin blueberries: fresas o moras (mismo efecto). Sin coco: leche de almendras sin azúcar.'
+  },
+  {
+    emoji:'🥚', name:'Tortilla de Espinaca con Ajo y Cúrcuma', category:'desayuno', score:88,
+    tags:['keto','anti'],
+    time:'12 min', servings:'1',
+    ingredients:['🥚 3 huevos', '🥬 Puñado de espinaca', '🧄 2 dientes de ajo', '🟡 Cúrcuma en polvo', '🌶 Pimienta negra', '🫒 Aceite de oliva extra virgen', '🌿 Cilantro fresco'],
+    steps:['Saltea el ajo en aceite de oliva a fuego bajo — nunca a fuego alto (destruye los compuestos activos del aceite).','Agrega la espinaca, saltea 1 minuto.','Bate los huevos con cúrcuma y pimienta, vierte sobre las verduras.','Cocina a fuego medio-bajo hasta cuajar. No dorar en exceso.','Termina con cilantro fresco — sus aceites esenciales son antiinflamatorios y se destruyen con el calor.'],
+    why:'La pimienta negra multiplica por 20 la absorción de la curcumina del huevo. El ajo cocinado brevemente conserva sus propiedades. Proteína + grasa + antioxidantes = desayuno de recuperación.',
+    swap:'Sin huevo: tofu firme desmenuzado funciona igual en textura y proteína.'
+  },
+  // ALMUERZOS
+  {
+    emoji:'🐟', name:'Bowl de Salmón con Vegetales Asados', category:'almuerzo', score:98,
+    tags:['keto','anti'],
+    time:'25 min', servings:'2',
+    ingredients:['🐟 Salmón salvaje (200g)', '🥦 Brócoli', '🫑 Pimiento rojo', '🧄 Ajo', '🫒 Aceite de oliva', '🟡 Cúrcuma', '🍋 Limón', '🌿 Perejil fresco'],
+    steps:['Precalienta horno a 200°C. Corta brócoli y pimiento en trozos medianos.','Marina el salmón 10 min con aceite de oliva, ajo, cúrcuma, limón y pimienta.','Asa los vegetales 15 min. Agrega el salmón y hornea 10-12 min más.','Sirve con jugo de limón fresco y abundante perejil — la vitamina C del perejil mejora absorción del hierro del salmón.',],
+    why:'Este plato tiene el score antiinflamatorio más alto de esta guía. El EPA/DHA del salmón más el sulforafano del brócoli es la combinación más potente contra inflamación sistémica estudiada en nutrición.',
+    swap:'Sin salmón: sardinas en aceite de oliva (mismo efecto, menor costo). Sin brócoli: coliflor o espárragos.'
+  },
+  {
+    emoji:'🥗', name:'Ensalada Dorada con Jengibre y Cúrcuma', category:'almuerzo', score:91,
+    tags:['anti','vegana','rapida'],
+    time:'15 min', servings:'2',
+    ingredients:['🥬 Mix de hojas verdes', '🥑 Aguacate', '🫐 Blueberries frescos', '🌰 Nueces', '🌱 Semillas de chía', '🍋 Limón exprimido', '🫚 Jengibre rallado (1 cdta)', '🫒 Aceite de oliva', '🟡 Cúrcuma (pizca)', '🌶 Pimienta negra'],
+    steps:['Prepara el aderezo mezclando: aceite de oliva + limón + jengibre rallado + cúrcuma + pimienta negra. Emulsifica con un tenedor.','Arma la ensalada con las hojas, aguacate en cubos, blueberries y nueces.','Vierte el aderezo y mezcla suavemente — no antes, para que el aderezo no oxide las hojas.','Esparce semillas de chía al servir.'],
+    why:'Esta ensalada activa simultáneamente 4 vías antiinflamatorias distintas. El aderezo con jengibre y cúrcuma convierte el aceite de oliva en un vehículo de entrega de curcumina biodisponible.',
+    swap:'Añade pollo orgánico desmenuzado para una versión más proteica y saciante.'
+  },
+  {
+    emoji:'🫘', name:'Sopa de Lentejas con Jengibre y Espinaca', category:'almuerzo', score:84,
+    tags:['anti','vegana'],
+    time:'35 min', servings:'3',
+    ingredients:['🫘 Lentejas rojas (1 taza)', '🥬 Espinaca (2 tazas)', '🧅 Cebolla', '🧄 Ajo (3 dientes)', '🫚 Jengibre fresco (2 cm)', '🟡 Cúrcuma (1 cdta)', '🌶 Pimienta negra', '🍋 Limón', '🫒 Aceite de oliva'],
+    steps:['Saltea cebolla y ajo en aceite de oliva a fuego medio hasta dorar ligeramente.','Agrega jengibre rallado, cúrcuma y pimienta — cocina 1 minuto más para activar los aceites.','Incorpora las lentejas lavadas, cubre con agua o caldo, cocina 20-25 min hasta suaves.','Agrega la espinaca en los últimos 2 minutos — se preservan mejor sus nutrientes.','Termina con jugo de limón al servir — realza los sabores y añade vitamina C.'],
+    why:'Las lentejas son fuente de fibra prebiótica que alimenta bacterias antiinflamatorias en el intestino. El jengibre y la cúrcuma elevan el perfil antiinflamatorio al máximo en una sopa.',
+    swap:'Más keto: reemplaza las lentejas por brócoli + tofu y omite las lentejas.'
+  },
+  // CENAS
+  {
+    emoji:'🍗', name:'Pollo al Limón con Ajo y Hierbas', category:'cena', score:86,
+    tags:['keto','anti'],
+    time:'30 min', servings:'2',
+    ingredients:['🍗 Pechuga de pollo orgánica', '🧄 Ajo (4 dientes)', '🍋 Limón (2)', '🌿 Romero fresco', '🌿 Tomillo', '🫒 Aceite de oliva', '🌶 Pimienta negra', '🧂 Sal marina'],
+    steps:['Marina el pollo mínimo 20 min en: jugo de 1 limón, ajo picado, aceite de oliva, romero, tomillo y pimienta.','Cocina en sartén a fuego medio con un toque de aceite — evita fuego alto que oxida el aceite.','Voltea una sola vez cuando se vea dorado (~7 min por lado).','Sirve con ralladura de limón y hierbas frescas encima — las hierbas crudas aportan compuestos que se pierden al cocinar.'],
+    why:'El pollo orgánico no tiene los pro-inflamatorios del de criadero industrial. El ajo activa sus propiedades al cortarlo 5-10 minutos antes de cocinar (formación de alicina).',
+    swap:'Acompaña con espárragos a la plancha o coliflor asada en lugar de carbohidratos.'
+  },
+  {
+    emoji:'🥦', name:'Curry de Coliflor y Cúrcuma', category:'cena', score:90,
+    tags:['keto','anti','vegana'],
+    time:'25 min', servings:'3',
+    ingredients:['🥦 Coliflor grande', '🥥 Leche de coco (1 lata)', '🧅 Cebolla', '🧄 Ajo', '🫚 Jengibre', '🟡 Cúrcuma (2 cdtas)', '🌶 Pimienta negra', '🌿 Cilantro', '🍋 Limón', '🫒 Aceite de coco'],
+    steps:['Sofríe cebolla, ajo y jengibre en aceite de coco hasta transparentar.','Agrega cúrcuma y pimienta negra — saltea 1 minuto para activar.','Incorpora coliflor en floretes y la leche de coco. Cocina tapado 15 min.','Ajusta sal, termina con limón y abundante cilantro fresco.'],
+    why:'La leche de coco (TCM) combinada con cúrcuma es una de las mejores formas de aumentar la biodisponibilidad de la curcumina — la grasa del coco actúa como vehículo de absorción.',
+    swap:'Agrega garbanzos para más proteína. Añade chile para mayor efecto termogénico.'
+  },
+  // BEBIDAS
+  {
+    emoji:'🌙', name:'Golden Milk (Leche Dorada)', category:'bebida', score:96,
+    tags:['anti','keto','rapida'],
+    time:'5 min', servings:'1',
+    ingredients:['🥥 Leche de coco o almendras (1 taza)', '🟡 Cúrcuma (1 cdta)', '🌶 Pimienta negra (pizca)', '🍂 Canela de Ceilán (½ cdta)', '🫚 Jengibre en polvo (¼ cdta)', '🍯 Miel cruda (opcional, ½ cdta)'],
+    steps:['Calienta la leche a fuego bajo — nunca hiervas (destruye compuestos activos).','Agrega cúrcuma, pimienta, canela y jengibre. Mezcla bien.','Prueba y ajusta. Añade miel si deseas más dulce.','Bebe caliente antes de dormir — la canela también ayuda a estabilizar la glucosa nocturna.'],
+    why:'La pimienta negra aumenta la absorción de curcumina hasta un 2000%. Bebida clínica en Ayurveda por 3000 años, ahora validada por más de 50 ensayos clínicos modernos.',
+    swap:'Agrega ashwagandha en polvo para efecto adaptogénico adicional.'
+  },
+  {
+    emoji:'🍵', name:'Té Antiinflamatorio Triple Poder', category:'bebida', score:94,
+    tags:['anti','vegana','rapida'],
+    time:'5 min', servings:'1',
+    ingredients:['🍵 Té verde (1 bolsa o 1 cdta)', '🫚 Jengibre fresco rallado (1 cm)', '🍋 Limón exprimido', '🍂 Canela rama', '🍯 Miel cruda opcional'],
+    steps:['Hierve el agua y déjala reposar 2 minutos — el té verde no se prepara con agua 100°C (amarga y pierde EGCG).','Infusiona 3-4 min, agrega jengibre rallado directamente.','Cuela, exprime el limón y añade canela.','Bebe caliente o frío — los beneficios se mantienen en ambas temperaturas.'],
+    why:'El EGCG del té verde + los gingeroles del jengibre + la vitamina C del limón forman el trío antiinflamatorio más accesible y económico disponible. El limón además aumenta la absorción de las catequinas del té un 13 veces.',
+    swap:'Reemplaza el té verde por rooibos (sin cafeína) para la versión nocturna.'
+  },
+  {
+    emoji:'💚', name:'Smoothie Verde Detox MORAIMA', category:'bebida', score:93,
+    tags:['anti','vegana'],
+    time:'8 min', servings:'1',
+    ingredients:['🥬 Espinaca baby (1 taza)', '🥑 ½ aguacate', '🫐 Blueberries (½ taza)', '🍋 Limón exprimido', '🫚 Jengibre (1 cm)', '💧 Agua fría (1 taza)', '🌱 Semillas de chía (1 cdta)', '🍫 Cacao puro en polvo (1 cdta)'],
+    steps:['Licúa espinaca con el agua primero hasta homogenizar.','Agrega aguacate, blueberries, limón y jengibre. Licúa 45 seg a velocidad alta.','Agrega cacao y chía. Mezcla 10 seg más.','Sirve inmediatamente — el aguacate se oxida rápido al aire.'],
+    why:'Este smoothie combina 6 de los 10 alimentos más antiinflamatorios en una sola bebida. El cacao añade flavonoles cardioprotectores y el chía forma un gel prebiótico que alimenta la microbiota positiva.',
+    swap:'Añade proteína de colágeno en polvo para versión más saciante y articular.'
+  },
+  // SNACKS
+  {
+    emoji:'🌰', name:'Mix de Nueces Activadas MORAIMA', category:'snack', score:88,
+    tags:['keto','anti','rapida'],
+    time:'5 min', servings:'4',
+    ingredients:['🌰 Nueces (½ taza)', '🫘 Almendras (¼ taza)', '🌱 Semillas de calabaza', '🍫 Cacao nibs', '🍂 Canela', '🧂 Sal marina (pizca)'],
+    steps:['Mezcla todos los ingredientes en un tazón.','Espolvorea canela y sal marina.','Divide en porciones de ¼ taza (una palma de mano = porción ideal).','Guarda en frasco hermético hasta 2 semanas.'],
+    why:'Las nueces son la fuente vegetal más rica en omega-3 ALA. Los cacao nibs añaden flavonoles sin azúcar. Este snack estabiliza la glucosa entre comidas y frena la inflamación post-almuerzo.',
+    swap:'Agrega cúrcuma en polvo al mix para extra potencia antiinflamatoria.'
+  },
+  {
+    emoji:'🥒', name:'Bites de Aguacate y Pepino', category:'snack', score:85,
+    tags:['keto','anti','vegana','rapida'],
+    time:'5 min', servings:'2',
+    ingredients:['🥒 Pepino grande', '🥑 Aguacate', '🍋 Limón', '🧄 Ajo (1 diente)', '🌿 Cilantro', '🌶 Chile (opcional)', '🧂 Sal marina'],
+    steps:['Corta el pepino en rodajas gruesas — base de cada bite.','Prepara guacamole simple: aguacate + limón + ajo rallado + cilantro + sal.','Pon una cucharada de guacamole encima de cada rodaja.','Termina con una hoja de cilantro y chile opcional.'],
+    why:'El pepino es 96% agua + silicio antiinflamatorio para piel y articulaciones. El aguacate encima convierte un snack simple en una entrega de grasas antiinflamatorias de alta absorción.',
+    swap:'Reemplaza pepino por rodajas de betabel crudo para efecto antioxidante diferente.'
+  },
+];
+
+// ══ GAME STATE ════════════════════════════════════════════════════
+let gameQueue = [];
+let gCorrect = 0, gWrong = 0, gStreak = 0, gMaxStreak = 0;
+let gAnswered = false;
+let gLearnedInflama = [], gLearnedSana = [];
+
+function startGame() {
+  gameQueue = [...FOODS].sort(() => Math.random() - 0.5);
+  gCorrect = 0; gWrong = 0; gStreak = 0; gMaxStreak = 0;
+  gLearnedInflama = []; gLearnedSana = [];
+  gAnswered = false;
+  showScreen('screen-game');
+  renderCard();
+}
+
+function renderCard() {
+  if (gameQueue.length === 0) { showGameResults(); return; }
+  const f = gameQueue[0];
+  gAnswered = false;
+  document.getElementById('card-emoji').textContent = f.emoji;
+  document.getElementById('card-name').textContent  = f.name;
+  document.getElementById('card-hint').textContent  = '¿Inflama o Sana?';
+  const ans = document.getElementById('card-answer');
+  ans.textContent = ''; ans.className = 'card-answer';
+
+  const card = document.getElementById('food-card');
+  card.style.background = 'rgba(255,255,255,0.06)';
+  card.style.borderColor = 'rgba(255,255,255,0.12)';
+
+  document.getElementById('btn-inflama').disabled = false;
+  document.getElementById('btn-sana').disabled    = false;
+  document.getElementById('btn-next-card').style.display = 'none';
+
+  const total = FOODS.length;
+  const done  = total - gameQueue.length;
+  document.getElementById('gp-fill').style.width = (done/total*100) + '%';
+  document.getElementById('gp-label').textContent = `${done+1}/${total}`;
+  document.getElementById('g-left').textContent   = gameQueue.length;
+}
+
+function guess(userGuess) {
+  if (gAnswered) return;
+  gAnswered = true;
+  const f    = gameQueue.shift();
+  const isCorrect = (userGuess === f.type) || (f.type === 'ambos');
+  const card = document.getElementById('food-card');
+  const ans  = document.getElementById('card-answer');
+
+  if (isCorrect) {
+    gCorrect++; gStreak++;
+    if (gStreak > gMaxStreak) gMaxStreak = gStreak;
+    card.style.background   = 'rgba(93,226,140,0.1)';
+    card.style.borderColor  = 'var(--green)';
+    ans.className = 'card-answer answer-sana visible';
+    if (f.type === 'sana' || f.type === 'ambos') gLearnedSana.push(f.emoji + ' ' + f.name);
+  } else {
+    gWrong++; gStreak = 0;
+    card.style.background  = 'rgba(226,93,93,0.1)';
+    card.style.borderColor = 'var(--red)';
+    ans.className = 'card-answer answer-inflama visible';
+    if (f.type === 'inflama') gLearnedInflama.push(f.emoji + ' ' + f.name);
+  }
+
+  // Show type label + explanation
+  const typeLabel = f.type === 'inflama' ? '🔴 INFLAMA' : f.type === 'sana' ? '🟢 SANA' : '🟡 DEPENDE';
+  ans.innerHTML = `<strong>${typeLabel}</strong><br><br>${f.explanation}`;
+
+  document.getElementById('g-correct').textContent = gCorrect;
+  document.getElementById('g-wrong').textContent   = gWrong;
+  document.getElementById('btn-inflama').disabled  = true;
+  document.getElementById('btn-sana').disabled     = true;
+  document.getElementById('btn-next-card').style.display = 'block';
+  document.getElementById('btn-next-card').textContent   = gameQueue.length > 0 ? 'Siguiente →' : 'Ver resultados →';
+}
+
+function nextCard() {
+  if (gameQueue.length === 0) { showGameResults(); return; }
+  renderCard();
+}
+
+function showGameResults() {
+  const total = FOODS.length;
+  const pct   = Math.round(gCorrect / total * 100);
+  let emoji, grade, sub;
+  if (pct >= 85)      { emoji='🏆'; grade='Experta Antiinflamatoria'; sub='Tu conocimiento sobre alimentación y salud es excepcional. Eres capaz de construir un menú antiinflamatorio completo con confianza.'; }
+  else if (pct >= 65) { emoji='🌟'; grade='Muy buen conocimiento'; sub='Conoces bien los principios. Con la práctica en la cocina, ese conocimiento se convierte en hábito permanente.'; }
+  else if (pct >= 45) { emoji='🌱'; grade='Aprendiendo — ¡vas bien!'; sub='Normal tener dudas — el marketing alimentario está diseñado para confundir. Ahora ya sabes la verdad sobre estos alimentos.'; }
+  else                { emoji='💡'; grade='Gran aprendizaje'; sub='Ahora tienes información que la mayoría nunca tendrá. Este conocimiento puede transformar completamente cómo te alimentas y cómo te sientes.'; }
+
+  document.getElementById('gr-emoji').textContent      = emoji;
+  document.getElementById('gr-grade').textContent      = grade;
+  document.getElementById('gr-sub').textContent        = sub;
+  document.getElementById('gr-correct').textContent    = gCorrect;
+  document.getElementById('gr-pct').textContent        = pct + '%';
+  document.getElementById('gr-streak').textContent     = gMaxStreak;
+
+  const il = document.getElementById('gr-inflama-list');
+  const sa = document.getElementById('gr-sana-list');
+  if (gLearnedInflama.length > 0) {
+    il.innerHTML = gLearnedInflama.map(f=>`<span class="pantry-chip inflama">${f}</span>`).join('');
+  } else {
+    il.innerHTML = '<span style="font-size:12px;color:rgba(255,255,255,0.35)">¡Identificaste todos! 🎉</span>';
+  }
+  if (gLearnedSana.length > 0) {
+    sa.innerHTML = gLearnedSana.map(f=>`<span class="pantry-chip sana">${f}</span>`).join('');
+  } else {
+    sa.innerHTML = '<span style="font-size:12px;color:rgba(255,255,255,0.35)">¡Ya los conocías todos! 🎉</span>';
+  }
+
+  showScreen('screen-game-results');
+}
+
+// ══ RECIPES ═══════════════════════════════════════════════════════
+let openRecipeIdx = null;
+
+function setTab(el) {
+  document.querySelectorAll('.meal-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function renderRecipes(category) {
+  openRecipeIdx = null;
+  const filtered = category === 'todo' ? RECIPES : RECIPES.filter(r => r.category === category);
+  const grid = document.getElementById('recipe-grid');
+  grid.innerHTML = '';
+
+  filtered.forEach((r, i) => {
+    const pct = r.score;
+    const fillColor = pct >= 90 ? 'var(--green)' : pct >= 75 ? 'var(--gold)' : 'var(--sky)';
+    const tagHTML = r.tags.map(t => {
+      const labels = {keto:'KETO',anti:'ANTI-INFLAM',rapida:'RÁPIDA',vegana:'VEGANA'};
+      const cls    = {keto:'tag-keto',anti:'tag-anti',rapida:'tag-rapida',vegana:'tag-vegana'};
+      return `<span class="recipe-tag ${cls[t]}">${labels[t]}</span>`;
+    }).join('');
+
+    grid.innerHTML += `
+      <div class="recipe-card" id="rcard-${i}" onclick="toggleRecipe(${i})">
+        <div class="recipe-card-header">
+          <div class="recipe-top">
+            <div class="recipe-icon">${r.emoji}</div>
+            <div class="recipe-meta">
+              <div class="recipe-name">${r.name}</div>
+              <div class="recipe-tags">${tagHTML}</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:5px;">⏱ ${r.time} · 🍽 ${r.servings} porción(es)</div>
+            </div>
+          </div>
+          <div class="recipe-score-row">
+            <div class="recipe-score-bar"><div class="recipe-score-fill" style="width:${pct}%;background:${fillColor}"></div></div>
+            <div class="recipe-score-num">${pct}/100</div>
+          </div>
+        </div>
+        <div class="recipe-detail" id="rdetail-${i}">
+          <div class="detail-section">Ingredientes</div>
+          <div class="ingredients-list">${r.ingredients.map(ing=>`<span class="ing-pill">${ing}</span>`).join('')}</div>
+          <div class="detail-section">Preparación</div>
+          <div class="steps-list">${r.steps.map((s,n)=>`<div class="step-item"><div class="step-num">${n+1}</div><div class="step-text">${s}</div></div>`).join('')}</div>
+          <div class="why-box"><p>🔬 <strong>Por qué funciona:</strong> ${r.why}</p></div>
+          <div class="swap-box"><p>🔄 <strong>Variaciones:</strong> ${r.swap}</p></div>
+        </div>
+      </div>`;
+  });
+}
+
+function toggleRecipe(i) {
+  const detail = document.getElementById('rdetail-' + i);
+  const isOpen = detail.classList.contains('open');
+  document.querySelectorAll('.recipe-detail').forEach(d => d.classList.remove('open'));
+  if (!isOpen) detail.classList.add('open');
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
