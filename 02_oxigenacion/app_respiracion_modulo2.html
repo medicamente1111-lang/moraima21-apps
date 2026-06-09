@@ -318,11 +318,13 @@ const TECHNIQUES = {
     science:'📖 Ma et al. (2017) confirma que la respiración diafragmática reduce cortisol, ansiedad y presión arterial en adultos sanos.',
     benefit:'Tu sistema nervioso autónomo acaba de recibir una señal de calma. El cortisol baja, la digestión mejora y el cerebro recupera claridad. Hazla cada mañana y noche para resultados acumulativos.',
     phases:[
-      { label:'INHALA', duration:4, scale:1.25, sound:'inhale' },
-      { label:'EXHALA', duration:6, scale:0.85, sound:'exhale' }
+      { label:'INHALA',  duration:4, scale:1.25, sound:'inhale' },
+      { label:'SUELTA',  duration:1, scale:1.25, sound:null     },
+      { label:'EXHALA',  duration:6, scale:0.85, sound:'exhale' }
     ],
     instructions:[
       { icon:'🫁', label:'<span class="pi-time">4 segundos</span> — Inhala por la nariz llenando el abdomen (no el pecho). Siente cómo tu barriga se expande.' },
+      { icon:'·',  label:'<span class="pi-time">1 segundo</span> — Pausa natural en la cima — deja que el cuerpo se prepare para soltar.' },
       { icon:'💨', label:'<span class="pi-time">6 segundos</span> — Exhala lentamente por la boca, vaciando el abdomen de abajo hacia arriba.' }
     ]
   },
@@ -331,8 +333,9 @@ const TECHNIQUES = {
     science:'📖 Lehrer & Gevirtz (2014) demostraron que respirar a 0.1 Hz (6 resp/min) maximiza la variabilidad cardíaca (HRV) y equilibra el sistema nervioso autónomo.',
     benefit:'Acabas de entrenar tu corazón a latir con mayor coherencia. La HRV alta es el marcador de salud cardiovascular y longevidad más estudiado. Úsala antes de tomar decisiones importantes.',
     phases:[
-      { label:'INHALA', duration:5, scale:1.2,  sound:'inhale' },
-      { label:'EXHALA', duration:5, scale:0.85, sound:'exhale' }
+      { label:'INHALA',  duration:5, scale:1.2,  sound:'inhale' },
+      { label:'SUELTA',  duration:1, scale:1.2,  sound:null     },
+      { label:'EXHALA',  duration:5, scale:0.85, sound:'exhale' }
     ],
     instructions:[
       { icon:'🌬️', label:'<span class="pi-time">5 segundos</span> — Inhala suave y constante por la nariz. Ritmo uniforme, sin esfuerzo.' },
@@ -570,23 +573,22 @@ function runPhase() {
   circle.style.transition = `transform ${totalSecs}s linear`;
   circle.style.transform  = `scale(${phase.scale})`;
 
-  // Phase bar
+  // Phase bar — JS driven, synced with countdown
   const fill = document.getElementById('phase-fill');
   fill.style.transition = 'none';
   fill.style.width = '0%';
-  requestAnimationFrame(() => {
-    fill.style.transition = `width ${totalSecs}s linear`;
-    fill.style.width = '100%';
-  });
 
   // Breathing sound
   if (phase.sound) playBreathSound(phase.sound, totalSecs);
 
-  // Countdown
+  // Countdown + bar update every second
   clearInterval(phaseIntervalID);
   phaseIntervalID = setInterval(() => {
     if (isPaused) return;
     phaseSecondsLeft--;
+    const pct = ((totalSecs - phaseSecondsLeft) / totalSecs) * 100;
+    fill.style.transition = 'width 0.9s linear';
+    fill.style.width = Math.min(pct, 100) + '%';
     document.getElementById('breath-count').textContent = phaseSecondsLeft > 0 ? phaseSecondsLeft : '';
     if (phaseSecondsLeft <= 0) {
       clearInterval(phaseIntervalID);
@@ -654,13 +656,9 @@ function resumePhase() {
   circle.style.transform  = `scale(${phase.scale})`;
 
   const fill = document.getElementById('phase-fill');
-  const pct  = ((phase.duration - remaining) / phase.duration) * 100;
+  const startPct = ((phase.duration - remaining) / phase.duration) * 100;
   fill.style.transition = 'none';
-  fill.style.width = pct + '%';
-  requestAnimationFrame(() => {
-    fill.style.transition = `width ${remaining}s linear`;
-    fill.style.width = '100%';
-  });
+  fill.style.width = startPct + '%';
 
   // Play sound for remaining duration
   if (phase.sound && remaining > 0) playBreathSound(phase.sound, remaining);
@@ -669,6 +667,9 @@ function resumePhase() {
   phaseIntervalID = setInterval(() => {
     if (isPaused) return;
     phaseSecondsLeft--;
+    const pct = ((phase.duration - phaseSecondsLeft) / phase.duration) * 100;
+    fill.style.transition = 'width 0.9s linear';
+    fill.style.width = Math.min(pct, 100) + '%';
     document.getElementById('breath-count').textContent = phaseSecondsLeft > 0 ? phaseSecondsLeft : '';
     if (phaseSecondsLeft <= 0) {
       clearInterval(phaseIntervalID);
