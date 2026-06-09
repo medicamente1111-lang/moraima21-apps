@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Científica: Recuperación — MORAIMA 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a2942;
+    --navy-mid: #0d3a5c;
+    --sky: #5dade2;
+    --sky-light: #a8d8f0;
+    --gold: #f4d03f;
+    --gold-soft: rgba(244,208,63,0.12);
+    --green: #5de28c;
+    --teal: #48c9b0;
+    --purple: #9b59b6;
+    --white: #ffffff;
+    --white-60: rgba(255,255,255,0.6);
+    --white-30: rgba(255,255,255,0.3);
+    --white-10: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  @media print {
+    body { background: #fff; color: #111; }
+    .no-print { display: none; }
+    section { break-inside: avoid; }
+  }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(160deg, #071e30 0%, var(--navy) 50%, var(--navy-mid) 100%);
+    min-height: 100vh;
+    color: var(--white);
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .hero {
+    background: linear-gradient(135deg, #071e30 0%, #0a2942 60%, #0d5c4a 100%);
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(93,226,140,0.08) 0%, transparent 70%);
+  }
+  .hero-logo   { font-size: 9px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+  .hero-module { display: inline-block; background: rgba(93,226,140,0.12); border: 1px solid rgba(93,226,140,0.3); border-radius: 20px; padding: 4px 16px; font-size: 10px; letter-spacing: 2px; color: var(--green); text-transform: uppercase; margin-bottom: 22px; }
+  .hero-icon   { font-size: 64px; margin-bottom: 16px; }
+  .hero h1     { font-size: 28px; font-weight: 900; line-height: 1.2; margin-bottom: 10px; }
+  .hero h1 span{ color: var(--teal); }
+  .hero-sub    { font-size: 13px; color: var(--white-60); line-height: 1.8; max-width: 480px; margin: 0 auto 24px; }
+  .hero-days   { display: inline-flex; gap: 8px; }
+  .day-pill    { padding: 6px 16px; border-radius: 20px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); font-size: 11px; font-weight: 700; }
+
+  /* ── CONTAINER ── */
+  .container { max-width: 680px; margin: 0 auto; padding: 0 20px 60px; }
+
+  /* ── LEAD QUOTE ── */
+  .lead-quote {
+    margin: 32px 0;
+    padding: 28px 28px;
+    background: linear-gradient(135deg, rgba(72,201,176,0.1), rgba(93,173,226,0.08));
+    border-left: 4px solid var(--teal);
+    border-radius: 0 16px 16px 0;
+  }
+  .lead-quote p { font-size: 17px; font-weight: 600; line-height: 1.75; color: var(--sky-light); font-style: italic; }
+  .lead-quote cite { display: block; margin-top: 10px; font-size: 11px; color: var(--white-60); font-style: normal; letter-spacing: 1px; }
+
+  /* ── SCIENCE CARD ── */
+  .science-card {
+    background: var(--white-10);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 24px;
+  }
+  .card-header { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+  .card-icon   { font-size: 36px; flex-shrink: 0; }
+  .card-meta   { flex: 1; }
+  .card-tag    { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .card-title  { font-size: 18px; font-weight: 800; line-height: 1.3; }
+  .card-body   { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.85; }
+  .card-body p { margin-bottom: 12px; }
+  .card-body p:last-child { margin-bottom: 0; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin: 16px 0;
+  }
+  .highlight-gold   { background: var(--gold-soft); border: 1px solid rgba(244,208,63,0.25); }
+  .highlight-green  { background: rgba(93,226,140,0.08); border: 1px solid rgba(93,226,140,0.2); }
+  .highlight-teal   { background: rgba(72,201,176,0.08); border: 1px solid rgba(72,201,176,0.2); }
+  .highlight-purple { background: rgba(155,89,182,0.08); border: 1px solid rgba(155,89,182,0.25); }
+  .highlight-title  { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+  .highlight-text   { font-size: 12px; line-height: 1.75; }
+  .highlight-gold .highlight-title,  .highlight-gold .highlight-text  { color: rgba(244,208,63,0.9); }
+  .highlight-green .highlight-title, .highlight-green .highlight-text { color: rgba(93,226,140,0.9); }
+  .highlight-teal .highlight-title,  .highlight-teal .highlight-text  { color: rgba(72,201,176,0.9); }
+  .highlight-purple .highlight-title,.highlight-purple .highlight-text{ color: rgba(155,89,182,1); }
+
+  /* ── SECTION TITLE ── */
+  .section-label {
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal); font-weight: 700;
+    margin: 40px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(72,201,176,0.15);
+  }
+
+  /* ── RECOVERY TYPE GRID ── */
+  .recovery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+  @media(max-width:480px){ .recovery-grid { grid-template-columns: 1fr; } }
+  .recovery-type {
+    padding: 20px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .rt-icon  { font-size: 32px; margin-bottom: 10px; }
+  .rt-name  { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .rt-desc  { font-size: 11px; color: var(--white-60); line-height: 1.6; }
+
+  /* ── ACTIVITY MATRIX ── */
+  .activity-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px; border-radius: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 10px;
+  }
+  .ar-icon { font-size: 28px; flex-shrink: 0; }
+  .ar-body { flex: 1; }
+  .ar-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .ar-why  { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+  .ar-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 9px; font-weight: 700; letter-spacing: 1px; margin-top: 6px; }
+  .badge-mental  { background: rgba(155,89,182,0.2); color: rgba(155,89,182,1); }
+  .badge-fisico  { background: rgba(93,226,140,0.2); color: var(--green); }
+  .badge-social  { background: rgba(244,208,63,0.2); color: var(--gold); }
+  .badge-creativo{ background: rgba(72,201,176,0.2); color: var(--teal); }
+
+  /* ── SCIENCE STATS ── */
+  .stats-row { display: flex; gap: 12px; margin: 20px 0; }
+  @media(max-width:400px){ .stats-row { flex-direction: column; } }
+  .stat-box { flex: 1; text-align: center; padding: 18px 12px; background: rgba(255,255,255,0.05); border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); }
+  .stat-num  { font-size: 26px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+  .stat-label{ font-size: 10px; color: var(--white-60); line-height: 1.5; }
+
+  /* ── REFERENCES ── */
+  .ref-list { padding: 0; list-style: none; }
+  .ref-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 11px;
+    color: var(--white-60);
+    line-height: 1.6;
+  }
+  .ref-list li:last-child { border-bottom: none; }
+  .ref-list strong { color: var(--sky-light); }
+
+  /* ── FOOTER ── */
+  .footer { text-align: center; padding: 32px 20px; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 48px; }
+  .footer p { font-size: 11px; color: var(--white-30); line-height: 1.8; }
+  .footer .sig { font-size: 13px; font-weight: 700; color: var(--sky); margin-bottom: 6px; }
+
+  /* ── PRINT BTN ── */
+  .print-btn {
+    display: block; width: 100%; max-width: 320px; margin: 32px auto 0;
+    padding: 14px; border-radius: 50px;
+    background: rgba(72,201,176,0.15); border: 2px solid rgba(72,201,176,0.35);
+    color: var(--teal); font-family: 'Montserrat', sans-serif;
+    font-size: 13px; font-weight: 700; cursor: pointer; text-align: center;
+    transition: all 0.2s;
+  }
+  .print-btn:hover { background: rgba(72,201,176,0.25); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-logo">epimedik · MORAIMA 21</div>
+  <div class="hero-module">Módulo 3 · Recuperación · R</div>
+  <div class="hero-icon">🌿</div>
+  <h1>El Arte de <span>Recuperarte</span><br>más allá del sueño</h1>
+  <p class="hero-sub">La ciencia revela que recuperarse no es pasividad — es una práctica activa, inteligente y profundamente personal que va mucho más allá de las horas que duermes.</p>
+  <div class="hero-days">
+    <span class="day-pill">📅 Día 7</span>
+    <span class="day-pill">📅 Día 8</span>
+    <span class="day-pill">📅 Día 9</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- LEAD QUOTE -->
+  <div class="lead-quote">
+    <p>"El descanso no es una recompensa al final del trabajo — es la condición fisiológica desde la cual todo trabajo con sentido se vuelve posible."</p>
+    <cite>— Saundra Dalton-Smith, MD · <em>Sacred Rest: Recover Your Life, Renew Your Energy</em> (2017)</cite>
+  </div>
+
+  <!-- SECTION: ¿QUÉ ES REALMENTE RECUPERARSE? -->
+  <div class="section-label">La Ciencia de la Recuperación</div>
+
+  <div class="science-card">
+    <div class="card-header">
+      <div class="card-icon">🧠</div>
+      <div class="card-meta">
+        <div class="card-tag" style="color:var(--teal)">Neurociencia aplicada</div>
+        <div class="card-title">Recuperación ≠ hacer nada</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>El cerebro nunca se apaga del todo. Lo que cambia durante el descanso es <strong>qué red neuronal está activa</strong>. Durante el trabajo concentrado (emails, reuniones, decisiones) opera la <em>Red de Atención Ejecutiva</em>. Cuando nos desconectamos de esa exigencia cognitiva, se activa la <em>Red de Modo por Defecto</em> (DMN, por sus siglas en inglés), responsable de la consolidación de la memoria, la creatividad, la resolución de problemas complejos y la regulación emocional.</p>
+      <p>Investigaciones del Laboratorio de Neuroimagen de Yale (Buckner et al., 2008) confirmaron que la DMN es metabólicamente muy activa — paradójicamente, el cerebro <em>trabaja más</em> durante el descanso que durante muchas tareas cognitivas simples. Por eso descansar no es lujo: es mantenimiento cerebral obligatorio.</p>
+      <div class="highlight-box highlight-gold">
+        <div class="highlight-title">Dato clave</div>
+        <div class="highlight-text">Las personas que no permiten que su DMN se active sufren deterioro en creatividad, toma de decisiones y procesamiento emocional — independientemente de cuántas horas duerman. El tipo de actividad durante el día importa tanto como el sueño nocturno.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="science-card">
+    <div class="card-header">
+      <div class="card-icon">📊</div>
+      <div class="card-meta">
+        <div class="card-tag" style="color:var(--purple)">Psicología de la salud</div>
+        <div class="card-title">Los 7 tipos de descanso — Dra. Saundra Dalton-Smith</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>La Dra. Dalton-Smith, médica internista e investigadora, identificó en su práctica clínica que la mayoría de las personas no están agotadas por falta de sueño — están <strong>exhaustas por déficit de descanso en la dimensión equivocada</strong>. Duermen 8 horas y amanecen igual de cansadas.</p>
+      <p>Su modelo reconoce 7 tipos de recuperación, cada uno con mecanismos fisiológicos y prácticas distintas:</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+      <div class="activity-row">
+        <div class="ar-icon">😴</div>
+        <div class="ar-body">
+          <div class="ar-name">Descanso Físico</div>
+          <div class="ar-why">Sueño reparador + recuperación muscular activa (yoga suave, caminata tranquila). No confundir con colapsar en el sofá — la inmovilidad excesiva agrava el cansancio físico.</div>
+          <span class="ar-badge badge-fisico">FÍSICO</span>
+        </div>
+      </div>
+      <div class="activity-row">
+        <div class="ar-icon">🧠</div>
+        <div class="ar-body">
+          <div class="ar-name">Descanso Mental</div>
+          <div class="ar-why">Pauses de 5-10 min cada 2 horas de trabajo cognitivo intenso. Sin pantallas. Mirar por la ventana, respirar, caminar sin destino. Reduce la acumulación de adenosina y cortisol prefrontal.</div>
+          <span class="ar-badge badge-mental">MENTAL</span>
+        </div>
+      </div>
+      <div class="activity-row">
+        <div class="ar-icon">🎨</div>
+        <div class="ar-body">
+          <div class="ar-name">Descanso Creativo</div>
+          <div class="ar-why">Exponerse a belleza, arte, naturaleza o crear algo con las manos. Activa el sistema de recompensa sin exigencia de resultados. Imprescindible para personas en trabajos analíticos.</div>
+          <span class="ar-badge badge-creativo">CREATIVO</span>
+        </div>
+      </div>
+      <div class="activity-row">
+        <div class="ar-icon">💬</div>
+        <div class="ar-body">
+          <div class="ar-name">Descanso Social</div>
+          <div class="ar-why">Pasar tiempo con personas que <em>recargan</em> (no drenan). Identificar quiénes son es tan importante como el descanso mismo. El aislamiento voluntario también es válido cuando el entorno es agotador.</div>
+          <span class="ar-badge badge-social">SOCIAL</span>
+        </div>
+      </div>
+      <div class="activity-row">
+        <div class="ar-icon">📵</div>
+        <div class="ar-body">
+          <div class="ar-name">Descanso Sensorial</div>
+          <div class="ar-why">Reducir la hiperestimulación: notificaciones, ruido, luz artificial, pantallas. El sistema nervioso autónomo necesita períodos de baja estimulación para regular el cortisol y la adrenalina.</div>
+          <span class="ar-badge badge-mental">SENSORIAL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box highlight-teal" style="margin-top:16px;">
+      <div class="highlight-title">¿Cuál te falta más?</div>
+      <div class="highlight-text">La mayoría de mujeres que trabajan y cuidan una familia tienen déficit crónico de descanso creativo y sensorial, no de sueño. Si duermes bien pero amaneces sin energía, este es el punto a investigar esta semana.</div>
+    </div>
+  </div>
+
+  <!-- SECTION: OCIO ACTIVO -->
+  <div class="section-label">El Poder del Ocio Activo</div>
+
+  <div class="science-card">
+    <div class="card-header">
+      <div class="card-icon">🌱</div>
+      <div class="card-meta">
+        <div class="card-tag" style="color:var(--green)">Teoría de la Restauración de la Atención</div>
+        <div class="card-title">Por qué la jardinería, cocinar o caminar son medicina real</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>En 1989, los psicólogos Rachel y Stephen Kaplan de la Universidad de Michigan publicaron la <em>Teoría de la Restauración de la Atención (ART)</em>, una de las teorías más replicadas en psicología ambiental. Su hallazgo central: <strong>los entornos que capturan la atención de forma involuntaria — jardines, naturaleza, artesanías, cocina — restauran activamente la capacidad de atención dirigida</strong> que se agota con el trabajo cognitivo.</p>
+      <p>Lo que hace restaurador a un ambiente u actividad no es que sea pasivo, sino que tenga cuatro características específicas:</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+      <div style="padding:14px;background:rgba(93,226,140,0.07);border:1px solid rgba(93,226,140,0.15);border-radius:12px;">
+        <div style="font-size:18px;margin-bottom:6px;">🌿</div>
+        <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Fascinación suave</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);">Captura atención sin esfuerzo. Ej: observar plantas crecer, agua fluyendo, amasar pan.</div>
+      </div>
+      <div style="padding:14px;background:rgba(93,226,140,0.07);border:1px solid rgba(93,226,140,0.15);border-radius:12px;">
+        <div style="font-size:18px;margin-bottom:6px;">🏝</div>
+        <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Sensación de escape</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);">Alejarse psicológicamente de las preocupaciones habituales, aunque sea 20 minutos.</div>
+      </div>
+      <div style="padding:14px;background:rgba(93,226,140,0.07);border:1px solid rgba(93,226,140,0.15);border-radius:12px;">
+        <div style="font-size:18px;margin-bottom:6px;">🌀</div>
+        <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Extensión</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);">El entorno o actividad es lo suficientemente rico para mantenerse explorado (jardín, museo, cocinar).</div>
+      </div>
+      <div style="padding:14px;background:rgba(93,226,140,0.07);border:1px solid rgba(93,226,140,0.15);border-radius:12px;">
+        <div style="font-size:18px;margin-bottom:6px;">✅</div>
+        <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Compatibilidad</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);">La actividad se alinea con lo que la persona valora y quiere hacer — sin obligación.</div>
+      </div>
+    </div>
+    <div class="highlight-box highlight-green" style="margin-top:16px;">
+      <div class="highlight-title">Conclusión aplicada</div>
+      <div class="highlight-text">Si trabajas en una oficina frente a pantallas todo el día, una actividad de movimiento suave con poca exigencia mental — jardinería, cocinar recetas nuevas, pintar, caminar en naturaleza — no es "perder el tiempo". Es recuperación cerebral de alta eficiencia validada científicamente.</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--teal)">23%</div>
+      <div class="stat-label">Reducción de cortisol tras 20 min de jardinería<br><span style="color:rgba(255,255,255,0.3)">Park et al., 2016</span></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--green)">89%</div>
+      <div class="stat-label">De personas reportan mejor humor tras actividades creativas sin presión de resultados<br><span style="color:rgba(255,255,255,0.3)">Tamlin Conner, 2018</span></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--gold)">7x</div>
+      <div class="stat-label">Mayor longevidad en personas con hobbies activos regulares<br><span style="color:rgba(255,255,255,0.3)">Steptoe & Fancourt, 2019</span></div>
+    </div>
+  </div>
+
+  <!-- SECTION: FLUJO / FLOW -->
+  <div class="section-label">Estado de Flow — La Recuperación Más Profunda</div>
+
+  <div class="science-card">
+    <div class="card-header">
+      <div class="card-icon">🌊</div>
+      <div class="card-meta">
+        <div class="card-tag" style="color:var(--sky)">Psicología positiva</div>
+        <div class="card-title">Flow: cuando hacer es descansar</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Mihaly Csikszentmihalyi (Universidad de Chicago) describió el estado de "flow" o flujo como una experiencia de absorción total en una actividad donde el tiempo parece detenerse, el esfuerzo se siente natural y la mente está completamente presente. Lo paradójico: el flow produce <strong>profunda restauración psicológica</strong> aunque la actividad requiera esfuerzo.</p>
+      <p>El flow ocurre en el punto exacto donde la habilidad y el desafío se equilibran — ni muy fácil (aburrimiento), ni muy difícil (ansiedad). Actividades que inducen flow en la vida cotidiana incluyen:</p>
+      <ul style="margin-left:20px;margin-top:8px;color:rgba(255,255,255,0.75);font-size:12px;line-height:2;">
+        <li>Jardinería o cuidado de plantas</li>
+        <li>Cocinar recetas que requieren concentración liviana</li>
+        <li>Tejer, bordar, cerámica, artesanías</li>
+        <li>Tocar un instrumento musical</li>
+        <li>Dibujar, pintar, fotografiar</li>
+        <li>Leer una novela que engancha (no un libro técnico)</li>
+        <li>Caminar por un parque con atención plena</li>
+      </ul>
+      <div class="highlight-box highlight-purple" style="margin-top:14px;">
+        <div class="highlight-title">Para ti, en concreto</div>
+        <div class="highlight-text">Si tu trabajo es 90% mental y de alto impacto emocional (como atención médica, liderazgo, cuidado de personas), tu recuperación óptima es exactamente lo opuesto: actividades físicas simples, creativas, o con la naturaleza. Tu cerebro necesita el contraste para restaurarse.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: TIPOS DE ACTIVIDAD -->
+  <div class="section-label">Tu Actividad Según Tu Trabajo</div>
+
+  <div class="science-card">
+    <div class="card-header">
+      <div class="card-icon">🔄</div>
+      <div class="card-meta">
+        <div class="card-tag" style="color:var(--gold)">Aplicación práctica</div>
+        <div class="card-title">Principio de recuperación complementaria</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>El fisiólogo Sabine Sonnentag (Universidad de Mannheim) demostró en múltiples estudios que la recuperación más efectiva no es la "opuesta al esfuerzo" sino la que contrasta con la <em>dimensión del esfuerzo habitual</em>. A esto le llama el <strong>principio de esfuerzo complementario</strong>.</p>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Si tu trabajo es mayormente MENTAL / SEDENTARIO:</div>
+      <div class="activity-row">
+        <div class="ar-icon">🌱</div>
+        <div class="ar-body"><div class="ar-name">Jardinería o contacto con tierra</div><div class="ar-why">Las bacterias del suelo (Mycobacterium vaccae) activan la producción de serotonina al contacto dérmico. Efecto antidepresivo natural documentado (Lowry et al., 2007).</div><span class="ar-badge badge-fisico">FÍSICO + MENTAL</span></div>
+      </div>
+      <div class="activity-row">
+        <div class="ar-icon">🚶‍♀️</div>
+        <div class="ar-body"><div class="ar-name">Caminata sin destino ni teléfono</div><div class="ar-why">20-40 min de caminata suave baja el cortisol y la adrenalina, activa la DMN y mejora el humor de forma comparable a antidepresivos en estados leves (Blumenthal et al., 2007).</div><span class="ar-badge badge-fisico">FÍSICO + SENSORIAL</span></div>
+      </div>
+      <div class="activity-row">
+        <div class="ar-icon">🍳</div>
+        <div class="ar-body"><div class="ar-name">Cocinar algo nuevo sin apuro</div><div class="ar-why">Activa la atención sensorial (olfato, tacto, vista) y el sentido de logro. Investigación de Harvard (2019) mostró que cocinar activamente reduce los niveles de angustia en un 25% en adultos bajo estrés laboral.</div><span class="ar-badge badge-creativo">CREATIVO</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;">Si tu trabajo es mayormente FÍSICO / DE PIE:</div>
+      <div class="activity-row">
+        <div class="ar-icon">📖</div>
+        <div class="ar-body"><div class="ar-name">Leer (no pantallas)</div><div class="ar-why">6 minutos de lectura reducen los niveles de estrés un 68% (Univ. de Sussex, 2009). Más efectivo que escuchar música o tomar té. La narrativa activa empatía y cognición de alto nivel.</div><span class="ar-badge badge-mental">MENTAL</span></div>
+      </div>
+      <div class="activity-row">
+        <div class="ar-icon">🎵</div>
+        <div class="ar-body"><div class="ar-name">Música pasiva o activa</div><div class="ar-why">La música a 60-80 BPM activa el ritmo alfa cerebral y sincroniza el sistema nervioso autónomo hacia el estado parasimpático (descanso/digestión). Componer o tocar amplifica el efecto.</div><span class="ar-badge badge-creativo">CREATIVO + SENSORIAL</span></div>
+      </div>
+      <div class="activity-row">
+        <div class="ar-icon">🛁</div>
+        <div class="ar-body"><div class="ar-name">Baño caliente o hidroterapia</div><div class="ar-why">El calor del agua reduce la inflamación muscular y activa el nervio vago — el freno del sistema nervioso simpático. Baño de 10-20 min = recuperación muscular equivalente a 30 min de estiramiento pasivo.</div><span class="ar-badge badge-fisico">FÍSICO</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: SUEÑO -->
+  <div class="section-label">El Sueño Como Base (Nunca Como Único Pilar)</div>
+
+  <div class="science-card">
+    <div class="card-header">
+      <div class="card-icon">🌙</div>
+      <div class="card-meta">
+        <div class="card-tag" style="color:var(--sky)">Neurociencia del sueño</div>
+        <div class="card-title">Lo que pasa en tu cerebro mientras duermes</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>El sueño no es un solo estado — es una arquitectura. Cada noche completamos 4-6 ciclos de ~90 minutos, cada uno con fases distintas que hacen trabajo diferente:</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(93,173,226,0.08);border:1px solid rgba(93,173,226,0.15);border-radius:12px;">
+        <div style="font-size:22px;flex-shrink:0;">💤</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px;">NREM Fase 3 — Sueño Profundo</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.65);line-height:1.65;">Reparación física celular, síntesis de hormona de crecimiento, consolidación de memoria declarativa. El sistema glinfático "lava" el cerebro de proteínas inflamatorias (incluyendo beta-amiloide). Predomina en las primeras horas de sueño.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(155,89,182,0.08);border:1px solid rgba(155,89,182,0.15);border-radius:12px;">
+        <div style="font-size:22px;flex-shrink:0;">🎭</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px;">REM — Sueño de Movimientos Oculares Rápidos</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.65);line-height:1.65;">Procesamiento emocional, integración de memorias, creatividad, regulación del estado de ánimo. Predomina en la segunda mitad de la noche. Truncar el sueño antes del 5to-6to ciclo afecta principalmente esta fase.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box highlight-gold" style="margin-top:16px;">
+      <div class="highlight-title">Recomendación de Matthew Walker (PhD, UC Berkeley)</div>
+      <div class="highlight-text">No existe compensación del sueño en fines de semana — la deuda de sueño se acumula y el daño metabólico, cognitivo e inmune persiste aunque "recuperes" horas después. La consistencia del horario importa más que la cantidad total.</div>
+    </div>
+  </div>
+
+  <!-- RECUPERACIÓN ANTI-INFLAMATORIA -->
+  <div class="section-label">Recuperación y Reducción de la Inflamación</div>
+
+  <div class="science-card">
+    <div class="card-header">
+      <div class="card-icon">🔥</div>
+      <div class="card-meta">
+        <div class="card-tag" style="color:var(--teal)">Medicina de estilo de vida</div>
+        <div class="card-title">El descanso es la intervención antiinflamatoria más potente</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>La privación de descanso (en cualquiera de sus formas) activa el eje hipotalámico-pituitario-adrenal (HPA), manteniendo los niveles de cortisol elevados. El cortisol crónico:</p>
+      <ul style="margin-left:20px;margin-top:8px;color:rgba(255,255,255,0.75);font-size:12px;line-height:2.2;">
+        <li>Aumenta la producción de citocinas proinflamatorias (IL-6, TNF-α)</li>
+        <li>Aumenta la permeabilidad intestinal ("leaky gut")</li>
+        <li>Reduce la sensibilidad a la insulina</li>
+        <li>Suprime la inmunidad adaptativa</li>
+        <li>Acelera el envejecimiento celular (acortamiento de telómeros)</li>
+      </ul>
+      <div class="highlight-box highlight-teal" style="margin-top:14px;">
+        <div class="highlight-title">Implicación directa para tu programa</div>
+        <div class="highlight-text">Puedes comer perfectamente antiinflamatorio y hacer ejercicio regularmente — si no recuperas, el cortisol crónico activa las mismas vías inflamatorias que bloqueaste con la alimentación. La recuperación no complementa tu salud: la habilita.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TU PRÁCTICA ESTA SEMANA -->
+  <div class="section-label">Tu Práctica Esta Semana</div>
+
+  <div class="science-card">
+    <div class="card-header">
+      <div class="card-icon">📋</div>
+      <div class="card-meta">
+        <div class="card-tag" style="color:var(--green)">Protocolo MORAIMA días 7-9</div>
+        <div class="card-title">3 compromisos de recuperación activa</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p style="margin-bottom:18px;">Elige <strong>al menos una actividad</strong> de cada tipo durante estos 3 días. No más — calidad sobre cantidad. El objetivo es que empieces a notar la diferencia entre el cansancio que arrastra y la vitalidad que construye.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="padding:16px;background:rgba(93,226,140,0.07);border-left:3px solid var(--green);border-radius:0 12px 12px 0;">
+        <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:1px;margin-bottom:6px;">COMPROMISO 1 · PAUSA MENTAL DIARIA</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.7;">Programa 2 pausas de 10 minutos durante tu jornada. Sin teléfono. Solo mirar un punto fijo, respirar o salir un momento. Esto activa la DMN y previene la fatiga cognitiva acumulada.</div>
+      </div>
+      <div style="padding:16px;background:rgba(72,201,176,0.07);border-left:3px solid var(--teal);border-radius:0 12px 12px 0;">
+        <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:1px;margin-bottom:6px;">COMPROMISO 2 · ACTIVIDAD DE OCIO ELEGIDA POR TI</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.7;">Escoge UNA actividad de ocio activo que te guste y que contraste con tu trabajo: jardinería, cocinar, caminar, pintar, leer, artesanías. Mínimo 30 minutos. Anota cómo te sientes antes y después.</div>
+      </div>
+      <div style="padding:16px;background:rgba(93,173,226,0.07);border-left:3px solid var(--sky);border-radius:0 12px 12px 0;">
+        <div style="font-size:11px;font-weight:700;color:var(--sky);letter-spacing:1px;margin-bottom:6px;">COMPROMISO 3 · HIGIENE DEL SUEÑO</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.7;">Apaga pantallas 60 min antes de dormir. Temperatura habitación 18-20°C. Oscuridad completa o antifaz. Mismo horario de cama los 3 días. Estos 4 cambios juntos mejoran la calidad del sueño profundo en un 31% (Walker, 2017).</div>
+      </div>
+    </div>
+
+    <div class="highlight-box highlight-gold" style="margin-top:18px;">
+      <div class="highlight-title">Abre la app del Módulo 3 después de leer esta guía</div>
+      <div class="highlight-text">La app te acompañará para diagnosticar en cuál de los 7 tipos de descanso tienes más déficit y te dará un plan de recuperación personalizado para los días 7 al 9 de MORAIMA 21.</div>
+    </div>
+  </div>
+
+  <!-- REFERENCES -->
+  <div class="section-label">Evidencia Científica</div>
+  <ul class="ref-list">
+    <li><strong>Buckner RL et al. (2008)</strong> — The brain's default network: anatomy, function, and relevance to disease. <em>Annals of the New York Academy of Sciences.</em></li>
+    <li><strong>Dalton-Smith S. (2017)</strong> — Sacred Rest: Recover Your Life, Renew Your Energy, Restore Your Sanity. <em>FaithWords / Hachette Book Group.</em></li>
+    <li><strong>Kaplan R & Kaplan S. (1989)</strong> — The Experience of Nature: A Psychological Perspective. <em>Cambridge University Press. Attention Restoration Theory.</em></li>
+    <li><strong>Csikszentmihalyi M. (1990)</strong> — Flow: The Psychology of Optimal Experience. <em>Harper & Row.</em></li>
+    <li><strong>Sonnentag S & Fritz C. (2007)</strong> — The Recovery Experience Questionnaire: Development and validation of a measure for assessing recuperation and unwinding from work. <em>Journal of Occupational Health Psychology.</em></li>
+    <li><strong>Park BJ et al. (2016)</strong> — Physiological and psychological effects of Shinrin-yoku (taking in forest atmosphere or forest bathing). <em>Environmental Health and Preventive Medicine.</em></li>
+    <li><strong>Lowry CA et al. (2007)</strong> — Identification of an immune-responsive mesolimbocortical serotonergic system: Potential role in regulation of emotional behavior. <em>Neuroscience.</em></li>
+    <li><strong>Walker M. (2017)</strong> — Why We Sleep: Unlocking the Power of Sleep and Dreams. <em>Scribner.</em></li>
+    <li><strong>Steptoe A & Fancourt D. (2019)</strong> — Leading a meaningful life at older ages and its relationship with social engagement, prosperity, health, biology, and time use. <em>PNAS.</em></li>
+    <li><strong>Blumenthal JA et al. (2007)</strong> — Exercise and pharmacotherapy in the treatment of major depressive disorder. <em>Psychosomatic Medicine.</em></li>
+    <li><strong>Selhub EM & Logan AC. (2012)</strong> — Your Brain on Nature. <em>Wiley.</em></li>
+  </ul>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="sig">Dra. Monica Arellano · epimedik</div>
+    <p>Módulo 3 de MORAIMA 21 — Protocolo de Medicina Preventiva y Bioregulación<br>
+    Toda la información tiene fines educativos. Consulta siempre con tu equipo de salud.</p>
+    <p style="margin-top:10px;font-size:10px;color:rgba(255,255,255,0.2)">Vive la vida al 100 · epimedik.com</p>
+  </div>
+
+  <button class="print-btn no-print" onclick="window.print()">📄 Descargar / Imprimir guía</button>
+
+</div><!-- /container -->
+</body>
+</html>
