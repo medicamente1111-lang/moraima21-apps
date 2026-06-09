@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>MENTE — Módulo 1 | MORAIMA21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a2942;
+  --navy2: #0d3455;
+  --sky: #5dade2;
+  --sky2: #3a7bb5;
+  --gold: #f4d03f;
+  --gold2: #e8c33a;
+  --white: #ffffff;
+  --soft: #d6eaf8;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow-x:hidden; }
+body {
+  font-family: Montserrat, Helvetica, Arial, sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  min-height: 100vh;
+}
+
+/* ──────── STARS BACKGROUND ──────── */
+.stars {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  pointer-events: none; z-index:0; overflow:hidden;
+}
+.star {
+  position:absolute; background:white; border-radius:50%;
+  animation: twinkle linear infinite;
+}
+@keyframes twinkle {
+  0%,100% { opacity:0; }
+  50% { opacity:1; }
+}
+
+/* ──────── SCREENS ──────── */
+.screen {
+  display:none; position:relative; z-index:1;
+  min-height:100vh; padding:24px 20px 40px;
+  flex-direction:column; align-items:center; justify-content:center;
+}
+.screen.active { display:flex; }
+
+/* ──────── WELCOME ──────── */
+.badge {
+  font-size:11px; letter-spacing:3px; color:var(--sky);
+  text-transform:uppercase; margin-bottom:12px; text-align:center;
+}
+.main-title {
+  font-size:36px; font-weight:800; text-align:center;
+  line-height:1.15; margin-bottom:6px;
+}
+.main-title span { color:var(--gold); }
+.subtitle {
+  font-size:14px; color:var(--soft); text-align:center;
+  margin-bottom:32px; font-weight:300; line-height:1.7;
+  max-width:320px;
+}
+.tip-box {
+  background:rgba(93,173,226,0.12); border:1px solid rgba(93,173,226,0.3);
+  border-radius:12px; padding:16px 20px; max-width:360px; width:100%;
+  margin-bottom:32px;
+}
+.tip-box p { font-size:13px; color:var(--soft); line-height:1.7; }
+.tip-box strong { color:var(--gold); }
+
+/* ──────── BUTTONS ──────── */
+.btn-primary {
+  background: var(--gold); color: var(--navy);
+  border:none; border-radius:50px; padding:16px 40px;
+  font-family:Montserrat,sans-serif; font-weight:700; font-size:15px;
+  cursor:pointer; transition:all .2s; letter-spacing:.5px;
+  box-shadow:0 4px 20px rgba(244,208,63,0.3);
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(244,208,63,0.45); }
+.btn-secondary {
+  background:transparent; color:var(--sky); border:1.5px solid var(--sky);
+  border-radius:50px; padding:12px 32px;
+  font-family:Montserrat,sans-serif; font-weight:600; font-size:14px;
+  cursor:pointer; transition:all .2s; margin-top:16px;
+}
+.btn-secondary:hover { background:rgba(93,173,226,0.1); }
+
+/* ──────── ASSESSMENT ──────── */
+.progress-bar {
+  width:100%; max-width:380px; height:4px;
+  background:rgba(255,255,255,0.1); border-radius:4px; margin-bottom:40px;
+}
+.progress-fill {
+  height:100%; background:var(--gold); border-radius:4px;
+  transition: width .4s ease;
+}
+.q-number {
+  font-size:12px; letter-spacing:2px; color:var(--sky);
+  text-transform:uppercase; margin-bottom:16px; text-align:center;
+}
+.q-text {
+  font-size:20px; font-weight:700; text-align:center;
+  line-height:1.4; margin-bottom:10px; max-width:340px;
+}
+.q-subtext {
+  font-size:13px; color:var(--soft); text-align:center;
+  margin-bottom:36px; font-weight:300; max-width:320px;
+}
+
+/* SLIDER */
+.slider-wrap { width:100%; max-width:340px; margin-bottom:12px; }
+input[type=range] {
+  -webkit-appearance:none; width:100%; height:6px;
+  border-radius:6px; outline:none;
+  background: linear-gradient(to right, var(--gold) 0%, var(--sky) 100%);
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:28px; height:28px;
+  border-radius:50%; background:var(--gold);
+  box-shadow:0 2px 8px rgba(244,208,63,0.5); cursor:pointer;
+}
+.slider-labels {
+  display:flex; justify-content:space-between;
+  font-size:11px; color:var(--soft); margin-top:8px;
+}
+.slider-value {
+  font-size:42px; font-weight:800; color:var(--gold);
+  text-align:center; margin:16px 0 32px;
+  line-height:1;
+}
+
+/* OPTIONS */
+.options { width:100%; max-width:360px; margin-bottom:32px; }
+.option {
+  background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:12px; padding:16px 20px; margin-bottom:12px;
+  cursor:pointer; transition:all .2s; font-size:14px;
+  line-height:1.5; font-weight:400;
+}
+.option:hover { border-color:var(--sky); background:rgba(93,173,226,0.08); }
+.option.selected { border-color:var(--gold); background:rgba(244,208,63,0.08); color:var(--gold); }
+
+/* ──────── SESSION SCREEN ──────── */
+.session-header {
+  text-align:center; margin-bottom:32px;
+}
+.session-header h2 { font-size:14px; letter-spacing:3px; color:var(--sky); text-transform:uppercase; }
+.timer-display {
+  font-size:56px; font-weight:800; color:var(--white);
+  text-align:center; letter-spacing:2px; margin-bottom:8px;
+  font-variant-numeric:tabular-nums;
+}
+.timer-label { font-size:12px; color:var(--soft); text-align:center; letter-spacing:2px; text-transform:uppercase; margin-bottom:40px; }
+
+/* BREATHING CIRCLE */
+.breath-container {
+  position:relative; width:200px; height:200px;
+  display:flex; align-items:center; justify-content:center; margin-bottom:40px;
+}
+.breath-ring {
+  position:absolute; border-radius:50%;
+  animation: breathe 8s ease-in-out infinite;
+}
+.ring1 { width:200px; height:200px; background:rgba(93,173,226,0.06); }
+.ring2 { width:160px; height:160px; background:rgba(93,173,226,0.1); animation-delay:-2.5s; }
+.ring3 { width:120px; height:120px; background:rgba(93,173,226,0.18); animation-delay:-5s; }
+.ring-core {
+  width:80px; height:80px; border-radius:50%;
+  background:radial-gradient(circle, var(--sky2), var(--navy2));
+  display:flex; align-items:center; justify-content:center;
+  position:relative; z-index:2;
+  box-shadow:0 0 30px rgba(93,173,226,0.4);
+}
+.breath-text { font-size:11px; font-weight:600; letter-spacing:1px; color:var(--white); }
+@keyframes breathe {
+  0%,100% { transform:scale(1); opacity:.7; }
+  50% { transform:scale(1.15); opacity:1; }
+}
+
+/* AFFIRMATION */
+.affirmation-box {
+  max-width:340px; text-align:center; min-height:100px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:32px;
+}
+.affirmation-text {
+  font-size:18px; font-weight:600; line-height:1.6;
+  color:var(--white); opacity:0;
+  transition:opacity 1.2s ease;
+}
+.affirmation-text.visible { opacity:1; }
+
+.sound-status {
+  font-size:12px; color:var(--sky); letter-spacing:1px;
+  text-align:center; margin-bottom:8px;
+}
+.wave-viz {
+  display:flex; gap:4px; align-items:center; justify-content:center; margin-bottom:32px;
+}
+.wave-bar {
+  width:4px; background:var(--sky); border-radius:4px; opacity:.7;
+  animation: wave-anim .8s ease-in-out infinite;
+}
+.wave-bar:nth-child(1) { height:8px; animation-delay:0s; }
+.wave-bar:nth-child(2) { height:16px; animation-delay:.1s; }
+.wave-bar:nth-child(3) { height:24px; animation-delay:.2s; }
+.wave-bar:nth-child(4) { height:16px; animation-delay:.3s; }
+.wave-bar:nth-child(5) { height:8px; animation-delay:.4s; }
+.wave-bar:nth-child(6) { height:20px; animation-delay:.5s; }
+.wave-bar:nth-child(7) { height:12px; animation-delay:.6s; }
+@keyframes wave-anim {
+  0%,100% { transform:scaleY(1); }
+  50% { transform:scaleY(1.8); }
+}
+@keyframes mantra-pulse {
+  0%,100% { opacity:.06; letter-spacing:4px; }
+  50% { opacity:.15; letter-spacing:6px; }
+}
+
+/* ──────── RESULTS SCREEN ──────── */
+.score-circle {
+  width:160px; height:160px; border-radius:50%;
+  background:conic-gradient(var(--gold) 0deg, rgba(93,173,226,0.15) 0deg);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 32px;
+  box-shadow:0 0 40px rgba(244,208,63,0.2);
+  position:relative;
+}
+.score-circle::before {
+  content:''; position:absolute;
+  width:128px; height:128px; border-radius:50%;
+  background:var(--navy);
+}
+.score-inner {
+  position:relative; z-index:1; text-align:center;
+}
+.score-number { font-size:42px; font-weight:800; color:var(--gold); line-height:1; }
+.score-max { font-size:16px; color:var(--soft); }
+.score-label { font-size:12px; letter-spacing:1px; text-transform:uppercase; color:var(--soft); margin-top:4px; }
+
+.insight-card {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(93,173,226,0.2);
+  border-radius:12px; padding:16px 20px; max-width:360px; width:100%;
+  margin-bottom:12px;
+}
+.insight-card .icon { font-size:20px; margin-bottom:8px; }
+.insight-card h4 { font-size:14px; font-weight:700; color:var(--sky); margin-bottom:6px; }
+.insight-card p { font-size:13px; color:var(--soft); line-height:1.7; font-weight:300; }
+
+.complete-btn-wrap { margin-top:32px; text-align:center; width:100%; }
+.epimedik-footer {
+  margin-top:32px; text-align:center;
+  font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:1px;
+}
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- ══════════════════════════ SCREEN 0 — WELCOME ══════════════════════════ -->
+<div class="screen active" id="screen-welcome">
+  <p class="badge">MORAIMA21 · Módulo 1</p>
+  <h1 class="main-title">Tu <span>MENTE</span><br>es tu primer<br>médico</h1>
+
+  <div style="background:var(--gold);border-radius:16px;padding:16px 20px;max-width:360px;width:100%;margin-bottom:24px;text-align:center">
+    <p style="font-size:22px;margin-bottom:6px">🎧</p>
+    <p style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:4px">PONTE LOS AUDÍFONOS ANTES DE EMPEZAR</p>
+    <p style="font-size:12px;color:var(--navy);opacity:.8;line-height:1.5">Frecuencias binaurales · Sin audífonos no funcionan</p>
+  </div>
+
+  <!-- SOUND SELECTOR (siempre visible) -->
+  <p style="font-size:11px;letter-spacing:2px;color:var(--sky);text-transform:uppercase;margin-bottom:12px">Elige tu sesión de hoy</p>
+  <div style="width:100%;max-width:380px;margin-bottom:24px">
+    <div class="sound-option" id="opt-morning" onclick="selectSound('morning')"
+      style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px 18px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:all .2s">
+      <div style="font-size:24px">🌅</div>
+      <div>
+        <p style="font-size:14px;font-weight:700;margin-bottom:1px">Despertar</p>
+        <p style="font-size:11px;color:var(--soft);opacity:.8">14Hz · Alfa alta · Mañana — Cortisol · Foco</p>
+      </div>
+    </div>
+    <div class="sound-option" id="opt-calm" onclick="selectSound('calm')"
+      style="background:rgba(93,173,226,0.12);border:2px solid var(--sky);border-radius:14px;padding:14px 18px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:all .2s">
+      <div style="font-size:24px">🌿</div>
+      <div>
+        <p style="font-size:14px;font-weight:700;margin-bottom:1px">Calma <span style="font-size:10px;background:var(--gold);color:var(--navy);padding:1px 7px;border-radius:50px;margin-left:6px">✓ ACTIVA</span></p>
+        <p style="font-size:11px;color:var(--soft);opacity:.8">10Hz · Alfa media · Tarde — Paz · Receptividad</p>
+      </div>
+    </div>
+    <div class="sound-option" id="opt-night" onclick="selectSound('night')"
+      style="background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:all .2s">
+      <div style="font-size:24px">🌙</div>
+      <div>
+        <p style="font-size:14px;font-weight:700;margin-bottom:1px">Noche</p>
+        <p style="font-size:11px;color:var(--soft);opacity:.8">6Hz · Theta · Noche — Sueño · Melatonina</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones dinámicos según si ya hizo evaluación -->
+  <div id="welcome-btns"></div>
+</div>
+
+<!-- ══════════════════════════ SCREEN 1 — ASSESSMENT ══════════════════════════ -->
+<div class="screen" id="screen-assessment">
+  <button onclick="showScreen('screen-welcome')"
+    style="align-self:flex-start;background:transparent;border:none;color:var(--sky);font-family:Montserrat,sans-serif;font-size:13px;cursor:pointer;margin-bottom:16px;padding:0">
+    ← Volver
+  </button>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  <p class="q-number" id="q-number">Pregunta 1 de 5</p>
+  <h2 class="q-text" id="q-text"></h2>
+  <p class="q-subtext" id="q-subtext"></p>
+  <div id="q-input-area"></div>
+  <button class="btn-primary" id="btn-next" onclick="nextQuestion()" style="opacity:.3;pointer-events:none">Siguiente →</button>
+</div>
+
+<!-- ══════════════════════════ SCREEN 2 — SESSION ══════════════════════════ -->
+<div class="screen" id="screen-session">
+  <button onclick="backToSoundSelector()"
+    style="align-self:flex-start;background:transparent;border:none;color:rgba(255,255,255,0.4);font-family:Montserrat,sans-serif;font-size:12px;cursor:pointer;margin-bottom:8px;padding:0;letter-spacing:1px">
+    ← Cambiar sonido
+  </button>
+  <div class="session-header">
+    <h2>Sincronización Cerebral</h2>
+    <p id="session-sound-label" style="font-size:13px;color:var(--gold);margin-top:6px;letter-spacing:1px">🌿 Calma — 10Hz</p>
+  </div>
+
+  <div class="timer-display" id="timer-display">05:00</div>
+  <p class="timer-label">minutos de transformación</p>
+
+  <div class="breath-container">
+    <div class="breath-ring ring1"></div>
+    <div class="breath-ring ring2"></div>
+    <div class="breath-ring ring3"></div>
+    <div class="ring-core">
+      <span class="breath-text" id="breath-word">INHALA</span>
+    </div>
+  </div>
+
+  <!-- affirmation spoken only, no visible text -->
+  <div style="height:60px"></div>
+
+  <p class="sound-status" id="sound-status">🎵 Ondas alfa activas — 10Hz</p>
+  <div class="wave-viz" id="wave-viz">
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div>
+  </div>
+
+  <div style="width:100%;max-width:320px;margin-bottom:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <span style="font-size:12px;color:var(--soft);letter-spacing:1px">🔉 VOLUMEN</span>
+      <span style="font-size:13px;font-weight:700;color:var(--gold)" id="vol-label">60%</span>
+    </div>
+    <input type="range" id="vol-slider" min="0" max="100" value="60"
+      oninput="changeVolume(this.value)"
+      style="width:100%;height:6px;border-radius:6px;outline:none;-webkit-appearance:none;background:rgba(255,255,255,0.15)">
+  </div>
+
+  <button id="btn-pause" onclick="togglePause()"
+    style="background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.2);border-radius:50px;padding:12px 28px;font-family:Montserrat,sans-serif;font-size:14px;font-weight:600;color:var(--white);cursor:pointer;margin-bottom:16px;letter-spacing:1px">
+    ⏸ Pausar sonido
+  </button>
+
+  <p style="font-size:13px;color:rgba(255,255,255,0.08);letter-spacing:4px;text-align:center;font-weight:700;text-transform:uppercase;animation:mantra-pulse 8s ease-in-out infinite;margin-top:8px" id="mantra-bg">
+    vivo al cien · con salud plena
+  </p>
+</div>
+
+<!-- ══════════════════════════ SCREEN 3 — RESULTS ══════════════════════════ -->
+<div class="screen" id="screen-results">
+  <p class="badge">Sesión completada ✓</p>
+  <h2 class="main-title" style="font-size:26px;margin-bottom:24px">Tu Perfil de<br><span>Creencias de Salud</span></h2>
+
+  <div class="score-circle" id="score-circle">
+    <div class="score-inner">
+      <div class="score-number" id="score-number">0</div>
+      <div class="score-max">/50</div>
+      <div class="score-label">puntos</div>
+    </div>
+  </div>
+
+  <p id="score-message" style="font-size:15px;text-align:center;color:var(--soft);margin-bottom:28px;max-width:320px;line-height:1.7;font-weight:300"></p>
+
+  <div id="insights-container" style="width:100%;max-width:380px"></div>
+
+  <div class="complete-btn-wrap">
+    <button class="btn-primary" onclick="completeDay()">✓ Completé el Día 1</button>
+    <br>
+    <button class="btn-secondary" onclick="location.reload()">Repetir sesión</button>
+  </div>
+
+  <p class="epimedik-footer">epimedik · Vive la vida al 100</p>
+</div>
+
+
+<script>
+// Init welcome buttons on load
+window.addEventListener('load', renderWelcomeBtns);
+
+// ══════════════════════════ STARS ══════════════════════════
+(function(){
+  const container = document.getElementById('stars');
+  for(let i=0;i<80;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    const size = Math.random()*2.5+0.5;
+    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-duration:${Math.random()*4+2}s;animation-delay:${Math.random()*5}s`;
+    container.appendChild(s);
+  }
+})();
+
+// ══════════════════════════ ASSESSMENT DATA ══════════════════════════
+const questions = [
+  {
+    type:'slider',
+    text:'¿Cuánto crees que tu mente influye en tu salud física?',
+    subtext:'0 = ninguna influencia · 10 = influencia total',
+    min:0, max:10, default:5,
+    key:'mente_cuerpo'
+  },
+  {
+    type:'options',
+    text:'Cuando sientes un síntoma físico, tu primer pensamiento es...',
+    subtext:'Elige la opción más honesta — no hay respuesta correcta.',
+    key:'sintoma_reaccion',
+    options:[
+      { text:'Miedo — algo malo me está pasando', value:1 },
+      { text:'Mi cuerpo me está pidiendo atención', value:4 },
+      { text:'Lo ignoro y espero que pase solo', value:2 },
+      { text:'Necesito un medicamento rápido', value:2 }
+    ]
+  },
+  {
+    type:'slider',
+    text:'¿Qué tan capaz te sientes de sanar completamente?',
+    subtext:'0 = no me lo creo · 10 = lo sé con certeza',
+    min:0, max:10, default:5,
+    key:'capacidad_sanar'
+  },
+  {
+    type:'options',
+    text:'¿Cómo describes tu relación con tu cuerpo hoy?',
+    subtext:'',
+    key:'relacion_cuerpo',
+    options:[
+      { text:'Mi cuerpo me falla seguido', value:1 },
+      { text:'Neutral — no lo pienso mucho', value:2 },
+      { text:'Lo escucho pero no siempre le hago caso', value:3 },
+      { text:'Mi cuerpo es mi aliado — lo cuido', value:4 }
+    ]
+  },
+  {
+    type:'slider',
+    text:'¿Qué tan fuerte es tu creencia de que puedes estar en plena salud?',
+    subtext:'0 = no lo creo posible · 10 = lo siento como mi realidad',
+    min:0, max:10, default:5,
+    key:'creencia_salud'
+  }
+];
+
+let currentQ = 0;
+const answers = {};
+let currentValue = null;
+
+function showQuestion(idx){
+  const q = questions[idx];
+  document.getElementById('q-number').textContent = `Pregunta ${idx+1} de ${questions.length}`;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-subtext').textContent = q.subtext || '';
+  document.getElementById('progress-fill').style.width = `${(idx/questions.length)*100}%`;
+
+  const btn = document.getElementById('btn-next');
+  btn.style.opacity = '.3'; btn.style.pointerEvents = 'none';
+  currentValue = null;
+
+  const area = document.getElementById('q-input-area');
+  area.innerHTML = '';
+
+  if(q.type==='slider'){
+    area.innerHTML = `
+      <div class="slider-wrap">
+        <input type="range" id="slider-q" min="${q.min}" max="${q.max}" value="${q.default}" oninput="onSliderChange(this.value)">
+        <div class="slider-labels"><span>0</span><span>5</span><span>10</span></div>
+      </div>
+      <div class="slider-value" id="slider-val">${q.default}</div>`;
+    currentValue = q.default;
+    btn.style.opacity='1'; btn.style.pointerEvents='auto';
+  } else {
+    const wrap = document.createElement('div');
+    wrap.className='options';
+    q.options.forEach((opt,i)=>{
+      const div = document.createElement('div');
+      div.className='option';
+      div.textContent = opt.text;
+      div.onclick=()=>{ selectOption(div, opt.value, i); };
+      wrap.appendChild(div);
+    });
+    area.appendChild(wrap);
+  }
+}
+
+function onSliderChange(val){
+  document.getElementById('slider-val').textContent = val;
+  currentValue = parseInt(val);
+  const btn=document.getElementById('btn-next');
+  btn.style.opacity='1'; btn.style.pointerEvents='auto';
+}
+
+function selectOption(el, value, idx){
+  document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  currentValue = value;
+  const btn=document.getElementById('btn-next');
+  btn.style.opacity='1'; btn.style.pointerEvents='auto';
+}
+
+function nextQuestion(){
+  const q = questions[currentQ];
+  answers[q.key] = currentValue;
+  currentQ++;
+  if(currentQ < questions.length){
+    showQuestion(currentQ);
+  } else {
+    // Save assessment done flag, return to welcome so they pick sound
+    const score =
+      (answers.mente_cuerpo||5)+(answers.sintoma_reaccion||2)+
+      (answers.capacidad_sanar||5)+(answers.relacion_cuerpo||2)+(answers.creencia_salud||5);
+    if(!localStorage.getItem('moraima_belief_score_start'))
+      localStorage.setItem('moraima_belief_score_start', score);
+    localStorage.setItem('moraima_belief_score_latest', score);
+    renderWelcomeBtns();
+    showScreen('screen-welcome');
+    // Show a brief confirmation
+    const wrap = document.getElementById('welcome-btns');
+    wrap.insertAdjacentHTML('beforebegin',
+      '<p style="font-size:13px;color:var(--gold);margin-bottom:16px;text-align:center">✓ Evaluación completada — ahora elige tu sesión</p>');
+  }
+}
+
+function renderWelcomeBtns(){
+  const done = !!localStorage.getItem('moraima_belief_score_start');
+  const wrap = document.getElementById('welcome-btns');
+  if(done){
+    wrap.innerHTML = `
+      <button class="btn-primary" onclick="startSession()">Comenzar sesión →</button>
+      <br>
+      <button class="btn-secondary" onclick="startAssessment()" style="margin-top:12px;font-size:12px">Repetir evaluación de creencias</button>`;
+  } else {
+    wrap.innerHTML = `
+      <button class="btn-primary" onclick="startAssessment()">Hacer evaluación primero →</button>
+      <br>
+      <button class="btn-secondary" onclick="startSession()" style="margin-top:12px;font-size:12px">Saltar evaluación — ir a sesión</button>`;
+  }
+}
+
+function startAssessment(){
+  showScreen('screen-assessment');
+  showQuestion(0);
+}
+
+// ══════════════════════════ AUDIO ENGINE ══════════════════════════
+let audioCtx = null;
+let oscL=null, oscR=null, noise=null, masterGain=null;
+
+function initAudio(){
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(masterVolume * 0.30, audioCtx.currentTime+3);
+    masterGain.connect(audioCtx.destination);
+
+    // Pink noise (background)
+    const bufferSize = audioCtx.sampleRate * 2;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+    for(let i=0;i<bufferSize;i++){
+      const white = Math.random()*2-1;
+      b0=0.99886*b0+white*0.0555179; b1=0.99332*b1+white*0.0750759;
+      b2=0.96900*b2+white*0.1538520; b3=0.86650*b3+white*0.3104856;
+      b4=0.55000*b4+white*0.5329522; b5=-0.7616*b5-white*0.0168980;
+      data[i]=(b0+b1+b2+b3+b4+b5+b6+white*0.5362)/7;
+      b6=white*0.115926;
+    }
+    const noiseSource = audioCtx.createBufferSource();
+    noiseSource.buffer = buffer; noiseSource.loop = true;
+    const noiseGain = audioCtx.createGain(); noiseGain.gain.value = 0.04;
+    noiseSource.connect(noiseGain); noiseGain.connect(masterGain);
+    noiseSource.start();
+
+    // Binaural — frequency set by user selection
+    const cfg = SOUNDS[selectedSound];
+    const binauralGain = audioCtx.createGain();
+    binauralGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    binauralGain.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 4);
+    binauralGain.connect(masterGain);
+
+    oscL = audioCtx.createOscillator();
+    oscL.type = 'sine'; oscL.frequency.value = cfg.carrier;
+
+    oscR = audioCtx.createOscillator();
+    oscR.type = 'sine'; oscR.frequency.value = cfg.carrier + cfg.freq;
+
+    const panL = audioCtx.createStereoPanner(); panL.pan.value = -1;
+    const panR = audioCtx.createStereoPanner(); panR.pan.value = 1;
+
+    oscL.connect(panL); panL.connect(binauralGain);
+    oscR.connect(panR); panR.connect(binauralGain);
+
+    oscL.start(); oscR.start();
+  } catch(e){ console.log('Audio not available', e); }
+}
+
+function stopAudio(){
+  if(audioCtx){
+    try {
+      masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime+2);
+      setTimeout(()=>{ audioCtx.close(); audioCtx=null; }, 2500);
+    } catch(e){}
+  }
+}
+
+function togglePause(){
+  const btn = document.getElementById('btn-pause');
+  const waves = document.getElementById('wave-viz');
+  const status = document.getElementById('sound-status');
+  isPaused = !isPaused;
+  if(isPaused){
+    if(audioCtx) audioCtx.suspend();
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+    clearTimeout(whisperTimer);
+    clearInterval(timerInterval);
+    btn.textContent = '▶ Reanudar sonido';
+    btn.style.borderColor = 'var(--gold)';
+    btn.style.color = 'var(--gold)';
+    waves.style.opacity = '0.2';
+    status.textContent = '⏸ En pausa';
+  } else {
+    if(audioCtx) audioCtx.resume();
+    setTimeout(whisperMantra, 1500);
+    timerInterval = setInterval(()=>{
+      secondsLeft--;
+      updateTimer();
+      if(secondsLeft<=0){ endSession(); }
+    }, 1000);
+    btn.textContent = '⏸ Pausar sonido';
+    btn.style.borderColor = 'rgba(255,255,255,0.2)';
+    btn.style.color = 'var(--white)';
+    waves.style.opacity = '1';
+    status.textContent = '🎵 Ondas alfa activas — 10Hz';
+  }
+}
+
+// ══════════════════════════ SESSION ══════════════════════════
+const MANTRA = "Vivo al cien con salud plena";
+
+const SOUNDS = {
+  morning: { freq: 14, carrier: 396, label: '🌅 Despertar — 14Hz', statusTxt: '🎵 Ondas alfa activas — 14Hz' },
+  calm:    { freq: 10, carrier: 396, label: '🌿 Calma — 10Hz',     statusTxt: '🎵 Ondas alfa activas — 10Hz' },
+  night:   { freq:  6, carrier: 288, label: '🌙 Noche — 6Hz Theta',statusTxt: '🎵 Ondas theta activas — 6Hz' }
+};
+let selectedSound = 'calm';
+
+const breathCycle = ['INHALA','INHALA','INHALA','INHALA','SOSTÉN','SOSTÉN','EXHALA','EXHALA','EXHALA','EXHALA','EXHALA','EXHALA'];
+let timerInterval=null, breathInterval=null, affirmInterval=null;
+let secondsLeft = 300;
+let affirmIdx = 0;
+let breathStep = 0;
+let isPaused = false;
+
+function startSession(){
+  showScreen('screen-session');
+  initAudio();
+  secondsLeft = 300;
+  updateTimer();
+  showAffirmation(0);
+
+  timerInterval = setInterval(()=>{
+    secondsLeft--;
+    updateTimer();
+    if(secondsLeft<=0){ endSession(); }
+  }, 1000);
+
+  breathInterval = setInterval(()=>{
+    breathStep = (breathStep+1)%breathCycle.length;
+    document.getElementById('breath-word').textContent = breathCycle[breathStep];
+  }, 1000);
+
+  // Start whisper mantra after 4s (let binaural settle first)
+  setTimeout(whisperMantra, 4000);
+}
+
+function updateTimer(){
+  const m = Math.floor(secondsLeft/60).toString().padStart(2,'0');
+  const s = (secondsLeft%60).toString().padStart(2,'0');
+  document.getElementById('timer-display').textContent = `${m}:${s}`;
+}
+
+let masterVolume = 0.60;
+let selectedVoice = null;
+let whisperTimer = null;
+
+function loadVoice(){
+  const voices = window.speechSynthesis.getVoices();
+  selectedVoice =
+    voices.find(v => v.lang.startsWith('es') && /paulina|monica|ioana|lucia|elena|female|mujer|jorge/i.test(v.name)) ||
+    voices.find(v => v.lang === 'es-CO') ||
+    voices.find(v => v.lang === 'es-ES') ||
+    voices.find(v => v.lang.startsWith('es')) ||
+    null;
+}
+
+window.speechSynthesis.onvoiceschanged = loadVoice;
+loadVoice();
+
+function changeVolume(val){
+  masterVolume = val / 100;
+  document.getElementById('vol-label').textContent = val + '%';
+  if(audioCtx && masterGain){
+    masterGain.gain.linearRampToValueAtTime(masterVolume * 0.30, audioCtx.currentTime + 0.1);
+  }
+}
+
+function whisperMantra(){
+  if(!window.speechSynthesis || isPaused) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(MANTRA);
+  utter.lang = 'es-CO';
+  utter.rate = 0.60;
+  utter.pitch = 1.1;
+  utter.volume = 0.28;
+  if(selectedVoice) utter.voice = selectedVoice;
+  utter.onend = () => {
+    if(!isPaused) whisperTimer = setTimeout(whisperMantra, 22000);
+  };
+  window.speechSynthesis.speak(utter);
+}
+
+// Keep legacy name for compatibility
+function showAffirmation(idx){ /* no-op — visual removed */ }
+
+function endSession(){
+  clearInterval(timerInterval);
+  clearInterval(breathInterval);
+  clearInterval(affirmInterval);
+  clearTimeout(whisperTimer);
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  stopAudio();
+  showResults();
+}
+
+// ══════════════════════════ RESULTS ══════════════════════════
+function showResults(){
+  showScreen('screen-results');
+
+  // Score calculation (max 50)
+  const score =
+    (answers.mente_cuerpo || 5) +
+    (answers.sintoma_reaccion || 2) +
+    (answers.capacidad_sanar || 5) +
+    (answers.relacion_cuerpo || 2) +
+    (answers.creencia_salud || 5);
+
+  // Animate score
+  let displayed = 0;
+  const scoreEl = document.getElementById('score-number');
+  const interval = setInterval(()=>{
+    displayed++;
+    scoreEl.textContent = displayed;
+    if(displayed >= score) clearInterval(interval);
+  }, 60);
+
+  // Animate conic gradient
+  const circle = document.getElementById('score-circle');
+  const pct = Math.round((score/50)*360);
+  setTimeout(()=>{
+    circle.style.background = `conic-gradient(var(--gold) ${pct}deg, rgba(93,173,226,0.15) ${pct}deg)`;
+  }, 500);
+
+  // Save to localStorage
+  const prev = localStorage.getItem('moraima_belief_score_start');
+  if(!prev) localStorage.setItem('moraima_belief_score_start', score);
+  localStorage.setItem('moraima_belief_score_latest', score);
+  localStorage.setItem('moraima_belief_score_date', new Date().toLocaleDateString('es-CO'));
+
+  // Message
+  const msg = score >= 38 ? 'Tu mente ya está alineada con la salud. Este programa potenciará lo que ya sabes.'
+    : score >= 25 ? 'Tienes una base sólida. MORAIMA21 va a reforzar y expandir esas creencias.'
+    : 'Estás en el lugar correcto. Hay creencias que transformar — y eso es exactamente para lo que estás aquí.';
+  document.getElementById('score-message').textContent = msg;
+
+  // Insights
+  const insights = [];
+  if((answers.mente_cuerpo||0) < 6){
+    insights.push({ icon:'🧠', title:'Conexión mente-cuerpo', text:'La ciencia muestra que el 80% de los diagnósticos están influenciados por el estado mental. Estos 21 días te lo demostrarán.' });
+  }
+  if((answers.sintoma_reaccion||0) <= 2){
+    insights.push({ icon:'💛', title:'Relación con los síntomas', text:'El miedo al síntoma activa inflamación. Aprender a escuchar tu cuerpo es el primer acto de medicina preventiva.' });
+  }
+  if((answers.capacidad_sanar||0) < 6){
+    insights.push({ icon:'✨', title:'Tu capacidad de sanar', text:'El cuerpo humano regenera millones de células al día. La creencia de que puedes sanar activa literalmente ese proceso.' });
+  }
+  if(insights.length === 0){
+    insights.push({ icon:'🌿', title:'Mente alineada', text:'Comienzas desde un lugar de poder. Cada módulo que completes va a profundizar esa conexión contigo misma.' });
+  }
+
+  const container = document.getElementById('insights-container');
+  insights.forEach(ins=>{
+    container.innerHTML += `<div class="insight-card"><div class="icon">${ins.icon}</div><h4>${ins.title}</h4><p>${ins.text}</p></div>`;
+  });
+}
+
+function completeDay(){
+  // Mark day 1 complete in localStorage
+  localStorage.setItem('moraima_day1_complete', new Date().toISOString());
+  alert('¡Día 1 completado! 🎉\n\nTu progreso ha sido guardado.\nMañana: Día 2 — continúa con tu práctica de MENTE.');
+}
+
+// ══════════════════════════ UTILS ══════════════════════════
+function backToSoundSelector(){
+  clearInterval(timerInterval);
+  clearInterval(breathInterval);
+  clearTimeout(whisperTimer);
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  stopAudio();
+  isPaused = false;
+  secondsLeft = 300;
+  showScreen('screen-welcome');
+}
+
+function selectSound(key){
+  selectedSound = key;
+  document.querySelectorAll('.sound-option').forEach(el=>{
+    el.style.background='rgba(255,255,255,0.05)';
+    el.style.border='1.5px solid rgba(255,255,255,0.12)';
+  });
+  const el = document.getElementById('opt-'+key);
+  el.style.background='rgba(93,173,226,0.12)';
+  el.style.border='2px solid var(--sky)';
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  // Update session labels when session starts
+  if(id==='screen-session'){
+    const cfg = SOUNDS[selectedSound];
+    document.getElementById('sound-status').textContent = cfg.statusTxt;
+    document.getElementById('session-sound-label').textContent = cfg.label;
+  }
+}
+</script>
+</body>
+</html>

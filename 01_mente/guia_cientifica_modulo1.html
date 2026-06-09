@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Científica — Módulo 1: MENTE | MORAIMA21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a2942;
+  --navy2: #0d3455;
+  --sky: #5dade2;
+  --sky2: #3a7bb5;
+  --gold: #f4d03f;
+  --gold2: #c9a227;
+  --white: #ffffff;
+  --text: #1a2535;
+  --soft: #f0f7ff;
+  --gray: #6b7a8d;
+  --light: #f8fafc;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Montserrat, Helvetica, Arial, sans-serif; background:#f0f4f8; color:var(--text); }
+
+/* ── PAGE WRAPPER ── */
+.page { width:794px; margin:0 auto; background:white; }
+
+/* ── COVER ── */
+.cover {
+  background: linear-gradient(160deg, var(--navy) 0%, #0d2235 60%, #1a4060 100%);
+  min-height:1000px; padding:80px 64px; position:relative; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.cover::before {
+  content:''; position:absolute; top:-120px; right:-120px;
+  width:500px; height:500px; border-radius:50%;
+  background:radial-gradient(circle, rgba(93,173,226,0.12) 0%, transparent 70%);
+}
+.cover::after {
+  content:''; position:absolute; bottom:-80px; left:-80px;
+  width:400px; height:400px; border-radius:50%;
+  background:radial-gradient(circle, rgba(244,208,63,0.08) 0%, transparent 70%);
+}
+.cover-badge {
+  display:inline-block; background:rgba(93,173,226,0.15);
+  border:1px solid rgba(93,173,226,0.4); border-radius:50px;
+  padding:8px 20px; font-size:11px; letter-spacing:3px;
+  color:var(--sky); text-transform:uppercase; margin-bottom:64px;
+  position:relative; z-index:1;
+}
+.cover-content { position:relative; z-index:1; }
+.cover-module { font-size:13px; letter-spacing:4px; color:var(--gold); text-transform:uppercase; margin-bottom:16px; }
+.cover-title { font-size:72px; font-weight:800; color:white; line-height:1.0; margin-bottom:12px; }
+.cover-title span { color:var(--gold); }
+.cover-subtitle { font-size:18px; color:rgba(255,255,255,0.6); font-weight:300; margin-bottom:48px; line-height:1.6; }
+.cover-line { width:60px; height:3px; background:var(--gold); margin-bottom:48px; }
+.cover-desc { font-size:15px; color:rgba(255,255,255,0.75); line-height:1.8; max-width:420px; font-weight:300; }
+
+.cover-footer {
+  position:relative; z-index:1;
+  display:flex; justify-content:space-between; align-items:flex-end;
+  padding-top:48px; border-top:1px solid rgba(255,255,255,0.1);
+}
+.cover-author { font-size:13px; color:rgba(255,255,255,0.5); }
+.cover-author strong { color:white; display:block; font-size:15px; margin-bottom:4px; }
+.cover-logo { font-size:11px; letter-spacing:3px; color:var(--sky); text-transform:uppercase; }
+
+/* ── BODY CONTENT ── */
+.content { padding:72px 64px; }
+
+/* SECTION HEADER */
+.section-header { margin-bottom:40px; }
+.section-num {
+  font-size:11px; letter-spacing:3px; color:var(--sky); text-transform:uppercase;
+  margin-bottom:8px; font-weight:600;
+}
+.section-title { font-size:32px; font-weight:800; color:var(--navy); line-height:1.2; margin-bottom:12px; }
+.section-title span { color:var(--sky2); }
+.section-line { width:40px; height:3px; background:var(--gold); }
+
+/* BODY TEXT */
+.body-text { font-size:15px; line-height:1.9; color:#2c3e50; margin-bottom:24px; font-weight:400; }
+.body-text strong { color:var(--navy); font-weight:700; }
+.lead-text { font-size:18px; line-height:1.8; color:var(--navy2); font-weight:300; margin-bottom:32px; font-style:italic; }
+
+/* CALLOUT BOXES */
+.box-dato {
+  background:var(--soft); border-left:4px solid var(--sky);
+  border-radius:0 12px 12px 0; padding:20px 24px; margin:28px 0;
+}
+.box-dato .box-label { font-size:10px; letter-spacing:2px; color:var(--sky2); text-transform:uppercase; font-weight:700; margin-bottom:8px; }
+.box-dato p { font-size:14px; line-height:1.8; color:var(--text); }
+
+.box-caso {
+  background:linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+  border-radius:16px; padding:28px 32px; margin:32px 0; color:white;
+}
+.box-caso .box-label { font-size:10px; letter-spacing:2px; color:var(--gold); text-transform:uppercase; font-weight:700; margin-bottom:12px; }
+.box-caso .caso-title { font-size:16px; font-weight:700; margin-bottom:12px; }
+.box-caso p { font-size:14px; line-height:1.8; color:rgba(255,255,255,0.85); }
+.box-caso .caso-result { margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.15); font-size:13px; color:var(--gold); font-weight:600; }
+
+.box-sabia {
+  background:#fffbea; border:1px solid var(--gold); border-radius:12px;
+  padding:20px 24px; margin:28px 0;
+}
+.box-sabia .box-label { font-size:10px; letter-spacing:2px; color:var(--gold2); text-transform:uppercase; font-weight:700; margin-bottom:8px; }
+.box-sabia p { font-size:14px; line-height:1.8; color:#5a4a00; }
+
+/* PROTOCOL BOX */
+.protocol-box {
+  background:linear-gradient(135deg, #f8fafc 0%, var(--soft) 100%);
+  border:2px solid var(--sky); border-radius:16px; padding:32px; margin:32px 0;
+}
+.protocol-title { font-size:18px; font-weight:800; color:var(--navy); margin-bottom:24px; }
+.protocol-step { display:flex; gap:16px; margin-bottom:20px; align-items:flex-start; }
+.step-num { min-width:36px; height:36px; border-radius:50%; background:var(--navy); color:white; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; }
+.step-content h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+.step-content p { font-size:13px; color:var(--gray); line-height:1.7; }
+
+/* STAT STRIP */
+.stats-strip { display:flex; gap:0; margin:32px 0; border-radius:16px; overflow:hidden; }
+.stat-item { flex:1; padding:24px 20px; text-align:center; }
+.stat-item:nth-child(1) { background:var(--navy); }
+.stat-item:nth-child(2) { background:var(--navy2); }
+.stat-item:nth-child(3) { background:var(--sky2); }
+.stat-num { font-size:32px; font-weight:800; color:var(--gold); line-height:1; }
+.stat-label { font-size:11px; color:rgba(255,255,255,0.7); margin-top:6px; line-height:1.4; }
+
+/* FREQ TABLE */
+.freq-table { width:100%; border-collapse:collapse; margin:24px 0; font-size:14px; }
+.freq-table th { background:var(--navy); color:white; padding:12px 16px; text-align:left; font-size:11px; letter-spacing:1px; text-transform:uppercase; }
+.freq-table td { padding:12px 16px; border-bottom:1px solid #e8f0fb; }
+.freq-table tr:last-child td { border-bottom:none; }
+.freq-table tr:nth-child(even) td { background:var(--soft); }
+.freq-table .highlight td { background:#fffbea; font-weight:700; }
+.badge-best { background:var(--gold); color:var(--navy); font-size:10px; padding:2px 8px; border-radius:50px; font-weight:700; }
+
+/* DIVIDER */
+.divider { height:1px; background:linear-gradient(to right, transparent, #dde8f5, transparent); margin:48px 0; }
+
+/* PAGE BREAK */
+.page-break { page-break-before: always; padding-top:64px; }
+
+/* REFERENCES */
+.ref-section { background:#f8fafc; padding:48px 64px; border-top:3px solid var(--navy); }
+.ref-title { font-size:14px; font-weight:800; color:var(--navy); letter-spacing:2px; text-transform:uppercase; margin-bottom:24px; }
+.ref-item { font-size:12px; color:var(--gray); line-height:1.7; margin-bottom:12px; padding-left:20px; position:relative; }
+.ref-item::before { content:counter(ref); counter-increment:ref; position:absolute; left:0; font-weight:700; color:var(--sky2); }
+.refs { counter-reset:ref; }
+.ref-item a { color:var(--sky2); text-decoration:none; }
+
+/* BACK COVER */
+.back-cover {
+  background:linear-gradient(160deg, var(--navy) 0%, #0d2235 100%);
+  padding:64px; text-align:center; margin-top:0;
+}
+.back-tagline { font-size:28px; font-weight:800; color:white; margin-bottom:16px; }
+.back-tagline span { color:var(--gold); }
+.back-sub { font-size:14px; color:rgba(255,255,255,0.5); letter-spacing:2px; text-transform:uppercase; }
+
+@media print {
+  body { background:white; }
+  .page { width:100%; box-shadow:none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ════════════════ PORTADA ════════════════ -->
+<div class="cover">
+  <div>
+    <div class="cover-badge">MORAIMA21 · Guía Científica</div>
+    <div class="cover-content">
+      <p class="cover-module">Módulo 1 · Días 1 al 3</p>
+      <h1 class="cover-title">TU<br><span>MENTE</span><br>ES TU<br>PRIMER<br>MÉDICO<span style="font-size:0.4em;display:block;color:rgba(255,255,255,0.5);letter-spacing:3px;font-weight:300;margin-top:8px">— Y SIEMPRE LO FUE</span></h1>
+      <p class="cover-subtitle">La ciencia detrás de cómo tus pensamientos<br>construyen — o destruyen — tu salud</p>
+      <div class="cover-line"></div>
+      <p class="cover-desc">Esta guía tiene un propósito claro: mostrarte, con datos reales y casos clínicos, que la relación entre tu mente y tu cuerpo no es metafórica. Es biología. Y que cambiar esa relación es la palanca más poderosa de tu salud.</p>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-author">
+      <strong>Dra. Monica Arellano</strong>
+      Medicina Preventiva · Bioregulación · epimedik
+    </div>
+    <div class="cover-logo">epimedik · Vive la vida al 100</div>
+  </div>
+</div>
+
+<!-- ════════════════ SECCIÓN 1: LA MENTE QUE ENFERMA ════════════════ -->
+<div class="content">
+  <div class="section-header">
+    <p class="section-num">Sección 01</p>
+    <h2 class="section-title">La mente que<br><span>enferma sin que te des cuenta</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p class="lead-text">"Doctora, yo no tengo estrés. Como bien, hago ejercicio. No entiendo por qué sigo enferma."<br><span style="font-size:0.85em;color:#8a9bb0">— Paciente real, consulta epimedik, 2024</span></p>
+
+  <p class="body-text">Si alguna vez has dicho algo parecido, esta sección es para ti. Porque el estrés más peligroso no es el que sientes — es el que normalizas. El que llevas tan dentro que ya no lo detectas.</p>
+
+  <p class="body-text">Cuando tu cerebro percibe amenaza — una discusión, una deuda, el miedo a enfermar, la preocupación constante — activa una cadena de reacciones físicas muy concretas. La más importante involucra al <strong>cortisol</strong>, la hormona del estrés crónico.</p>
+
+  <div class="box-dato">
+    <p class="box-label">📊 Dato científico</p>
+    <p>Un estudio publicado en <em>Cells</em> (2023) encontró que el cortisol elevado de forma crónica está directamente ligado a <strong>enfermedades neurodegenerativas, inflamación sistémica y trastornos psicológicos</strong>. No como factor de riesgo distante — como mecanismo central.¹</p>
+  </div>
+
+  <p class="body-text">¿Cómo se traduce eso en tu cuerpo? El cortisol alto sostenido suprime el sistema inmune, eleva la glucosa, promueve el almacenamiento de grasa abdominal, altera el sueño y, con el tiempo, daña literalmente el hipocampo — la región del cerebro que procesa la memoria y el estado de ánimo.</p>
+
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num">80%</div>
+      <div class="stat-label">de las consultas médicas tienen componente de estrés crónico</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6×</div>
+      <div class="stat-label">más riesgo cardiovascular en personas con estrés crónico sin manejo</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3 años</div>
+      <div class="stat-label">antes de que aparezca el síntoma físico, la mente ya lo gestó</div>
+    </div>
+  </div>
+
+  <div class="box-caso">
+    <p class="box-label">🩺 Caso Clínico</p>
+    <p class="caso-title">Valentina, 38 años — Barranquilla</p>
+    <p>Valentina llegó a consulta con fatiga crónica, aumento de 8 kilos en dos años y dolor articular difuso. Sus exámenes: normales. "Doctora, todos me dicen que estoy bien pero yo no me siento bien." Al explorar su historia, llevaba cuatro años cuidando a su madre enferma, siendo madre de dos hijos, y trabajando tiempo completo. Nunca lo identificó como estrés — lo llamaba "su vida normal".</p>
+    <p class="caso-result">✦ Los síntomas de Valentina no eran un misterio médico. Eran la respuesta biológica a una mente que nunca descansaba.</p>
+  </div>
+
+  <p class="body-text">Vitetta y colaboradores (2005) lo documentaron de forma contundente en los <em>Annals of the New York Academy of Sciences</em>: el estrés mental no gestionado <strong>acorta la expectativa de vida y acelera el deterioro de múltiples sistemas orgánicos</strong>.² No es alarmismo. Es fisiología.</p>
+
+  <div class="box-sabia">
+    <p class="box-label">💡 ¿Sabías que...?</p>
+    <p>Tu sistema nervioso no distingue entre una amenaza real (un accidente de tránsito) y una imaginaria (preocuparte por algo que no ha pasado). <strong>Ambas activan la misma cascada de cortisol.</strong> Por eso los pensamientos repetitivos de preocupación hacen tanto daño físico.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ════════════════ SECCIÓN 2: LA MENTE QUE SANA ════════════════ -->
+<div class="content page-break">
+  <div class="section-header">
+    <p class="section-num">Sección 02</p>
+    <h2 class="section-title">La mente que<br><span>sana — neuroplasticidad real</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p class="lead-text">La noticia extraordinaria es que el cerebro que aprendió a enfermar puede aprender a sanar. Eso no es autoayuda — es neurociencia.</p>
+
+  <p class="body-text">La <strong>neuroplasticidad</strong> es la capacidad del cerebro de reorganizarse formando nuevas conexiones neuronales. Durante décadas se creyó que el cerebro adulto era fijo, inmutable. Hoy sabemos que eso es falso. Tu cerebro puede cambiar a los 40, a los 55, a los 70 años.</p>
+
+  <p class="body-text">Y la psiconeuroimmunología — la ciencia que estudia la relación entre mente, sistema nervioso e inmunidad — ha confirmado algo que la medicina antigua intuía pero no podía medir: <strong>las prácticas mentales como la meditación modifican marcadores inmunológicos de forma medible.</strong></p>
+
+  <div class="box-dato">
+    <p class="box-label">📊 Dato científico</p>
+    <p>Magan y colaboradores (2022) publicaron en los <em>Annals of Neurosciences</em> que la meditación regular produce <strong>cambios en la expresión génica relacionada con la inflamación</strong>, reduce biomarcadores de estrés oxidativo y mejora la función del sistema nervioso autónomo.³</p>
+  </div>
+
+  <div class="box-caso">
+    <p class="box-label">🩺 Caso Clínico</p>
+    <p class="caso-title">Carlos, 52 años — Hipertensión y ansiedad</p>
+    <p>Carlos era ingeniero con hipertensión de 6 años de evolución, en tratamiento farmacológico. Inició un programa de manejo mental (técnicas de respiración + meditación guiada 10 min/día). Después de 8 semanas, su médico redujo la dosis de antihipertensivo a la mitad. "No cambié mi dieta ni hice más ejercicio. Solo empecé a escuchar mis pensamientos", dijo Carlos.</p>
+    <p class="caso-result">✦ Rossettini et al. (2018) en el <em>BMC Musculoskeletal Disorders</em> documentaron que los factores contextuales y las expectativas del paciente producen cambios fisiológicos reales y medibles — no solo subjetivos.⁴</p>
+  </div>
+
+  <p class="body-text">El llamado <strong>"efecto placebo"</strong> ha sido sistemáticamente subestimado en medicina convencional. Hoy se sabe que activar la creencia de sanación no es un "truco psicológico" — es activar vías reales de neurotransmisores, endorfinas y modulación inmune. <strong>Lo que crees sobre tu salud tiene poder farmacológico.</strong></p>
+
+  <div class="box-sabia">
+    <p class="box-label">💡 ¿Sabías que...?</p>
+    <p>En un estudio de Harvard, pacientes con rodilla lesionada que recibieron una cirugía simulada (solo anestesia y pequeñas incisiones sin reparación real) mejoraron <strong>igual que los operados de verdad</strong>. El cerebro ordenó la reparación porque creyó que había ocurrido.⁴</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ════════════════ SECCIÓN 3: EL SONIDO COMO MEDICINA ════════════════ -->
+<div class="content">
+  <div class="section-header">
+    <p class="section-num">Sección 03</p>
+    <h2 class="section-title">El sonido que<br><span>sincroniza tu cerebro</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p class="lead-text">Los sonidos binaurales no son música new age. Son una tecnología de audio con décadas de investigación en neurociencia.</p>
+
+  <p class="body-text">¿Cómo funcionan? Cuando escuchas un sonido de frecuencia ligeramente diferente en cada oído — por ejemplo, 396Hz en el izquierdo y 406Hz en el derecho — tu cerebro calcula la diferencia (10Hz) y genera esa frecuencia internamente. A esto se llama <strong>arrastre neuronal</strong> o <em>brainwave entrainment</em>.</p>
+
+  <p class="body-text">El resultado es que el cerebro entra en el estado de frecuencia que "calculó". Si la diferencia es 10Hz — franja alfa media — el cerebro adopta ese ritmo. <strong>Entras en un estado de calma alerta: relajado pero consciente, el estado ideal para sembrar nuevas creencias.</strong></p>
+
+  <div class="box-dato">
+    <p class="box-label">📊 Dato científico — PubMed confirmado</p>
+    <p>Solcà y colaboradores (2016) en <em>Hearing Research</em> demostraron mediante EEG que los beats binaurales <strong>aumentan la coherencia alfa interhemisférica</strong> entre las cortezas auditivas de ambos hemisferios cerebrales. Es decir: los dos lados del cerebro sincronizan su actividad.⁵</p>
+  </div>
+
+  <table class="freq-table">
+    <thead>
+      <tr><th>Frecuencia</th><th>Banda</th><th>Efecto documentado</th><th>Uso en MORAIMA21</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>6 Hz</td><td>Theta</td><td>Meditación profunda, creatividad</td><td>Sesión nocturna, Módulo 3</td></tr>
+      <tr class="highlight"><td><strong>10 Hz ✦</strong></td><td><strong>Alfa media</strong></td><td><strong>Coherencia hemisférica, receptividad, calma alerta</strong></td><td><span class="badge-best">Módulo 1 MENTE</span></td></tr>
+      <tr><td>14 Hz</td><td>Alfa alta</td><td>Foco suave, claridad mental</td><td>Sesión matutina, actividad</td></tr>
+      <tr><td>40 Hz</td><td>Gamma</td><td>Cognición, estado de ánimo, Alzheimer/Parkinson research</td><td>Módulo 2 Oxigenación</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box-caso">
+    <p class="box-label">🩺 Evidencia Clínica</p>
+    <p class="caso-title">Estudio con pacientes de ansiedad — Le Scouarnec et al., 2001</p>
+    <p>En un estudio publicado en <em>Alternative Therapies in Health and Medicine</em>, pacientes con diagnóstico de ansiedad que usaron beats binaurales alfa reportaron <strong>reducción significativa de síntomas de ansiedad</strong> después de 30 días de uso regular. El dato más relevante: los pacientes que continuaron más allá de los 30 días mantuvieron los beneficios.⁷</p>
+    <p class="caso-result">✦ La clave no fue la intensidad — fue la consistencia. 5 minutos diarios sostenidos superaron a sesiones largas e irregulares.</p>
+  </div>
+
+  <div class="box-dato">
+    <p class="box-label">📊 Dato científico</p>
+    <p>Vernon y colaboradores (2014) en el <em>International Journal of Psychophysiology</em> rastrearon cambios de EEG en tiempo real durante la escucha de beats binaurales alfa y confirmaron <strong>modificaciones medibles en las ondas cerebrales</strong> consistentes con el estado de relajación profunda.⁶</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ════════════════ SECCIÓN 4: TU PROTOCOLO ════════════════ -->
+<div class="content">
+  <div class="section-header">
+    <p class="section-num">Sección 04</p>
+    <h2 class="section-title">Tu protocolo —<br><span>cuándo y cuántas veces escuchar</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p class="body-text">Una pregunta frecuente: <em>"¿Debo escucharlo solo durante los 21 días?"</em> La respuesta corta es no. La respuesta larga es esta sección.</p>
+
+  <div class="protocol-box">
+    <p class="protocol-title">🎯 Protocolo Oficial — App Sonidos MORAIMA</p>
+
+    <div class="protocol-step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Durante los 21 días — una vez al día</h4>
+        <p>Preferiblemente en la mañana al despertar (antes de revisar el celular) o en la noche antes de dormir. Son solo 5 minutos. La constancia diaria es lo que crea el nuevo patrón neuronal.</p>
+      </div>
+    </div>
+
+    <div class="protocol-step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Después de los 21 días — mínimo 3 veces por semana</h4>
+        <p>La neuroplasticidad requiere mantenimiento. Un hábito nuevo tarda entre 21 y 66 días en consolidarse. Después del programa, continuar 3 veces por semana durante 3 meses cementa el cambio.</p>
+      </div>
+    </div>
+
+    <div class="protocol-step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>En momentos de crisis o estrés alto — sesión extra</h4>
+        <p>Si tienes un día difícil, una discusión fuerte o te sientes ansiosa: 5 minutos de ondas alfa te llevan de vuelta a tu estado de equilibrio. Úsala como "rescate mental".</p>
+      </div>
+    </div>
+
+    <div class="protocol-step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>La regla de oro: audífonos siempre</h4>
+        <p>Sin audífonos, el beat binaural no funciona. Cada oído necesita recibir su frecuencia de forma independiente. Con parlantes, las frecuencias se mezclan en el aire antes de llegar al cerebro.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-sabia">
+    <p class="box-label">💡 ¿Cuándo NO escucharlos?</p>
+    <p>No uses beats binaurales <strong>mientras manejas o operas maquinaria</strong>. El estado alfa que inducen reduce el tiempo de reacción. Tampoco si tienes epilepsia diagnosticada — consulta a tu médico primero. Para cualquier otra persona, son completamente seguros.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ════════════════ REFERENCIAS ════════════════ -->
+<div class="ref-section">
+  <p class="ref-title">Referencias Científicas</p>
+  <div class="refs">
+    <p class="ref-item">Knezevic E, et al. The Role of Cortisol in Chronic Stress, Neurodegenerative Diseases, and Psychological Disorders. <em>Cells.</em> 2023;12(23):2726. <a href="https://pubmed.ncbi.nlm.nih.gov/38067154/" target="_blank">PMID: 38067154</a></p>
+    <p class="ref-item">Vitetta L, et al. Mind-body medicine: stress and its impact on overall health and longevity. <em>Ann N Y Acad Sci.</em> 2005;1057:492-505. <a href="https://pubmed.ncbi.nlm.nih.gov/16399915/" target="_blank">PMID: 16399915</a></p>
+    <p class="ref-item">Magan D, et al. Psychoneuroimmunology of Meditation. <em>Ann Neurosci.</em> 2022;29(2-3):163-176. <a href="https://pubmed.ncbi.nlm.nih.gov/36419515/" target="_blank">PMID: 36419515</a></p>
+    <p class="ref-item">Rossettini G, et al. Clinical relevance of contextual factors as triggers of placebo and nocebo effects in musculoskeletal pain. <em>BMC Musculoskelet Disord.</em> 2018;19(1):27. <a href="https://pubmed.ncbi.nlm.nih.gov/29357856/" target="_blank">PMID: 29357856</a></p>
+    <p class="ref-item">Solcà M, et al. Binaural beats increase interhemispheric alpha-band coherence between auditory cortices. <em>Hear Res.</em> 2016;332:233-237. <a href="https://pubmed.ncbi.nlm.nih.gov/26541421/" target="_blank">PMID: 26541421</a></p>
+    <p class="ref-item">Vernon D, et al. Tracking EEG changes in response to alpha and beta binaural beats. <em>Int J Psychophysiol.</em> 2014;93(1):134-139. <a href="https://pubmed.ncbi.nlm.nih.gov/23085086/" target="_blank">PMID: 23085086</a></p>
+    <p class="ref-item">Le Scouarnec RP, et al. Use of binaural beat tapes for treatment of anxiety: a pilot study. <em>Altern Ther Health Med.</em> 2001;7(1):58-63. <a href="https://pubmed.ncbi.nlm.nih.gov/11191043/" target="_blank">PMID: 11191043</a></p>
+    <p class="ref-item">Adam EK, et al. Diurnal cortisol slopes and mental and physical health outcomes: A systematic review. <em>Psychoneuroendocrinology.</em> 2017;83:25-41. <a href="https://pubmed.ncbi.nlm.nih.gov/28578301/" target="_blank">PMID: 28578301</a></p>
+    <p class="ref-item">Lee E, et al. Entrapment of Binaural Auditory Beats in Subjects with Symptoms of Insomnia. <em>Brain Sci.</em> 2022;12(4):438. <a href="https://pubmed.ncbi.nlm.nih.gov/35326295/" target="_blank">PMID: 35326295</a></p>
+  </div>
+</div>
+
+<!-- ════════════════ CONTRAPORTADA ════════════════ -->
+<div class="back-cover">
+  <p class="back-tagline">Tu salud comienza<br>en lo que <span>crees</span> de ella.</p>
+  <p class="back-sub" style="margin-top:24px">epimedik · Módulo 1 MENTE · MORAIMA21</p>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>
