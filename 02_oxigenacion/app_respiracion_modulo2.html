@@ -6,233 +6,192 @@
 <title>Respiración Consciente — MORAIMA 21</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0a2942;
-    --sky: #5dade2;
-    --gold: #f4d03f;
-    --white: #ffffff;
-    --light: #e8f4fd;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --navy:#0a2942; --sky:#5dade2; --gold:#f4d03f; --white:#ffffff; }
+  * { box-sizing:border-box; margin:0; padding:0; }
   body {
-    font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(145deg, #0a2942 0%, #0d3a5c 60%, #0a2942 100%);
-    min-height: 100vh;
-    color: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
+    font-family:'Montserrat',sans-serif;
+    background:linear-gradient(145deg,#0a2942 0%,#0d3a5c 60%,#0a2942 100%);
+    min-height:100vh; color:var(--white);
+    display:flex; align-items:center; justify-content:center; padding:16px;
   }
 
-  /* ── SCREENS ── */
-  .screen { display: none; width: 100%; max-width: 440px; }
-  .screen.active { display: flex; flex-direction: column; align-items: center; }
+  .screen { display:none; width:100%; max-width:440px; }
+  .screen.active { display:flex; flex-direction:column; align-items:center; }
 
-  /* ── HEADER ── */
-  .logo-bar {
-    font-size: 10px; letter-spacing: 3px; color: var(--gold);
-    text-transform: uppercase; margin-bottom: 6px; text-align: center;
-  }
+  .logo-bar { font-size:10px; letter-spacing:3px; color:var(--gold); text-transform:uppercase; margin-bottom:6px; text-align:center; }
   .module-tag {
-    background: rgba(93,173,226,0.18); border: 1px solid rgba(93,173,226,0.35);
-    border-radius: 20px; padding: 4px 14px; font-size: 10px;
-    letter-spacing: 2px; color: var(--sky); text-transform: uppercase;
-    margin-bottom: 24px;
+    background:rgba(93,173,226,0.18); border:1px solid rgba(93,173,226,0.35);
+    border-radius:20px; padding:4px 14px; font-size:10px;
+    letter-spacing:2px; color:var(--sky); text-transform:uppercase; margin-bottom:24px;
   }
 
-  /* ── TECHNIQUE CARDS ── */
-  h1 {
-    font-size: 22px; font-weight: 800; text-align: center;
-    line-height: 1.3; margin-bottom: 6px;
-  }
-  .subtitle {
-    font-size: 12px; color: rgba(255,255,255,0.6); text-align: center;
-    margin-bottom: 28px; letter-spacing: 1px;
-  }
+  h1 { font-size:22px; font-weight:800; text-align:center; line-height:1.3; margin-bottom:6px; }
+  .subtitle { font-size:12px; color:rgba(255,255,255,0.6); text-align:center; margin-bottom:28px; letter-spacing:1px; }
 
-  .technique-grid { display: flex; flex-direction: column; gap: 14px; width: 100%; }
-
+  /* TECHNIQUE CARDS */
+  .technique-grid { display:flex; flex-direction:column; gap:14px; width:100%; }
   .technique-card {
-    background: rgba(255,255,255,0.06);
-    border: 2px solid rgba(93,173,226,0.2);
-    border-radius: 18px; padding: 18px 20px;
-    cursor: pointer; transition: all 0.25s ease;
-    display: flex; align-items: center; gap: 16px;
+    background:rgba(255,255,255,0.06); border:2px solid rgba(93,173,226,0.2);
+    border-radius:18px; padding:18px 20px; cursor:pointer; transition:all 0.25s;
+    display:flex; align-items:center; gap:16px;
   }
-  .technique-card:hover { background: rgba(93,173,226,0.12); border-color: var(--sky); }
-  .technique-card.selected {
-    border-color: var(--gold); background: rgba(244,208,63,0.1);
-  }
-
-  .tc-icon {
-    width: 52px; height: 52px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0;
-  }
-  .tc-icon.abdominal { background: rgba(93,173,226,0.2); }
-  .tc-icon.coherente { background: rgba(244,208,63,0.15); }
-  .tc-icon.cuatro78  { background: rgba(93,226,140,0.15); }
-
-  .tc-info { flex: 1; }
-  .tc-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-  .tc-benefit { font-size: 11px; color: rgba(255,255,255,0.55); }
-  .tc-tag {
-    font-size: 9px; background: rgba(93,173,226,0.2);
-    border-radius: 10px; padding: 2px 8px; color: var(--sky);
-    letter-spacing: 1px; margin-top: 5px; display: inline-block;
-  }
-  .tc-tag.gold { background: rgba(244,208,63,0.18); color: var(--gold); }
-  .tc-tag.green { background: rgba(93,226,140,0.18); color: #5de28c; }
+  .technique-card:hover { background:rgba(93,173,226,0.12); border-color:var(--sky); }
+  .technique-card.selected { border-color:var(--gold); background:rgba(244,208,63,0.1); }
+  .tc-icon { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+  .tc-icon.abdominal { background:rgba(93,173,226,0.2); }
+  .tc-icon.coherente  { background:rgba(244,208,63,0.15); }
+  .tc-icon.cuatro78   { background:rgba(93,226,140,0.15); }
+  .tc-info { flex:1; }
+  .tc-name { font-size:13px; font-weight:700; margin-bottom:2px; }
+  .tc-benefit { font-size:11px; color:rgba(255,255,255,0.55); }
+  .tc-tag { font-size:9px; background:rgba(93,173,226,0.2); border-radius:10px; padding:2px 8px; color:var(--sky); letter-spacing:1px; margin-top:5px; display:inline-block; }
+  .tc-tag.gold  { background:rgba(244,208,63,0.18); color:var(--gold); }
+  .tc-tag.green { background:rgba(93,226,140,0.18); color:#5de28c; }
 
   .btn-primary {
-    width: 100%; padding: 16px; border-radius: 50px;
-    background: linear-gradient(135deg, var(--sky), #3a8fc7);
-    color: var(--white); font-family: 'Montserrat', sans-serif;
-    font-size: 14px; font-weight: 700; letter-spacing: 1px;
-    border: none; cursor: pointer; margin-top: 24px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    width:100%; padding:16px; border-radius:50px;
+    background:linear-gradient(135deg,var(--sky),#3a8fc7);
+    color:var(--white); font-family:'Montserrat',sans-serif;
+    font-size:14px; font-weight:700; letter-spacing:1px;
+    border:none; cursor:pointer; margin-top:24px; transition:transform 0.15s,box-shadow 0.15s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(93,173,226,0.4); }
-  .btn-primary:disabled { opacity: 0.35; cursor: default; transform: none; }
-
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(93,173,226,0.4); }
+  .btn-primary:disabled { opacity:0.35; cursor:default; transform:none; }
   .btn-secondary {
-    background: transparent; border: 1.5px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.6); font-family: 'Montserrat', sans-serif;
-    font-size: 12px; padding: 10px 22px; border-radius: 50px;
-    cursor: pointer; margin-top: 12px; transition: all 0.2s;
+    background:transparent; border:1.5px solid rgba(255,255,255,0.2);
+    color:rgba(255,255,255,0.6); font-family:'Montserrat',sans-serif;
+    font-size:12px; padding:10px 22px; border-radius:50px; cursor:pointer; margin-top:12px; transition:all 0.2s;
   }
-  .btn-secondary:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+  .btn-secondary:hover { border-color:rgba(255,255,255,0.5); color:var(--white); }
+  .btn-back { background:transparent; border:none; color:rgba(255,255,255,0.45); font-family:'Montserrat',sans-serif; font-size:12px; cursor:pointer; padding:8px 16px; margin-top:4px; transition:color 0.2s; }
+  .btn-back:hover { color:rgba(255,255,255,0.8); }
 
-  /* ── BREATHING SCREEN ── */
-  .session-header { text-align: center; margin-bottom: 28px; width: 100%; }
-  .session-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-  .session-subtitle { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 1px; }
+  /* INSTRUCTIONS */
+  .science-pill { background:rgba(244,208,63,0.1); border:1px solid rgba(244,208,63,0.25); border-radius:20px; padding:8px 16px; font-size:10px; color:rgba(244,208,63,0.85); text-align:center; margin-bottom:20px; max-width:320px; line-height:1.5; }
+  .instr-header { font-size:13px; font-weight:700; margin-bottom:14px; text-align:center; }
+  .phase-instruction { display:flex; align-items:center; gap:14px; background:rgba(255,255,255,0.05); border-radius:14px; padding:14px 16px; margin-bottom:10px; width:100%; }
+  .pi-dot { width:36px; height:36px; border-radius:50%; background:rgba(93,173,226,0.2); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .pi-text { font-size:12px; line-height:1.5; color:rgba(255,255,255,0.8); }
+  .pi-time { font-weight:700; color:var(--gold); }
+  .breath-stats { display:flex; gap:24px; margin-bottom:24px; justify-content:center; }
+  .stat-block { text-align:center; }
+  .stat-val { font-size:22px; font-weight:700; color:var(--gold); }
+  .stat-label { font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:1px; }
 
-  /* Breathing circle */
-  .breath-container {
-    position: relative; display: flex; align-items: center;
-    justify-content: center; margin: 10px 0 32px;
+  /* SESSION */
+  .session-header { text-align:center; margin-bottom:20px; width:100%; }
+  .session-title { font-size:18px; font-weight:700; margin-bottom:4px; }
+  .session-subtitle { font-size:11px; color:rgba(255,255,255,0.5); letter-spacing:1px; }
+
+  /* COUNTDOWN OVERLAY */
+  #countdown-overlay {
+    position:fixed; inset:0; background:rgba(10,41,66,0.96);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    z-index:100;
   }
-  .breath-ring {
-    position: absolute; border-radius: 50%;
-    animation: none;
+  #countdown-overlay.hidden { display:none; }
+  .cd-label { font-size:13px; letter-spacing:3px; color:var(--sky); text-transform:uppercase; margin-bottom:16px; }
+  .cd-number {
+    font-size:96px; font-weight:800; color:var(--gold);
+    line-height:1; transition:transform 0.1s ease;
   }
-  .ring-outer {
-    width: 260px; height: 260px;
-    border: 1.5px solid rgba(93,173,226,0.15);
-  }
-  .ring-mid {
-    width: 220px; height: 220px;
-    border: 1.5px solid rgba(93,173,226,0.25);
-  }
+  .cd-number.pulse { transform:scale(1.1); }
+  .cd-hint { font-size:11px; color:rgba(255,255,255,0.4); margin-top:20px; letter-spacing:1px; }
+
+  /* BREATHING CIRCLE */
+  .breath-container { position:relative; display:flex; align-items:center; justify-content:center; margin:10px 0 28px; }
+  .breath-ring { position:absolute; border-radius:50%; }
+  .ring-outer { width:260px; height:260px; border:1.5px solid rgba(93,173,226,0.15); }
+  .ring-mid   { width:220px; height:220px; border:1.5px solid rgba(93,173,226,0.25); }
   .breath-circle {
-    width: 160px; height: 160px; border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, rgba(93,173,226,0.55), rgba(10,41,66,0.8));
-    border: 2.5px solid rgba(93,173,226,0.5);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    transition: transform 0s linear;
-    position: relative; z-index: 2;
-    box-shadow: 0 0 40px rgba(93,173,226,0.25);
+    width:160px; height:160px; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,rgba(93,173,226,0.55),rgba(10,41,66,0.8));
+    border:2.5px solid rgba(93,173,226,0.5);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    position:relative; z-index:2; box-shadow:0 0 40px rgba(93,173,226,0.25);
   }
-  .breath-word {
-    font-size: 15px; font-weight: 700; letter-spacing: 2px;
-    color: var(--white); text-transform: uppercase;
-  }
-  .breath-count {
-    font-size: 36px; font-weight: 300; color: var(--gold);
-    line-height: 1; margin-top: 4px;
-  }
+  .breath-word  { font-size:15px; font-weight:700; letter-spacing:2px; color:var(--white); text-transform:uppercase; }
+  .breath-count { font-size:36px; font-weight:300; color:var(--gold); line-height:1; margin-top:4px; }
 
-  .phase-bar {
-    width: 100%; max-width: 320px;
-    height: 5px; background: rgba(255,255,255,0.1);
-    border-radius: 10px; overflow: hidden; margin-bottom: 24px;
-  }
-  .phase-fill {
-    height: 100%; background: var(--sky);
-    border-radius: 10px; width: 0%;
-    transition: width 1s linear;
-  }
+  .phase-bar { width:100%; max-width:320px; height:5px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; margin-bottom:20px; }
+  .phase-fill { height:100%; background:var(--sky); border-radius:10px; width:0%; transition:width 1s linear; }
 
-  .breath-stats {
-    display: flex; gap: 24px; margin-bottom: 24px; justify-content: center;
+  /* CONTROLS ROW */
+  .controls-row {
+    display:flex; align-items:center; justify-content:center; gap:16px;
+    margin-bottom:20px; width:100%;
   }
-  .stat-block { text-align: center; }
-  .stat-val { font-size: 22px; font-weight: 700; color: var(--gold); }
-  .stat-label { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 1px; }
-
-  .btn-back {
-    background: transparent; border: none; color: rgba(255,255,255,0.45);
-    font-family: 'Montserrat', sans-serif; font-size: 12px;
-    cursor: pointer; padding: 8px 16px; margin-top: 4px;
-    transition: color 0.2s;
+  .ctrl-btn {
+    width:52px; height:52px; border-radius:50%;
+    border:2px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.06);
+    color:var(--white); font-size:20px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s; position:relative;
   }
-  .btn-back:hover { color: rgba(255,255,255,0.8); }
+  .ctrl-btn:hover { background:rgba(93,173,226,0.2); border-color:var(--sky); }
+  .ctrl-btn.pause-active { background:rgba(244,208,63,0.15); border-color:var(--gold); }
 
-  /* Science tooltip */
-  .science-pill {
-    background: rgba(244,208,63,0.1); border: 1px solid rgba(244,208,63,0.25);
-    border-radius: 20px; padding: 8px 16px;
-    font-size: 10px; color: rgba(244,208,63,0.85);
-    text-align: center; margin-bottom: 20px; max-width: 320px;
-    line-height: 1.5;
+  /* VOLUME PANEL */
+  .volume-wrap { width:100%; max-width:300px; position:relative; margin-bottom:4px; }
+  .volume-panel {
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12);
+    border-radius:30px; padding:10px 20px;
+    display:flex; align-items:center; gap:10px;
+    transition:all 0.2s;
   }
+  .volume-panel.hidden { display:none; }
+  .vol-icon { font-size:16px; flex-shrink:0; }
+  #volume-slider {
+    flex:1; -webkit-appearance:none; appearance:none;
+    height:4px; border-radius:4px; background:rgba(255,255,255,0.2); outline:none; cursor:pointer;
+  }
+  #volume-slider::-webkit-slider-thumb {
+    -webkit-appearance:none; width:18px; height:18px;
+    border-radius:50%; background:var(--sky); cursor:pointer;
+  }
+  .vol-pct { font-size:11px; color:rgba(255,255,255,0.5); min-width:32px; text-align:right; }
 
-  /* ── RESULTS ── */
+  /* PAUSED OVERLAY on circle */
+  .paused-badge {
+    position:absolute; z-index:10;
+    background:rgba(244,208,63,0.9); color:var(--navy);
+    font-size:11px; font-weight:700; letter-spacing:2px;
+    padding:4px 14px; border-radius:20px; top:-14px;
+    display:none;
+  }
+  .paused-badge.visible { display:block; }
+
+  /* RESULTS */
   .result-circle {
-    width: 130px; height: 130px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(93,173,226,0.3), rgba(10,41,66,0.9));
-    border: 3px solid var(--sky);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    margin: 16px auto 28px;
-    box-shadow: 0 0 40px rgba(93,173,226,0.3);
+    width:130px; height:130px; border-radius:50%;
+    background:radial-gradient(circle,rgba(93,173,226,0.3),rgba(10,41,66,0.9));
+    border:3px solid var(--sky); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; margin:16px auto 28px;
+    box-shadow:0 0 40px rgba(93,173,226,0.3);
   }
-  .result-emoji { font-size: 36px; margin-bottom: 4px; }
-  .result-label { font-size: 9px; color: rgba(255,255,255,0.6); letter-spacing: 2px; }
-
-  .result-stats {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 12px; width: 100%; margin-bottom: 24px;
-  }
-  .result-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 14px; padding: 14px; text-align: center;
-  }
-  .result-val { font-size: 24px; font-weight: 700; color: var(--gold); }
-  .result-unit { font-size: 10px; color: rgba(255,255,255,0.5); }
-  .result-desc { font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 4px; }
-
-  .benefit-box {
-    background: rgba(93,173,226,0.1); border: 1px solid rgba(93,173,226,0.2);
-    border-radius: 14px; padding: 16px; margin-bottom: 16px; width: 100%;
-  }
-  .benefit-box h3 { font-size: 11px; color: var(--sky); letter-spacing: 2px; margin-bottom: 8px; }
-  .benefit-box p { font-size: 12px; line-height: 1.6; color: rgba(255,255,255,0.75); }
-
-  /* ── INSTRUCTIONS SCREEN ── */
-  .instr-header { font-size: 13px; font-weight: 700; margin-bottom: 14px; text-align: center; }
-  .phase-instruction {
-    display: flex; align-items: center; gap: 14px;
-    background: rgba(255,255,255,0.05); border-radius: 14px;
-    padding: 14px 16px; margin-bottom: 10px; width: 100%;
-  }
-  .pi-dot {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(93,173,226,0.2); display: flex;
-    align-items: center; justify-content: center;
-    font-size: 16px; flex-shrink: 0;
-  }
-  .pi-text { font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.8); }
-  .pi-time { font-weight: 700; color: var(--gold); }
+  .result-emoji { font-size:36px; margin-bottom:4px; }
+  .result-label { font-size:9px; color:rgba(255,255,255,0.6); letter-spacing:2px; }
+  .result-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; margin-bottom:24px; }
+  .result-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:14px; text-align:center; }
+  .result-val { font-size:24px; font-weight:700; color:var(--gold); }
+  .result-unit { font-size:10px; color:rgba(255,255,255,0.5); }
+  .result-desc { font-size:10px; color:rgba(255,255,255,0.55); margin-top:4px; }
+  .benefit-box { background:rgba(93,173,226,0.1); border:1px solid rgba(93,173,226,0.2); border-radius:14px; padding:16px; margin-bottom:16px; width:100%; }
+  .benefit-box h3 { font-size:11px; color:var(--sky); letter-spacing:2px; margin-bottom:8px; }
+  .benefit-box p { font-size:12px; line-height:1.6; color:rgba(255,255,255,0.75); }
 </style>
 </head>
 <body>
 
-<!-- ══ SCREEN 1: CHOOSE TECHNIQUE ══ -->
+<!-- ══ COUNTDOWN OVERLAY ══ -->
+<div id="countdown-overlay" class="hidden">
+  <div class="cd-label">Prepárate para respirar</div>
+  <div class="cd-number" id="cd-number">5</div>
+  <div class="cd-hint">Cierra los ojos · Pon los audífonos · Relaja los hombros</div>
+</div>
+
+<!-- ══ SCREEN 1: CHOOSE ══ -->
 <div class="screen active" id="screen-choose">
   <div class="logo-bar">epimedik · MORAIMA 21</div>
   <div class="module-tag">Módulo 2 · Oxigenación</div>
@@ -240,7 +199,6 @@
   <p class="subtitle">Elige tu técnica para hoy</p>
 
   <div class="technique-grid">
-
     <div class="technique-card" id="card-abdominal" onclick="selectTechnique('abdominal')">
       <div class="tc-icon abdominal">🫁</div>
       <div class="tc-info">
@@ -249,7 +207,6 @@
         <span class="tc-tag">🌅 Cualquier momento</span>
       </div>
     </div>
-
     <div class="technique-card" id="card-coherente" onclick="selectTechnique('coherente')">
       <div class="tc-icon coherente">💛</div>
       <div class="tc-info">
@@ -258,7 +215,6 @@
         <span class="tc-tag gold">🌿 Para el día · enfoque</span>
       </div>
     </div>
-
     <div class="technique-card" id="card-cuatro78" onclick="selectTechnique('cuatro78')">
       <div class="tc-icon cuatro78">🌙</div>
       <div class="tc-info">
@@ -267,7 +223,6 @@
         <span class="tc-tag green">🌙 Para la noche · descanso</span>
       </div>
     </div>
-
   </div>
 
   <button class="btn-primary" id="btn-start-choose" onclick="goToInstructions()" disabled>
@@ -278,25 +233,15 @@
 <!-- ══ SCREEN 2: INSTRUCTIONS ══ -->
 <div class="screen" id="screen-instructions">
   <div class="logo-bar">epimedik · MORAIMA 21</div>
-  <div class="module-tag" id="instr-tag">Módulo 2 · Oxigenación</div>
-
+  <div class="module-tag">Módulo 2 · Oxigenación</div>
   <div class="science-pill" id="instr-science"></div>
-
   <div class="instr-header" id="instr-title"></div>
   <div id="instr-phases"></div>
-
-  <div class="breath-stats" style="margin-top: 16px;">
-    <div class="stat-block">
-      <div class="stat-val" id="instr-rounds">5</div>
-      <div class="stat-label">RONDAS</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-val" id="instr-duration">~5</div>
-      <div class="stat-label">MINUTOS</div>
-    </div>
+  <div class="breath-stats" style="margin-top:16px;">
+    <div class="stat-block"><div class="stat-val" id="instr-rounds">—</div><div class="stat-label">RONDAS</div></div>
+    <div class="stat-block"><div class="stat-val" id="instr-duration">—</div><div class="stat-label">MINUTOS</div></div>
   </div>
-
-  <button class="btn-primary" onclick="startSession()">Comenzar sesión</button>
+  <button class="btn-primary" onclick="beginCountdown()">Comenzar sesión</button>
   <button class="btn-back" onclick="backToChoose()">← Cambiar técnica</button>
 </div>
 
@@ -311,8 +256,9 @@
   <div class="breath-container">
     <div class="breath-ring ring-outer"></div>
     <div class="breath-ring ring-mid"></div>
+    <div class="paused-badge" id="paused-badge">EN PAUSA</div>
     <div class="breath-circle" id="breath-circle">
-      <div class="breath-word" id="breath-word">—</div>
+      <div class="breath-word"  id="breath-word">—</div>
       <div class="breath-count" id="breath-count">—</div>
     </div>
   </div>
@@ -320,150 +266,191 @@
   <div class="phase-bar"><div class="phase-fill" id="phase-fill"></div></div>
 
   <div class="breath-stats">
-    <div class="stat-block">
-      <div class="stat-val" id="rounds-done">0</div>
-      <div class="stat-label">RONDAS</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-val" id="time-elapsed">0:00</div>
-      <div class="stat-label">TIEMPO</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-val" id="rounds-total">—</div>
-      <div class="stat-label">META</div>
+    <div class="stat-block"><div class="stat-val" id="rounds-done">0</div><div class="stat-label">RONDAS</div></div>
+    <div class="stat-block"><div class="stat-val" id="time-elapsed">0:00</div><div class="stat-label">TIEMPO</div></div>
+    <div class="stat-block"><div class="stat-val" id="rounds-total">—</div><div class="stat-label">META</div></div>
+  </div>
+
+  <!-- Controls: Restart · Pause · Volume -->
+  <div class="controls-row">
+    <button class="ctrl-btn" id="btn-restart" onclick="restartSession()" title="Reiniciar">↺</button>
+    <button class="ctrl-btn" id="btn-pause"   onclick="togglePause()"   title="Pausa / Continuar">⏸</button>
+    <button class="ctrl-btn" id="btn-vol"      onclick="toggleVolumePanel()" title="Volumen">🔊</button>
+  </div>
+
+  <!-- Volume panel -->
+  <div class="volume-wrap">
+    <div class="volume-panel hidden" id="volume-panel">
+      <span class="vol-icon">🔈</span>
+      <input type="range" id="volume-slider" min="0" max="100" value="80" oninput="setMasterVolume(this.value)">
+      <span class="vol-pct" id="vol-pct">80%</span>
     </div>
   </div>
 
-  <button class="btn-back" onclick="stopSession()">← Cambiar técnica</button>
+  <button class="btn-back" onclick="stopAndBack()">← Cambiar técnica</button>
 </div>
 
 <!-- ══ SCREEN 4: RESULTS ══ -->
 <div class="screen" id="screen-results">
   <div class="logo-bar">epimedik · MORAIMA 21</div>
   <div class="module-tag">¡Sesión completada!</div>
-
   <div class="result-circle">
     <div class="result-emoji">🌬️</div>
     <div class="result-label">OXIGENACIÓN</div>
   </div>
-
   <div class="result-stats">
-    <div class="result-card">
-      <div class="result-val" id="res-rondas">—</div>
-      <div class="result-unit">rondas</div>
-      <div class="result-desc">respiraciones completas</div>
-    </div>
-    <div class="result-card">
-      <div class="result-val" id="res-tiempo">—</div>
-      <div class="result-unit">minutos</div>
-      <div class="result-desc">de oxigenación activa</div>
-    </div>
-    <div class="result-card">
-      <div class="result-val" id="res-tecnica">—</div>
-      <div class="result-unit">técnica</div>
-      <div class="result-desc">practicada hoy</div>
-    </div>
-    <div class="result-card">
-      <div class="result-val" id="res-streak">—</div>
-      <div class="result-unit">días</div>
-      <div class="result-desc">racha acumulada</div>
-    </div>
+    <div class="result-card"><div class="result-val" id="res-rondas">—</div><div class="result-unit">rondas</div><div class="result-desc">respiraciones completas</div></div>
+    <div class="result-card"><div class="result-val" id="res-tiempo">—</div><div class="result-unit">minutos</div><div class="result-desc">de oxigenación activa</div></div>
+    <div class="result-card"><div class="result-val" id="res-tecnica">—</div><div class="result-unit">técnica</div><div class="result-desc">practicada hoy</div></div>
+    <div class="result-card"><div class="result-val" id="res-streak">—</div><div class="result-unit">días</div><div class="result-desc">racha acumulada</div></div>
   </div>
-
   <div class="benefit-box" id="res-benefit-box"></div>
-
-  <button class="btn-primary" onclick="resetApp()">Hacer otra técnica</button>
+  <button class="btn-primary" onclick="resetApp()">Hacer otra sesión</button>
   <button class="btn-secondary" onclick="backToChoose()">Elegir técnica diferente</button>
-
-  <p style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:20px;text-align:center;letter-spacing:1px;">
-    Vive la vida al cien · epimedik
-  </p>
+  <p style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:20px;text-align:center;letter-spacing:1px;">Vive la vida al cien · epimedik</p>
 </div>
 
 <script>
-// ── TECHNIQUE CONFIG ──────────────────────────────────────────────
+// ══ TECHNIQUE CONFIG ══════════════════════════════════════════════
 const TECHNIQUES = {
   abdominal: {
-    name: 'Respiración Abdominal',
-    shortName: 'Abdominal',
-    icon: '🫁',
-    rounds: 10,
-    durationLabel: '~5',
-    science: '📖 Ma et al. (2017) confirma que la respiración diafragmática reduce cortisol, ansiedad y presión arterial en adultos sanos.',
-    benefit: 'Tu sistema nervioso autónomo acaba de recibir una señal de calma. El cortisol baja, la digestión mejora y el cerebro recupera claridad. Hazla cada mañana y cada noche para resultados acumulativos.',
-    phases: [
-      { label: 'INHALA', duration: 4, color: '#5dade2', scale: 1.25 },
-      { label: 'EXHALA', duration: 6, color: '#f4d03f', scale: 0.85 }
+    name:'Respiración Abdominal', shortName:'Abdominal', icon:'🫁', rounds:10, durationLabel:'~5',
+    science:'📖 Ma et al. (2017) confirma que la respiración diafragmática reduce cortisol, ansiedad y presión arterial en adultos sanos.',
+    benefit:'Tu sistema nervioso autónomo acaba de recibir una señal de calma. El cortisol baja, la digestión mejora y el cerebro recupera claridad. Hazla cada mañana y noche para resultados acumulativos.',
+    phases:[
+      { label:'INHALA', duration:4, scale:1.25, sound:'inhale' },
+      { label:'EXHALA', duration:6, scale:0.85, sound:'exhale' }
     ],
-    instructions: [
-      { icon: '🫁', label: '<span class="pi-time">4 segundos</span> — Inhala por la nariz llenando el abdomen (no el pecho). Siente cómo tu barriga se expande.' },
-      { icon: '💨', label: '<span class="pi-time">6 segundos</span> — Exhala lentamente por la boca, vaciando el abdomen de abajo hacia arriba.' }
+    instructions:[
+      { icon:'🫁', label:'<span class="pi-time">4 segundos</span> — Inhala por la nariz llenando el abdomen (no el pecho). Siente cómo tu barriga se expande.' },
+      { icon:'💨', label:'<span class="pi-time">6 segundos</span> — Exhala lentamente por la boca, vaciando el abdomen de abajo hacia arriba.' }
     ]
   },
   coherente: {
-    name: 'Respiración Coherente',
-    shortName: 'Coherente',
-    icon: '💛',
-    rounds: 30,
-    durationLabel: '~5',
-    science: '📖 Lehrer & Gevirtz (2014) demostraron que respirar a 0.1 Hz (6 respiraciones/min) maximiza la variabilidad de la frecuencia cardíaca (HRV) y equilibra el sistema nervioso autónomo.',
-    benefit: 'Acabas de entrenar tu corazón a latir con mayor coherencia. La HRV alta es el marcador de salud cardiovascular, estrés bajo y longevidad más estudiado en medicina preventiva. Úsala 5 minutos antes de tomar decisiones importantes.',
-    phases: [
-      { label: 'INHALA', duration: 5, color: '#f4d03f', scale: 1.2 },
-      { label: 'EXHALA', duration: 5, color: '#f4d03f', scale: 0.85 }
+    name:'Respiración Coherente', shortName:'Coherente', icon:'💛', rounds:30, durationLabel:'~5',
+    science:'📖 Lehrer & Gevirtz (2014) demostraron que respirar a 0.1 Hz (6 resp/min) maximiza la variabilidad cardíaca (HRV) y equilibra el sistema nervioso autónomo.',
+    benefit:'Acabas de entrenar tu corazón a latir con mayor coherencia. La HRV alta es el marcador de salud cardiovascular y longevidad más estudiado. Úsala antes de tomar decisiones importantes.',
+    phases:[
+      { label:'INHALA', duration:5, scale:1.2,  sound:'inhale' },
+      { label:'EXHALA', duration:5, scale:0.85, sound:'exhale' }
     ],
-    instructions: [
-      { icon: '🌬️', label: '<span class="pi-time">5 segundos</span> — Inhala suave y constante por la nariz. Ritmo uniforme, sin esfuerzo.' },
-      { icon: '💨', label: '<span class="pi-time">5 segundos</span> — Exhala suave y constante por la nariz o boca. Misma duración que la inhalación.' }
+    instructions:[
+      { icon:'🌬️', label:'<span class="pi-time">5 segundos</span> — Inhala suave y constante por la nariz. Ritmo uniforme, sin esfuerzo.' },
+      { icon:'💨', label:'<span class="pi-time">5 segundos</span> — Exhala suave y constante por la nariz o boca. Misma duración.' }
     ]
   },
   cuatro78: {
-    name: 'Respiración 4-7-8',
-    shortName: '4-7-8',
-    icon: '🌙',
-    rounds: 8,
-    durationLabel: '~5',
-    science: '📖 Weil (2015) y múltiples estudios clínicos confirman que retener el aire 7 segundos activa el nervio vago y la respuesta parasimpática, reduciendo el tiempo para conciliar el sueño hasta un 40%.',
-    benefit: 'El nervio vago acaba de recibir la señal de que estás a salvo. Tu frecuencia cardíaca baja, la adrenalina disminuye y el cuerpo entra en modo recuperación. Hazla 3 noches seguidas y mide la diferencia en tu calidad de sueño.',
-    phases: [
-      { label: 'INHALA', duration: 4, color: '#5dade2', scale: 1.2 },
-      { label: 'RETÉN',  duration: 7, color: '#f4d03f', scale: 1.2 },
-      { label: 'EXHALA', duration: 8, color: '#5de28c', scale: 0.85 }
+    name:'Respiración 4-7-8', shortName:'4-7-8', icon:'🌙', rounds:8, durationLabel:'~5',
+    science:'📖 Weil (2015) y estudios clínicos confirman que retener 7 segundos activa el nervio vago y la respuesta parasimpática, reduciendo el tiempo para conciliar el sueño hasta un 40%.',
+    benefit:'El nervio vago acaba de recibir la señal de que estás a salvo. Frecuencia cardíaca baja, adrenalina disminuye, el cuerpo entra en modo recuperación. Hazla 3 noches seguidas.',
+    phases:[
+      { label:'INHALA', duration:4, scale:1.2,  sound:'inhale' },
+      { label:'RETÉN',  duration:7, scale:1.2,  sound:'hold'   },
+      { label:'EXHALA', duration:8, scale:0.85, sound:'exhale' }
     ],
-    instructions: [
-      { icon: '🫁', label: '<span class="pi-time">4 segundos</span> — Inhala silenciosamente por la nariz.' },
-      { icon: '⏸️', label: '<span class="pi-time">7 segundos</span> — Retén el aire (boca cerrada). No forces — deja que el cuerpo se adapte con práctica.' },
-      { icon: '💨', label: '<span class="pi-time">8 segundos</span> — Exhala completamente por la boca haciendo un suave sonido de viento.' }
+    instructions:[
+      { icon:'🫁', label:'<span class="pi-time">4 segundos</span> — Inhala silenciosamente por la nariz.' },
+      { icon:'⏸️', label:'<span class="pi-time">7 segundos</span> — Retén el aire (boca cerrada).' },
+      { icon:'💨', label:'<span class="pi-time">8 segundos</span> — Exhala completamente por la boca con un suave sonido de viento.' }
     ]
   }
 };
 
-// ── STATE ─────────────────────────────────────────────────────────
-let selectedTech = null;
+// ══ STATE ═════════════════════════════════════════════════════════
+let selectedTech   = null;
 let sessionRunning = false;
-let sessionTimer = null;
-let phaseTimer = null;
-let sessionStart = null;
-let roundsDone = 0;
+let isPaused       = false;
+let sessionStart   = null;
+let pausedAt       = null;
+let pausedElapsed  = 0;
+let roundsDone     = 0;
 let currentPhaseIdx = 0;
-let phaseSeconds = 0;
+let phaseSecondsLeft = 0;
+let sessionTimerID = null;
+let phaseIntervalID = null;
+let masterVolume   = 0.8;
 
-// ── HELPERS ───────────────────────────────────────────────────────
-function getStreak() {
-  const today = new Date().toDateString();
-  const data = JSON.parse(localStorage.getItem('moraima_breath_streak') || '{"count":0,"last":""}');
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
-  if (data.last === today) return data.count;
-  if (data.last === yesterday) return data.count; // will increment on save
-  return 0;
+// ══ AUDIO ═════════════════════════════════════════════════════════
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
 }
+
+function playBeep(freq, duration, vol) {
+  const ctx = getAudioCtx();
+  const osc  = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, ctx.currentTime);
+  gain.gain.setValueAtTime(0, ctx.currentTime);
+  gain.gain.linearRampToValueAtTime((vol || 0.18) * masterVolume, ctx.currentTime + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + duration);
+}
+
+function playBreathSound(type, duration) {
+  const ctx = getAudioCtx();
+  const buf = ctx.createBuffer(1, ctx.sampleRate * duration, ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1);
+
+  const src    = ctx.createBufferSource();
+  const filter = ctx.createBiquadFilter();
+  const gain   = ctx.createGain();
+
+  src.buffer = buf;
+  src.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+
+  filter.type = 'bandpass';
+  gain.gain.setValueAtTime(0, ctx.currentTime);
+
+  if (type === 'inhale') {
+    // Rising sound: starts low, swells, fades
+    filter.frequency.setValueAtTime(300,  ctx.currentTime);
+    filter.frequency.linearRampToValueAtTime(900, ctx.currentTime + duration * 0.7);
+    filter.frequency.linearRampToValueAtTime(600, ctx.currentTime + duration);
+    filter.Q.value = 0.8;
+    gain.gain.linearRampToValueAtTime(0.22 * masterVolume, ctx.currentTime + duration * 0.3);
+    gain.gain.linearRampToValueAtTime(0.18 * masterVolume, ctx.currentTime + duration * 0.7);
+    gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+  } else if (type === 'exhale') {
+    // Falling sound: starts full, fades out slowly
+    filter.frequency.setValueAtTime(700, ctx.currentTime);
+    filter.frequency.linearRampToValueAtTime(250, ctx.currentTime + duration);
+    filter.Q.value = 0.6;
+    gain.gain.linearRampToValueAtTime(0.18 * masterVolume, ctx.currentTime + 0.1);
+    gain.gain.linearRampToValueAtTime(0.10 * masterVolume, ctx.currentTime + duration * 0.6);
+    gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+  } else {
+    // Hold: very soft presence hum
+    filter.frequency.setValueAtTime(400, ctx.currentTime);
+    filter.Q.value = 2;
+    gain.gain.linearRampToValueAtTime(0.04 * masterVolume, ctx.currentTime + 0.5);
+    gain.gain.setValueAtTime(0.04 * masterVolume, ctx.currentTime + duration - 0.5);
+    gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + duration);
+  }
+
+  src.start(ctx.currentTime);
+  src.stop(ctx.currentTime + duration);
+}
+
+// ══ HELPERS ═══════════════════════════════════════════════════════
 function saveStreak() {
   const today = new Date().toDateString();
-  const data = JSON.parse(localStorage.getItem('moraima_breath_streak') || '{"count":0,"last":""}');
+  const d = JSON.parse(localStorage.getItem('moraima_breath_streak') || '{"count":0,"last":""}');
   const yesterday = new Date(Date.now() - 86400000).toDateString();
   let count = 1;
-  if (data.last === today) count = data.count;
-  else if (data.last === yesterday) count = data.count + 1;
+  if (d.last === today) count = d.count;
+  else if (d.last === yesterday) count = d.count + 1;
   localStorage.setItem('moraima_breath_streak', JSON.stringify({ count, last: today }));
   return count;
 }
@@ -474,13 +461,12 @@ function showScreen(id) {
   window.scrollTo(0, 0);
 }
 
-function elapsed() {
-  if (!sessionStart) return '0:00';
-  const s = Math.floor((Date.now() - sessionStart) / 1000);
+function elapsedStr() {
+  const s = Math.floor(pausedElapsed / 1000 + (isPaused ? 0 : (Date.now() - (sessionStart || Date.now())) / 1000));
   return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
 }
 
-// ── SELECTION ─────────────────────────────────────────────────────
+// ══ SELECTION ═════════════════════════════════════════════════════
 function selectTechnique(key) {
   selectedTech = key;
   document.querySelectorAll('.technique-card').forEach(c => c.classList.remove('selected'));
@@ -488,26 +474,19 @@ function selectTechnique(key) {
   document.getElementById('btn-start-choose').disabled = false;
 }
 
-// ── INSTRUCTIONS ──────────────────────────────────────────────────
+// ══ INSTRUCTIONS ══════════════════════════════════════════════════
 function goToInstructions() {
   if (!selectedTech) return;
   const t = TECHNIQUES[selectedTech];
-
   document.getElementById('instr-science').textContent = t.science;
   document.getElementById('instr-title').textContent = t.name;
   document.getElementById('instr-rounds').textContent = t.rounds;
   document.getElementById('instr-duration').textContent = t.durationLabel;
-
   const container = document.getElementById('instr-phases');
   container.innerHTML = '';
   t.instructions.forEach(ph => {
-    container.innerHTML += `
-      <div class="phase-instruction">
-        <div class="pi-dot">${ph.icon}</div>
-        <div class="pi-text">${ph.label}</div>
-      </div>`;
+    container.innerHTML += `<div class="phase-instruction"><div class="pi-dot">${ph.icon}</div><div class="pi-text">${ph.label}</div></div>`;
   });
-
   showScreen('screen-instructions');
 }
 
@@ -515,45 +494,83 @@ function backToChoose() {
   stopSession();
   showScreen('screen-choose');
 }
+function stopAndBack() { backToChoose(); }
 
-// ── SESSION ───────────────────────────────────────────────────────
-function startSession() {
+// ══ COUNTDOWN ═════════════════════════════════════════════════════
+function beginCountdown() {
+  getAudioCtx(); // unlock audio on user gesture
+  showScreen('screen-session');
+  // Set up session title now
   const t = TECHNIQUES[selectedTech];
-  sessionRunning = true;
-  sessionStart = Date.now();
-  roundsDone = 0;
-  currentPhaseIdx = 0;
-  phaseSeconds = 0;
-
   document.getElementById('session-title').textContent = t.name;
   document.getElementById('rounds-total').textContent = t.rounds;
-  document.getElementById('rounds-done').textContent = 0;
-  document.getElementById('time-elapsed').textContent = '0:00';
 
-  showScreen('screen-session');
-  runPhase();
+  const overlay = document.getElementById('countdown-overlay');
+  const numEl   = document.getElementById('cd-number');
+  overlay.classList.remove('hidden');
 
-  // Clock
-  sessionTimer = setInterval(() => {
-    document.getElementById('time-elapsed').textContent = elapsed();
+  let count = 5;
+  numEl.textContent = count;
+
+  const tick = setInterval(() => {
+    numEl.classList.remove('pulse');
+    void numEl.offsetWidth; // reflow
+    numEl.classList.add('pulse');
+
+    // Beep: higher pitch on last count
+    playBeep(count === 1 ? 880 : 440, 0.25, count === 1 ? 0.28 : 0.15);
+
+    count--;
+    if (count <= 0) {
+      clearInterval(tick);
+      overlay.classList.add('hidden');
+      startSession();
+    } else {
+      numEl.textContent = count;
+    }
   }, 1000);
 }
 
+// ══ SESSION ═══════════════════════════════════════════════════════
+function startSession() {
+  sessionRunning = true;
+  isPaused       = false;
+  sessionStart   = Date.now();
+  pausedElapsed  = 0;
+  roundsDone     = 0;
+  currentPhaseIdx = 0;
+
+  document.getElementById('rounds-done').textContent = 0;
+  document.getElementById('time-elapsed').textContent = '0:00';
+  document.getElementById('btn-pause').textContent = '⏸';
+  document.getElementById('btn-pause').classList.remove('pause-active');
+  document.getElementById('paused-badge').classList.remove('visible');
+
+  sessionTimerID = setInterval(() => {
+    if (!isPaused) document.getElementById('time-elapsed').textContent = elapsedStr();
+  }, 1000);
+
+  runPhase();
+}
+
 function runPhase() {
-  if (!sessionRunning) return;
-  const t = TECHNIQUES[selectedTech];
+  if (!sessionRunning || isPaused) return;
+  const t     = TECHNIQUES[selectedTech];
   const phase = t.phases[currentPhaseIdx];
   const totalSecs = phase.duration;
+  phaseSecondsLeft = totalSecs;
 
-  document.getElementById('breath-word').textContent = phase.label;
+  document.getElementById('breath-word').textContent  = phase.label;
   document.getElementById('breath-count').textContent = totalSecs;
   document.getElementById('session-phase-label').textContent =
     currentPhaseIdx === 0 ? 'Ronda ' + (roundsDone + 1) + ' de ' + t.rounds : '';
 
+  // Circle animation
   const circle = document.getElementById('breath-circle');
   circle.style.transition = `transform ${totalSecs}s linear`;
-  circle.style.transform = `scale(${phase.scale})`;
+  circle.style.transform  = `scale(${phase.scale})`;
 
+  // Phase bar
   const fill = document.getElementById('phase-fill');
   fill.style.transition = 'none';
   fill.style.width = '0%';
@@ -562,61 +579,163 @@ function runPhase() {
     fill.style.width = '100%';
   });
 
-  let secondsLeft = totalSecs;
-  const countdown = setInterval(() => {
-    secondsLeft--;
-    document.getElementById('breath-count').textContent = secondsLeft > 0 ? secondsLeft : '';
-    if (secondsLeft <= 0) {
-      clearInterval(countdown);
-      nextPhase(t);
+  // Breathing sound
+  if (phase.sound) playBreathSound(phase.sound, totalSecs);
+
+  // Countdown
+  clearInterval(phaseIntervalID);
+  phaseIntervalID = setInterval(() => {
+    if (isPaused) return;
+    phaseSecondsLeft--;
+    document.getElementById('breath-count').textContent = phaseSecondsLeft > 0 ? phaseSecondsLeft : '';
+    if (phaseSecondsLeft <= 0) {
+      clearInterval(phaseIntervalID);
+      advancePhase();
     }
   }, 1000);
 }
 
-function nextPhase(t) {
+function advancePhase() {
   if (!sessionRunning) return;
   currentPhaseIdx++;
+  const t = TECHNIQUES[selectedTech];
   if (currentPhaseIdx >= t.phases.length) {
     currentPhaseIdx = 0;
     roundsDone++;
     document.getElementById('rounds-done').textContent = roundsDone;
-    if (roundsDone >= t.rounds) {
-      endSession();
-      return;
-    }
+    if (roundsDone >= t.rounds) { endSession(); return; }
   }
   runPhase();
 }
 
+// ══ PAUSE / RESUME ════════════════════════════════════════════════
+function togglePause() {
+  if (!sessionRunning) return;
+  isPaused = !isPaused;
+
+  const btn   = document.getElementById('btn-pause');
+  const badge = document.getElementById('paused-badge');
+  const circle = document.getElementById('breath-circle');
+  const fill   = document.getElementById('phase-fill');
+
+  if (isPaused) {
+    // Accumulate elapsed before pausing
+    pausedElapsed += Date.now() - sessionStart;
+    btn.textContent = '▶';
+    btn.classList.add('pause-active');
+    badge.classList.add('visible');
+    // Freeze circle and bar
+    circle.style.transition = 'none';
+    fill.style.transition   = 'none';
+    // Stop audio (can't un-stop nodes, but new ones won't start while paused)
+    if (audioCtx && audioCtx.state === 'running') audioCtx.suspend();
+  } else {
+    sessionStart = Date.now(); // reset start ref for elapsed calc
+    btn.textContent = '⏸';
+    btn.classList.remove('pause-active');
+    badge.classList.remove('visible');
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    // Resume current phase from remaining seconds
+    resumePhase();
+  }
+}
+
+function resumePhase() {
+  const t     = TECHNIQUES[selectedTech];
+  const phase = t.phases[currentPhaseIdx];
+  const remaining = phaseSecondsLeft;
+
+  document.getElementById('breath-word').textContent = phase.label;
+  document.getElementById('breath-count').textContent = remaining;
+
+  // Restart circle + bar for remaining time
+  const circle = document.getElementById('breath-circle');
+  circle.style.transition = `transform ${remaining}s linear`;
+  circle.style.transform  = `scale(${phase.scale})`;
+
+  const fill = document.getElementById('phase-fill');
+  const pct  = ((phase.duration - remaining) / phase.duration) * 100;
+  fill.style.transition = 'none';
+  fill.style.width = pct + '%';
+  requestAnimationFrame(() => {
+    fill.style.transition = `width ${remaining}s linear`;
+    fill.style.width = '100%';
+  });
+
+  // Play sound for remaining duration
+  if (phase.sound && remaining > 0) playBreathSound(phase.sound, remaining);
+
+  clearInterval(phaseIntervalID);
+  phaseIntervalID = setInterval(() => {
+    if (isPaused) return;
+    phaseSecondsLeft--;
+    document.getElementById('breath-count').textContent = phaseSecondsLeft > 0 ? phaseSecondsLeft : '';
+    if (phaseSecondsLeft <= 0) {
+      clearInterval(phaseIntervalID);
+      advancePhase();
+    }
+  }, 1000);
+}
+
+// ══ RESTART ═══════════════════════════════════════════════════════
+function restartSession() {
+  clearInterval(phaseIntervalID);
+  clearInterval(sessionTimerID);
+  // Reset circle
+  const circle = document.getElementById('breath-circle');
+  circle.style.transition = 'none';
+  circle.style.transform  = 'scale(1)';
+  // Re-launch countdown
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  beginCountdown();
+}
+
+// ══ STOP ══════════════════════════════════════════════════════════
+function stopSession() {
+  sessionRunning = false;
+  isPaused = false;
+  clearInterval(phaseIntervalID);
+  clearInterval(sessionTimerID);
+  const circle = document.getElementById('breath-circle');
+  if (circle) { circle.style.transition = 'none'; circle.style.transform = 'scale(1)'; }
+  document.getElementById('countdown-overlay').classList.add('hidden');
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+// ══ END ═══════════════════════════════════════════════════════════
 function endSession() {
   sessionRunning = false;
-  clearInterval(sessionTimer);
+  clearInterval(phaseIntervalID);
+  clearInterval(sessionTimerID);
 
   const t = TECHNIQUES[selectedTech];
-  const totalSecs = Math.floor((Date.now() - sessionStart) / 1000);
-  const mins = (totalSecs / 60).toFixed(1);
+  const totalMs = pausedElapsed + (Date.now() - sessionStart);
+  const mins = (totalMs / 60000).toFixed(1);
   const streak = saveStreak();
 
-  document.getElementById('res-rondas').textContent = roundsDone;
-  document.getElementById('res-tiempo').textContent = mins;
+  document.getElementById('res-rondas').textContent  = roundsDone;
+  document.getElementById('res-tiempo').textContent  = mins;
   document.getElementById('res-tecnica').textContent = t.shortName;
-  document.getElementById('res-streak').textContent = streak;
-
-  document.getElementById('res-benefit-box').innerHTML = `
-    <h3>🔬 LO QUE PASÓ EN TU CUERPO</h3>
-    <p>${t.benefit}</p>
-  `;
+  document.getElementById('res-streak').textContent  = streak;
+  document.getElementById('res-benefit-box').innerHTML = `<h3>🔬 LO QUE PASÓ EN TU CUERPO</h3><p>${t.benefit}</p>`;
 
   showScreen('screen-results');
 }
 
-function stopSession() {
-  sessionRunning = false;
-  clearInterval(sessionTimer);
-  const circle = document.getElementById('breath-circle');
-  if (circle) { circle.style.transition = 'none'; circle.style.transform = 'scale(1)'; }
+// ══ VOLUME ════════════════════════════════════════════════════════
+function toggleVolumePanel() {
+  const panel = document.getElementById('volume-panel');
+  panel.classList.toggle('hidden');
 }
 
+function setMasterVolume(val) {
+  masterVolume = val / 100;
+  document.getElementById('vol-pct').textContent = val + '%';
+  const icon = document.getElementById('btn-vol');
+  icon.textContent = val == 0 ? '🔇' : val < 50 ? '🔉' : '🔊';
+}
+
+// ══ RESET ═════════════════════════════════════════════════════════
 function resetApp() {
   selectedTech = null;
   document.querySelectorAll('.technique-card').forEach(c => c.classList.remove('selected'));
