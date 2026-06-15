@@ -3,445 +3,634 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Alacena Antiinflamatoria — MORAIMA 21</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>M5 Inflamación — MORAIMA 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e25d5d;--orange:#f4a03f;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Montserrat',sans-serif;background:linear-gradient(160deg,#071e30 0%,#0a2942 50%,#0d3a5c 100%);min-height:100vh;color:#fff;display:flex;align-items:flex-start;justify-content:center;padding:16px;}
-  .screen{display:none;width:100%;max-width:460px;}
-  .screen.active{display:flex;flex-direction:column;align-items:center;}
-  .logo-bar{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;text-align:center;}
-  .module-tag{background:rgba(226,93,93,0.15);border:1px solid rgba(226,93,93,0.3);border-radius:20px;padding:4px 14px;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:18px;}
-  h1{font-size:22px;font-weight:800;text-align:center;line-height:1.3;margin-bottom:8px;}
-  .subtitle{font-size:12px;color:rgba(255,255,255,0.55);text-align:center;margin-bottom:20px;line-height:1.7;}
-  .btn-primary{width:100%;padding:15px;border-radius:50px;background:linear-gradient(135deg,var(--red),#c0392b);color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;border:none;cursor:pointer;margin-top:12px;transition:transform 0.15s;}
-  .btn-primary:hover{transform:translateY(-2px);}
-  .btn-outline{width:100%;padding:13px;border-radius:50px;background:transparent;border:2px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;}
-  .btn-ghost{background:transparent;border:none;color:rgba(255,255,255,0.4);font-family:'Montserrat',sans-serif;font-size:12px;cursor:pointer;padding:8px;margin-top:8px;}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e74c3c;--orange:#f39c12;--purple:#9b59b6;--light:#f0f7ff;--gray:#6c757d}
+body{font-family:'Montserrat',sans-serif;background:var(--light);color:var(--navy);min-height:100vh;overflow-x:hidden}
+.screen{display:none;min-height:100vh;padding-bottom:80px}
+.screen.active{display:block}
 
-  /* CATEGORY TABS */
-  .cat-tabs{display:flex;gap:6px;width:100%;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;}
-  .cat-tab{padding:7px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.12);background:transparent;color:rgba(255,255,255,0.5);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;flex-shrink:0;}
-  .cat-tab.active{background:rgba(226,93,93,0.2);border-color:var(--red);color:#fff;}
+/* WELCOME */
+#s-welcome{background:linear-gradient(160deg,#1a0a0a 0%,#3d0a0a 40%,#0a2942 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;min-height:100vh;position:relative;overflow:hidden}
+#s-welcome::before{content:'🔥';font-size:220px;position:absolute;top:-20px;right:-30px;opacity:0.06;pointer-events:none}
+.w-label{background:rgba(231,76,60,0.2);border:1px solid rgba(231,76,60,0.4);color:#ff8a80;padding:7px 18px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+#s-welcome h1{color:white;font-size:28px;font-weight:900;margin-bottom:10px;line-height:1.15}
+#s-welcome h1 span{color:#ff8a80}
+#s-welcome p{color:rgba(255,255,255,0.7);font-size:13px;margin-bottom:36px;max-width:340px;line-height:1.7}
+.alarm-stats{display:flex;gap:12px;margin-bottom:36px}
+.alarm-card{background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.3);border-radius:14px;padding:14px 14px;text-align:center;flex:1}
+.alarm-card .anum{color:#ff8a80;font-size:22px;font-weight:900}
+.alarm-card .albl{color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;margin-top:3px;line-height:1.3}
+.btn-start{background:linear-gradient(135deg,var(--red),#c0392b);color:white;border:none;padding:18px 48px;border-radius:50px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 30px rgba(231,76,60,0.4);transition:all .3s}
+.btn-start:hover{transform:translateY(-3px)}
 
-  /* FOOD GRID */
-  .food-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:16px;}
-  .food-item{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
-  .food-item.selected-bad{background:rgba(226,93,93,0.2);border-color:var(--red);}
-  .food-item.selected-good{background:rgba(93,226,140,0.15);border-color:var(--green);}
-  .fi-emoji{font-size:32px;margin-bottom:6px;}
-  .fi-name{font-size:11px;font-weight:700;line-height:1.3;margin-bottom:4px;}
-  .fi-check{position:absolute;top:8px;right:8px;font-size:14px;opacity:0;}
-  .food-item.selected-bad .fi-check{opacity:1;}
-  .food-item.selected-good .fi-check{opacity:1;}
-  .fi-inflama{font-size:9px;color:var(--red);font-weight:600;letter-spacing:.5px;}
-  .fi-sana{font-size:9px;color:var(--green);font-weight:600;letter-spacing:.5px;}
+/* BOTTOM NAV */
+#bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--navy);display:none;grid-template-columns:repeat(4,1fr);z-index:100;box-shadow:0 -4px 20px rgba(0,0,0,0.3)}
+#bottom-nav.visible{display:grid}
+.nav-item{display:flex;flex-direction:column;align-items:center;padding:10px 5px;cursor:pointer;color:rgba(255,255,255,0.5);transition:all .2s;border:none;background:none;font-family:'Montserrat',sans-serif}
+.nav-item.active,.nav-item:hover{color:var(--gold)}
+.nav-icon{font-size:20px;margin-bottom:3px}
+.nav-lbl{font-size:9px;font-weight:700;text-transform:uppercase}
 
-  /* ALACENA LIST */
-  .alacena-section{width:100%;margin-bottom:16px;}
-  .alacena-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:6px 12px;border-radius:8px;margin-bottom:10px;}
-  .al-bad{color:var(--red);background:rgba(226,93,93,0.1);}
-  .al-good{color:var(--green);background:rgba(93,226,140,0.1);}
-  .alacena-grid{display:flex;flex-wrap:wrap;gap:7px;}
-  .acena-chip{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;}
-  .chip-bad{background:rgba(226,93,93,0.15);border:1px solid rgba(226,93,93,0.3);color:var(--red);}
-  .chip-good{background:rgba(93,226,140,0.15);border:1px solid rgba(93,226,140,0.3);color:var(--green);}
-  .chip-remove{cursor:pointer;opacity:0.6;font-size:13px;}
-  .chip-remove:hover{opacity:1;}
+/* PAGE HEADERS */
+.page-header{background:linear-gradient(135deg,var(--navy),#1a4a6b);padding:22px 20px 18px;color:white;position:sticky;top:0;z-index:50}
+.page-header h2{font-size:19px;font-weight:800;color:var(--gold)}
+.page-header p{font-size:12px;opacity:0.8;margin-top:3px}
 
-  /* SWAP CARDS */
-  .swap-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px;width:100%;margin-bottom:10px;}
-  .swap-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-  .swap-bad{font-size:22px;}
-  .swap-arrow{font-size:14px;color:rgba(255,255,255,0.4);}
-  .swap-good{font-size:22px;}
-  .swap-names{flex:1;}
-  .swap-from{font-size:12px;font-weight:700;color:var(--red);}
-  .swap-to{font-size:12px;font-weight:700;color:var(--green);margin-top:2px;}
-  .swap-why{font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;}
-  .swap-action{display:flex;gap:8px;margin-top:10px;}
-  .btn-swap{flex:1;padding:8px;border-radius:20px;border:1.5px solid var(--green);background:rgba(93,226,140,0.1);color:var(--green);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;cursor:pointer;}
-  .btn-elim{flex:1;padding:8px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.5);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;cursor:pointer;}
+/* TEST */
+.test-intro{padding:16px;background:linear-gradient(135deg,#fff5f5,#fdecea);border-bottom:1px solid #f5c6c6}
+.ti-text{font-size:13px;color:var(--navy);line-height:1.7}
+.ti-text strong{color:var(--red);font-weight:800}
+.categories-nav{display:flex;gap:8px;padding:10px 16px;background:white;border-bottom:1px solid #e0e8f0;overflow-x:auto;scrollbar-width:none;position:sticky;top:70px;z-index:40}
+.categories-nav::-webkit-scrollbar{display:none}
+.cat-btn{padding:6px 14px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;border:2px solid #e0e8f0;background:white;color:var(--navy);white-space:nowrap;font-family:'Montserrat',sans-serif;transition:all .2s}
+.cat-btn.active{background:var(--red);color:white;border-color:var(--red)}
+.symptom-count{padding:8px 16px;font-size:11px;color:var(--gray);font-weight:600;background:white;display:flex;justify-content:space-between;align-items:center}
+.score-badge{background:var(--red);color:white;padding:3px 10px;border-radius:50px;font-size:11px;font-weight:800}
+.symptom-list{padding:14px;display:flex;flex-direction:column;gap:10px}
+.symptom-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);border:2px solid transparent;transition:all .2s;cursor:pointer}
+.symptom-card.checked{border-color:var(--red)}
+.sc-header{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.sc-emoji{font-size:32px;flex-shrink:0}
+.sc-info{flex:1}
+.sc-title{font-size:13px;font-weight:700;color:var(--navy)}
+.sc-system{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
+.sc-check{width:26px;height:26px;border-radius:50%;border:2px solid #e0e8f0;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s}
+.symptom-card.checked .sc-check{background:var(--red);border-color:var(--red);color:white}
+.sc-detail{display:none;padding:0 16px 14px;font-size:12px;color:var(--gray);line-height:1.6;border-top:1px dashed #f0f0f0;margin-top:0}
+.symptom-card.open .sc-detail{display:block}
+.sc-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.sc-tag{padding:3px 8px;border-radius:50px;font-size:10px;font-weight:700}
+.tag-early{background:#fef9e7;color:#b7770d}
+.tag-mid{background:#fdecea;color:#c0392b}
+.tag-late{background:#f4ecf7;color:#7d3c98}
+.tag-system{background:#e8f4fd;color:#1a5276}
+.btn-ver-resultado{position:sticky;bottom:80px;left:0;right:0;width:calc(100% - 32px);margin:0 16px;padding:16px;background:linear-gradient(135deg,var(--red),#c0392b);color:white;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Montserrat',sans-serif;box-shadow:0 4px 16px rgba(231,76,60,0.4);display:block;margin-top:14px}
 
-  /* SUMMARY STATS */
-  .summary-row{display:flex;gap:10px;width:100%;margin-bottom:20px;}
-  .sum-box{flex:1;text-align:center;padding:14px 8px;background:rgba(255,255,255,0.06);border-radius:14px;}
-  .sum-val{font-size:24px;font-weight:900;}
-  .sum-label{font-size:9px;color:rgba(255,255,255,0.45);letter-spacing:1px;margin-top:3px;}
+/* RESULTADO */
+.resultado-wrap{padding:16px;display:flex;flex-direction:column;gap:12px}
+.resultado-card{border-radius:20px;padding:24px;text-align:center;color:white}
+.rc-emoji{font-size:56px;margin-bottom:10px}
+.rc-nivel-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;opacity:0.8;margin-bottom:6px}
+.rc-title{font-size:20px;font-weight:900;margin-bottom:10px;line-height:1.2}
+.rc-score{font-size:40px;font-weight:900;color:white}
+.rc-score span{font-size:18px;opacity:0.7}
+.rc-desc{font-size:12px;opacity:0.85;line-height:1.6;margin-top:10px;max-width:300px;margin-left:auto;margin-right:auto}
+.checked-list-card{background:white;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.clc-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.clc-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed #f0f0f0}
+.clc-item:last-child{border-bottom:none}
+.clc-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:4px}
+.clc-text{flex:1}
+.clc-name{font-size:12px;font-weight:700;color:var(--navy)}
+.clc-why{font-size:11px;color:var(--gray);margin-top:2px;line-height:1.4}
+.action-btns{display:flex;flex-direction:column;gap:10px}
+.btn-primary{padding:16px;background:linear-gradient(135deg,var(--green),#27ae60);color:var(--navy);border:none;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Montserrat',sans-serif;text-align:center}
+.btn-secondary{padding:14px;background:white;color:var(--navy);border:2px solid var(--navy);border-radius:14px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif}
 
-  /* SCORE RING */
-  .score-ring{width:100px;height:100px;margin:0 auto 16px;position:relative;}
-  .score-ring svg{transform:rotate(-90deg);}
-  .score-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-  .score-num{font-size:24px;font-weight:900;}
-  .score-label{font-size:9px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+/* ENFERMEDADES */
+.disease-intro-box{padding:16px;background:linear-gradient(135deg,#fff5f5,#fdecea)}
+.dib-text{font-size:12px;color:var(--navy);line-height:1.7}
+.dib-text strong{color:var(--red);font-weight:800}
+.nfkb-explainer{margin:16px;background:linear-gradient(135deg,var(--navy),#1a4a6b);border-radius:16px;padding:16px;color:white}
+.nfkb-title{font-size:14px;font-weight:800;color:var(--gold);margin-bottom:8px}
+.nfkb-text{font-size:12px;opacity:0.85;line-height:1.6}
+.systems-container{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
+.system-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.system-header{padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.sys-emoji{font-size:28px;flex-shrink:0}
+.sys-info{flex:1}
+.sys-name{font-size:14px;font-weight:800;color:var(--navy)}
+.sys-count{font-size:11px;color:var(--gray);margin-top:2px}
+.sys-arrow{font-size:20px;color:var(--gray);transition:transform .2s}
+.system-card.open .sys-arrow{transform:rotate(90deg)}
+.disease-list{display:none;flex-direction:column;gap:8px;padding:0 16px 14px}
+.system-card.open .disease-list{display:flex}
+.disease-item{background:#fff5f5;border-radius:12px;padding:12px 14px;border-left:3px solid var(--red)}
+.di-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.di-link{font-size:11px;color:var(--gray);line-height:1.5}
+.di-badge{display:inline-flex;align-items:center;gap:4px;background:#fdecea;color:var(--red);padding:2px 8px;border-radius:50px;font-size:10px;font-weight:700;margin-top:6px}
 
-  .progress-bar-row{display:flex;align-items:center;gap:10px;width:100%;margin-bottom:10px;}
-  .pb-label{font-size:11px;font-weight:600;width:100px;flex-shrink:0;}
-  .pb-track{flex:1;height:7px;background:rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;}
-  .pb-fill{height:100%;border-radius:10px;transition:width 0.5s ease;}
-  .pb-count{font-size:11px;font-weight:700;width:28px;text-align:right;flex-shrink:0;}
+/* SOLUCIONES */
+.soluciones-container{padding:16px;display:flex;flex-direction:column;gap:12px}
+.sol-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+.sol-header{padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.sol-emoji-big{font-size:40px;flex-shrink:0}
+.sol-info{flex:1}
+.sol-name{font-size:15px;font-weight:800;color:var(--navy)}
+.sol-tags{display:flex;gap:6px;margin-top:5px;flex-wrap:wrap}
+.sol-tag{padding:2px 8px;border-radius:50px;font-size:10px;font-weight:700;background:#e8f8f0;color:#1e8449}
+.sol-tag.azul{background:#e8f4fd;color:#1a5276}
+.sol-desc-short{font-size:12px;color:var(--gray);margin-top:5px;line-height:1.4}
+.sol-body{display:none;padding:0 16px 16px;border-top:1px solid #f0f0f0}
+.sol-card.expanded .sol-body{display:block}
+.sol-science-box{background:linear-gradient(135deg,#f0f7ff,#e8f4fd);border-radius:12px;padding:14px;margin:12px 0}
+.ssb-title{font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ssb-text{font-size:12px;color:var(--navy);line-height:1.6}
+.ssb-ref{font-size:10px;color:var(--gray);font-style:italic;margin-top:6px}
+.sol-steps-title{font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.sol-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;background:#f8f9fa;border-radius:10px;padding:10px 12px}
+.ss-num{background:var(--navy);color:var(--gold);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px}
+.ss-text{font-size:12px;color:var(--gray);line-height:1.5;flex:1}
+.sol-foods-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:8px}
+.sfood{background:#f0fff5;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px}
+.power-bar-wrap{margin-top:12px;background:#f8f9fa;border-radius:10px;padding:10px 12px}
+.pbw-label{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.pbw-bar{height:10px;background:#e0e8f0;border-radius:5px;overflow:hidden}
+.pbw-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--green));border-radius:5px}
+
+/* PLAN */
+.plan-wrap{padding:16px;display:flex;flex-direction:column;gap:10px}
+.plan-nivel-card{border-radius:16px;padding:18px;color:white;text-align:center;margin-bottom:4px}
+.plnc-title{font-size:18px;font-weight:900;margin-bottom:6px}
+.plnc-sub{font-size:12px;opacity:0.85;line-height:1.5}
+.plan-progress{background:white;border-radius:12px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.pp-label{font-size:13px;font-weight:700;color:var(--navy)}
+.pp-count{font-size:13px;font-weight:800}
+.plan-item{background:white;border-radius:14px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);cursor:pointer;transition:all .2s}
+.plan-item.done{opacity:0.65}
+.plan-item.done .pi-title{text-decoration:line-through;color:var(--gray)}
+.pi-icon{font-size:28px;flex-shrink:0}
+.pi-body{flex:1}
+.pi-title{font-size:13px;font-weight:700;color:var(--navy)}
+.pi-sub{font-size:11px;color:var(--gray);margin-top:2px;line-height:1.4}
+.pi-chk{width:26px;height:26px;border-radius:50%;border:2px solid #e0e8f0;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;margin-top:2px}
+.plan-item.done .pi-chk{background:var(--green);border-color:var(--green);color:white}
+.plan-empty{text-align:center;padding:60px 20px;color:var(--gray)}
+.plan-empty .pe-icon{font-size:60px;margin-bottom:16px}
+.plan-empty h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.plan-empty p{font-size:13px;line-height:1.6;margin-bottom:20px}
+.btn-go-test{padding:12px 24px;background:var(--navy);color:var(--gold);border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-reset{width:100%;padding:14px;background:white;color:var(--gray);border:2px solid #e0e8f0;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:4px}
+
+@media print{#bottom-nav{display:none!important}.screen{padding-bottom:0!important}.page-header{position:static!important}}
 </style>
 </head>
 <body>
 
 <!-- WELCOME -->
-<div class="screen active" id="s-welcome">
-  <div class="logo-bar">epimedik · MORAIMA 21</div>
-  <div class="module-tag">Módulo 5 · Inflamación · Días 13-15</div>
-  <div style="font-size:56px;margin-bottom:14px;text-align:center;">🔥</div>
-  <h1>Tu Alacena<br><span style="color:var(--red)">Antiinflamatoria</span></h1>
-  <p class="subtitle">Revisa lo que tienes en casa ahora mismo. Identifica qué te está inflamando sin que lo sepas — y descubre con qué reemplazarlo o si simplemente lo sacas.</p>
-
-  <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:16px;width:100%;margin-bottom:6px;">
-    <div style="display:flex;gap:12px;align-items:center;">
-      <div style="font-size:28px;">🔍</div>
-      <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">Fase 1 — Identifica</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.5);">Marca los alimentos que tienes actualmente en tu casa</div></div>
-    </div>
-    <div style="height:1px;background:rgba(255,255,255,0.08);margin:12px 0;"></div>
-    <div style="display:flex;gap:12px;align-items:center;">
-      <div style="font-size:28px;">🔄</div>
-      <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">Fase 2 — Decide</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.5);">Para cada inflamatorio: ¿lo reemplazas o lo eliminas?</div></div>
-    </div>
+<div id="s-welcome" class="screen active">
+  <div class="w-label">Módulo 5 · INFLAMACIÓN</div>
+  <h1>El fuego silencioso<br>que <span>ya está en ti</span></h1>
+  <p>La inflamación crónica de bajo grado no duele, no da fiebre, no da señales obvias. Pero lleva años destruyendo tus tejidos. Hoy aprenderás a detectarla y apagarla.</p>
+  <div class="alarm-stats">
+    <div class="alarm-card"><div class="anum">80+</div><div class="albl">Enfermedades vinculadas</div></div>
+    <div class="alarm-card"><div class="anum">32</div><div class="albl">Síntomas para detectarla</div></div>
+    <div class="alarm-card"><div class="anum">6</div><div class="albl">Soluciones naturales</div></div>
   </div>
-
-  <button class="btn-primary" onclick="showScreen('s-identify')">🔍 Revisar mi alacena →</button>
+  <button class="btn-start" onclick="enterApp()">¿Estoy inflamada? Descúbrelo 🔥</button>
 </div>
 
-<!-- IDENTIFY -->
-<div class="screen" id="s-identify">
-  <div class="logo-bar">epimedik · MORAIMA 21</div>
-  <div class="module-tag">Fase 1 — ¿Qué tienes en casa?</div>
-  <p style="font-size:12px;color:rgba(255,255,255,0.6);text-align:center;margin-bottom:16px;">Toca los alimentos que tienes actualmente en tu nevera o despensa</p>
-
-  <div class="cat-tabs" id="cat-tabs">
-    <button class="cat-tab active" onclick="filterCat('todos',this)">Todos</button>
-    <button class="cat-tab" onclick="filterCat('lacteos',this)">🥛 Lácteos</button>
-    <button class="cat-tab" onclick="filterCat('carbos',this)">🍞 Carbos</button>
-    <button class="cat-tab" onclick="filterCat('proteina',this)">🥩 Proteína</button>
-    <button class="cat-tab" onclick="filterCat('bebidas',this)">🥤 Bebidas</button>
-    <button class="cat-tab" onclick="filterCat('grasas',this)">🫒 Grasas</button>
-    <button class="cat-tab" onclick="filterCat('otros',this)">🌶 Otros</button>
+<!-- TEST SÍNTOMAS -->
+<div id="s-test" class="screen">
+  <div class="page-header">
+    <h2>🔍 Test de Inflamación Silenciosa</h2>
+    <p>32 señales — marca todo lo que presentas</p>
   </div>
-
-  <div class="food-grid" id="food-grid"></div>
-
-  <div style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border-radius:14px;margin-bottom:14px;">
-    <div style="font-size:11px;color:rgba(255,255,255,0.5);text-align:center;" id="selection-count">Toca los alimentos que tienes en casa</div>
+  <div class="test-intro">
+    <div class="ti-text">Estos signos <strong>no son normales aunque sean frecuentes</strong>. Son la voz de tu cuerpo diciendo que hay un fuego interno activo. Marca todos los que hayas sentido en los últimos 3 meses.</div>
   </div>
-
-  <button class="btn-primary" id="btn-ver-alacena" onclick="showAlacena()" style="display:none">Ver mi alacena →</button>
-  <button class="btn-ghost" onclick="showScreen('s-welcome')">← Inicio</button>
+  <div class="categories-nav" id="cats-nav"></div>
+  <div class="symptom-count">
+    <span id="showing-count">Mostrando todos</span>
+    <span class="score-badge" id="score-badge">0 marcados</span>
+  </div>
+  <div class="symptom-list" id="symptom-list"></div>
+  <div style="padding:0 14px 14px">
+    <button class="btn-ver-resultado" onclick="verResultado()">Ver mi nivel de inflamación →</button>
+  </div>
 </div>
 
-<!-- MI ALACENA -->
-<div class="screen" id="s-alacena">
-  <div class="logo-bar">epimedik · MORAIMA 21</div>
-  <div class="module-tag">Mi Alacena</div>
-
-  <div class="summary-row" id="summary-row"></div>
-
-  <div class="alacena-section" id="bad-section">
-    <div class="alacena-label al-bad">🔴 Inflamatorios que tienes</div>
-    <div class="alacena-grid" id="bad-chips"></div>
+<!-- RESULTADO -->
+<div id="s-resultado" class="screen">
+  <div class="page-header">
+    <h2>📊 Tu Nivel de Inflamación</h2>
+    <p>Análisis basado en tus síntomas</p>
   </div>
-
-  <div class="alacena-section" id="good-section">
-    <div class="alacena-label al-good">🟢 Antiinflamatorios que tienes</div>
-    <div class="alacena-grid" id="good-chips"></div>
-  </div>
-
-  <button class="btn-primary" id="btn-swaps" onclick="showSwaps()">🔄 Ver qué hacer con cada inflamatorio →</button>
-  <button class="btn-outline" onclick="showScreen('s-identify')">← Editar mi lista</button>
-  <button class="btn-ghost" onclick="showScreen('s-welcome')">Inicio</button>
+  <div class="resultado-wrap" id="resultado-content"></div>
 </div>
 
-<!-- SWAPS -->
-<div class="screen" id="s-swaps">
-  <div class="logo-bar">epimedik · MORAIMA 21</div>
-  <div class="module-tag">Fase 2 — Toma una decisión</div>
-  <h1 style="font-size:18px;margin-bottom:6px;">Para cada uno,<br><span style="color:var(--green)">tú decides</span></h1>
-  <p class="subtitle" style="margin-bottom:18px;">¿Lo reemplazas por algo mejor, o simplemente lo sacas de tu vida?</p>
-
-  <div id="swaps-list" style="width:100%;"></div>
-
-  <button class="btn-primary" onclick="showResults()" style="margin-top:8px;">✅ Guardé mis decisiones →</button>
-  <button class="btn-ghost" onclick="showScreen('s-alacena')">← Mi alacena</button>
-</div>
-
-<!-- RESULTS -->
-<div class="screen" id="s-results">
-  <div class="logo-bar">epimedik · MORAIMA 21</div>
-  <div class="module-tag">Tu Plan Antiinflamatorio</div>
-
-  <div id="results-emoji" style="font-size:56px;text-align:center;margin-bottom:10px;">🏆</div>
-  <div id="results-title" style="font-size:20px;font-weight:800;text-align:center;margin-bottom:6px;"></div>
-  <div id="results-sub" style="font-size:12px;color:rgba(255,255,255,0.55);text-align:center;margin-bottom:20px;line-height:1.7;"></div>
-
-  <div style="background:rgba(255,255,255,0.06);border-radius:16px;padding:16px;width:100%;margin-bottom:14px;" id="results-actions"></div>
-
-  <div style="background:rgba(93,226,140,0.08);border:1px solid rgba(93,226,140,0.2);border-radius:14px;padding:14px;width:100%;margin-bottom:16px;">
-    <div style="font-size:10px;letter-spacing:2px;color:var(--green);font-weight:700;margin-bottom:8px;">🟢 LO QUE YA TIENES Y ESTÁ BIEN</div>
-    <div id="results-good" style="display:flex;flex-wrap:wrap;gap:7px;"></div>
+<!-- ENFERMEDADES -->
+<div id="s-enfermedades" class="screen">
+  <div class="page-header">
+    <h2>🧬 80+ Enfermedades del Fuego Lento</h2>
+    <p>Todas comparten una raíz: NF-κB activado</p>
   </div>
-
-  <button class="btn-primary" onclick="showScreen('s-welcome')">🔄 Revisar de nuevo</button>
-  <button class="btn-ghost" onclick="window.print()">📄 Guardar mi plan</button>
+  <div class="disease-intro-box">
+    <div class="dib-text">El <strong>Factor Nuclear NF-κB</strong> es el interruptor maestro de la inflamación en tus células. Cuando se activa crónicamente por malos hábitos, desencadena todas estas enfermedades de forma silenciosa.</div>
+  </div>
+  <div class="nfkb-explainer" style="margin:16px 16px 0">
+    <div class="nfkb-title">🔬 ¿Qué es NF-κB?</div>
+    <div class="nfkb-text">Es una proteína dentro de cada célula que actúa como "interruptor de guerra". Cuando se activa, ordena producir TNF-alfa, IL-6 e IL-1β — las citoquinas que generan inflamación sistémica. La azúcar, el estrés crónico, el sueño deficiente y los aceites refinados lo encienden. La cúrcuma, el omega-3, el grounding y el ayuno lo apagan.</div>
+  </div>
+  <div class="systems-container" id="systems-container"></div>
 </div>
+
+<!-- SOLUCIONES -->
+<div id="s-soluciones" class="screen">
+  <div class="page-header">
+    <h2>💚 6 Formas de Apagar el Fuego</h2>
+    <p>Intervenciones naturales con evidencia científica</p>
+  </div>
+  <div class="soluciones-container" id="soluciones-container"></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav id="bottom-nav">
+  <button class="nav-item active" onclick="goTo('s-test',0)">
+    <span class="nav-icon">🔍</span><span class="nav-lbl">Test</span>
+  </button>
+  <button class="nav-item" onclick="goTo('s-resultado',1);if(!nivelActual)goTo('s-test',0)">
+    <span class="nav-icon">📊</span><span class="nav-lbl">Resultado</span>
+  </button>
+  <button class="nav-item" onclick="goTo('s-enfermedades',2)">
+    <span class="nav-icon">🧬</span><span class="nav-lbl">Enfermedades</span>
+  </button>
+  <button class="nav-item" onclick="goTo('s-soluciones',3)">
+    <span class="nav-icon">💚</span><span class="nav-lbl">Soluciones</span>
+  </button>
+</nav>
 
 <script>
-const FOODS = [
-  // LÁCTEOS
-  {id:'leche',emoji:'🥛',name:'Leche de vaca',cat:'lacteos',type:'ambos',
-    why:'Neutral para muchos, pero la caseína A1 inflama en personas sensibles. Mejor leche de almendras o coco sin azúcar.',
-    swap:{emoji:'🥥',name:'Leche de coco sin azúcar',why:'Sin caseína ni lactosa. Aporta grasas MCT antiinflamatorias.'}},
-  {id:'queso',emoji:'🧀',name:'Queso procesado',cat:'lacteos',type:'inflama',
-    why:'Alto en sal, aditivos conservantes y grasas saturadas de baja calidad. Activa NF-κB.',
-    swap:{emoji:'🥑',name:'Aguacate',why:'Cremoso, saciante, lleno de grasas buenas. Perfecto sustituto en sándwiches.'}},
-  {id:'yogurt_az',emoji:'🍦',name:'Yogurt con azúcar',cat:'lacteos',type:'inflama',
-    why:'El azúcar añadido anula los beneficios probióticos del yogurt.',
-    swap:{emoji:'🫙',name:'Yogurt natural sin azúcar',why:'Probiótico real, sin azúcar. Agrégale fruta fresca o canela.'}},
-  {id:'yogurt_nat',emoji:'🫙',name:'Yogurt natural',cat:'lacteos',type:'sana',
-    why:'Probiótico, mejora microbiota, reduce inflamación intestinal.',swap:null},
-
-  // CARBOHIDRATOS
-  {id:'pan_bl',emoji:'🍞',name:'Pan blanco',cat:'carbos',type:'inflama',
-    why:'Harina refinada = glucosa rápida = pico de insulina = NF-κB activo.',
-    swap:{emoji:'🥑',name:'Tostada de aguacate sin pan',why:'Más saciante, sin glucosa rápida, lleno de grasas buenas.'}},
-  {id:'arroz_bl',emoji:'🍚',name:'Arroz blanco',cat:'carbos',type:'ambos',
-    why:'Índice glucémico alto. En pequeñas cantidades es neutral, en exceso inflama.',
-    swap:{emoji:'🥦',name:'Arroz de coliflor',why:'Misma textura, prácticamente cero carbohidratos, repleto de sulforafano.'}},
-  {id:'pasta',emoji:'🍝',name:'Pasta refinada',cat:'carbos',type:'inflama',
-    why:'Alto IG, bajo en fibra, aumenta glucosa rápido y activa inflamación post-comida.',
-    swap:{emoji:'🥒',name:'Zoodles (espirales de zucchini)',why:'Zero glucosa, fibra, vitamina C. Mismo volumen, cero inflamación.'}},
-  {id:'avena',emoji:'🌾',name:'Avena integral',cat:'carbos',type:'sana',
-    why:'Beta-glucanos reducen LDL y PCR. Fibra prebiótica que alimenta microbiota positiva.',swap:null},
-  {id:'cereales',emoji:'🥣',name:'Cereales de caja',cat:'carbos',type:'inflama',
-    why:'Azúcar disfrazada de "integral". Hasta 25g de azúcar por porción + aditivos.',
-    swap:{emoji:'🌾',name:'Avena natural con canela',why:'Misma practicidad, sin azúcar añadida, con fibra real.'}},
-
-  // PROTEÍNAS
-  {id:'salmon',emoji:'🐟',name:'Salmón / Atún',cat:'proteina',type:'sana',
-    why:'EPA y DHA precursores de resolvinas antiinflamatorias. 2 porciones/semana reducen PCR.',swap:null},
-  {id:'pollo',emoji:'🍗',name:'Pollo orgánico',cat:'proteina',type:'sana',
-    why:'Proteína limpia sin hormonas ni antibióticos. Antiinflamatorio cuando es de pastoreo.',swap:null},
-  {id:'embutidos',emoji:'🌭',name:'Embutidos / Salchichas',cat:'proteina',type:'inflama',
-    why:'Nitritos + AGEs + grasas trans + sodio alto. Triple daño inflamatorio.',
-    swap:{emoji:'🍗',name:'Pechuga de pollo al natural',why:'Sin conservantes, sin nitritos. Misma facilidad de preparación.'}},
-  {id:'huevos',emoji:'🥚',name:'Huevos',cat:'proteina',type:'sana',
-    why:'Colina, vitamina D, omega-3 (si son de pastoreo). Proteína completa antiinflamatoria.',swap:null},
-  {id:'carne_roja',emoji:'🥩',name:'Carne roja (frecuente)',cat:'proteina',type:'ambos',
-    why:'Neutral si es carne fresca de pastoreo, inflamatoria si es industrial o en exceso.',
-    swap:{emoji:'🐟',name:'Pescado azul 2x/semana',why:'Reemplaza 2 de las 5 porciones semanales por omega-3 antiinflamatorio.'}},
-
-  // BEBIDAS
-  {id:'soda',emoji:'🥤',name:'Refresco / Gaseosa',cat:'bebidas',type:'inflama',
-    why:'40g de azúcar por lata = activación inmediata de NF-κB + daño al microbioma.',
-    swap:{emoji:'💧',name:'Agua con limón y jengibre',why:'Antiinflamatoria, alcalinizante, hidratante. Cero azúcar.'}},
-  {id:'jugo_caja',emoji:'🧃',name:'Jugo de caja',cat:'bebidas',type:'inflama',
-    why:'Sin fibra, con azúcar concentrado y conservantes. Fructosa libre → hígado graso.',
-    swap:{emoji:'🍵',name:'Té verde con limón',why:'EGCG + vitamina C. Antiinflamatorio potente, sin azúcar.'}},
-  {id:'cafe',emoji:'☕',name:'Café (sin azúcar)',cat:'bebidas',type:'sana',
-    why:'Los polifenoles del café reducen PCR y mejoran sensibilidad a la insulina. Hasta 3 tazas/día son beneficiosas.',swap:null},
-  {id:'te_verde',emoji:'🍵',name:'Té verde',cat:'bebidas',type:'sana',
-    why:'EGCG inhibe NF-κB. Uno de los antiinflamatorios más potentes y accesibles.',swap:null},
-  {id:'alcohol',emoji:'🍷',name:'Alcohol frecuente',cat:'bebidas',type:'inflama',
-    why:'El alcohol daña la barrera intestinal directamente → leaky gut → inflamación sistémica.',
-    swap:{emoji:'🫐',name:'Kombucha sin azúcar',why:'Sabor similar al vino espumante, con probióticos antiinflamatorios.'}},
-
-  // GRASAS
-  {id:'aove',emoji:'🫒',name:'Aceite de oliva EV',cat:'grasas',type:'sana',
-    why:'Oleocantal = antiinflamatorio natural similar al ibuprofeno. Solo extra virgen, en frío.',swap:null},
-  {id:'aguacate',emoji:'🥑',name:'Aguacate',cat:'grasas',type:'sana',
-    why:'Omega-9 + luteína. Reduce IL-6 y TNF-α. Mejora absorción de otros antiinflamatorios.',swap:null},
-  {id:'margarina',emoji:'🧈',name:'Margarina',cat:'grasas',type:'inflama',
-    why:'Grasas trans industriales. De las más inflamatorias que existen. Aumentan LDL oxidado.',
-    swap:{emoji:'🫒',name:'Aceite de oliva extra virgen',why:'Mismo uso, infinitamente más saludable. Aplica en frío o baja temperatura.'}},
-  {id:'aceite_girasol',emoji:'🌻',name:'Aceite de girasol',cat:'grasas',type:'inflama',
-    why:'Exceso de omega-6 desequilibra la ratio omega-6/omega-3, activando prostaglandinas inflamatorias.',
-    swap:{emoji:'🥥',name:'Aceite de coco',why:'Grasas MCT estables al calor, antiinflamatorias y con efecto saciante.'}},
-  {id:'nueces',emoji:'🌰',name:'Nueces / Almendras',cat:'grasas',type:'sana',
-    why:'Omega-3 ALA, vitamina E, magnesio. Un puñado diario reduce la PCR significativamente.',swap:null},
-
-  // OTROS
-  {id:'azucar',emoji:'🍬',name:'Azúcar / Dulces',cat:'otros',type:'inflama',
-    why:'El azúcar es el activador de inflamación más potente y más consumido. Activa AGEs y NF-κB.',
-    swap:{emoji:'🍂',name:'Canela de Ceilán',why:'Endulza sin glucosa, regula insulina, tiene efecto antiinflamatorio propio.'}},
-  {id:'curcuma',emoji:'🟡',name:'Cúrcuma',cat:'otros',type:'sana',
-    why:'La curcumina inhibe NF-κB directamente. Siempre con pimienta negra para activarla.',swap:null},
-  {id:'jengibre',emoji:'🫚',name:'Jengibre fresco',cat:'otros',type:'sana',
-    why:'Los gingeroles inhiben COX-2, la misma enzima que bloquea el ibuprofeno. Potente y accesible.',swap:null},
-  {id:'ajo',emoji:'🧄',name:'Ajo',cat:'otros',type:'sana',
-    why:'La alicina reduce PCR y presión arterial. Cortarlo 5 min antes de cocinar activa sus propiedades.',swap:null},
-  {id:'snacks',emoji:'🍪',name:'Snacks procesados',cat:'otros',type:'inflama',
-    why:'Aceites oxidados + sal en exceso + aditivos = tormenta inflamatoria en cada bocado.',
-    swap:{emoji:'🌰',name:'Mix de nueces y cacao puro',why:'Grasas buenas + flavonoles antiinflamatorios. Igual de satisfactorio.'}},
+// 32 SÍNTOMAS
+const sintomas = [
+  // ENERGÍA Y MENTE
+  {e:'😴',t:'Cansancio crónico sin explicación',s:'Tu sistema inmune activo consume energía constantemente. La inflamación sistémica produce fatiga que no mejora con el descanso.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Inmune'},
+  {e:'🧠',t:'Niebla mental — pensamiento lento o confuso',s:'La IL-6 y el TNF-alfa cruzan la barrera hematoencefálica y ralentizan la transmisión neuronal. El cerebro inflamado piensa más despacio.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Neurológico'},
+  {e:'📉',t:'Dificultad para concentrarte o memorizar',s:'La neuroinflamación reduce el BDNF (factor neurotrófico cerebral) afectando memoria de trabajo y concentración sostenida.',cat:'Energía y Mente',etapa:'Moderado',sistema:'Neurológico'},
+  {e:'😔',t:'Ánimo bajo, tristeza sin motivo claro',s:'La inflamación reduce la serotonina y dopamina. Los antidepresivos modernos tienen efecto antiinflamatorio parcial — eso explica por qué funcionan.',cat:'Energía y Mente',etapa:'Moderado',sistema:'Neurológico'},
+  {e:'😰',t:'Ansiedad o tensión interna frecuente',s:'El cortisol elevado por inflamación activa la amígdala de forma continua, generando un estado de alerta que no tiene causa externa evidente.',cat:'Energía y Mente',etapa:'Moderado',sistema:'Neurológico'},
+  {e:'🌙',t:'Insomnio o sueño no reparador',s:'La inflamación eleva el cortisol nocturno que compite con la melatonina. Además, las citoquinas interrumpen las fases profundas del sueño.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Neurológico'},
+  // DIGESTIVO
+  {e:'🫃',t:'Distensión abdominal después de comer',s:'Señal clara de inflamación intestinal y disbiosis. El microbioma alterado fermenta alimentos que no debería, produciendo gas e inflamación local.',cat:'Digestivo',etapa:'Temprano',sistema:'Digestivo'},
+  {e:'💨',t:'Gases excesivos o frecuentes',s:'Bacterias proinflamatorias en exceso producen metano y CO2 al fermentar los alimentos. Indica permeabilidad intestinal inicial.',cat:'Digestivo',etapa:'Temprano',sistema:'Digestivo'},
+  {e:'🚽',t:'Cambios en tránsito intestinal (estreñimiento / diarrea)',s:'El intestino inflamado pierde su ritmicidad. La mucosa inflamada no absorbe bien y el sistema nervioso entérico se desregula.',cat:'Digestivo',etapa:'Moderado',sistema:'Digestivo'},
+  {e:'🔥',t:'Acidez, reflujo o sensación de ardor',s:'La inflamación del esfínter esofágico y la mucosa gástrica mantiene el reflujo. El ácido no es el problema — la inflamación que abre las válvulas sí.',cat:'Digestivo',etapa:'Moderado',sistema:'Digestivo'},
+  {e:'🤢',t:'Náuseas o malestar digestivo frecuente',s:'La hiperpermeabilidad intestinal permite que endotoxinas bacterianas entren al torrente sanguíneo, generando malestar sistémico que se percibe como náusea.',cat:'Digestivo',etapa:'Moderado',sistema:'Digestivo'},
+  {e:'🍽️',t:'Antojos intensos de azúcar o carbohidratos',s:'La inflamación altera la señalización de leptina e insulina en el hipotálamo. El cerebro inflamado pide azúcar como combustible rápido.',cat:'Digestivo',etapa:'Temprano',sistema:'Metabólico'},
+  // PIEL Y CABELLO
+  {e:'🌸',t:'Acné persistente o brotes frecuentes',s:'La piel es el espejo de la inflamación interna. El acné crónico en adultos indica niveles elevados de andrógenos inflamatorios y disbiosis intestinal.',cat:'Piel y Cabello',etapa:'Temprano',sistema:'Cutáneo'},
+  {e:'🔴',t:'Rojez, rosácea o piel reactiva',s:'La rosácea es inflamación vascular periférica. La vasodilatación inflamatoria crónica produce el eritema permanente y la sensibilidad cutánea.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Cutáneo'},
+  {e:'🌑',t:'Manchas oscuras o hiperpigmentación',s:'La inflamación activa la melanogénesis. Las manchas post-inflamatorias y el melasma son señales cutáneas de inflamación sistémica de bajo grado.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Cutáneo'},
+  {e:'😤',t:'Piel seca, descamación o eczema',s:'La barrera cutánea inflamada pierde agua y lípidos. El eczema es una respuesta TH2 exagerada, idéntica a la que ocurre en el intestino con alimentos.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Cutáneo'},
+  {e:'💇‍♀️',t:'Caída de cabello o cabello sin brillo',s:'La inflamación del cuero cabelludo y los folículos pilosos reduce el ciclo anágeno (crecimiento). La deficiencia de hierro inflamatoria agrava la caída.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Cutáneo'},
+  {e:'💅',t:'Uñas frágiles, con estrías o que se rompen',s:'Las uñas reflejan el estado nutricional e inflamatorio. La inflamación sistémica reduce la absorción de zinc, biotina y silicio necesarios para su estructura.',cat:'Piel y Cabello',etapa:'Tardío',sistema:'Cutáneo'},
+  // DOLOR Y ARTICULACIONES
+  {e:'🦴',t:'Dolor articular sin lesión evidente',s:'Las citoquinas inflamatorias (IL-1β y TNF-alfa) atacan el tejido sinovial. El dolor articular "migratorio" sin causa es la firma de la inflamación sistémica.',cat:'Dolor',etapa:'Moderado',sistema:'Músculo-Esquelético'},
+  {e:'💪',t:'Dolor o rigidez muscular difusa',s:'La inflamación muscular no producida por ejercicio (mialgia inflamatoria) es causada por citoquinas que alteran la membrana de las células musculares.',cat:'Dolor',etapa:'Moderado',sistema:'Músculo-Esquelético'},
+  {e:'🌅',t:'Rigidez al despertar que tarda en mejorar',s:'El cortisol matutino (que normalmente suprime inflamación) está insuficiente. La rigidez matutina mayor a 30 min es criterio diagnóstico de artritis reumatoide temprana.',cat:'Dolor',etapa:'Moderado',sistema:'Músculo-Esquelético'},
+  {e:'🤕',t:'Dolores de cabeza frecuentes o migrañas',s:'La neuroinflamación y la vasodilatación inflamatoria intracraneal son los mecanismos detrás de la migraña crónica. La serotonina baja por inflamación la desencadena.',cat:'Dolor',etapa:'Moderado',sistema:'Neurológico'},
+  {e:'🦵',t:'Sensación de pesadez en piernas',s:'La inflamación vascular periférica aumenta la permeabilidad capilar, generando edema leve y sensación de piernas pesadas, especialmente en la tarde.',cat:'Dolor',etapa:'Temprano',sistema:'Cardiovascular'},
+  // SISTEMA INMUNE Y METABÓLICO
+  {e:'🤧',t:'Resfriados o infecciones más de 3 veces al año',s:'Paradoja inmune: la inflamación crónica agota los recursos del sistema inmune adaptativo. El cuerpo está tan ocupado "apagando" que no puede defender bien.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Inmune'},
+  {e:'🌡️',t:'Febrícula o temperatura basal levemente elevada',s:'Una temperatura de 37.0-37.4°C constante (sin infección activa) es signo de activación inmune crónica — el termómetro lo confirma.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Inmune'},
+  {e:'🤧',t:'Alergias o sensibilidades que han empeorado',s:'La histamina está elevada por hiperactivación mastocitaria inflamatoria. Las alergias que empeoran con el tiempo indican que la inflamación sistémica aumenta.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Inmune'},
+  {e:'⚖️',t:'Peso en abdomen difícil de perder',s:'El tejido adiposo visceral produce sus propias adipokinas proinflamatorias (leptina, resistina). Es un ciclo vicioso: inflamación produce grasa, grasa produce más inflamación.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Metabólico'},
+  {e:'🫀',t:'Presión arterial elevada sin causa clara',s:'La inflamación vascular rigidifica las arterias y aumenta la resistencia periférica. La hipertensión esencial en muchos casos es una enfermedad inflamatoria.',cat:'Inmune y Metabólico',etapa:'Tardío',sistema:'Cardiovascular'},
+  // BOCA Y MUCOSAS
+  {e:'🦷',t:'Encías que sangran o se inflaman fácilmente',s:'La periodontitis es inflamación bacteriana crónica. Estudios muestran que la inflamación bucal aumenta el riesgo cardiovascular — las mismas bacterias van al torrente sanguíneo.',cat:'Boca y Mucosas',etapa:'Temprano',sistema:'Digestivo'},
+  {e:'👅',t:'Lengua con capa blanca o saburra lingual',s:'La disbiosis oral e intestinal se refleja en la lengua. La saburra es bacterias y células muertas en un ambiente de microbioma alterado.',cat:'Boca y Mucosas',etapa:'Temprano',sistema:'Digestivo'},
+  {e:'🌬️',t:'Mal aliento persistente (halitosis)',s:'Las bacterias proinflamatorias en boca e intestino producen compuestos sulfurados. La halitosis crónica indica disbiosis intestinal y oral activa.',cat:'Boca y Mucosas',etapa:'Temprano',sistema:'Digestivo'},
+  // HORMONAL
+  {e:'🌑',t:'Ciclo menstrual irregular o doloroso',s:'El exceso de prostaglandinas inflamatorias intensifica los cólicos. La inflamación pélvica crónica está detrás del 80% de dismenorreas severas y la endometriosis.',cat:'Hormonal',etapa:'Moderado',sistema:'Hormonal'},
+  {e:'🧬',t:'Síntomas tiroideos (frío, cansancio, caída de pelo)',s:'El hipotiroidismo de Hashimoto es la enfermedad autoinmune más común. Anticuerpos TPO elevados son inflamación crónica tiroidea confirmada en laboratorio.',cat:'Hormonal',etapa:'Tardío',sistema:'Hormonal'}
 ];
 
-let selected = new Set();
-let swapDecisions = {}; // id → 'swap' | 'eliminate'
+// SISTEMAS Y ENFERMEDADES
+const sistemas = [
+  {e:'🫀',n:'Cardiovascular',diseases:[
+    {n:'Aterosclerosis',l:'Las placas de colesterol son lesiones inflamatorias — NF-κB activa macrófagos en las arterias que forman las placas.'},
+    {n:'Infarto agudo de miocardio',l:'El 70% de los infartos ocurren en placas que no obstruían — son placas inflamadas que se rompen súbitamente.'},
+    {n:'Hipertensión esencial',l:'La inflamación vascular rigidifica las arterias. Muchos casos de hipertensión sin causa son una enfermedad inflamatoria.'},
+    {n:'Arritmia crónica',l:'Las citoquinas inflamatorias alteran los canales iónicos del músculo cardíaco, generando ritmos anormales.'}
+  ]},
+  {e:'🧠',n:'Neurológico',diseases:[
+    {n:'Alzheimer',l:'Reconocido hoy como enfermedad inflamatoria neurológica. PCR elevada duplica el riesgo. La microglía activada destruye sinapsis.'},
+    {n:'Parkinson',l:'Neuroinflamación de la sustancia negra — la microglía inflamada destruye las neuronas productoras de dopamina.'},
+    {n:'Depresión crónica',l:'Los antidepresivos tienen efecto antiinflamatorio. La IL-6 baja la serotonina. El 40% de depresiones son resistentes porque no se trata la inflamación.'},
+    {n:'Ansiedad generalizada',l:'El cortisol crónico inflama el hipocampo y la amígdala, generando ansiedad estructural que no tiene causa psicológica evidente.'},
+    {n:'Migraña crónica',l:'Neuroinflamación + activación del nervio trigémino + vasodilatación inflamatoria intracraneal son el mecanismo base.'}
+  ]},
+  {e:'⚖️',n:'Metabólico',diseases:[
+    {n:'Diabetes tipo 2',l:'La resistencia a la insulina es causada por inflamación en los receptores celulares. NF-κB bloquea la señal insulínica directamente.'},
+    {n:'Obesidad visceral',l:'El tejido graso produce adipokinas inflamatorias: ciclo vicioso — más grasa = más inflamación = más grasa.'},
+    {n:'Síndrome metabólico',l:'La combinación glucosa alta + HDL baja + presión alta + cintura grande es un síndrome 100% inflamatorio.'},
+    {n:'Hígado graso (NASH)',l:'La inflamación hepática progresa silenciosamente de esteatosis → esteatohepatitis → cirrosis en 10-20 años sin síntomas.'}
+  ]},
+  {e:'🦴',n:'Músculo-Esquelético',diseases:[
+    {n:'Artritis reumatoide',l:'Sistema inmune ataca articulaciones propias. NF-κB es el mediador central. La rigidez matutina es su primer signo.'},
+    {n:'Fibromialgia',l:'Neuroinflamación que sensibiliza receptores de dolor. PCR e IL-6 elevadas en el 80% de pacientes.'},
+    {n:'Lumbalgia crónica',l:'La inflamación del disco intervertebral y músculos paraespinales mantiene el dolor. No es mecánico — es inflamatorio.'},
+    {n:'Osteoporosis',l:'Las citoquinas RANKL activan osteoclastos que destruyen hueso más rápido de lo que los osteoblastos lo forman.'}
+  ]},
+  {e:'🫃',n:'Digestivo',diseases:[
+    {n:'Intestino permeable (Leaky Gut)',l:'La inflamación abre las uniones estrechas intestinales. Toxinas bacterianas y proteínas no digeridas entran al torrente sanguíneo.'},
+    {n:'Síndrome de colon irritable',l:'Inflamación de bajo grado en mucosa intestinal + disfunción del eje intestino-cerebro. Muchos casos son post-infecciosos.'},
+    {n:'Enfermedad de Crohn',l:'Respuesta inmune exagerada contra flora bacteriana intestinal. La dieta antiinflamatoria puede inducir remisión en casos tempranos.'},
+    {n:'Reflujo gastroesofágico crónico',l:'Inflamación del esfínter esofágico inferior y mucosa gástrica. Los inhibidores de bomba de protones no resuelven la causa.'}
+  ]},
+  {e:'🛡️',n:'Autoinmune',diseases:[
+    {n:'Hipotiroidismo de Hashimoto',l:'Anticuerpos TPO atacan la tiroides inflamada. La dieta sin gluten y antiinflamatoria reduce los anticuerpos en muchos casos.'},
+    {n:'Lupus eritematoso sistémico',l:'Inflamación sistémica que ataca múltiples órganos. Los brotes se correlacionan con elevación de marcadores inflamatorios.'},
+    {n:'Psoriasis',l:'Queratinocitos inflamados proliferan en exceso. El intestino permeable es el detonante principal. Responde a dieta antiinflamatoria.'},
+    {n:'Endometriosis',l:'Tejido endometrial inflamado prolifera fuera del útero. La inflamación pélvica mantiene y expande las lesiones.'}
+  ]},
+  {e:'🔬',n:'Oncológico',diseases:[
+    {n:'Cáncer de colon',l:'La inflamación crónica intestinal es el mayor factor de riesgo independiente para cáncer colorrectal. La aspirina reduce riesgo un 40% — por su efecto antiinflamatorio.'},
+    {n:'Cáncer de mama',l:'El ambiente inflamatorio en tejido mamario promueve proliferación tumoral, angiogénesis y escape inmune.'},
+    {n:'Cáncer de hígado',l:'NASH → cirrosis → hepatocarcinoma es la ruta inflamatoria confirmada. Cada escalón es inflamación progresiva.'}
+  ]}
+];
 
-function showScreen(id) {
+// SOLUCIONES
+const soluciones = [
+  {e:'🥗',n:'Alimentación Antiinflamatoria',tags:['Alta evidencia','Efecto en 2-4 semanas','Cada comida'],
+   desc:'Cada comida activa o desactiva NF-κB. Es el mayor modificador de inflamación a tu disposición.',
+   science:'El estudio PREDIMED (7,500 personas, 5 años) demostró que la dieta mediterránea reduce eventos cardiovasculares en 30%. La cúrcuma + pimienta negra reduce PCR en 38% en 4 semanas. El omega-3 del salmón inhibe COX-2 igual que el ibuprofeno sin efectos secundarios.',
+   ref:'Estruch R et al. Primary Prevention with Mediterranean Diet. NEJM, 2013.',
+   steps:['ELIMINA esta semana: azúcar blanca, harinas refinadas, aceites de girasol/maíz/canola','AGREGA cúrcuma ½ cdta + pimienta negra + aceite de oliva en cada comida','Come pescado azul 3-4x/semana: salmón, sardinas, atún, macarela','1 taza de frutos rojos diario: arándanos, moras o fresas (antocianinas)','Reemplaza snacks por nueces, almendras o semillas de chía'],
+   foods:[{e:'🌼',n:'Cúrcuma'},{e:'🐟',n:'Salmón'},{e:'🫐',n:'Arándanos'},{e:'🧄',n:'Ajo'},{e:'🫒',n:'AOVE'},{e:'🌿',n:'Jengibre'},{e:'🥦',n:'Brócoli'},{e:'🌰',n:'Nueces'}],
+   power:92},
+  {e:'🌍',n:'Grounding / Earthing',tags:['Evidencia moderada','Sin costo','20-30 min'],
+   desc:'Tus pies descalzos en la tierra transfieren electrones libres que neutralizan radicales libres inflamatorios.',
+   science:'La tierra tiene carga eléctrica negativa. Al hacer contacto descalza, absorbes electrones que neutralizan radicales libres. El estudio de Chevalier et al. (2012) mostró reducción de estrés oxidativo, cortisol nocturno y mejora de la viscosidad sanguínea (sangre más fluida = menos inflamación vascular) en personas que practicaron earthing 8 semanas.',
+   ref:'Chevalier G et al. Earthing: Health Implications. J Environmental and Public Health, 2012.',
+   steps:['Sal descalza a tierra, pasto, arena, playa o concreto natural (no asfalto)','20-30 minutos continuos — el contacto constante es la clave','Puedes estar parada, sentada o caminando lentamente','La mañana es ideal — el cortisol y la inflamación están más altos al despertar','El mar y ríos naturales tienen el mismo efecto — el agua conduce los electrones'],
+   foods:[],
+   power:73},
+  {e:'☀️',n:'Vitamina D — El sol como hormona',tags:['Alta evidencia','Gratis','15-20 min/día'],
+   desc:'La vitamina D es una hormona que regula directamente NF-κB — el interruptor maestro de la inflamación.',
+   science:'El 70% de la población latinoamericana tiene deficiencia de vitamina D. Niveles <30 ng/mL se asocian con IL-6, TNF-alfa y PCR elevados. 15-20 min de sol produce 10,000-20,000 UI de vitamina D3 en la piel. Esta vitamina activa el receptor VDR que inhibe NF-κB directamente en el núcleo celular, cortando la producción de citoquinas inflamatorias.',
+   ref:'Holick MF. Vitamin D Deficiency. New England Journal of Medicine, 2007;357:266-281.',
+   steps:['Expón brazos y piernas al sol entre 10am y 2pm (cuando el UVB llega)','15 min si tu piel es clara, 30-45 min si tu piel es oscura o morena','Sin bloqueador solar en esa ventana — el filtro bloquea la síntesis de vitamina D','Después de ese tiempo, sí aplica protección solar para el resto del día','Solicita niveles de vitamina D en tu próximo examen de sangre (ideal: 50-70 ng/mL)'],
+   foods:[],
+   power:80},
+  {e:'❄️',n:'Terapia de Frío',tags:['Evidencia moderada','En casa','30 seg - 3 min'],
+   desc:'El frío produce norepinefrina 300% — tu antiinflamatorio más rápido y gratuito.',
+   science:'La exposición al frío aumenta la norepinefrina hasta 300% en minutos. La norepinefrina inhibe directamente TNF-alfa (citoquina proinflamatoria central). 11 minutos semanales de inmersión en frío (14°C) producen beneficios antiinflamatorios medibles. El frío también activa el tejido adiposo marrón (BAT), que es metabólicamente antiinflamatorio y quema calorías sin inflamar.',
+   ref:'Shevchuk NA. Adapted cold shower as potential treatment. Med Hypotheses, 2008;70(5):995.',
+   steps:['Semana 1: últimos 30 segundos de tu ducha en frío','Semana 2: 1 minuto de agua fría al final de la ducha','Semana 3: 2-3 minutos. Respira lentamente — no hagas apnea','Durante el frío: exhala lentamente por la boca para controlar la reacción vagal','Meta: 11 min de frío total por semana divididos en sesiones'],
+   foods:[],
+   power:71},
+  {e:'🌲',n:'Baño de Bosque — Shinrin-yoku',tags:['Alta evidencia','Semanal','2 horas'],
+   desc:'Los árboles emiten fitoncidas que al inhalarlos activan tu sistema inmune antiinflamatorio y bajan el cortisol.',
+   science:'El Dr. Qing Li documentó que 2 horas en un parque arbolado reducen cortisol 12%, aumentan células NK (natural killers) antiinflamatorias en 50%, y reducen IL-6 y TNF-alfa. El efecto dura hasta 7 días post-visita. Los fitoncidas — especialmente α-pineno y limoneno — son los compuestos bioactivos que generan estos efectos al ser inhalados.',
+   ref:'Li Q et al. Forest bathing enhances human natural killer activity. Int J Immunopathol Pharmacol, 2007.',
+   steps:['Ve a un parque grande, jardín botánico o área arbolada 1-2 veces por semana','Camina lento o siéntate — el objetivo es absorber, no ejercitarte','Respira profundo y lento por la nariz — así inhalas más fitoncidas','Apaga el teléfono o siléncialo — el estrés cortisol contrarrestaría el efecto','Combínalo con grounding: quítate los zapatos sobre el pasto del parque'],
+   foods:[],
+   power:76},
+  {e:'🫁',n:'Respiración Consciente — Nervio Vago',tags:['Alta evidencia','Diario','10-15 min'],
+   desc:'El nervio vago activa el "reflejo antiinflamatorio colinérgico" — apaga TNF-alfa en segundos con la respiración correcta.',
+   science:'El Dr. Kevin Tracey (2002) descubrió que el nervio vago puede apagar la producción de TNF-alfa en macrófagos a través de la acetilcolina. La exhalación lenta (más larga que la inhalación) es el activador principal del nervio vago. 20 min de respiración diafragmática diaria reduce IL-6 en 14% en 8 semanas.',
+   ref:'Tracey KJ. The inflammatory reflex. Nature, 2002;420:853-859.',
+   steps:['Siéntate cómoda con espalda recta o acuéstate boca arriba','Inhala por nariz contando 4 tiempos (el abdomen sube, no el pecho)','Exhala por boca contando 6 a 8 tiempos — exhala todo el aire','La exhala más larga que la inhala es la clave del nervio vago','10-15 minutos: ideal al despertar y antes de dormir'],
+   foods:[],
+   power:77}
+];
+
+// PLANES POR NIVEL
+const planes = {
+  verde:{color:'#27ae60',bg:'linear-gradient(135deg,#27ae60,#1e8449)',e:'✅',t:'Inflamación Baja',
+   d:'Tu cuerpo está en buen estado. Estos hábitos te protegerán de que la inflamación de bajo grado tome control en el futuro.',
+   items:[
+     {e:'🥗',t:'Cúrcuma + pimienta negra en una comida del día',s:'Solo ½ cdta con un pellizco de pimienta — efecto antiinflamatorio comprobado'},
+     {e:'🌍',t:'20 min de grounding esta semana (3 veces)',s:'Descalza en pasto, tierra o playa — absorbe electrones'},
+     {e:'☀️',t:'15 min de sol en brazos y piernas diario',s:'Sin bloqueador en esa ventana — sintetiza vitamina D'},
+     {e:'🫁',t:'10 min de respiración 4-6 al despertar',s:'Inhala 4, exhala 6 — activa tu nervio vago cada mañana'},
+     {e:'🫐',t:'1 taza de frutos rojos cada día',s:'Arándanos, moras o fresas — antocianinas antiinflamatorias'}
+   ]},
+  amarillo:{color:'#e67e22',bg:'linear-gradient(135deg,#e67e22,#d35400)',e:'⚠️',t:'Inflamación Moderada',
+   d:'Tu cuerpo está enviando señales claras. Es el momento ideal para actuar — la inflamación moderada responde muy bien a estos cambios en 2-4 semanas.',
+   items:[
+     {e:'🚫',t:'Elimina azúcar blanca y harinas refinadas esta semana',s:'Es el cambio de mayor impacto inmediato — activa NF-κB directo'},
+     {e:'🥗',t:'Cúrcuma + pimienta + aceite oliva en cada comida',s:'3 veces al día — tu ibuprofeno natural sin efectos secundarios'},
+     {e:'🐟',t:'Salmón o sardinas 3 veces esta semana',s:'Omega-3 EPA+DHA — antiinflamatorio más potente de la naturaleza'},
+     {e:'🌍',t:'Grounding diario — 30 minutos descalza',s:'Tierra, pasto, arena o playa — cada día de esta semana'},
+     {e:'☀️',t:'20 min de sol diario en brazos y piernas',s:'Vitamina D baja = inflamación alta — corrígela primero'},
+     {e:'🫁',t:'15 min de respiración 4-8 mañana y noche',s:'El reflejo antiinflamatorio del nervio vago — dos veces al día'},
+     {e:'🌲',t:'2 horas en parque arbolado esta semana',s:'Fitoncidas que reducen tus marcadores inflamatorios por días'}
+   ]},
+  rojo:{color:'#e74c3c',bg:'linear-gradient(135deg,#e74c3c,#c0392b)',e:'🔴',t:'Inflamación Alta — Actúa Ahora',
+   d:'Tu cuerpo necesita atención urgente. Implementa TODOS estos hábitos y solicita una PCR ultrasensible a tu médico para confirmar el nivel.',
+   items:[
+     {e:'🚨',t:'Protocolo de emergencia alimentaria — esta semana',s:'Elimina TODO: azúcar, harinas blancas, aceites vegetales, ultraprocesados y alcohol'},
+     {e:'🐟',t:'Salmón o sardinas todos los días esta semana',s:'Omega-3 es el antiinflamatorio más potente — efecto en 72h'},
+     {e:'🌼',t:'Cúrcuma 1 cdta + pimienta + aceite en cada comida',s:'3 veces al día — este es tu ibuprofeno natural urgente'},
+     {e:'🌍',t:'Grounding: 30-60 min diarios sin excepción',s:'Descalza en tierra, pasto, arena o playa — reduce viscosidad sanguínea'},
+     {e:'❄️',t:'Ducha con 1-2 min de agua fría al final cada día',s:'Norepinefrina +300% — el antiinflamatorio más rápido que tienes'},
+     {e:'☀️',t:'Sol 20-30 min en brazos y piernas cada mañana',s:'Corrige la deficiencia de vitamina D — uno de los mayores gatillos'},
+     {e:'🫁',t:'20 min de respiración 4-8 mañana Y noche',s:'Nervio vago activo = TNF-alfa bloqueado — hazlo dos veces al día'},
+     {e:'🌲',t:'Parque arbolado 2h, dos veces esta semana',s:'Fitoncidas + grounding combinados = protocolo antiinflamatorio completo'},
+     {e:'🩺',t:'Solicita PCR ultrasensible y vitamina D a tu médico',s:'Confirma el nivel y monitorea el progreso de tus cambios'}
+   ]}
+};
+
+// STATE
+let checked = new Set();
+let nivelActual = null;
+let activeCat = 'Todos';
+let openSymptom = null;
+let expandedSol = null;
+let planDone = JSON.parse(localStorage.getItem('moraima5_plan') || '{}');
+
+function enterApp(){
+  document.getElementById('s-welcome').classList.remove('active');
+  document.getElementById('bottom-nav').classList.add('visible');
+  showScreen('s-test');
+  renderCats();
+  renderSintomas();
+  renderSistemas();
+  renderSoluciones();
+}
+
+function goTo(id, idx){
+  showScreen(id);
+  document.querySelectorAll('.nav-item').forEach((el,i) => el.classList.toggle('active', i===idx));
+}
+
+function showScreen(id){
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
 }
 
-function filterCat(cat, el) {
-  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  renderFoods(cat);
+// TEST
+const cats = ['Todos','Energía y Mente','Digestivo','Piel y Cabello','Dolor','Inmune y Metabólico','Boca y Mucosas','Hormonal'];
+
+function renderCats(){
+  document.getElementById('cats-nav').innerHTML = cats.map(c =>
+    `<button class="cat-btn ${c===activeCat?'active':''}" onclick="setCat('${c}')">${c}</button>`
+  ).join('');
 }
 
-function renderFoods(cat) {
-  const grid = document.getElementById('food-grid');
-  const foods = cat === 'todos' ? FOODS : FOODS.filter(f => f.cat === cat);
-  grid.innerHTML = '';
-  foods.forEach(f => {
-    const isSelected = selected.has(f.id);
-    const cls = isSelected ? (f.type === 'inflama' ? 'selected-bad' : f.type === 'sana' ? 'selected-good' : 'selected-bad') : '';
-    const check = isSelected ? (f.type === 'sana' ? '✅' : '⚠️') : '';
-    grid.innerHTML += `
-      <div class="food-item ${cls}" id="fi-${f.id}" onclick="toggleFood('${f.id}')">
-        <div class="fi-check">${check}</div>
-        <div class="fi-emoji">${f.emoji}</div>
-        <div class="fi-name">${f.name}</div>
-        <div class="${f.type === 'sana' ? 'fi-sana' : f.type === 'inflama' ? 'fi-inflama' : 'fi-inflama'}">${f.type === 'sana' ? '🟢 antiinflamatorio' : f.type === 'inflama' ? '🔴 inflamatorio' : '🟡 depende'}</div>
-      </div>`;
-  });
-  updateCount();
+function setCat(cat){
+  activeCat = cat;
+  openSymptom = null;
+  renderCats();
+  renderSintomas();
 }
 
-function toggleFood(id) {
-  if (selected.has(id)) selected.delete(id);
-  else selected.add(id);
-  const currentCat = document.querySelector('.cat-tab.active');
-  const cat = currentCat ? currentCat.onclick.toString().match(/'([^']+)'/)?.[1] || 'todos' : 'todos';
-  filterCat(cat, currentCat);
+function renderSintomas(){
+  let list = sintomas;
+  if(activeCat !== 'Todos') list = list.filter(s => s.cat === activeCat);
+  document.getElementById('showing-count').textContent = `Mostrando ${list.length} síntomas`;
+  document.getElementById('score-badge').textContent = `${checked.size} marcados`;
+  const etapaColor = {Temprano:'tag-early',Moderado:'tag-mid',Tardío:'tag-late'};
+  document.getElementById('symptom-list').innerHTML = list.map(s => {
+    const idx = sintomas.indexOf(s);
+    return `
+    <div class="symptom-card ${checked.has(idx)?'checked':''} ${openSymptom===idx?'open':''}" id="sc-${idx}">
+      <div class="sc-header" onclick="toggleSymptom(${idx})">
+        <div class="sc-emoji">${s.e}</div>
+        <div class="sc-info">
+          <div class="sc-title">${s.t}</div>
+          <div class="sc-system" style="color:var(--gray)">${s.cat} · ${s.sistema}</div>
+        </div>
+        <div class="sc-check">${checked.has(idx)?'✓':''}</div>
+      </div>
+      <div class="sc-detail">
+        ${s.s}
+        <div class="sc-tags">
+          <span class="sc-tag ${etapaColor[s.etapa]||'tag-mid'}">${s.etapa}</span>
+          <span class="sc-tag tag-system">🔬 ${s.sistema}</span>
+          <button onclick="markSymptom(event,${idx})" style="padding:3px 10px;border-radius:50px;font-size:10px;font-weight:700;cursor:pointer;border:2px solid ${checked.has(idx)?'var(--red)':'var(--green)'};background:${checked.has(idx)?'var(--red)':'var(--green)'};color:${checked.has(idx)?'white':'var(--navy)'};font-family:inherit">
+            ${checked.has(idx)?'✓ Lo tengo — marcado':'Marcar como presente'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-function updateCount() {
-  const total = selected.size;
-  const bad = [...selected].filter(id => { const f = FOODS.find(x=>x.id===id); return f && f.type === 'inflama'; }).length;
-  const good = [...selected].filter(id => { const f = FOODS.find(x=>x.id===id); return f && f.type === 'sana'; }).length;
-  document.getElementById('selection-count').textContent = total > 0
-    ? `${total} seleccionados — ${bad} inflamatorios 🔴 · ${good} antiinflamatorios 🟢`
-    : 'Toca los alimentos que tienes en casa';
-  document.getElementById('btn-ver-alacena').style.display = total > 0 ? 'block' : 'none';
+function toggleSymptom(i){
+  openSymptom = openSymptom===i?null:i;
+  renderSintomas();
 }
 
-function showAlacena() {
-  const badFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && (f.type === 'inflama' || f.type === 'ambos'));
-  const goodFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && f.type === 'sana');
-
-  const sr = document.getElementById('summary-row');
-  sr.innerHTML = `
-    <div class="sum-box"><div class="sum-val" style="color:var(--red)">${badFoods.length}</div><div class="sum-label">INFLAMATORIOS</div></div>
-    <div class="sum-box"><div class="sum-val" style="color:var(--green)">${goodFoods.length}</div><div class="sum-label">ANTIINFLAMATORIOS</div></div>
-    <div class="sum-box"><div class="sum-val" style="color:var(--gold)">${selected.size}</div><div class="sum-label">TOTAL</div></div>`;
-
-  const badChips = document.getElementById('bad-chips');
-  badChips.innerHTML = badFoods.length > 0
-    ? badFoods.map(f => `<span class="acena-chip chip-bad">${f.emoji} ${f.name}</span>`).join('')
-    : '<span style="font-size:12px;color:rgba(255,255,255,0.3)">¡Ninguno! 🎉</span>';
-
-  const goodChips = document.getElementById('good-chips');
-  goodChips.innerHTML = goodFoods.length > 0
-    ? goodFoods.map(f => `<span class="acena-chip chip-good">${f.emoji} ${f.name}</span>`).join('')
-    : '<span style="font-size:12px;color:rgba(255,255,255,0.3)">Agrega más antiinflamatorios</span>';
-
-  document.getElementById('btn-swaps').style.display = badFoods.length > 0 ? 'block' : 'none';
-  showScreen('s-alacena');
+function markSymptom(e, i){
+  e.stopPropagation();
+  if(checked.has(i)) checked.delete(i); else checked.add(i);
+  renderSintomas();
 }
 
-function showSwaps() {
-  const badFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && (f.type === 'inflama' || f.type === 'ambos'));
-  const list = document.getElementById('swaps-list');
-  list.innerHTML = '';
-  badFoods.forEach(f => {
-    const hasSwap = f.swap !== null;
-    list.innerHTML += `
-      <div class="swap-card">
-        <div class="swap-header">
-          <div class="swap-bad">${f.emoji}</div>
-          ${hasSwap ? `<div class="swap-arrow">→</div><div class="swap-good">${f.swap.emoji}</div>` : ''}
-          <div class="swap-names">
-            <div class="swap-from">${f.name}</div>
-            ${hasSwap ? `<div class="swap-to">${f.swap.name}</div>` : '<div style="font-size:11px;color:rgba(255,255,255,0.4)">Sin reemplazo directo</div>'}
+function verResultado(){
+  const score = checked.size;
+  if(score <= 4) nivelActual = 'verde';
+  else if(score <= 12) nivelActual = 'amarillo';
+  else nivelActual = 'rojo';
+  renderResultado();
+  renderPlan();
+  goTo('s-resultado',1);
+}
+
+function renderResultado(){
+  const p = planes[nivelActual];
+  const score = checked.size;
+  const checkedItems = [...checked].map(i => sintomas[i]);
+  document.getElementById('resultado-content').innerHTML = `
+    <div class="resultado-card" style="background:${p.bg}">
+      <div class="rc-emoji">${p.e}</div>
+      <div class="rc-nivel-label">Nivel de inflamación silenciosa</div>
+      <div class="rc-title">${p.t}</div>
+      <div class="rc-score">${score}<span> / 32 síntomas</span></div>
+      <div class="rc-desc">${p.d}</div>
+    </div>
+    ${score > 0 ? `
+    <div class="checked-list-card">
+      <div class="clc-title">🔍 Tus ${score} señales detectadas</div>
+      ${checkedItems.map(s=>`
+        <div class="clc-item">
+          <div class="clc-dot"></div>
+          <div class="clc-text">
+            <div class="clc-name">${s.e} ${s.t}</div>
+            <div class="clc-why">${s.s}</div>
           </div>
-        </div>
-        <div class="swap-why">${f.why}</div>
-        ${hasSwap ? `<div class="swap-why" style="color:rgba(93,226,140,0.8);margin-top:5px;">✅ <em>${f.swap.why}</em></div>` : ''}
-        <div class="swap-action">
-          ${hasSwap ? `<button class="btn-swap" onclick="setDecision('${f.id}','swap')">🔄 Lo reemplazo</button>` : ''}
-          <button class="btn-elim" onclick="setDecision('${f.id}','eliminate')" style="${!hasSwap ? 'width:100%' : ''}">🗑 Lo elimino</button>
-        </div>
-      </div>`;
-  });
-  showScreen('s-swaps');
+        </div>`).join('')}
+    </div>` : '<div class="checked-list-card" style="text-align:center;color:var(--gray);font-size:13px;font-weight:600;padding:20px">✅ No marcaste síntomas — ¡Excelente estado inflamatorio!</div>'}
+    <div class="action-btns">
+      <button class="btn-primary" onclick="goTo('s-soluciones',3)">💚 Ver mis 6 soluciones naturales</button>
+      <button class="btn-secondary" onclick="goTo('s-enfermedades',2)">🧬 Ver enfermedades vinculadas</button>
+    </div>`;
 }
 
-function setDecision(id, decision) {
-  swapDecisions[id] = decision;
-  const card = document.querySelector(`[onclick*="'${id}'"][onclick*="'${decision}'"]`);
-  if (card) {
-    const parent = card.closest('.swap-card');
-    const all = parent.querySelectorAll('button');
-    all.forEach(b => b.style.opacity = '0.4');
-    card.style.opacity = '1';
-    card.style.background = decision === 'swap' ? 'rgba(93,226,140,0.25)' : 'rgba(255,255,255,0.15)';
-    card.style.borderColor = decision === 'swap' ? 'var(--green)' : 'rgba(255,255,255,0.5)';
-  }
-}
-
-function showResults() {
-  const badFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && (f.type === 'inflama' || f.type === 'ambos'));
-  const goodFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && f.type === 'sana');
-  const swaps = badFoods.filter(f => swapDecisions[f.id] === 'swap');
-  const elims = badFoods.filter(f => swapDecisions[f.id] === 'eliminate');
-  const decided = swaps.length + elims.length;
-  const total = badFoods.length;
-  const pct = total > 0 ? Math.round(decided / total * 100) : 100;
-
-  let emoji, title, sub;
-  if (pct >= 80)      { emoji='🏆'; title='Plan antiinflamatorio sólido'; sub='Tomaste decisiones concretas sobre la mayoría de tus inflamatorios. Esto ya es un cambio real en tu biología.'; }
-  else if (pct >= 50) { emoji='🌱'; title='¡Buen comienzo!'; sub='Cada decisión cuenta. Las que tomaste ya reducen tu carga inflamatoria. Vuelve a revisar el resto cuando estés lista.'; }
-  else if (total === 0){ emoji='🌟'; title='¡Alacena antiinflamatoria!'; sub='No tienes inflamatorios identificados en casa. Ahora enfócate en enriquecer con más antiinflamatorios.'; }
-  else               { emoji='💡'; title='Conciencia es el primer paso'; sub='Ya sabes qué tienes. La decisión de actuar es tuya y se puede tomar en cualquier momento. No hay prisa, hay intención.'; }
-
-  document.getElementById('results-emoji').textContent = emoji;
-  document.getElementById('results-title').textContent = title;
-  document.getElementById('results-sub').textContent = sub;
-
-  let actHTML = '';
-  if (swaps.length > 0) {
-    actHTML += `<div style="font-size:10px;letter-spacing:2px;color:var(--green);font-weight:700;margin-bottom:8px;">🔄 VAS A REEMPLAZAR</div>`;
-    actHTML += swaps.map(f => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px;">
-      <span>${f.emoji}</span><span style="color:var(--red)">${f.name}</span>
-      <span style="color:rgba(255,255,255,0.4)">→</span>
-      <span>${f.swap.emoji}</span><span style="color:var(--green)">${f.swap.name}</span>
+// ENFERMEDADES
+function renderSistemas(){
+  document.getElementById('systems-container').innerHTML = sistemas.map((s,i) => `
+    <div class="system-card" id="sys-${i}">
+      <div class="system-header" onclick="toggleSistema(${i})">
+        <div class="sys-emoji">${s.e}</div>
+        <div class="sys-info">
+          <div class="sys-name">${s.n}</div>
+          <div class="sys-count">${s.diseases.length} enfermedades — toca para ver</div>
+        </div>
+        <div class="sys-arrow">›</div>
+      </div>
+      <div class="disease-list">
+        ${s.diseases.map(d=>`
+          <div class="disease-item">
+            <div class="di-name">${d.n}</div>
+            <div class="di-link">${d.l}</div>
+            <div class="di-badge">🔥 NF-κB activado</div>
+          </div>`).join('')}
+      </div>
     </div>`).join('');
-  }
-  if (elims.length > 0) {
-    actHTML += `<div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.5);font-weight:700;margin:10px 0 8px;">🗑 VAS A ELIMINAR</div>`;
-    actHTML += elims.map(f => `<div style="font-size:12px;margin-bottom:6px;color:rgba(255,255,255,0.7);">${f.emoji} ${f.name}</div>`).join('');
-  }
-  if (!actHTML) actHTML = `<div style="font-size:12px;color:rgba(255,255,255,0.5);">Vuelve a revisar los swaps cuando estés lista.</div>`;
-  document.getElementById('results-actions').innerHTML = actHTML;
-
-  const goodDiv = document.getElementById('results-good');
-  goodDiv.innerHTML = goodFoods.length > 0
-    ? goodFoods.map(f => `<span class="acena-chip chip-good">${f.emoji} ${f.name}</span>`).join('')
-    : '<span style="font-size:12px;color:rgba(255,255,255,0.35)">Agrega antiinflamatorios a tu alacena 🌱</span>';
-
-  showScreen('s-results');
 }
 
-// Init
-renderFoods('todos');
+function toggleSistema(i){
+  document.getElementById(`sys-${i}`).classList.toggle('open');
+}
+
+// SOLUCIONES
+function renderSoluciones(){
+  document.getElementById('soluciones-container').innerHTML = soluciones.map((s,i) => `
+    <div class="sol-card ${expandedSol===i?'expanded':''}" id="solc-${i}">
+      <div class="sol-header" onclick="toggleSol(${i})">
+        <div class="sol-emoji-big">${s.e}</div>
+        <div class="sol-info">
+          <div class="sol-name">${s.n}</div>
+          <div class="sol-tags">
+            ${s.tags.map((t,ti)=>`<span class="sol-tag ${ti===0?'azul':''}">${t}</span>`).join('')}
+          </div>
+          <div class="sol-desc-short">${s.desc}</div>
+        </div>
+      </div>
+      <div class="sol-body">
+        <div class="sol-science-box">
+          <div class="ssb-title">🔬 La ciencia detrás</div>
+          <div class="ssb-text">${s.science}</div>
+          <div class="ssb-ref">Fuente: ${s.ref}</div>
+        </div>
+        <div class="sol-steps-title">Cómo aplicarlo esta semana</div>
+        ${s.steps.map((st,si)=>`
+          <div class="sol-step">
+            <div class="ss-num">${si+1}</div>
+            <div class="ss-text">${st}</div>
+          </div>`).join('')}
+        ${s.foods.length>0?`
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Top alimentos antiinflamatorios</div>
+          <div class="sol-foods-grid">${s.foods.map(f=>`<div class="sfood"><span>${f.e}</span>${f.n}</div>`).join('')}</div>
+        </div>`:''}
+        <div class="power-bar-wrap">
+          <div class="pbw-label">Poder antiinflamatorio medido: ${s.power}%</div>
+          <div class="pbw-bar"><div class="pbw-fill" style="width:${s.power}%"></div></div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleSol(i){
+  expandedSol = expandedSol===i?null:i;
+  renderSoluciones();
+  if(expandedSol!==null) setTimeout(()=>{
+    const el=document.getElementById(`solc-${i}`);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  },100);
+}
+
+// PLAN (embedded in resultado)
+function renderPlan(){} // plan shown inline in resultado
 </script>
 </body>
 </html>
