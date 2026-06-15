@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Científica Módulo 5 — Inflamación | MORAIMA 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e25d5d;--orange:#f4a03f;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Montserrat',sans-serif;background:#f5f7fa;color:#1a1a2e;}
+  .page{width:210mm;min-height:297mm;margin:0 auto 20px;padding:16mm 15mm;background:#fff;position:relative;overflow:hidden;}
+  .cover{background:linear-gradient(155deg,#2c0a0a 0%,#5c1a1a 50%,#8b2020 100%);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+  .cover-logo{font-size:9px;letter-spacing:4px;color:rgba(244,208,63,0.7);text-transform:uppercase;margin-bottom:8px;}
+  .cover-tag{background:rgba(244,208,63,0.15);border:1px solid rgba(244,208,63,0.4);border-radius:30px;padding:5px 18px;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:28px;}
+  .cover-title{font-size:34px;font-weight:900;line-height:1.2;margin-bottom:10px;text-transform:uppercase;}
+  .cover-title span{color:var(--gold);}
+  .cover-sub{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:44px;max-width:350px;line-height:1.7;}
+  .divider{width:60px;height:3px;background:var(--gold);border-radius:2px;margin:0 auto 28px;}
+  .cover-author{font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:2px;}
+  .cover-author strong{color:var(--sky);}
+  .deco{position:absolute;border-radius:50%;border:1.5px solid rgba(226,93,93,0.12);pointer-events:none;}
+
+  .stag{display:inline-block;background:var(--navy);color:var(--gold);font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:12px;}
+  h2.stitle{font-size:21px;font-weight:800;color:var(--navy);line-height:1.25;margin-bottom:8px;}
+  h2.stitle span{color:var(--red);}
+  .intro{font-size:12px;color:#444;line-height:1.85;margin-bottom:18px;border-left:3px solid var(--red);padding-left:14px;}
+  p.bt{font-size:12px;color:#333;line-height:1.85;margin-bottom:12px;}
+
+  .stats{display:flex;gap:0;margin:18px 0;border-radius:12px;overflow:hidden;}
+  .sbox{flex:1;padding:14px 10px;text-align:center;}
+  .sbox:nth-child(1){background:#5c1a1a;}
+  .sbox:nth-child(2){background:#8b2020;}
+  .sbox:nth-child(3){background:#b03030;}
+  .sbox:nth-child(4){background:var(--orange);}
+  .sv{font-size:22px;font-weight:900;color:var(--gold);}
+  .sl{font-size:8px;color:rgba(255,255,255,0.65);letter-spacing:1px;margin-top:2px;}
+
+  .hbox{background:var(--navy);color:#fff;border-radius:14px;padding:18px 20px;margin:16px 0;}
+  .hbox h3{font-size:12px;color:var(--gold);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
+  .hbox p{font-size:11px;line-height:1.75;color:rgba(255,255,255,0.82);}
+  .dato{background:#fff0f0;border-left:4px solid var(--red);border-radius:0 12px 12px 0;padding:12px 16px;margin:12px 0;}
+  .dato .dlabel{font-size:9px;letter-spacing:2px;color:#8b1a1a;text-transform:uppercase;margin-bottom:4px;font-weight:700;}
+  .dato p{font-size:11px;color:#5c1a1a;line-height:1.7;}
+  .warn{background:#fffbea;border:1.5px solid var(--gold);border-radius:12px;padding:12px 16px;margin:12px 0;}
+  .warn .wlabel{font-size:9px;letter-spacing:2px;color:#8b6914;text-transform:uppercase;margin-bottom:4px;font-weight:700;}
+  .warn p{font-size:11px;color:#555;line-height:1.7;}
+  .good-box{background:#f0fff5;border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:12px 16px;margin:12px 0;}
+  .good-box .glabel{font-size:9px;letter-spacing:2px;color:#1a5c2e;text-transform:uppercase;margin-bottom:4px;font-weight:700;}
+  .good-box p{font-size:11px;color:#1a4a2e;line-height:1.7;}
+
+  .symptom-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0;}
+  .sym-card{background:#fff0f0;border:1px solid #f4c6c6;border-radius:10px;padding:10px;text-align:center;}
+  .sym-icon{font-size:20px;margin-bottom:4px;}
+  .sym-name{font-size:10px;font-weight:700;color:#8b1a1a;}
+
+  .cascade{display:flex;flex-direction:column;gap:0;margin:16px 0;}
+  .casc-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid #e0e8f0;background:#f8fafc;}
+  .casc-item:first-child{border-radius:12px 12px 0 0;}
+  .casc-item:last-child{border-radius:0 0 12px 12px;border-top:none;}
+  .casc-item:not(:first-child):not(:last-child){border-top:none;}
+  .casc-num{width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .casc-text{font-size:11px;color:#333;line-height:1.65;}
+  .casc-title{font-weight:700;color:var(--navy);display:block;margin-bottom:2px;}
+
+  .phead{background:linear-gradient(135deg,#5c1a1a,#8b2020);color:#fff;border-radius:14px 14px 0 0;padding:14px 18px;text-align:center;}
+  .phead h3{font-size:13px;font-weight:700;color:var(--gold);}
+  .phead p{font-size:10px;color:rgba(255,255,255,0.6);margin-top:3px;}
+  .pbody{border:1.5px solid #f4c6c6;border-top:none;border-radius:0 0 14px 14px;}
+  .prow{display:flex;align-items:flex-start;gap:12px;padding:12px 18px;border-bottom:1px solid #fdf0f0;}
+  .prow:last-child{border-bottom:none;}
+  .ptime{width:52px;font-size:10px;font-weight:700;color:var(--navy);letter-spacing:1px;flex-shrink:0;}
+  .pdot{width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:3px;}
+  .ptext{font-size:11px;color:#333;line-height:1.6;}
+  .ptech{font-weight:700;color:var(--navy);}
+
+  .cit{font-size:10px;color:#666;line-height:1.6;margin-bottom:7px;padding-left:14px;position:relative;}
+  .cit::before{content:'[';position:absolute;left:0;color:var(--red);}
+
+  .back{background:linear-gradient(145deg,#2c0a0a 0%,#5c1a1a 100%);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+  .mantra{font-size:26px;font-weight:900;color:var(--gold);line-height:1.3;margin-bottom:12px;text-transform:uppercase;}
+
+  @media print{
+    @page{size:A4;margin:0;}
+    html,body{background:#fff;margin:0;padding:0;}
+    .page{margin:0;box-shadow:none;width:210mm;height:297mm;min-height:unset;overflow:hidden;page-break-after:always;}
+    .page:last-child{page-break-after:avoid;}
+  }
+  .print-btn{display:block;width:100%;max-width:300px;margin:32px auto 0;padding:13px;border-radius:50px;background:rgba(226,93,93,0.1);border:2px solid rgba(226,93,93,0.3);color:var(--red);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:center;}
+  @media print{.print-btn{display:none;}}
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="page cover">
+  <div class="deco" style="width:400px;height:400px;top:-80px;right:-90px;"></div>
+  <div class="deco" style="width:250px;height:250px;bottom:-50px;left:-70px;border-color:rgba(244,208,63,0.08)"></div>
+  <div class="cover-logo">epimedik · MORAIMA 21</div>
+  <div class="cover-tag">Módulo 5 · Inflamación · Días 13 al 15</div>
+  <div style="font-size:52px;margin-bottom:16px;">🔥</div>
+  <div class="cover-title">La <span>inflamación</span><br>silenciosa</div>
+  <div class="cover-sub">El fuego invisible que está detrás del cansancio, el dolor, el sobrepeso resistente y las enfermedades crónicas — y cómo apagarlo desde hoy</div>
+  <div class="divider"></div>
+  <div class="cover-author">Guía científica presentada por<br><strong>Dra. Monica Arellano · epimedik</strong></div>
+</div>
+
+<!-- PÁG 1: QUÉ ES LA INFLAMACIÓN -->
+<div class="page">
+  <div class="stag">El fuego que no se ve pero se siente</div>
+  <h2 class="stitle">La inflamación <span>crónica de bajo grado</span> — la raíz de todo</h2>
+  <p class="intro">Existe un tipo de inflamación que no duele, no da fiebre ni se ve en una radiografía. Se llama inflamación crónica de bajo grado (CIBD), y según la ciencia actual es el denominador común de más del 60% de las muertes a nivel mundial.</p>
+
+  <div class="stats">
+    <div class="sbox"><div class="sv">60%</div><div class="sl">MUERTES VINCULADAS A INFLAMACIÓN CRÓNICA</div></div>
+    <div class="sbox"><div class="sv">IL-6</div><div class="sl">CITOCINA PRINCIPAL — BUEN INDICADOR EN SANGRE</div></div>
+    <div class="sbox"><div class="sv">PCR</div><div class="sl">PROTEÍNA C-REACTIVA — MARCADOR ESTÁNDAR</div></div>
+    <div class="sbox"><div class="sv">21 d</div><div class="sl">MÍNIMO PARA REDUCIR MARCADORES INFLAMATORIOS</div></div>
+  </div>
+
+  <p class="bt">La inflamación aguda es buena: cuando te cortas, el cuerpo inflama la zona para reparar. El problema es cuando ese proceso nunca se apaga. La inflamación crónica es un sistema inmune que permanece en alerta máxima indefinidamente — dañando tejidos sanos, envejeciendo células prematuramente y creando las condiciones perfectas para la enfermedad.</p>
+
+  <div class="hbox">
+    <h3>🔬 NF-κB: el interruptor maestro de la inflamación</h3>
+    <p>El factor nuclear kappa B (NF-κB) es la molécula que activa los genes inflamatorios en prácticamente todas las células del cuerpo. Cuando se activa crónicamente por el estrés, el azúcar, los tóxicos ambientales o el intestino permeable, el cuerpo produce un exceso continuo de citocinas inflamatorias (IL-1β, IL-6, TNF-α) que dañan vasos sanguíneos, articulaciones, neuronas y tejido adiposo. La buena noticia: múltiples nutrientes y hábitos lo inhiben directamente.</p>
+  </div>
+
+  <div class="warn">
+    <div class="wlabel">⚠️ Los 9 síntomas de inflamación crónica que ignoramos</div>
+    <div class="symptom-grid">
+      <div class="sym-card"><div class="sym-icon">😴</div><div class="sym-name">Fatiga sin causa</div></div>
+      <div class="sym-card"><div class="sym-icon">🧠</div><div class="sym-name">Brain fog</div></div>
+      <div class="sym-card"><div class="sym-icon">🫃</div><div class="sym-name">Abdomen inflamado</div></div>
+      <div class="sym-card"><div class="sym-icon">🦴</div><div class="sym-name">Dolor articular</div></div>
+      <div class="sym-card"><div class="sym-icon">😰</div><div class="sym-name">Ansiedad crónica</div></div>
+      <div class="sym-card"><div class="sym-icon">🤧</div><div class="sym-name">Alergias frecuentes</div></div>
+      <div class="sym-card"><div class="sym-icon">⚖️</div><div class="sym-name">Peso resistente</div></div>
+      <div class="sym-card"><div class="sym-icon">😤</div><div class="sym-name">Irritabilidad</div></div>
+      <div class="sym-card"><div class="sym-icon">🌙</div><div class="sym-name">Mal sueño</div></div>
+    </div>
+    <p style="font-size:11px;color:#555;margin-top:8px;">Si tienes 3 o más de estos síntomas de forma regular, tu cuerpo probablemente está en estado inflamatorio crónico — aunque tus análisis de rutina salgan "normales".</p>
+  </div>
+</div>
+
+<!-- PÁG 2: CAUSAS Y CASCADA -->
+<div class="page">
+  <div class="stag">Las causas — lo que activa el fuego</div>
+  <h2 class="stitle">Qué <span>enciende</span> la inflamación crónica</h2>
+  <p class="intro">La inflamación crónica no tiene una sola causa. Es el resultado acumulado de múltiples señales de alarma que el cuerpo recibe día tras día. Identificar cuáles aplican en tu vida es el primer paso para apagarla.</p>
+
+  <div class="cascade">
+    <div class="casc-item">
+      <div class="casc-num">1</div>
+      <div class="casc-text"><span class="casc-title">Alimentación inflamatoria crónica</span>Azúcar refinada, harinas procesadas, aceites omega-6 en exceso y ultraprocesados activan el NF-κB directamente y alteran la microbiota intestinal, generando permeabilidad intestinal (leaky gut) que introduce bacterias al torrente sanguíneo.</div>
+    </div>
+    <div class="casc-item">
+      <div class="casc-num">2</div>
+      <div class="casc-text"><span class="casc-title">Estrés psicosocial crónico</span>El cortisol elevado sostenidamente suprime la respuesta antiinflamatoria regulatoria e incrementa la producción de IL-6 y PCR. El estrés psicológico activa la inflamación igual que una infección — la ciencia lo llama "inflamación neuroinmune".</div>
+    </div>
+    <div class="casc-item">
+      <div class="casc-num">3</div>
+      <div class="casc-text"><span class="casc-title">Privación del sueño</span>Una sola noche de sueño menor a 6 horas aumenta los niveles de IL-6 y TNF-α. La privación crónica mantiene el sistema inmune en estado de alerta permanente, acelerando el envejecimiento celular y el riesgo cardiovascular.</div>
+    </div>
+    <div class="casc-item">
+      <div class="casc-num">4</div>
+      <div class="casc-text"><span class="casc-title">Sedentarismo</span>El músculo en reposo no libera mioquinas antiinflamatorias (especialmente IL-10 e IL-1Ra). El movimiento regular es literalmente una terapia antiinflamatoria — sin movimiento, el sistema inflamatorio se desregula.</div>
+    </div>
+    <div class="casc-item">
+      <div class="casc-num">5</div>
+      <div class="casc-text"><span class="casc-title">Exposición a tóxicos ambientales</span>Pesticidas, plásticos (BPA, ftalatos), metales pesados y contaminantes del aire activan receptores inflamatorios celulares. La detoxificación hepática y renal eficiente es la primera línea de defensa.</div>
+    </div>
+    <div class="casc-item">
+      <div class="casc-num">6</div>
+      <div class="casc-text"><span class="casc-title">Soledad y aislamiento social</span>Los estudios de Cacioppo y Cole (UCLA, 2007) demostraron que la soledad crónica activa genes proinflamatorios y suprime genes antivirales — la conexión social es literalmente antiinflamatoria a nivel genético.</div>
+    </div>
+  </div>
+
+  <div class="dato">
+    <div class="dlabel">📊 El dato que cambia la perspectiva</div>
+    <p>Un metaanálisis de 2017 (Furman et al., Nature Medicine) confirmó que la inflamación crónica de bajo grado predice mejor el riesgo de mortalidad a 10 años que el colesterol, la presión arterial o el IMC. La PCR y la IL-6 son hoy consideradas por muchos especialistas los biomarcadores de envejecimiento más importantes disponibles.</p>
+  </div>
+</div>
+
+<!-- PÁG 3: APAGAR EL FUEGO + PROTOCOLO -->
+<div class="page">
+  <div class="stag">Cómo apagar el fuego</div>
+  <h2 class="stitle">Las intervenciones <span>más efectivas</span> para reducir la inflamación</h2>
+
+  <div class="good-box">
+    <div class="glabel">🌿 Los 5 antiinflamatorios más potentes validados por la ciencia</div>
+    <p><strong>1. Omega-3 (EPA+DHA):</strong> Precursores de resolvinas y protectinas — moléculas que apagan activamente la respuesta inflamatoria. 2-4g/día reduce PCR e IL-6 significativamente en ensayos clínicos.<br><br>
+    <strong>2. Cúrcuma + pimienta negra:</strong> La curcumina inhibe NF-κB con efectividad comparable a algunos AINEs. La piperina aumenta su absorción 2000%. Dosis efectiva: 500-1000mg curcumina/día.<br><br>
+    <strong>3. Movimiento moderado regular:</strong> 30 minutos de ejercicio aeróbico 5 veces/semana reduce la PCR un 35% en 12 semanas (Church et al., NEJM). Las mioquinas liberadas son más potentes que muchos fármacos antiinflamatorios.<br><br>
+    <strong>4. Meditación/respiración consciente:</strong> Reduce la expresión génica de NF-κB y la producción de cortisol. 20 min/día durante 8 semanas reducen PCR de forma medible (Davidson et al., Psychosomatic Medicine).<br><br>
+    <strong>5. Sueño reparador (7-9h):</strong> Durante el sueño profundo el sistema glinfático elimina proteínas inflamatorias del cerebro. Sin sueño suficiente, ninguna otra intervención antiinflamatoria funciona al 100%.</p>
+  </div>
+
+  <div class="stag" style="margin-top:18px;">Protocolo de los 3 días</div>
+  <h2 class="stitle">Tu <span>plan antiinflamatorio</span> para días 13, 14 y 15</h2>
+
+  <div class="phead">
+    <h3>🔥 Protocolo INFLAMACIÓN — Módulo 5</h3>
+    <p>Usa la App de Alacena para identificar y decidir sobre tus inflamatorios</p>
+  </div>
+  <div class="pbody">
+    <div class="prow">
+      <div class="ptime">DÍA 13</div><div class="pdot"></div>
+      <div class="ptext"><span class="ptech">Auditoría de tu alacena</span> · Abre la App, revisa cada categoría y marca lo que tienes en casa. Identifica tus inflamatorios sin juzgarte — solo observa lo que hay.</div>
+    </div>
+    <div class="prow">
+      <div class="ptime">DÍA 14</div><div class="pdot" style="background:var(--orange);"></div>
+      <div class="ptext"><span class="ptech">Toma tus decisiones</span> · Por cada inflamatorio identificado: ¿lo reemplazas o lo eliminas? No tienes que hacerlo todo hoy — elige 3 cambios que puedas mantener esta semana.</div>
+    </div>
+    <div class="prow">
+      <div class="ptime">DÍA 15</div><div class="pdot" style="background:var(--green);"></div>
+      <div class="ptext"><span class="ptech">Un antiinflamatorio extra al día</span> · Agrega al menos un alimento o hábito antiinflamatorio nuevo que no tenías. Cúrcuma al café, un puñado de nueces, aceite de oliva crudo en la ensalada. Lo pequeño, acumulado, transforma.</div>
+    </div>
+    <div class="prow">
+      <div class="ptime">CLAVE</div><div class="pdot" style="background:transparent;border:2px solid var(--gold);"></div>
+      <div class="ptext">Examina de laboratorio que puedes pedir: <strong>PCR ultrasensible + IL-6 + homocisteína</strong>. Con tu médico, monitorea estos marcadores antes y después del programa. Son el termómetro real de la inflamación sistémica.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 4: REFERENCIAS -->
+<div class="page">
+  <div class="stag">Evidencia científica</div>
+  <h2 class="stitle">Referencias de <span>este módulo</span></h2>
+  <p class="bt" style="margin-bottom:18px;">Todo el contenido está respaldado por investigación indexada en PubMed y revistas científicas revisadas por pares.</p>
+
+  <div class="cit">Furman D et al. (2019). "Chronic inflammation in the etiology of disease across the life span." <em>Nature Medicine.</em> PMID 31806905</div>
+  <div class="cit">Libby P (2021). "Inflammation during the life cycle of the atherosclerotic plaque." <em>Cardiovascular Research.</em> PMID 33585951</div>
+  <div class="cit">Calder PC (2015). "Functional roles of fatty acids and their effects on human health." <em>JPEN Journal of Parenteral and Enteral Nutrition.</em> PMID 26385186</div>
+  <div class="cit">Hewlings SJ & Kalman DS (2017). "Curcumin: a review of its effects on human health." <em>Foods.</em> PMID 28930929</div>
+  <div class="cit">Church TS et al. (2007). "Reduction of C-reactive protein levels through use of a multivitamin." <em>NEJM — related analysis in Am J Med.</em></div>
+  <div class="cit">Davidson RJ et al. (2003). "Alterations in brain and immune function produced by mindfulness meditation." <em>Psychosomatic Medicine.</em> PMID 12883106</div>
+  <div class="cit">Irwin MR & Opp MR (2017). "Sleep health: reciprocal regulation of sleep and innate immunity." <em>Neuropsychopharmacology.</em> PMID 27669980</div>
+  <div class="cit">Cole SW et al. (2007). "Social regulation of gene expression in human leukocytes." <em>Genome Biology.</em> PMID 17634951</div>
+  <div class="cit">Minihane AM et al. (2015). "Low-grade inflammation, diet composition and health." <em>British Journal of Nutrition.</em> PMID 26228057</div>
+
+  <div style="margin-top:22px;padding:16px 18px;background:#fff0f0;border-radius:14px;border:1px solid #f4c6c6;">
+    <p style="font-size:11px;color:#5c1a1a;line-height:1.8;">
+      <strong>Nota de la Dra. Monica Arellano:</strong> La inflamación silenciosa no es un diagnóstico de moda — es el lenguaje del cuerpo cuando lleva demasiado tiempo procesando señales de alarma. Este módulo no busca asustarte: busca darte el conocimiento que convierte cada decisión cotidiana en un acto de medicina preventiva. Tú tienes el poder de apagar el fuego.
+    </p>
+  </div>
+</div>
+
+<!-- CONTRAPORTADA -->
+<div class="page back">
+  <div class="deco" style="width:350px;height:350px;top:-60px;left:-60px;border-color:rgba(226,93,93,0.15);"></div>
+  <div class="deco" style="width:220px;height:220px;bottom:-40px;right:-40px;border-color:rgba(244,208,63,0.1);"></div>
+  <div class="cover-tag" style="margin-bottom:28px;">Módulo 5 completado · Día 15 de 21</div>
+  <div class="mantra">Apagaste<br>el fuego.</div>
+  <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:36px;">Ahora vamos a mantenerlo apagado.</div>
+  <div class="divider"></div>
+  <p style="font-size:12px;color:rgba(255,255,255,0.5);max-width:300px;text-align:center;line-height:1.8;margin-bottom:36px;">Llevas 15 días reprogramando tu biología. En el Módulo 6 aprenderás cómo el movimiento es la terapia antiinflamatoria más subestimada y accesible que existe.</p>
+  <div style="font-size:11px;color:var(--sky);letter-spacing:3px;text-transform:uppercase;margin-bottom:5px;">Hablemos MedicaMente</div>
+  <div style="font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:2px;">epimedik · Vive la vida al cien</div>
+</div>
+
+<button class="print-btn" onclick="window.print()">📄 Descargar / Imprimir guía</button>
+</body>
+</html>

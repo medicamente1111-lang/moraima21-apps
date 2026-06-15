@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Alacena Antiinflamatoria — MORAIMA 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e25d5d;--orange:#f4a03f;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Montserrat',sans-serif;background:linear-gradient(160deg,#071e30 0%,#0a2942 50%,#0d3a5c 100%);min-height:100vh;color:#fff;display:flex;align-items:flex-start;justify-content:center;padding:16px;}
+  .screen{display:none;width:100%;max-width:460px;}
+  .screen.active{display:flex;flex-direction:column;align-items:center;}
+  .logo-bar{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;text-align:center;}
+  .module-tag{background:rgba(226,93,93,0.15);border:1px solid rgba(226,93,93,0.3);border-radius:20px;padding:4px 14px;font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:18px;}
+  h1{font-size:22px;font-weight:800;text-align:center;line-height:1.3;margin-bottom:8px;}
+  .subtitle{font-size:12px;color:rgba(255,255,255,0.55);text-align:center;margin-bottom:20px;line-height:1.7;}
+  .btn-primary{width:100%;padding:15px;border-radius:50px;background:linear-gradient(135deg,var(--red),#c0392b);color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;border:none;cursor:pointer;margin-top:12px;transition:transform 0.15s;}
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-outline{width:100%;padding:13px;border-radius:50px;background:transparent;border:2px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;}
+  .btn-ghost{background:transparent;border:none;color:rgba(255,255,255,0.4);font-family:'Montserrat',sans-serif;font-size:12px;cursor:pointer;padding:8px;margin-top:8px;}
+
+  /* CATEGORY TABS */
+  .cat-tabs{display:flex;gap:6px;width:100%;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;}
+  .cat-tab{padding:7px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.12);background:transparent;color:rgba(255,255,255,0.5);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;flex-shrink:0;}
+  .cat-tab.active{background:rgba(226,93,93,0.2);border-color:var(--red);color:#fff;}
+
+  /* FOOD GRID */
+  .food-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:16px;}
+  .food-item{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+  .food-item.selected-bad{background:rgba(226,93,93,0.2);border-color:var(--red);}
+  .food-item.selected-good{background:rgba(93,226,140,0.15);border-color:var(--green);}
+  .fi-emoji{font-size:32px;margin-bottom:6px;}
+  .fi-name{font-size:11px;font-weight:700;line-height:1.3;margin-bottom:4px;}
+  .fi-check{position:absolute;top:8px;right:8px;font-size:14px;opacity:0;}
+  .food-item.selected-bad .fi-check{opacity:1;}
+  .food-item.selected-good .fi-check{opacity:1;}
+  .fi-inflama{font-size:9px;color:var(--red);font-weight:600;letter-spacing:.5px;}
+  .fi-sana{font-size:9px;color:var(--green);font-weight:600;letter-spacing:.5px;}
+
+  /* ALACENA LIST */
+  .alacena-section{width:100%;margin-bottom:16px;}
+  .alacena-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:6px 12px;border-radius:8px;margin-bottom:10px;}
+  .al-bad{color:var(--red);background:rgba(226,93,93,0.1);}
+  .al-good{color:var(--green);background:rgba(93,226,140,0.1);}
+  .alacena-grid{display:flex;flex-wrap:wrap;gap:7px;}
+  .acena-chip{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;}
+  .chip-bad{background:rgba(226,93,93,0.15);border:1px solid rgba(226,93,93,0.3);color:var(--red);}
+  .chip-good{background:rgba(93,226,140,0.15);border:1px solid rgba(93,226,140,0.3);color:var(--green);}
+  .chip-remove{cursor:pointer;opacity:0.6;font-size:13px;}
+  .chip-remove:hover{opacity:1;}
+
+  /* SWAP CARDS */
+  .swap-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px;width:100%;margin-bottom:10px;}
+  .swap-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .swap-bad{font-size:22px;}
+  .swap-arrow{font-size:14px;color:rgba(255,255,255,0.4);}
+  .swap-good{font-size:22px;}
+  .swap-names{flex:1;}
+  .swap-from{font-size:12px;font-weight:700;color:var(--red);}
+  .swap-to{font-size:12px;font-weight:700;color:var(--green);margin-top:2px;}
+  .swap-why{font-size:11px;color:rgba(255,255,255,0.6);line-height:1.6;}
+  .swap-action{display:flex;gap:8px;margin-top:10px;}
+  .btn-swap{flex:1;padding:8px;border-radius:20px;border:1.5px solid var(--green);background:rgba(93,226,140,0.1);color:var(--green);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;cursor:pointer;}
+  .btn-elim{flex:1;padding:8px;border-radius:20px;border:1.5px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.5);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;cursor:pointer;}
+
+  /* SUMMARY STATS */
+  .summary-row{display:flex;gap:10px;width:100%;margin-bottom:20px;}
+  .sum-box{flex:1;text-align:center;padding:14px 8px;background:rgba(255,255,255,0.06);border-radius:14px;}
+  .sum-val{font-size:24px;font-weight:900;}
+  .sum-label{font-size:9px;color:rgba(255,255,255,0.45);letter-spacing:1px;margin-top:3px;}
+
+  /* SCORE RING */
+  .score-ring{width:100px;height:100px;margin:0 auto 16px;position:relative;}
+  .score-ring svg{transform:rotate(-90deg);}
+  .score-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .score-num{font-size:24px;font-weight:900;}
+  .score-label{font-size:9px;color:rgba(255,255,255,0.5);letter-spacing:1px;}
+
+  .progress-bar-row{display:flex;align-items:center;gap:10px;width:100%;margin-bottom:10px;}
+  .pb-label{font-size:11px;font-weight:600;width:100px;flex-shrink:0;}
+  .pb-track{flex:1;height:7px;background:rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;}
+  .pb-fill{height:100%;border-radius:10px;transition:width 0.5s ease;}
+  .pb-count{font-size:11px;font-weight:700;width:28px;text-align:right;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<!-- WELCOME -->
+<div class="screen active" id="s-welcome">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Módulo 5 · Inflamación · Días 13-15</div>
+  <div style="font-size:56px;margin-bottom:14px;text-align:center;">🔥</div>
+  <h1>Tu Alacena<br><span style="color:var(--red)">Antiinflamatoria</span></h1>
+  <p class="subtitle">Revisa lo que tienes en casa ahora mismo. Identifica qué te está inflamando sin que lo sepas — y descubre con qué reemplazarlo o si simplemente lo sacas.</p>
+
+  <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:16px;width:100%;margin-bottom:6px;">
+    <div style="display:flex;gap:12px;align-items:center;">
+      <div style="font-size:28px;">🔍</div>
+      <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">Fase 1 — Identifica</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.5);">Marca los alimentos que tienes actualmente en tu casa</div></div>
+    </div>
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:12px 0;"></div>
+    <div style="display:flex;gap:12px;align-items:center;">
+      <div style="font-size:28px;">🔄</div>
+      <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">Fase 2 — Decide</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.5);">Para cada inflamatorio: ¿lo reemplazas o lo eliminas?</div></div>
+    </div>
+  </div>
+
+  <button class="btn-primary" onclick="showScreen('s-identify')">🔍 Revisar mi alacena →</button>
+</div>
+
+<!-- IDENTIFY -->
+<div class="screen" id="s-identify">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Fase 1 — ¿Qué tienes en casa?</div>
+  <p style="font-size:12px;color:rgba(255,255,255,0.6);text-align:center;margin-bottom:16px;">Toca los alimentos que tienes actualmente en tu nevera o despensa</p>
+
+  <div class="cat-tabs" id="cat-tabs">
+    <button class="cat-tab active" onclick="filterCat('todos',this)">Todos</button>
+    <button class="cat-tab" onclick="filterCat('lacteos',this)">🥛 Lácteos</button>
+    <button class="cat-tab" onclick="filterCat('carbos',this)">🍞 Carbos</button>
+    <button class="cat-tab" onclick="filterCat('proteina',this)">🥩 Proteína</button>
+    <button class="cat-tab" onclick="filterCat('bebidas',this)">🥤 Bebidas</button>
+    <button class="cat-tab" onclick="filterCat('grasas',this)">🫒 Grasas</button>
+    <button class="cat-tab" onclick="filterCat('otros',this)">🌶 Otros</button>
+  </div>
+
+  <div class="food-grid" id="food-grid"></div>
+
+  <div style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border-radius:14px;margin-bottom:14px;">
+    <div style="font-size:11px;color:rgba(255,255,255,0.5);text-align:center;" id="selection-count">Toca los alimentos que tienes en casa</div>
+  </div>
+
+  <button class="btn-primary" id="btn-ver-alacena" onclick="showAlacena()" style="display:none">Ver mi alacena →</button>
+  <button class="btn-ghost" onclick="showScreen('s-welcome')">← Inicio</button>
+</div>
+
+<!-- MI ALACENA -->
+<div class="screen" id="s-alacena">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Mi Alacena</div>
+
+  <div class="summary-row" id="summary-row"></div>
+
+  <div class="alacena-section" id="bad-section">
+    <div class="alacena-label al-bad">🔴 Inflamatorios que tienes</div>
+    <div class="alacena-grid" id="bad-chips"></div>
+  </div>
+
+  <div class="alacena-section" id="good-section">
+    <div class="alacena-label al-good">🟢 Antiinflamatorios que tienes</div>
+    <div class="alacena-grid" id="good-chips"></div>
+  </div>
+
+  <button class="btn-primary" id="btn-swaps" onclick="showSwaps()">🔄 Ver qué hacer con cada inflamatorio →</button>
+  <button class="btn-outline" onclick="showScreen('s-identify')">← Editar mi lista</button>
+  <button class="btn-ghost" onclick="showScreen('s-welcome')">Inicio</button>
+</div>
+
+<!-- SWAPS -->
+<div class="screen" id="s-swaps">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Fase 2 — Toma una decisión</div>
+  <h1 style="font-size:18px;margin-bottom:6px;">Para cada uno,<br><span style="color:var(--green)">tú decides</span></h1>
+  <p class="subtitle" style="margin-bottom:18px;">¿Lo reemplazas por algo mejor, o simplemente lo sacas de tu vida?</p>
+
+  <div id="swaps-list" style="width:100%;"></div>
+
+  <button class="btn-primary" onclick="showResults()" style="margin-top:8px;">✅ Guardé mis decisiones →</button>
+  <button class="btn-ghost" onclick="showScreen('s-alacena')">← Mi alacena</button>
+</div>
+
+<!-- RESULTS -->
+<div class="screen" id="s-results">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Tu Plan Antiinflamatorio</div>
+
+  <div id="results-emoji" style="font-size:56px;text-align:center;margin-bottom:10px;">🏆</div>
+  <div id="results-title" style="font-size:20px;font-weight:800;text-align:center;margin-bottom:6px;"></div>
+  <div id="results-sub" style="font-size:12px;color:rgba(255,255,255,0.55);text-align:center;margin-bottom:20px;line-height:1.7;"></div>
+
+  <div style="background:rgba(255,255,255,0.06);border-radius:16px;padding:16px;width:100%;margin-bottom:14px;" id="results-actions"></div>
+
+  <div style="background:rgba(93,226,140,0.08);border:1px solid rgba(93,226,140,0.2);border-radius:14px;padding:14px;width:100%;margin-bottom:16px;">
+    <div style="font-size:10px;letter-spacing:2px;color:var(--green);font-weight:700;margin-bottom:8px;">🟢 LO QUE YA TIENES Y ESTÁ BIEN</div>
+    <div id="results-good" style="display:flex;flex-wrap:wrap;gap:7px;"></div>
+  </div>
+
+  <button class="btn-primary" onclick="showScreen('s-welcome')">🔄 Revisar de nuevo</button>
+  <button class="btn-ghost" onclick="window.print()">📄 Guardar mi plan</button>
+</div>
+
+<script>
+const FOODS = [
+  // LÁCTEOS
+  {id:'leche',emoji:'🥛',name:'Leche de vaca',cat:'lacteos',type:'ambos',
+    why:'Neutral para muchos, pero la caseína A1 inflama en personas sensibles. Mejor leche de almendras o coco sin azúcar.',
+    swap:{emoji:'🥥',name:'Leche de coco sin azúcar',why:'Sin caseína ni lactosa. Aporta grasas MCT antiinflamatorias.'}},
+  {id:'queso',emoji:'🧀',name:'Queso procesado',cat:'lacteos',type:'inflama',
+    why:'Alto en sal, aditivos conservantes y grasas saturadas de baja calidad. Activa NF-κB.',
+    swap:{emoji:'🥑',name:'Aguacate',why:'Cremoso, saciante, lleno de grasas buenas. Perfecto sustituto en sándwiches.'}},
+  {id:'yogurt_az',emoji:'🍦',name:'Yogurt con azúcar',cat:'lacteos',type:'inflama',
+    why:'El azúcar añadido anula los beneficios probióticos del yogurt.',
+    swap:{emoji:'🫙',name:'Yogurt natural sin azúcar',why:'Probiótico real, sin azúcar. Agrégale fruta fresca o canela.'}},
+  {id:'yogurt_nat',emoji:'🫙',name:'Yogurt natural',cat:'lacteos',type:'sana',
+    why:'Probiótico, mejora microbiota, reduce inflamación intestinal.',swap:null},
+
+  // CARBOHIDRATOS
+  {id:'pan_bl',emoji:'🍞',name:'Pan blanco',cat:'carbos',type:'inflama',
+    why:'Harina refinada = glucosa rápida = pico de insulina = NF-κB activo.',
+    swap:{emoji:'🥑',name:'Tostada de aguacate sin pan',why:'Más saciante, sin glucosa rápida, lleno de grasas buenas.'}},
+  {id:'arroz_bl',emoji:'🍚',name:'Arroz blanco',cat:'carbos',type:'ambos',
+    why:'Índice glucémico alto. En pequeñas cantidades es neutral, en exceso inflama.',
+    swap:{emoji:'🥦',name:'Arroz de coliflor',why:'Misma textura, prácticamente cero carbohidratos, repleto de sulforafano.'}},
+  {id:'pasta',emoji:'🍝',name:'Pasta refinada',cat:'carbos',type:'inflama',
+    why:'Alto IG, bajo en fibra, aumenta glucosa rápido y activa inflamación post-comida.',
+    swap:{emoji:'🥒',name:'Zoodles (espirales de zucchini)',why:'Zero glucosa, fibra, vitamina C. Mismo volumen, cero inflamación.'}},
+  {id:'avena',emoji:'🌾',name:'Avena integral',cat:'carbos',type:'sana',
+    why:'Beta-glucanos reducen LDL y PCR. Fibra prebiótica que alimenta microbiota positiva.',swap:null},
+  {id:'cereales',emoji:'🥣',name:'Cereales de caja',cat:'carbos',type:'inflama',
+    why:'Azúcar disfrazada de "integral". Hasta 25g de azúcar por porción + aditivos.',
+    swap:{emoji:'🌾',name:'Avena natural con canela',why:'Misma practicidad, sin azúcar añadida, con fibra real.'}},
+
+  // PROTEÍNAS
+  {id:'salmon',emoji:'🐟',name:'Salmón / Atún',cat:'proteina',type:'sana',
+    why:'EPA y DHA precursores de resolvinas antiinflamatorias. 2 porciones/semana reducen PCR.',swap:null},
+  {id:'pollo',emoji:'🍗',name:'Pollo orgánico',cat:'proteina',type:'sana',
+    why:'Proteína limpia sin hormonas ni antibióticos. Antiinflamatorio cuando es de pastoreo.',swap:null},
+  {id:'embutidos',emoji:'🌭',name:'Embutidos / Salchichas',cat:'proteina',type:'inflama',
+    why:'Nitritos + AGEs + grasas trans + sodio alto. Triple daño inflamatorio.',
+    swap:{emoji:'🍗',name:'Pechuga de pollo al natural',why:'Sin conservantes, sin nitritos. Misma facilidad de preparación.'}},
+  {id:'huevos',emoji:'🥚',name:'Huevos',cat:'proteina',type:'sana',
+    why:'Colina, vitamina D, omega-3 (si son de pastoreo). Proteína completa antiinflamatoria.',swap:null},
+  {id:'carne_roja',emoji:'🥩',name:'Carne roja (frecuente)',cat:'proteina',type:'ambos',
+    why:'Neutral si es carne fresca de pastoreo, inflamatoria si es industrial o en exceso.',
+    swap:{emoji:'🐟',name:'Pescado azul 2x/semana',why:'Reemplaza 2 de las 5 porciones semanales por omega-3 antiinflamatorio.'}},
+
+  // BEBIDAS
+  {id:'soda',emoji:'🥤',name:'Refresco / Gaseosa',cat:'bebidas',type:'inflama',
+    why:'40g de azúcar por lata = activación inmediata de NF-κB + daño al microbioma.',
+    swap:{emoji:'💧',name:'Agua con limón y jengibre',why:'Antiinflamatoria, alcalinizante, hidratante. Cero azúcar.'}},
+  {id:'jugo_caja',emoji:'🧃',name:'Jugo de caja',cat:'bebidas',type:'inflama',
+    why:'Sin fibra, con azúcar concentrado y conservantes. Fructosa libre → hígado graso.',
+    swap:{emoji:'🍵',name:'Té verde con limón',why:'EGCG + vitamina C. Antiinflamatorio potente, sin azúcar.'}},
+  {id:'cafe',emoji:'☕',name:'Café (sin azúcar)',cat:'bebidas',type:'sana',
+    why:'Los polifenoles del café reducen PCR y mejoran sensibilidad a la insulina. Hasta 3 tazas/día son beneficiosas.',swap:null},
+  {id:'te_verde',emoji:'🍵',name:'Té verde',cat:'bebidas',type:'sana',
+    why:'EGCG inhibe NF-κB. Uno de los antiinflamatorios más potentes y accesibles.',swap:null},
+  {id:'alcohol',emoji:'🍷',name:'Alcohol frecuente',cat:'bebidas',type:'inflama',
+    why:'El alcohol daña la barrera intestinal directamente → leaky gut → inflamación sistémica.',
+    swap:{emoji:'🫐',name:'Kombucha sin azúcar',why:'Sabor similar al vino espumante, con probióticos antiinflamatorios.'}},
+
+  // GRASAS
+  {id:'aove',emoji:'🫒',name:'Aceite de oliva EV',cat:'grasas',type:'sana',
+    why:'Oleocantal = antiinflamatorio natural similar al ibuprofeno. Solo extra virgen, en frío.',swap:null},
+  {id:'aguacate',emoji:'🥑',name:'Aguacate',cat:'grasas',type:'sana',
+    why:'Omega-9 + luteína. Reduce IL-6 y TNF-α. Mejora absorción de otros antiinflamatorios.',swap:null},
+  {id:'margarina',emoji:'🧈',name:'Margarina',cat:'grasas',type:'inflama',
+    why:'Grasas trans industriales. De las más inflamatorias que existen. Aumentan LDL oxidado.',
+    swap:{emoji:'🫒',name:'Aceite de oliva extra virgen',why:'Mismo uso, infinitamente más saludable. Aplica en frío o baja temperatura.'}},
+  {id:'aceite_girasol',emoji:'🌻',name:'Aceite de girasol',cat:'grasas',type:'inflama',
+    why:'Exceso de omega-6 desequilibra la ratio omega-6/omega-3, activando prostaglandinas inflamatorias.',
+    swap:{emoji:'🥥',name:'Aceite de coco',why:'Grasas MCT estables al calor, antiinflamatorias y con efecto saciante.'}},
+  {id:'nueces',emoji:'🌰',name:'Nueces / Almendras',cat:'grasas',type:'sana',
+    why:'Omega-3 ALA, vitamina E, magnesio. Un puñado diario reduce la PCR significativamente.',swap:null},
+
+  // OTROS
+  {id:'azucar',emoji:'🍬',name:'Azúcar / Dulces',cat:'otros',type:'inflama',
+    why:'El azúcar es el activador de inflamación más potente y más consumido. Activa AGEs y NF-κB.',
+    swap:{emoji:'🍂',name:'Canela de Ceilán',why:'Endulza sin glucosa, regula insulina, tiene efecto antiinflamatorio propio.'}},
+  {id:'curcuma',emoji:'🟡',name:'Cúrcuma',cat:'otros',type:'sana',
+    why:'La curcumina inhibe NF-κB directamente. Siempre con pimienta negra para activarla.',swap:null},
+  {id:'jengibre',emoji:'🫚',name:'Jengibre fresco',cat:'otros',type:'sana',
+    why:'Los gingeroles inhiben COX-2, la misma enzima que bloquea el ibuprofeno. Potente y accesible.',swap:null},
+  {id:'ajo',emoji:'🧄',name:'Ajo',cat:'otros',type:'sana',
+    why:'La alicina reduce PCR y presión arterial. Cortarlo 5 min antes de cocinar activa sus propiedades.',swap:null},
+  {id:'snacks',emoji:'🍪',name:'Snacks procesados',cat:'otros',type:'inflama',
+    why:'Aceites oxidados + sal en exceso + aditivos = tormenta inflamatoria en cada bocado.',
+    swap:{emoji:'🌰',name:'Mix de nueces y cacao puro',why:'Grasas buenas + flavonoles antiinflamatorios. Igual de satisfactorio.'}},
+];
+
+let selected = new Set();
+let swapDecisions = {}; // id → 'swap' | 'eliminate'
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function filterCat(cat, el) {
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderFoods(cat);
+}
+
+function renderFoods(cat) {
+  const grid = document.getElementById('food-grid');
+  const foods = cat === 'todos' ? FOODS : FOODS.filter(f => f.cat === cat);
+  grid.innerHTML = '';
+  foods.forEach(f => {
+    const isSelected = selected.has(f.id);
+    const cls = isSelected ? (f.type === 'inflama' ? 'selected-bad' : f.type === 'sana' ? 'selected-good' : 'selected-bad') : '';
+    const check = isSelected ? (f.type === 'sana' ? '✅' : '⚠️') : '';
+    grid.innerHTML += `
+      <div class="food-item ${cls}" id="fi-${f.id}" onclick="toggleFood('${f.id}')">
+        <div class="fi-check">${check}</div>
+        <div class="fi-emoji">${f.emoji}</div>
+        <div class="fi-name">${f.name}</div>
+        <div class="${f.type === 'sana' ? 'fi-sana' : f.type === 'inflama' ? 'fi-inflama' : 'fi-inflama'}">${f.type === 'sana' ? '🟢 antiinflamatorio' : f.type === 'inflama' ? '🔴 inflamatorio' : '🟡 depende'}</div>
+      </div>`;
+  });
+  updateCount();
+}
+
+function toggleFood(id) {
+  if (selected.has(id)) selected.delete(id);
+  else selected.add(id);
+  const currentCat = document.querySelector('.cat-tab.active');
+  const cat = currentCat ? currentCat.onclick.toString().match(/'([^']+)'/)?.[1] || 'todos' : 'todos';
+  filterCat(cat, currentCat);
+}
+
+function updateCount() {
+  const total = selected.size;
+  const bad = [...selected].filter(id => { const f = FOODS.find(x=>x.id===id); return f && f.type === 'inflama'; }).length;
+  const good = [...selected].filter(id => { const f = FOODS.find(x=>x.id===id); return f && f.type === 'sana'; }).length;
+  document.getElementById('selection-count').textContent = total > 0
+    ? `${total} seleccionados — ${bad} inflamatorios 🔴 · ${good} antiinflamatorios 🟢`
+    : 'Toca los alimentos que tienes en casa';
+  document.getElementById('btn-ver-alacena').style.display = total > 0 ? 'block' : 'none';
+}
+
+function showAlacena() {
+  const badFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && (f.type === 'inflama' || f.type === 'ambos'));
+  const goodFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && f.type === 'sana');
+
+  const sr = document.getElementById('summary-row');
+  sr.innerHTML = `
+    <div class="sum-box"><div class="sum-val" style="color:var(--red)">${badFoods.length}</div><div class="sum-label">INFLAMATORIOS</div></div>
+    <div class="sum-box"><div class="sum-val" style="color:var(--green)">${goodFoods.length}</div><div class="sum-label">ANTIINFLAMATORIOS</div></div>
+    <div class="sum-box"><div class="sum-val" style="color:var(--gold)">${selected.size}</div><div class="sum-label">TOTAL</div></div>`;
+
+  const badChips = document.getElementById('bad-chips');
+  badChips.innerHTML = badFoods.length > 0
+    ? badFoods.map(f => `<span class="acena-chip chip-bad">${f.emoji} ${f.name}</span>`).join('')
+    : '<span style="font-size:12px;color:rgba(255,255,255,0.3)">¡Ninguno! 🎉</span>';
+
+  const goodChips = document.getElementById('good-chips');
+  goodChips.innerHTML = goodFoods.length > 0
+    ? goodFoods.map(f => `<span class="acena-chip chip-good">${f.emoji} ${f.name}</span>`).join('')
+    : '<span style="font-size:12px;color:rgba(255,255,255,0.3)">Agrega más antiinflamatorios</span>';
+
+  document.getElementById('btn-swaps').style.display = badFoods.length > 0 ? 'block' : 'none';
+  showScreen('s-alacena');
+}
+
+function showSwaps() {
+  const badFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && (f.type === 'inflama' || f.type === 'ambos'));
+  const list = document.getElementById('swaps-list');
+  list.innerHTML = '';
+  badFoods.forEach(f => {
+    const hasSwap = f.swap !== null;
+    list.innerHTML += `
+      <div class="swap-card">
+        <div class="swap-header">
+          <div class="swap-bad">${f.emoji}</div>
+          ${hasSwap ? `<div class="swap-arrow">→</div><div class="swap-good">${f.swap.emoji}</div>` : ''}
+          <div class="swap-names">
+            <div class="swap-from">${f.name}</div>
+            ${hasSwap ? `<div class="swap-to">${f.swap.name}</div>` : '<div style="font-size:11px;color:rgba(255,255,255,0.4)">Sin reemplazo directo</div>'}
+          </div>
+        </div>
+        <div class="swap-why">${f.why}</div>
+        ${hasSwap ? `<div class="swap-why" style="color:rgba(93,226,140,0.8);margin-top:5px;">✅ <em>${f.swap.why}</em></div>` : ''}
+        <div class="swap-action">
+          ${hasSwap ? `<button class="btn-swap" onclick="setDecision('${f.id}','swap')">🔄 Lo reemplazo</button>` : ''}
+          <button class="btn-elim" onclick="setDecision('${f.id}','eliminate')" style="${!hasSwap ? 'width:100%' : ''}">🗑 Lo elimino</button>
+        </div>
+      </div>`;
+  });
+  showScreen('s-swaps');
+}
+
+function setDecision(id, decision) {
+  swapDecisions[id] = decision;
+  const card = document.querySelector(`[onclick*="'${id}'"][onclick*="'${decision}'"]`);
+  if (card) {
+    const parent = card.closest('.swap-card');
+    const all = parent.querySelectorAll('button');
+    all.forEach(b => b.style.opacity = '0.4');
+    card.style.opacity = '1';
+    card.style.background = decision === 'swap' ? 'rgba(93,226,140,0.25)' : 'rgba(255,255,255,0.15)';
+    card.style.borderColor = decision === 'swap' ? 'var(--green)' : 'rgba(255,255,255,0.5)';
+  }
+}
+
+function showResults() {
+  const badFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && (f.type === 'inflama' || f.type === 'ambos'));
+  const goodFoods = [...selected].map(id => FOODS.find(f => f.id === id)).filter(f => f && f.type === 'sana');
+  const swaps = badFoods.filter(f => swapDecisions[f.id] === 'swap');
+  const elims = badFoods.filter(f => swapDecisions[f.id] === 'eliminate');
+  const decided = swaps.length + elims.length;
+  const total = badFoods.length;
+  const pct = total > 0 ? Math.round(decided / total * 100) : 100;
+
+  let emoji, title, sub;
+  if (pct >= 80)      { emoji='🏆'; title='Plan antiinflamatorio sólido'; sub='Tomaste decisiones concretas sobre la mayoría de tus inflamatorios. Esto ya es un cambio real en tu biología.'; }
+  else if (pct >= 50) { emoji='🌱'; title='¡Buen comienzo!'; sub='Cada decisión cuenta. Las que tomaste ya reducen tu carga inflamatoria. Vuelve a revisar el resto cuando estés lista.'; }
+  else if (total === 0){ emoji='🌟'; title='¡Alacena antiinflamatoria!'; sub='No tienes inflamatorios identificados en casa. Ahora enfócate en enriquecer con más antiinflamatorios.'; }
+  else               { emoji='💡'; title='Conciencia es el primer paso'; sub='Ya sabes qué tienes. La decisión de actuar es tuya y se puede tomar en cualquier momento. No hay prisa, hay intención.'; }
+
+  document.getElementById('results-emoji').textContent = emoji;
+  document.getElementById('results-title').textContent = title;
+  document.getElementById('results-sub').textContent = sub;
+
+  let actHTML = '';
+  if (swaps.length > 0) {
+    actHTML += `<div style="font-size:10px;letter-spacing:2px;color:var(--green);font-weight:700;margin-bottom:8px;">🔄 VAS A REEMPLAZAR</div>`;
+    actHTML += swaps.map(f => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px;">
+      <span>${f.emoji}</span><span style="color:var(--red)">${f.name}</span>
+      <span style="color:rgba(255,255,255,0.4)">→</span>
+      <span>${f.swap.emoji}</span><span style="color:var(--green)">${f.swap.name}</span>
+    </div>`).join('');
+  }
+  if (elims.length > 0) {
+    actHTML += `<div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.5);font-weight:700;margin:10px 0 8px;">🗑 VAS A ELIMINAR</div>`;
+    actHTML += elims.map(f => `<div style="font-size:12px;margin-bottom:6px;color:rgba(255,255,255,0.7);">${f.emoji} ${f.name}</div>`).join('');
+  }
+  if (!actHTML) actHTML = `<div style="font-size:12px;color:rgba(255,255,255,0.5);">Vuelve a revisar los swaps cuando estés lista.</div>`;
+  document.getElementById('results-actions').innerHTML = actHTML;
+
+  const goodDiv = document.getElementById('results-good');
+  goodDiv.innerHTML = goodFoods.length > 0
+    ? goodFoods.map(f => `<span class="acena-chip chip-good">${f.emoji} ${f.name}</span>`).join('')
+    : '<span style="font-size:12px;color:rgba(255,255,255,0.35)">Agrega antiinflamatorios a tu alacena 🌱</span>';
+
+  showScreen('s-results');
+}
+
+// Init
+renderFoods('todos');
+</script>
+</body>
+</html>

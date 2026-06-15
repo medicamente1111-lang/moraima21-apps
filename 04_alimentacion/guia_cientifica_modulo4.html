@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Científica Módulo 4 — Alimentación | MORAIMA 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0a2942; --navy2:#0d3a5c; --sky:#5dade2; --sky2:#a8d8f0;
+    --gold:#f4d03f; --green:#5de28c; --orange:#f4a03f; --red:#e25d5d;
+    --white:#fff; --w60:rgba(255,255,255,0.6); --w30:rgba(255,255,255,0.3);
+    --w08:rgba(255,255,255,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Montserrat',sans-serif;background:#f5f7fa;color:#1a1a2e;}
+
+  /* PAGE */
+  .page{width:210mm;min-height:297mm;margin:0 auto 20px;padding:16mm 15mm;background:#fff;position:relative;overflow:hidden;}
+
+  /* COVER */
+  .cover{background:linear-gradient(155deg,#0a2942 0%,#0d4a3a 60%,#1a6b4a 100%);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+  .cover-logo{font-size:9px;letter-spacing:4px;color:rgba(93,226,140,0.7);text-transform:uppercase;margin-bottom:8px;}
+  .cover-tag{background:rgba(244,208,63,0.15);border:1px solid rgba(244,208,63,0.4);border-radius:30px;
+    padding:5px 18px;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:28px;}
+  .cover-title{font-size:34px;font-weight:900;line-height:1.2;margin-bottom:10px;text-transform:uppercase;}
+  .cover-title span{color:var(--gold);}
+  .cover-sub{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:44px;font-weight:300;max-width:350px;line-height:1.7;}
+  .divider{width:60px;height:3px;background:var(--gold);border-radius:2px;margin:0 auto 28px;}
+  .cover-author{font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:2px;}
+  .cover-author strong{color:var(--sky);}
+  .deco{position:absolute;border-radius:50%;border:1.5px solid rgba(93,226,140,0.1);pointer-events:none;}
+
+  /* SECTION ELEMENTS */
+  .stag{display:inline-block;background:var(--navy);color:var(--gold);font-size:8px;letter-spacing:3px;
+    text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:12px;}
+  h2.stitle{font-size:21px;font-weight:800;color:var(--navy);line-height:1.25;margin-bottom:8px;}
+  h2.stitle span{color:var(--sky);}
+  .intro{font-size:12px;color:#444;line-height:1.85;margin-bottom:18px;border-left:3px solid var(--green);padding-left:14px;}
+  p.bt{font-size:12px;color:#333;line-height:1.85;margin-bottom:12px;}
+
+  /* STAT STRIP */
+  .stats{display:flex;gap:0;margin:18px 0;border-radius:12px;overflow:hidden;}
+  .sbox{flex:1;padding:14px 10px;text-align:center;}
+  .sbox:nth-child(1){background:var(--navy);}
+  .sbox:nth-child(2){background:#0d3a5c;}
+  .sbox:nth-child(3){background:#1a5276;}
+  .sbox:nth-child(4){background:var(--sky);}
+  .sv{font-size:22px;font-weight:900;color:var(--gold);}
+  .sl{font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:1px;margin-top:2px;}
+
+  /* HIGHLIGHT BOXES */
+  .hbox{background:var(--navy);color:#fff;border-radius:14px;padding:18px 20px;margin:16px 0;}
+  .hbox h3{font-size:12px;color:var(--gold);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
+  .hbox p{font-size:11px;line-height:1.75;color:rgba(255,255,255,0.82);}
+  .dato{background:#e8f8ef;border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:12px 16px;margin:12px 0;}
+  .dato .dlabel{font-size:9px;letter-spacing:2px;color:#0a5c2e;text-transform:uppercase;margin-bottom:4px;font-weight:700;}
+  .dato p{font-size:11px;color:#1a4a2e;line-height:1.7;}
+  .warn{background:#fff8e1;border:1.5px solid var(--gold);border-radius:12px;padding:12px 16px;margin:12px 0;}
+  .warn .wlabel{font-size:9px;letter-spacing:2px;color:#b7860a;text-transform:uppercase;margin-bottom:4px;font-weight:700;}
+  .warn p{font-size:11px;color:#555;line-height:1.7;}
+
+  /* FOOD CARDS */
+  .food-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+  .food-card{border-radius:12px;padding:14px;border:1.5px solid;}
+  .fc-inflama{background:#fff5f5;border-color:#f4c6c6;}
+  .fc-sana{background:#f0fff5;border-color:#b8f0c8;}
+  .fc-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .fc-icon{font-size:22px;}
+  .fc-name{font-size:12px;font-weight:700;color:var(--navy);}
+  .fc-why{font-size:10px;line-height:1.65;color:#555;}
+  .fc-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:9px;font-weight:700;margin-top:6px;letter-spacing:.5px;}
+  .badge-r{background:rgba(226,93,93,0.15);color:var(--red);}
+  .badge-g{background:rgba(93,226,140,0.2);color:#1a7a3e;}
+
+  /* PROTOCOL */
+  .phead{background:linear-gradient(135deg,var(--navy),#1a5276);color:#fff;border-radius:14px 14px 0 0;padding:14px 18px;text-align:center;}
+  .phead h3{font-size:13px;font-weight:700;color:var(--gold);}
+  .phead p{font-size:10px;color:rgba(255,255,255,0.6);margin-top:3px;}
+  .pbody{border:1.5px solid #e0e8f0;border-top:none;border-radius:0 0 14px 14px;}
+  .prow{display:flex;align-items:flex-start;gap:12px;padding:12px 18px;border-bottom:1px solid #f0f5fa;}
+  .prow:last-child{border-bottom:none;}
+  .ptime{width:52px;font-size:10px;font-weight:700;color:var(--navy);letter-spacing:1px;flex-shrink:0;padding-top:2px;}
+  .pdot{width:10px;height:10px;border-radius:50%;background:var(--sky);flex-shrink:0;margin-top:3px;}
+  .ptext{font-size:11px;color:#333;line-height:1.6;}
+  .ptech{font-weight:700;color:var(--navy);}
+
+  /* CITATIONS */
+  .cit{font-size:10px;color:#666;line-height:1.6;margin-bottom:7px;padding-left:14px;position:relative;}
+  .cit::before{content:'[';position:absolute;left:0;color:var(--sky);}
+
+  /* BACK COVER */
+  .back{background:linear-gradient(145deg,var(--navy) 0%,#0d4a3a 100%);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+  .mantra{font-size:26px;font-weight:900;color:var(--gold);line-height:1.3;margin-bottom:12px;text-transform:uppercase;}
+  .mantra-sub{font-size:13px;color:var(--w60);margin-bottom:36px;}
+
+  /* PRINT */
+  @media print{
+    @page{size:A4;margin:0;}
+    html,body{background:#fff;margin:0;padding:0;}
+    .page{margin:0;box-shadow:none;width:210mm;height:297mm;min-height:unset;overflow:hidden;page-break-after:always;}
+    .page:last-child{page-break-after:avoid;}
+  }
+  .print-btn{display:block;width:100%;max-width:300px;margin:32px auto 0;padding:13px;border-radius:50px;
+    background:rgba(93,226,140,0.12);border:2px solid rgba(93,226,140,0.3);color:#1a7a3e;
+    font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:center;}
+  @media print{.print-btn{display:none;}}
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="page cover">
+  <div class="deco" style="width:400px;height:400px;top:-80px;right:-90px;"></div>
+  <div class="deco" style="width:260px;height:260px;bottom:-50px;left:-70px;border-color:rgba(244,208,63,0.08)"></div>
+  <div class="cover-logo">epimedik · MORAIMA 21</div>
+  <div class="cover-tag">Módulo 4 · Alimentación · Días 10 al 12</div>
+  <div style="font-size:52px;margin-bottom:16px;">🥗</div>
+  <div class="cover-title">Tu cocina es<br>tu <span>farmacia</span></div>
+  <div class="cover-sub">La ciencia de la alimentación antiinflamatoria keto-equilibrio — aprende qué inflama tu cuerpo y cómo convertir cada comida en medicina</div>
+  <div class="divider"></div>
+  <div class="cover-author">Guía científica presentada por<br><strong>Dra. Monica Arellano · epimedik</strong></div>
+</div>
+
+<!-- PÁGINA 1: LA CIENCIA -->
+<div class="page">
+  <div class="stag">Por qué lo que comes decide cómo te sientes</div>
+  <h2 class="stitle">Cada comida es una <span>señal química</span> para tu cuerpo</h2>
+  <p class="intro">La alimentación no es solo combustible. Es información. Cada alimento que ingieres activa o desactiva genes, regula hormonas, moldea la microbiota intestinal y enciende o apaga la inflamación sistémica. La diferencia entre sentirte bien o mal puede estar en tu próxima comida.</p>
+
+  <div class="stats">
+    <div class="sbox"><div class="sv">70%</div><div class="sl">DEL SISTEMA INMUNE VIVE EN EL INTESTINO</div></div>
+    <div class="sbox"><div class="sv">3x</div><div class="sl">MÁS INFLAMACIÓN CON DIETA ULTRAPROCESADA</div></div>
+    <div class="sbox"><div class="sv">21 d</div><div class="sl">PARA REPROGRAMAR LA MICROBIOTA</div></div>
+    <div class="sbox"><div class="sv">38%</div><div class="sl">DE ENFERMEDADES CRÓNICAS EVITABLES CON DIETA</div></div>
+  </div>
+
+  <p class="bt">El eje intestino-cerebro es bidireccional: lo que comes afecta tu estado de ánimo, tu energía, tu claridad mental y tu nivel de inflamación. La inflamación crónica de bajo grado —invisible en muchos exámenes rutinarios— es hoy reconocida como la raíz común del sobrepeso resistente, la fatiga, el dolor articular, los cambios de humor y las enfermedades cardiovasculares y autoinmunes.</p>
+
+  <div class="hbox">
+    <h3>🔬 El NF-κB: el interruptor de la inflamación</h3>
+    <p>El factor nuclear NF-κB es la molécula que activa la respuesta inflamatoria en prácticamente todas las células del cuerpo. Lo que muchos no saben es que ciertos alimentos lo activan de forma crónica: el azúcar refinada, los aceites omega-6 procesados, los aditivos y los ultra-procesados mantienen el NF-κB encendido todo el día. Otros alimentos —como el ajo, la cúrcuma, el aceite de oliva extra virgen y los omega-3— lo inhiben activamente. Tu menú diario decide si vives en modo inflamatorio o en modo sanación.</p>
+  </div>
+
+  <div class="dato">
+    <div class="dlabel">📊 Estudio clave</div>
+    <p>Una revisión sistemática de 2021 (Ricker & Haas, Nutrients) analizó 34 ensayos clínicos y confirmó que las dietas con alto índice antiinflamatorio reducen significativamente los niveles de PCR (proteína C-reactiva), IL-6 y TNF-α — los tres marcadores inflamatorios más estudiados en medicina preventiva.</p>
+  </div>
+
+  <div class="warn">
+    <div class="wlabel">💡 El concepto keto-equilibrio de epimedik</div>
+    <p>No se trata de una dieta keto estricta ni de eliminar grupos de alimentos. El enfoque keto-equilibrio prioriza grasas buenas + proteína de calidad + vegetales antiinflamatorios, reduciendo carbohidratos refinados sin eliminar carbohidratos complejos. El objetivo es estabilizar la insulina, reducir la inflamación y aumentar la energía celular sostenida.</p>
+  </div>
+</div>
+
+<!-- PÁGINA 2: INFLAMA VS SANA -->
+<div class="page">
+  <div class="stag">Los alimentos que debes conocer</div>
+  <h2 class="stitle">Lo que <span>inflama</span> vs lo que <span style="color:var(--green)">sana</span></h2>
+  <p class="intro">Estos no son mitos de Instagram. Cada clasificación está respaldada por mecanismos bioquímicos validados. Conocerlos es el primer paso para tomar decisiones conscientes en cada comida.</p>
+
+  <div class="food-grid">
+    <div class="food-card fc-inflama">
+      <div class="fc-header"><div class="fc-icon">🍞</div><div class="fc-name">Harinas refinadas</div></div>
+      <div class="fc-why">Disparan la glucosa → pico de insulina → activación de NF-κB. El gluten además aumenta la permeabilidad intestinal (leaky gut) en personas sensibles.</div>
+      <span class="fc-badge badge-r">🔴 INFLAMA</span>
+    </div>
+    <div class="food-card fc-sana">
+      <div class="fc-header"><div class="fc-icon">🥑</div><div class="fc-name">Aguacate</div></div>
+      <div class="fc-why">Rico en ácido oleico y luteína. Reduce IL-6 y TNF-α. Mejora absorción de carotenoides antiinflamatorios de otros alimentos del mismo plato.</div>
+      <span class="fc-badge badge-g">🟢 SANA</span>
+    </div>
+    <div class="food-card fc-inflama">
+      <div class="fc-header"><div class="fc-icon">🥤</div><div class="fc-name">Azúcar y refrescos</div></div>
+      <div class="fc-why">El exceso de fructosa activa la síntesis de ácido úrico y daña el hígado. Una lata de soda = 10 cucharadas de azúcar → inflamación sistémica inmediata.</div>
+      <span class="fc-badge badge-r">🔴 INFLAMA</span>
+    </div>
+    <div class="food-card fc-sana">
+      <div class="fc-header"><div class="fc-icon">🐟</div><div class="fc-name">Salmón / Sardinas</div></div>
+      <div class="fc-why">EPA y DHA son precursores de resolvinas — moléculas que literalmente apagan la inflamación. 2 porciones/semana reducen la PCR de forma significativa.</div>
+      <span class="fc-badge badge-g">🟢 SANA</span>
+    </div>
+    <div class="food-card fc-inflama">
+      <div class="fc-header"><div class="fc-icon">🍟</div><div class="fc-name">Aceites omega-6 procesados</div></div>
+      <div class="fc-why">Aceite de maíz, girasol y soya en exceso desbalancean la ratio omega-6/omega-3, activando prostaglandinas proinflamatorias a nivel celular.</div>
+      <span class="fc-badge badge-r">🔴 INFLAMA</span>
+    </div>
+    <div class="food-card fc-sana">
+      <div class="fc-header"><div class="fc-icon">🟡</div><div class="fc-name">Cúrcuma + pimienta negra</div></div>
+      <div class="fc-why">La curcumina inhibe NF-κB directamente. La piperina de la pimienta aumenta su absorción hasta 2000%. Combinadas son el antiinflamatorio natural más estudiado.</div>
+      <span class="fc-badge badge-g">🟢 SANA</span>
+    </div>
+    <div class="food-card fc-inflama">
+      <div class="fc-header"><div class="fc-icon">🥩</div><div class="fc-name">Carnes procesadas</div></div>
+      <div class="fc-why">Embutidos, salchichas y carnes curadas contienen nitritos y AGEs (productos de glicación avanzada) que dañan proteínas celulares y activan inflamación crónica.</div>
+      <span class="fc-badge badge-r">🔴 INFLAMA</span>
+    </div>
+    <div class="food-card fc-sana">
+      <div class="fc-header"><div class="fc-icon">🫒</div><div class="fc-name">Aceite oliva extra virgen</div></div>
+      <div class="fc-why">El oleocantal actúa como antiinflamatorio natural similar al ibuprofeno. 50ml/día reducen la PCR comparablemente a dosis bajas de AINEs en estudios controlados.</div>
+      <span class="fc-badge badge-g">🟢 SANA</span>
+    </div>
+  </div>
+
+  <div class="dato" style="margin-top:14px;">
+    <div class="dlabel">🧬 La microbiota: el árbitro final</div>
+    <p>El microbioma intestinal produce o inhibe moléculas inflamatorias según lo que comes. Las bacterias beneficiosas (Lactobacillus, Bifidobacterium) prosperan con fibra prebiótica de vegetales, legumbres y semillas. Los patógenos oportunistas prosperan con azúcar y ultraprocesados. Tu microbiota cambia en 48-72 horas según tu dieta — para bien o para mal.</p>
+  </div>
+</div>
+
+<!-- PÁGINA 3: PROTOCOLO -->
+<div class="page">
+  <div class="stag">Caso clínico · epimedik</div>
+  <h2 class="stitle">De la inflamación <span>invisible</span> a la vitalidad real</h2>
+
+  <div class="hbox" style="margin-bottom:18px;">
+    <span style="font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:8px;">📋 Caso clínico · Consulta epimedik</span>
+    <div style="font-size:13px;font-weight:700;margin-bottom:8px;">Andrea, 42 años — directora de empresa, madre de 3</div>
+    <p>Andrea llegó con "todo bien en exámenes" pero con fatiga constante, abdomen inflamado después de cada comida, antojos de dulce en la tarde y dolor articular leve. Su dieta era "equilibrada" según los estándares convencionales: cereales de caja, jugo de naranja, pechuga de pollo y algo de ensalada.</p>
+    <p style="margin-top:10px;">Al revisar su dieta real, el patrón era claro: alto en carbohidratos refinados, bajo en grasas buenas, casi cero omega-3. Se implementó el protocolo keto-equilibrio antiinflamatorio por 21 días: eliminación de azúcar y harina refinada, incorporación de aguacate, salmón, aceite de oliva, cúrcuma y vegetales de hoja verde a diario.</p>
+    <p style="margin-top:10px;color:rgba(255,255,255,0.55);font-size:11px;">A los 21 días: abdomen más plano, energía sostenida sin caídas en la tarde, cero antojos de dulce, dolor articular desaparecido. Sin medicamentos. Solo cambio de información alimentaria.</p>
+  </div>
+
+  <div class="stag" style="margin-top:20px;">Protocolo de los 3 días</div>
+  <h2 class="stitle">Tu <span>plan de acción</span> para los días 10, 11 y 12</h2>
+
+  <div class="phead">
+    <h3>🥗 Protocolo ALIMENTACIÓN — Módulo 4</h3>
+    <p>Usa la App de Recetas para guiarte en cada comida del día</p>
+  </div>
+  <div class="pbody">
+    <div class="prow">
+      <div class="ptime">DÍA 10</div><div class="pdot" style="background:var(--gold);"></div>
+      <div class="ptext"><span class="ptech">Identifica tus inflamatorios</span> · Abre la App, juega ¿Inflama o Sana? y revisa tu despensa real. ¿Qué hay ahí que debería no estar? Solo observa, sin culpa.</div>
+    </div>
+    <div class="prow">
+      <div class="ptime">DÍA 11</div><div class="pdot" style="background:var(--green);"></div>
+      <div class="ptext"><span class="ptech">Cocina una receta nueva</span> · Elige una receta de la App que no hayas preparado antes. Intenta incorporar al menos un alimento antiinflamatorio que normalmente no usas: jengibre, cúrcuma, aceite de oliva crudo, blueberries.</div>
+    </div>
+    <div class="prow">
+      <div class="ptime">DÍA 12</div><div class="pdot" style="background:var(--sky);"></div>
+      <div class="ptext"><span class="ptech">Planea tu semana antiinflamatoria</span> · Usando la App como referencia, diseña 3 desayunos + 3 almuerzos + 3 cenas para la semana siguiente. El plan elimina la improvisación que lleva a elegir mal.</div>
+    </div>
+    <div class="prow">
+      <div class="ptime">CLAVE</div><div class="pdot" style="background:transparent;border:2px solid var(--gold);"></div>
+      <div class="ptext">No es restricción — es <strong>sustitución inteligente.</strong> Por cada alimento inflamatorio que retiras, agrega uno que sana. La escasez no funciona a largo plazo. La abundancia de lo correcto, sí.</div>
+    </div>
+  </div>
+
+  <div class="warn" style="margin-top:16px;">
+    <div class="wlabel">🔑 El principio más importante de este módulo</div>
+    <p>La alimentación antiinflamatoria no es una dieta de emergencia — es un estilo de vida. El 80/20 funciona mejor que el 100/0: el 80% del tiempo comes antiinflamatorio, el 20% restante disfrutas sin culpa. La culpa genera cortisol, y el cortisol genera inflamación. El equilibrio es la meta.</p>
+  </div>
+</div>
+
+<!-- PÁGINA 4: CIENCIA PROFUNDA -->
+<div class="page">
+  <div class="stag">Más allá de los alimentos</div>
+  <h2 class="stitle">Cómo comes importa <span>tanto como</span> qué comes</h2>
+  <p class="intro">La ciencia del comportamiento alimentario muestra que el contexto, la velocidad y el estado mental al comer determinan hasta un 30% de la respuesta inflamatoria a un mismo alimento.</p>
+
+  <div class="hbox">
+    <h3>⏱ La velocidad de comer y la insulina</h3>
+    <p>Comer rápido reduce la señalización de saciedad (leptina y GLP-1 tardan 20 minutos en llegar al cerebro) y aumenta el pico glucémico post-prandial incluso con los mismos alimentos. Un estudio de 2018 (Hurst & Fukuda, BMJ Open) demostró que comer lento reduce el riesgo de obesidad en un 42% comparado con comer rápido, independientemente de la calidad de la dieta.</p>
+  </div>
+
+  <div class="food-grid">
+    <div class="food-card fc-sana">
+      <div class="fc-header"><div class="fc-icon">🧘‍♀️</div><div class="fc-name">Comer sin pantallas</div></div>
+      <div class="fc-why">La atención plena al comer activa el sistema parasimpático (descanso/digestión). La distracción con pantallas activa el simpático, reduciendo los jugos digestivos y aumentando la fermentación intestinal.</div>
+      <span class="fc-badge badge-g">✅ PRÁCTICA CLAVE</span>
+    </div>
+    <div class="food-card fc-sana">
+      <div class="fc-header"><div class="fc-icon">🍽</div><div class="fc-name">Orden de los alimentos</div></div>
+      <div class="fc-why">Comer fibra/vegetales primero, proteína después, carbohidratos al final reduce el pico glucémico post-comida hasta un 36% (Shukla et al., Diabetes Care, 2018).</div>
+      <span class="fc-badge badge-g">✅ PRÁCTICA CLAVE</span>
+    </div>
+    <div class="food-card fc-sana">
+      <div class="fc-header"><div class="fc-icon">⏰</div><div class="fc-name">Ayuno intermitente suave</div></div>
+      <div class="fc-why">Respetar 12-14 horas sin comer (ej: cena 7pm, desayuno 7-9am) activa la autofagia — limpieza celular que reduce inflamación y rejuvenece tejidos. No requiere restricción calórica.</div>
+      <span class="fc-badge badge-g">✅ PRÁCTICA CLAVE</span>
+    </div>
+    <div class="food-card fc-sana">
+      <div class="fc-header"><div class="fc-icon">💧</div><div class="fc-name">Hidratación e inflamación</div></div>
+      <div class="fc-why">La deshidratación aumenta la concentración de citocinas inflamatorias en sangre. 2-2.5L de agua/día + electrolitos naturales (agua de coco, agua con limón) optimizan la depuración renal de toxinas.</div>
+      <span class="fc-badge badge-g">✅ PRÁCTICA CLAVE</span>
+    </div>
+  </div>
+
+  <div class="dato">
+    <div class="dlabel">🌿 El intestino permeable y la inflamación sistémica</div>
+    <p>La permeabilidad intestinal aumentada (leaky gut) permite que fragmentos bacterianos (LPS — lipopolisacáridos) pasen al torrente sanguíneo, activando una respuesta inflamatoria sistémica continua. Los principales causantes: gluten en exceso, alcohol, AINES frecuentes, estrés crónico y dieta baja en fibra. Los principales reparadores: glutamina, caldo de hueso, fibra prebiótica, probióticos y cúrcuma.</p>
+  </div>
+
+  <div class="warn">
+    <div class="wlabel">🥗 Usa la App MORAIMA — Módulo 4</div>
+    <p>La App de Recetas Antiinflamatorias tiene el juego ¿Inflama o Sana? para aprender de forma interactiva + más de 12 recetas curadas por categoría de comida (desayuno, almuerzo, cena, bebidas, snacks) — todas siguiendo el protocolo keto-equilibrio de epimedik.</p>
+  </div>
+</div>
+
+<!-- PÁGINA 5: REFERENCIAS + CONTRAPORTADA -->
+<div class="page">
+  <div class="stag">Evidencia científica</div>
+  <h2 class="stitle">Referencias de <span>este módulo</span></h2>
+  <p class="bt" style="margin-bottom:18px;">Todo el contenido de esta guía está respaldado por investigación indexada en PubMed y publicaciones revisadas por pares. Busca cada PMID en pubmed.ncbi.nlm.nih.gov</p>
+
+  <div class="cit">Ricker MA & Haas WC (2017). "Anti-inflammatory diet in clinical practice: a review." <em>Nutrition in Clinical Practice.</em> PMID 28675411</div>
+  <div class="cit">Minihane AM et al. (2015). "Low-grade inflammation, diet composition and health: current research evidence and its translation." <em>British Journal of Nutrition.</em> PMID 26228057</div>
+  <div class="cit">Calder PC (2017). "Omega-3 fatty acids and inflammatory processes: from molecules to man." <em>Biochemical Society Transactions.</em> PMID 28900017</div>
+  <div class="cit">Shukla AP et al. (2018). "Food order has a significant impact on postprandial glucose and insulin levels." <em>Diabetes Care.</em> PMID 28559222</div>
+  <div class="cit">Hurst Y & Fukuda H (2018). "Effects of changes in eating speed on obesity in patients with diabetes." <em>BMJ Open Diabetes Research & Care.</em> PMID 30487969</div>
+  <div class="cit">Zinöcker MK & Lindseth IA (2018). "The western diet-microbiome-host interaction and its role in metabolic disease." <em>Nutrients.</em> PMID 29562591</div>
+  <div class="cit">Camilleri M (2019). "Leaky gut: mechanisms, measurement and clinical implications in humans." <em>Gut.</em> PMID 31076401</div>
+  <div class="cit">Trichopoulou A et al. (2014). "Definitions and potential health benefits of the Mediterranean diet: views from experts around the world." <em>BMC Medicine.</em> PMID 24857157</div>
+  <div class="cit">Hwang JH et al. (2020). "Effect of curcumin on inflammatory cytokines: a meta-analysis of randomized clinical trials." <em>Phytotherapy Research.</em> PMID 32936474</div>
+
+  <div style="margin-top:22px;padding:16px 18px;background:#f0fff5;border-radius:14px;border:1px solid #b8f0c8;">
+    <p style="font-size:11px;color:#1a4a2e;line-height:1.8;">
+      <strong>Nota de la Dra. Monica Arellano:</strong> La alimentación antiinflamatoria es medicina preventiva, no dietética estética. El objetivo nunca es el peso — es la vitalidad celular, la ausencia de inflamación y la energía sostenida. Cuando comes para sanar tu biología, el cuerpo responde: el peso se regula solo, el dolor disminuye, la mente se aclara. Esta guía es el mapa. Tú decides cuándo empezar el viaje.
+    </p>
+  </div>
+</div>
+
+<!-- CONTRAPORTADA -->
+<div class="page back">
+  <div class="deco" style="width:360px;height:360px;top:-70px;left:-70px;"></div>
+  <div class="deco" style="width:240px;height:240px;bottom:-50px;right:-50px;border-color:rgba(244,208,63,0.08);"></div>
+
+  <div class="cover-tag" style="margin-bottom:28px;">Módulo 4 completado · Día 12 de 21</div>
+  <div class="mantra">Tu cocina<br>es tu farmacia.</div>
+  <div class="mantra-sub">Y siempre estuvo en ti.</div>
+  <div class="divider"></div>
+  <p style="font-size:12px;color:var(--w60);max-width:300px;text-align:center;line-height:1.8;margin-bottom:36px;">
+    Llevas 12 días transformando tu biología desde adentro. En el Módulo 5 aprenderás a identificar y eliminar la inflamación silenciosa que puede estar viviendo en tu propia despensa.
+  </p>
+  <div style="font-size:11px;color:var(--sky);letter-spacing:3px;text-transform:uppercase;margin-bottom:5px;">Hablemos MedicaMente</div>
+  <div style="font-size:10px;color:var(--w30);letter-spacing:2px;">epimedik · Vive la vida al cien</div>
+</div>
+
+<button class="print-btn" onclick="window.print()">📄 Descargar / Imprimir guía</button>
+
+</body>
+</html>
