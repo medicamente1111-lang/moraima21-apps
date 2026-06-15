@@ -7,630 +7,566 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e74c3c;--orange:#f39c12;--purple:#9b59b6;--light:#f0f7ff;--gray:#6c757d}
-body{font-family:'Montserrat',sans-serif;background:var(--light);color:var(--navy);min-height:100vh;overflow-x:hidden}
-.screen{display:none;min-height:100vh;padding-bottom:80px}
-.screen.active{display:block}
+:root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e74c3c;--orange:#f39c12;--gray:#6c757d;--light:#fff5f5}
+body{font-family:'Montserrat',sans-serif;background:#1a0a0a;color:var(--navy);min-height:100vh;overflow-x:hidden}
 
-/* WELCOME */
-#s-welcome{background:linear-gradient(160deg,#1a0a0a 0%,#3d0a0a 40%,#0a2942 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;min-height:100vh;position:relative;overflow:hidden}
-#s-welcome::before{content:'🔥';font-size:220px;position:absolute;top:-20px;right:-30px;opacity:0.06;pointer-events:none}
-.w-label{background:rgba(231,76,60,0.2);border:1px solid rgba(231,76,60,0.4);color:#ff8a80;padding:7px 18px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
-#s-welcome h1{color:white;font-size:28px;font-weight:900;margin-bottom:10px;line-height:1.15}
-#s-welcome h1 span{color:#ff8a80}
-#s-welcome p{color:rgba(255,255,255,0.7);font-size:13px;margin-bottom:36px;max-width:340px;line-height:1.7}
-.alarm-stats{display:flex;gap:12px;margin-bottom:36px}
-.alarm-card{background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.3);border-radius:14px;padding:14px 14px;text-align:center;flex:1}
-.alarm-card .anum{color:#ff8a80;font-size:22px;font-weight:900}
-.alarm-card .albl{color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;margin-top:3px;line-height:1.3}
-.btn-start{background:linear-gradient(135deg,var(--red),#c0392b);color:white;border:none;padding:18px 48px;border-radius:50px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 30px rgba(231,76,60,0.4);transition:all .3s}
-.btn-start:hover{transform:translateY(-3px)}
+/* ALL SCREENS — JS controls display */
+.scr{display:none;min-height:100vh}
+
+/* ── WELCOME ── */
+#w{flex-direction:column;align-items:center;justify-content:center;text-align:center;
+   padding:40px 22px;background:linear-gradient(160deg,#1a0a0a 0%,#3d0a0a 50%,#0a2942 100%)}
+.w-tag{background:rgba(231,76,60,.2);border:1px solid rgba(231,76,60,.35);
+       color:#ff8a80;padding:7px 18px;border-radius:50px;font-size:11px;
+       font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;display:inline-block}
+.w-title{color:white;font-size:28px;font-weight:900;margin-bottom:10px;line-height:1.15}
+.w-title em{color:#ff8a80;font-style:normal}
+.w-sub{color:rgba(255,255,255,.7);font-size:13px;margin-bottom:32px;max-width:330px;line-height:1.7}
+.w-stats{display:flex;gap:12px;margin-bottom:34px}
+.ws{background:rgba(231,76,60,.15);border:1px solid rgba(231,76,60,.3);
+    border-radius:14px;padding:14px;text-align:center;flex:1}
+.ws-n{color:#ff8a80;font-size:22px;font-weight:900}
+.ws-l{color:rgba(255,255,255,.6);font-size:10px;font-weight:600;margin-top:3px;line-height:1.3}
+.btn-start{background:linear-gradient(135deg,var(--red),#c0392b);color:white;border:none;
+           padding:18px 48px;border-radius:50px;font-size:16px;font-weight:800;
+           cursor:pointer;box-shadow:0 8px 30px rgba(231,76,60,.4);transition:transform .2s}
+.btn-start:active{transform:scale(.97)}
+
+/* ── APP SHELL ── */
+#app{flex-direction:column;background:#f8f0f0}
+
+/* TOP BAR */
+.topbar{background:linear-gradient(135deg,#3d0a0a,var(--navy));padding:14px 18px;
+        display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50}
+.btn-back{background:rgba(255,255,255,.1);border:none;color:white;width:36px;height:36px;
+          border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tb-title{color:var(--gold);font-size:16px;font-weight:800;flex:1}
+.tb-score{font-size:12px;font-weight:800;color:white;background:rgba(231,76,60,.5);
+          padding:4px 12px;border-radius:50px}
 
 /* BOTTOM NAV */
-#bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--navy);display:none;grid-template-columns:repeat(4,1fr);z-index:100;box-shadow:0 -4px 20px rgba(0,0,0,0.3)}
-#bottom-nav.visible{display:grid}
-.nav-item{display:flex;flex-direction:column;align-items:center;padding:10px 5px;cursor:pointer;color:rgba(255,255,255,0.5);transition:all .2s;border:none;background:none;font-family:'Montserrat',sans-serif}
-.nav-item.active,.nav-item:hover{color:var(--gold)}
-.nav-icon{font-size:20px;margin-bottom:3px}
-.nav-lbl{font-size:9px;font-weight:700;text-transform:uppercase}
+.bnav{background:var(--navy);display:flex;position:sticky;bottom:0;z-index:50;
+      box-shadow:0 -4px 20px rgba(0,0,0,.3)}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 4px;
+    cursor:pointer;color:rgba(255,255,255,.45);border:none;background:none;
+    font-family:'Montserrat',sans-serif;transition:color .2s}
+.bn.on{color:var(--gold)}
+.bn-i{font-size:20px;margin-bottom:3px}
+.bn-l{font-size:9px;font-weight:700;text-transform:uppercase}
 
-/* PAGE HEADERS */
-.page-header{background:linear-gradient(135deg,var(--navy),#1a4a6b);padding:22px 20px 18px;color:white;position:sticky;top:0;z-index:50}
-.page-header h2{font-size:19px;font-weight:800;color:var(--gold)}
-.page-header p{font-size:12px;opacity:0.8;margin-top:3px}
+/* PANELS */
+.panel{display:none;flex:1;overflow-y:auto;padding-bottom:10px}
+.panel.on{display:block}
 
-/* TEST */
-.test-intro{padding:16px;background:linear-gradient(135deg,#fff5f5,#fdecea);border-bottom:1px solid #f5c6c6}
+/* ── TEST PANEL ── */
+.test-intro{background:linear-gradient(135deg,#fff5f5,#fdecea);padding:14px 16px;
+            border-bottom:1px solid #f5c6c6}
 .ti-text{font-size:13px;color:var(--navy);line-height:1.7}
-.ti-text strong{color:var(--red);font-weight:800}
-.categories-nav{display:flex;gap:8px;padding:10px 16px;background:white;border-bottom:1px solid #e0e8f0;overflow-x:auto;scrollbar-width:none;position:sticky;top:70px;z-index:40}
-.categories-nav::-webkit-scrollbar{display:none}
-.cat-btn{padding:6px 14px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;border:2px solid #e0e8f0;background:white;color:var(--navy);white-space:nowrap;font-family:'Montserrat',sans-serif;transition:all .2s}
-.cat-btn.active{background:var(--red);color:white;border-color:var(--red)}
-.symptom-count{padding:8px 16px;font-size:11px;color:var(--gray);font-weight:600;background:white;display:flex;justify-content:space-between;align-items:center}
-.score-badge{background:var(--red);color:white;padding:3px 10px;border-radius:50px;font-size:11px;font-weight:800}
-.symptom-list{padding:14px;display:flex;flex-direction:column;gap:10px}
-.symptom-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);border:2px solid transparent;transition:all .2s;cursor:pointer}
-.symptom-card.checked{border-color:var(--red)}
-.sc-header{padding:14px 16px;display:flex;align-items:center;gap:12px}
-.sc-emoji{font-size:32px;flex-shrink:0}
-.sc-info{flex:1}
-.sc-title{font-size:13px;font-weight:700;color:var(--navy)}
-.sc-system{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
-.sc-check{width:26px;height:26px;border-radius:50%;border:2px solid #e0e8f0;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s}
-.symptom-card.checked .sc-check{background:var(--red);border-color:var(--red);color:white}
-.sc-detail{display:none;padding:0 16px 14px;font-size:12px;color:var(--gray);line-height:1.6;border-top:1px dashed #f0f0f0;margin-top:0}
-.symptom-card.open .sc-detail{display:block}
-.sc-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.sc-tag{padding:3px 8px;border-radius:50px;font-size:10px;font-weight:700}
-.tag-early{background:#fef9e7;color:#b7770d}
-.tag-mid{background:#fdecea;color:#c0392b}
-.tag-late{background:#f4ecf7;color:#7d3c98}
-.tag-system{background:#e8f4fd;color:#1a5276}
-.btn-ver-resultado{position:sticky;bottom:80px;left:0;right:0;width:calc(100% - 32px);margin:0 16px;padding:16px;background:linear-gradient(135deg,var(--red),#c0392b);color:white;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Montserrat',sans-serif;box-shadow:0 4px 16px rgba(231,76,60,0.4);display:block;margin-top:14px}
+.ti-text strong{color:var(--red)}
 
-/* RESULTADO */
-.resultado-wrap{padding:16px;display:flex;flex-direction:column;gap:12px}
-.resultado-card{border-radius:20px;padding:24px;text-align:center;color:white}
-.rc-emoji{font-size:56px;margin-bottom:10px}
-.rc-nivel-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;opacity:0.8;margin-bottom:6px}
+/* Category filter */
+.cat-bar{display:flex;gap:8px;padding:10px 16px;background:white;
+         border-bottom:1px solid #e8e0e0;overflow-x:auto;scrollbar-width:none;
+         position:sticky;top:64px;z-index:40}
+.cat-bar::-webkit-scrollbar{display:none}
+.cbt{padding:6px 14px;border-radius:50px;font-size:11px;font-weight:700;
+     cursor:pointer;border:2px solid #e0d8d8;background:white;color:var(--navy);
+     white-space:nowrap;font-family:'Montserrat',sans-serif;transition:all .2s}
+.cbt.on{background:var(--red);color:white;border-color:var(--red)}
+
+.sym-count{padding:8px 16px;font-size:11px;color:var(--gray);font-weight:600;
+           background:white;display:flex;justify-content:space-between;align-items:center}
+.sc-badge{background:var(--red);color:white;padding:3px 10px;border-radius:50px;font-size:11px;font-weight:800}
+
+.syms{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.sym{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);
+     border:2px solid transparent;transition:all .2s;cursor:pointer}
+.sym.on{border-color:var(--red)}
+.sym-hd{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.sym-e{font-size:32px;flex-shrink:0}
+.sym-info{flex:1}
+.sym-t{font-size:13px;font-weight:700;color:var(--navy)}
+.sym-sys{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;color:var(--gray)}
+.sym-chk{width:26px;height:26px;border-radius:50%;border:2px solid #e0d8d8;
+         flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s}
+.sym.on .sym-chk{background:var(--red);border-color:var(--red);color:white}
+.sym-detail{display:none;padding:0 16px 14px;font-size:12px;color:var(--gray);
+            line-height:1.6;border-top:1px dashed #f5e8e8}
+.sym.exp .sym-detail{display:block}
+.sym-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.stag{padding:3px 8px;border-radius:50px;font-size:10px;font-weight:700}
+.stag-e{background:#fef9e7;color:#b7770d}
+.stag-m{background:#fdecea;color:#c0392b}
+.stag-t{background:#f4ecf7;color:#7d3c98}
+.stag-s{background:#e8f4fd;color:#1a5276}
+
+.btn-result{display:block;width:calc(100% - 32px);margin:4px 16px 80px;
+            padding:16px;background:linear-gradient(135deg,var(--red),#c0392b);
+            color:white;border:none;border-radius:14px;font-size:15px;font-weight:800;
+            cursor:pointer;font-family:'Montserrat',sans-serif;
+            box-shadow:0 4px 16px rgba(231,76,60,.35)}
+
+/* ── RESULTADO PANEL ── */
+.res-wrap{padding:16px;display:flex;flex-direction:column;gap:14px}
+.res-card{border-radius:20px;padding:24px;text-align:center;color:white}
+.rc-e{font-size:56px;margin-bottom:10px}
+.rc-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;opacity:.8;margin-bottom:6px}
 .rc-title{font-size:20px;font-weight:900;margin-bottom:10px;line-height:1.2}
-.rc-score{font-size:40px;font-weight:900;color:white}
-.rc-score span{font-size:18px;opacity:0.7}
-.rc-desc{font-size:12px;opacity:0.85;line-height:1.6;margin-top:10px;max-width:300px;margin-left:auto;margin-right:auto}
-.checked-list-card{background:white;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
-.clc-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.clc-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed #f0f0f0}
-.clc-item:last-child{border-bottom:none}
-.clc-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:4px}
-.clc-text{flex:1}
-.clc-name{font-size:12px;font-weight:700;color:var(--navy)}
-.clc-why{font-size:11px;color:var(--gray);margin-top:2px;line-height:1.4}
-.action-btns{display:flex;flex-direction:column;gap:10px}
-.btn-primary{padding:16px;background:linear-gradient(135deg,var(--green),#27ae60);color:var(--navy);border:none;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Montserrat',sans-serif;text-align:center}
-.btn-secondary{padding:14px;background:white;color:var(--navy);border:2px solid var(--navy);border-radius:14px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif}
+.rc-score{font-size:42px;font-weight:900}
+.rc-score span{font-size:18px;opacity:.7}
+.rc-desc{font-size:12px;opacity:.85;line-height:1.6;margin-top:10px}
+.plan-card{background:white;border-radius:18px;padding:18px;box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.plan-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:14px}
+.plan-item{display:flex;align-items:center;gap:10px;padding:10px 0;
+           border-bottom:1px solid #f5e8e8;cursor:pointer}
+.plan-item:last-child{border-bottom:none}
+.pi-chk{width:24px;height:24px;border-radius:6px;border:2px solid #e0d8d8;
+        flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.plan-item.done .pi-chk{background:var(--green);border-color:var(--green);color:white;font-size:13px}
+.pi-text{font-size:12px;color:var(--navy);line-height:1.4}
 
-/* ENFERMEDADES */
-.disease-intro-box{padding:16px;background:linear-gradient(135deg,#fff5f5,#fdecea)}
-.dib-text{font-size:12px;color:var(--navy);line-height:1.7}
-.dib-text strong{color:var(--red);font-weight:800}
-.nfkb-explainer{margin:16px;background:linear-gradient(135deg,var(--navy),#1a4a6b);border-radius:16px;padding:16px;color:white}
-.nfkb-title{font-size:14px;font-weight:800;color:var(--gold);margin-bottom:8px}
-.nfkb-text{font-size:12px;opacity:0.85;line-height:1.6}
-.systems-container{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
-.system-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
-.system-header{padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:pointer}
-.sys-emoji{font-size:28px;flex-shrink:0}
+/* ── ENFERMEDADES PANEL ── */
+.sys-intro{background:linear-gradient(135deg,#1a0a0a,#3d0a0a);padding:16px;color:white}
+.sys-intro-t{font-size:14px;font-weight:800;color:var(--gold);margin-bottom:6px}
+.sys-intro-s{font-size:12px;opacity:.8;line-height:1.6}
+.systems{padding:14px;display:flex;flex-direction:column;gap:10px}
+.sys-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.07);cursor:pointer;border-left:4px solid}
+.sys-hd{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.sys-e{font-size:32px;flex-shrink:0}
 .sys-info{flex:1}
-.sys-name{font-size:14px;font-weight:800;color:var(--navy)}
-.sys-count{font-size:11px;color:var(--gray);margin-top:2px}
-.sys-arrow{font-size:20px;color:var(--gray);transition:transform .2s}
-.system-card.open .sys-arrow{transform:rotate(90deg)}
-.disease-list{display:none;flex-direction:column;gap:8px;padding:0 16px 14px}
-.system-card.open .disease-list{display:flex}
-.disease-item{background:#fff5f5;border-radius:12px;padding:12px 14px;border-left:3px solid var(--red)}
-.di-name{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px}
-.di-link{font-size:11px;color:var(--gray);line-height:1.5}
-.di-badge{display:inline-flex;align-items:center;gap:4px;background:#fdecea;color:var(--red);padding:2px 8px;border-radius:50px;font-size:10px;font-weight:700;margin-top:6px}
+.sys-t{font-size:14px;font-weight:800;color:var(--navy)}
+.sys-s{font-size:11px;color:var(--gray);margin-top:2px}
+.sys-arr{font-size:16px;color:var(--gray);transition:transform .2s;flex-shrink:0}
+.sys-card.open .sys-arr{transform:rotate(180deg)}
+.sys-body{display:none;padding:0 16px 14px;border-top:1px dashed #f0e8e8}
+.sys-card.open .sys-body{display:block}
+.dis-list{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.dis-item{font-size:12px;color:var(--navy);padding:8px 12px;background:#fff5f5;
+          border-radius:8px;line-height:1.5}
+.dis-item strong{color:var(--red)}
 
-/* SOLUCIONES */
-.soluciones-container{padding:16px;display:flex;flex-direction:column;gap:12px}
-.sol-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
-.sol-header{padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.sol-emoji-big{font-size:40px;flex-shrink:0}
+/* ── SOLUCIONES PANEL ── */
+.sol-intro{background:linear-gradient(135deg,#0a2942,#155a30);padding:16px;color:white}
+.sol-intro-t{font-size:14px;font-weight:800;color:var(--green);margin-bottom:6px}
+.sol-intro-s{font-size:12px;opacity:.8;line-height:1.6}
+.sols{padding:14px;display:flex;flex-direction:column;gap:12px}
+.sol-card{background:white;border-radius:18px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.07);cursor:pointer;border-top:4px solid var(--green)}
+.sol-hd{padding:16px;display:flex;align-items:center;gap:14px}
+.sol-e{font-size:38px;flex-shrink:0}
 .sol-info{flex:1}
-.sol-name{font-size:15px;font-weight:800;color:var(--navy)}
-.sol-tags{display:flex;gap:6px;margin-top:5px;flex-wrap:wrap}
-.sol-tag{padding:2px 8px;border-radius:50px;font-size:10px;font-weight:700;background:#e8f8f0;color:#1e8449}
-.sol-tag.azul{background:#e8f4fd;color:#1a5276}
-.sol-desc-short{font-size:12px;color:var(--gray);margin-top:5px;line-height:1.4}
-.sol-body{display:none;padding:0 16px 16px;border-top:1px solid #f0f0f0}
-.sol-card.expanded .sol-body{display:block}
-.sol-science-box{background:linear-gradient(135deg,#f0f7ff,#e8f4fd);border-radius:12px;padding:14px;margin:12px 0}
-.ssb-title{font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.ssb-text{font-size:12px;color:var(--navy);line-height:1.6}
-.ssb-ref{font-size:10px;color:var(--gray);font-style:italic;margin-top:6px}
-.sol-steps-title{font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-.sol-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;background:#f8f9fa;border-radius:10px;padding:10px 12px}
-.ss-num{background:var(--navy);color:var(--gold);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;margin-top:1px}
-.ss-text{font-size:12px;color:var(--gray);line-height:1.5;flex:1}
-.sol-foods-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:8px}
-.sfood{background:#f0fff5;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px}
-.power-bar-wrap{margin-top:12px;background:#f8f9fa;border-radius:10px;padding:10px 12px}
-.pbw-label{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:6px}
-.pbw-bar{height:10px;background:#e0e8f0;border-radius:5px;overflow:hidden}
-.pbw-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--green));border-radius:5px}
-
-/* PLAN */
-.plan-wrap{padding:16px;display:flex;flex-direction:column;gap:10px}
-.plan-nivel-card{border-radius:16px;padding:18px;color:white;text-align:center;margin-bottom:4px}
-.plnc-title{font-size:18px;font-weight:900;margin-bottom:6px}
-.plnc-sub{font-size:12px;opacity:0.85;line-height:1.5}
-.plan-progress{background:white;border-radius:12px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
-.pp-label{font-size:13px;font-weight:700;color:var(--navy)}
-.pp-count{font-size:13px;font-weight:800}
-.plan-item{background:white;border-radius:14px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);cursor:pointer;transition:all .2s}
-.plan-item.done{opacity:0.65}
-.plan-item.done .pi-title{text-decoration:line-through;color:var(--gray)}
-.pi-icon{font-size:28px;flex-shrink:0}
-.pi-body{flex:1}
-.pi-title{font-size:13px;font-weight:700;color:var(--navy)}
-.pi-sub{font-size:11px;color:var(--gray);margin-top:2px;line-height:1.4}
-.pi-chk{width:26px;height:26px;border-radius:50%;border:2px solid #e0e8f0;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;margin-top:2px}
-.plan-item.done .pi-chk{background:var(--green);border-color:var(--green);color:white}
-.plan-empty{text-align:center;padding:60px 20px;color:var(--gray)}
-.plan-empty .pe-icon{font-size:60px;margin-bottom:16px}
-.plan-empty h3{font-size:16px;font-weight:700;margin-bottom:8px}
-.plan-empty p{font-size:13px;line-height:1.6;margin-bottom:20px}
-.btn-go-test{padding:12px 24px;background:var(--navy);color:var(--gold);border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
-.btn-reset{width:100%;padding:14px;background:white;color:var(--gray);border:2px solid #e0e8f0;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:4px}
-
-@media print{#bottom-nav{display:none!important}.screen{padding-bottom:0!important}.page-header{position:static!important}}
+.sol-t{font-size:14px;font-weight:800;color:var(--navy)}
+.sol-pwr{font-size:11px;font-weight:700;color:var(--green);margin-top:3px}
+.sol-arr{font-size:16px;color:var(--gray);transition:transform .2s;flex-shrink:0}
+.sol-card.open .sol-arr{transform:rotate(180deg)}
+.sol-body{display:none;padding:0 16px 16px;border-top:1px dashed #e0f0e0}
+.sol-card.open .sol-body{display:block}
+.sol-desc{font-size:12px;color:var(--gray);line-height:1.6;margin-top:12px;margin-bottom:10px}
+.sol-ref{font-size:11px;font-weight:700;color:var(--sky);margin-bottom:10px}
+.sol-steps-t{font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.sol-step{font-size:12px;color:var(--gray);padding:5px 0 5px 16px;position:relative;
+          line-height:1.5;border-bottom:1px dashed #f0f0f0}
+.sol-step::before{content:'→';position:absolute;left:0;color:var(--green);font-weight:800}
+.sol-foods{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.sol-food{background:#f0fff5;border:1px solid #a9dfbf;border-radius:50px;
+          padding:4px 10px;font-size:11px;font-weight:700;color:#1e8449}
 </style>
 </head>
 <body>
 
-<!-- WELCOME -->
-<div id="s-welcome" class="screen active">
-  <div class="w-label">Módulo 5 · INFLAMACIÓN</div>
-  <h1>El fuego silencioso<br>que <span>ya está en ti</span></h1>
-  <p>La inflamación crónica de bajo grado no duele, no da fiebre, no da señales obvias. Pero lleva años destruyendo tus tejidos. Hoy aprenderás a detectarla y apagarla.</p>
-  <div class="alarm-stats">
-    <div class="alarm-card"><div class="anum">80+</div><div class="albl">Enfermedades vinculadas</div></div>
-    <div class="alarm-card"><div class="anum">32</div><div class="albl">Síntomas para detectarla</div></div>
-    <div class="alarm-card"><div class="anum">6</div><div class="albl">Soluciones naturales</div></div>
+<!-- ══ WELCOME ══ -->
+<div id="w" class="scr">
+  <div class="w-tag">Módulo 5 · Inflamación</div>
+  <div class="w-title">El fuego silencioso<br>que <em>ya está en ti</em></div>
+  <div class="w-sub">La inflamación crónica de bajo grado no duele, no da fiebre, no da señales obvias. Pero lleva años destruyendo tus tejidos. Hoy aprenderás a detectarla y apagarla.</div>
+  <div class="w-stats">
+    <div class="ws"><div class="ws-n">80+</div><div class="ws-l">Enfermedades vinculadas</div></div>
+    <div class="ws"><div class="ws-n">32</div><div class="ws-l">Síntomas para detectarla</div></div>
+    <div class="ws"><div class="ws-n">6</div><div class="ws-l">Soluciones naturales</div></div>
   </div>
-  <button class="btn-start" onclick="enterApp()">¿Estoy inflamada? Descúbrelo 🔥</button>
+  <button class="btn-start" onclick="startApp()">¿Estoy inflamada? Descúbrelo 🔥</button>
 </div>
 
-<!-- TEST SÍNTOMAS -->
-<div id="s-test" class="screen">
-  <div class="page-header">
-    <h2>🔍 Test de Inflamación Silenciosa</h2>
-    <p>32 señales — marca todo lo que presentas</p>
-  </div>
-  <div class="test-intro">
-    <div class="ti-text">Estos signos <strong>no son normales aunque sean frecuentes</strong>. Son la voz de tu cuerpo diciendo que hay un fuego interno activo. Marca todos los que hayas sentido en los últimos 3 meses.</div>
-  </div>
-  <div class="categories-nav" id="cats-nav"></div>
-  <div class="symptom-count">
-    <span id="showing-count">Mostrando todos</span>
-    <span class="score-badge" id="score-badge">0 marcados</span>
-  </div>
-  <div class="symptom-list" id="symptom-list"></div>
-  <div style="padding:0 14px 14px">
-    <button class="btn-ver-resultado" onclick="verResultado()">Ver mi nivel de inflamación →</button>
-  </div>
-</div>
+<!-- ══ APP ══ -->
+<div id="app" class="scr">
 
-<!-- RESULTADO -->
-<div id="s-resultado" class="screen">
-  <div class="page-header">
-    <h2>📊 Tu Nivel de Inflamación</h2>
-    <p>Análisis basado en tus síntomas</p>
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <button class="btn-back" onclick="goWelcome()">←</button>
+    <div class="tb-title">🔥 Inflamación</div>
+    <div class="tb-score" id="tb-score">0 síntomas</div>
   </div>
-  <div class="resultado-wrap" id="resultado-content"></div>
-</div>
 
-<!-- ENFERMEDADES -->
-<div id="s-enfermedades" class="screen">
-  <div class="page-header">
-    <h2>🧬 80+ Enfermedades del Fuego Lento</h2>
-    <p>Todas comparten una raíz: NF-κB activado</p>
+  <!-- PANELS -->
+  <div class="panel on" id="p-test">
+    <div class="test-intro">
+      <div class="ti-text">Toca cada síntoma que hayas tenido en los <strong>últimos 3 meses</strong>. Toca el síntoma para ver la explicación científica. Marca el círculo ✓ para contarlo en tu puntaje.</div>
+    </div>
+    <div class="cat-bar" id="cat-bar"></div>
+    <div class="sym-count">
+      <span id="sym-count-txt">Mostrando todos los síntomas</span>
+      <span class="sc-badge" id="score-badge">0 marcados</span>
+    </div>
+    <div class="syms" id="syms-list"></div>
+    <button class="btn-result" onclick="showTab('result')">Ver mi resultado →</button>
   </div>
-  <div class="disease-intro-box">
-    <div class="dib-text">El <strong>Factor Nuclear NF-κB</strong> es el interruptor maestro de la inflamación en tus células. Cuando se activa crónicamente por malos hábitos, desencadena todas estas enfermedades de forma silenciosa.</div>
-  </div>
-  <div class="nfkb-explainer" style="margin:16px 16px 0">
-    <div class="nfkb-title">🔬 ¿Qué es NF-κB?</div>
-    <div class="nfkb-text">Es una proteína dentro de cada célula que actúa como "interruptor de guerra". Cuando se activa, ordena producir TNF-alfa, IL-6 e IL-1β — las citoquinas que generan inflamación sistémica. La azúcar, el estrés crónico, el sueño deficiente y los aceites refinados lo encienden. La cúrcuma, el omega-3, el grounding y el ayuno lo apagan.</div>
-  </div>
-  <div class="systems-container" id="systems-container"></div>
-</div>
 
-<!-- SOLUCIONES -->
-<div id="s-soluciones" class="screen">
-  <div class="page-header">
-    <h2>💚 6 Formas de Apagar el Fuego</h2>
-    <p>Intervenciones naturales con evidencia científica</p>
+  <div class="panel" id="p-result">
+    <div class="res-wrap" id="res-wrap"></div>
   </div>
-  <div class="soluciones-container" id="soluciones-container"></div>
-</div>
 
-<!-- BOTTOM NAV -->
-<nav id="bottom-nav">
-  <button class="nav-item active" onclick="goTo('s-test',0)">
-    <span class="nav-icon">🔍</span><span class="nav-lbl">Test</span>
-  </button>
-  <button class="nav-item" onclick="goTo('s-resultado',1);if(!nivelActual)goTo('s-test',0)">
-    <span class="nav-icon">📊</span><span class="nav-lbl">Resultado</span>
-  </button>
-  <button class="nav-item" onclick="goTo('s-enfermedades',2)">
-    <span class="nav-icon">🧬</span><span class="nav-lbl">Enfermedades</span>
-  </button>
-  <button class="nav-item" onclick="goTo('s-soluciones',3)">
-    <span class="nav-icon">💚</span><span class="nav-lbl">Soluciones</span>
-  </button>
-</nav>
+  <div class="panel" id="p-enf">
+    <div class="sys-intro">
+      <div class="sys-intro-t">Los 7 Sistemas que destruye la Inflamación</div>
+      <div class="sys-intro-s">La IBG sin tratar durante años se convierte en estas enfermedades. Toca cada sistema para ver las condiciones vinculadas.</div>
+    </div>
+    <div class="systems" id="systems-list"></div>
+  </div>
+
+  <div class="panel" id="p-sol">
+    <div class="sol-intro">
+      <div class="sol-intro-t">6 Soluciones Antiinflamatorias Naturales</div>
+      <div class="sol-intro-s">Respaldadas por ciencia. Sin pastillas. Solo decisiones inteligentes que apagan el NF-κB.</div>
+    </div>
+    <div class="sols" id="sols-list"></div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bnav">
+    <button class="bn on" id="bn-test" onclick="showTab('test')"><span class="bn-i">🔍</span><span class="bn-l">Test</span></button>
+    <button class="bn" id="bn-result" onclick="showTab('result')"><span class="bn-i">📊</span><span class="bn-l">Resultado</span></button>
+    <button class="bn" id="bn-enf" onclick="showTab('enf')"><span class="bn-i">🧬</span><span class="bn-l">Enfermedades</span></button>
+    <button class="bn" id="bn-sol" onclick="showTab('sol')"><span class="bn-i">💚</span><span class="bn-l">Soluciones</span></button>
+  </div>
+
+</div>
 
 <script>
-// 32 SÍNTOMAS
-const sintomas = [
+// ━━━ DATA ━━━
+const sintomas=[
   // ENERGÍA Y MENTE
-  {e:'😴',t:'Cansancio crónico sin explicación',s:'Tu sistema inmune activo consume energía constantemente. La inflamación sistémica produce fatiga que no mejora con el descanso.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Inmune'},
-  {e:'🧠',t:'Niebla mental — pensamiento lento o confuso',s:'La IL-6 y el TNF-alfa cruzan la barrera hematoencefálica y ralentizan la transmisión neuronal. El cerebro inflamado piensa más despacio.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Neurológico'},
-  {e:'📉',t:'Dificultad para concentrarte o memorizar',s:'La neuroinflamación reduce el BDNF (factor neurotrófico cerebral) afectando memoria de trabajo y concentración sostenida.',cat:'Energía y Mente',etapa:'Moderado',sistema:'Neurológico'},
-  {e:'😔',t:'Ánimo bajo, tristeza sin motivo claro',s:'La inflamación reduce la serotonina y dopamina. Los antidepresivos modernos tienen efecto antiinflamatorio parcial — eso explica por qué funcionan.',cat:'Energía y Mente',etapa:'Moderado',sistema:'Neurológico'},
-  {e:'😰',t:'Ansiedad o tensión interna frecuente',s:'El cortisol elevado por inflamación activa la amígdala de forma continua, generando un estado de alerta que no tiene causa externa evidente.',cat:'Energía y Mente',etapa:'Moderado',sistema:'Neurológico'},
-  {e:'🌙',t:'Insomnio o sueño no reparador',s:'La inflamación eleva el cortisol nocturno que compite con la melatonina. Además, las citoquinas interrumpen las fases profundas del sueño.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Neurológico'},
+  {e:'😴',t:'Fatiga sin razón aparente',s:'La IL-6 eleva el ciclo vigilia-sueño y el cerebro interpreta la inflamación como señal de enfermedad, generando letargia.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Neurológico'},
+  {e:'🧠',t:'Niebla mental',s:'La neuroinflamación leve reduce el flujo sanguíneo a la corteza prefrontal, afectando memoria de trabajo y concentración.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Neurológico'},
+  {e:'😡',t:'Irritabilidad sin causa',s:'El TNF-α altera la producción de serotonina y dopamina en el cerebro, generando cambios de humor inexplicables.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Neurológico'},
+  {e:'💤',t:'Sueño que no recupera',s:'Las citocinas inflamatorias interrumpen las ondas delta (sueño profundo) donde se produce la regeneración celular.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Neurológico'},
+  {e:'🎯',t:'Dificultad para concentrarse',s:'La PCR elevada afecta la corteza prefrontal, la región del cerebro encargada de la atención sostenida y la toma de decisiones.',cat:'Energía y Mente',etapa:'Temprano',sistema:'Neurológico'},
+  {e:'😪',t:'Tristeza o depresión leve',s:'La IL-1β activa la enzima IDO que convierte triptófano en kynurenina en vez de serotonina, causando estado depresivo.',cat:'Energía y Mente',etapa:'Moderado',sistema:'Neurológico'},
+  {e:'🌙',t:'Ansiedad nocturna',s:'El cortisol y las citocinas se desincronizaron: el cortisol sube por la noche cuando debería estar bajo, generando activación inoportuna.',cat:'Energía y Mente',etapa:'Moderado',sistema:'Neurológico'},
   // DIGESTIVO
-  {e:'🫃',t:'Distensión abdominal después de comer',s:'Señal clara de inflamación intestinal y disbiosis. El microbioma alterado fermenta alimentos que no debería, produciendo gas e inflamación local.',cat:'Digestivo',etapa:'Temprano',sistema:'Digestivo'},
-  {e:'💨',t:'Gases excesivos o frecuentes',s:'Bacterias proinflamatorias en exceso producen metano y CO2 al fermentar los alimentos. Indica permeabilidad intestinal inicial.',cat:'Digestivo',etapa:'Temprano',sistema:'Digestivo'},
-  {e:'🚽',t:'Cambios en tránsito intestinal (estreñimiento / diarrea)',s:'El intestino inflamado pierde su ritmicidad. La mucosa inflamada no absorbe bien y el sistema nervioso entérico se desregula.',cat:'Digestivo',etapa:'Moderado',sistema:'Digestivo'},
-  {e:'🔥',t:'Acidez, reflujo o sensación de ardor',s:'La inflamación del esfínter esofágico y la mucosa gástrica mantiene el reflujo. El ácido no es el problema — la inflamación que abre las válvulas sí.',cat:'Digestivo',etapa:'Moderado',sistema:'Digestivo'},
-  {e:'🤢',t:'Náuseas o malestar digestivo frecuente',s:'La hiperpermeabilidad intestinal permite que endotoxinas bacterianas entren al torrente sanguíneo, generando malestar sistémico que se percibe como náusea.',cat:'Digestivo',etapa:'Moderado',sistema:'Digestivo'},
-  {e:'🍽️',t:'Antojos intensos de azúcar o carbohidratos',s:'La inflamación altera la señalización de leptina e insulina en el hipotálamo. El cerebro inflamado pide azúcar como combustible rápido.',cat:'Digestivo',etapa:'Temprano',sistema:'Metabólico'},
+  {e:'🫃',t:'Abdomen hinchado frecuente',s:'La disbiosis intestinal genera endotoxinas (LPS) que cruzan la barrera intestinal aumentada y activan el NF-κB sistémico.',cat:'Digestivo',etapa:'Moderado',sistema:'Digestivo'},
+  {e:'🤢',t:'Gases frecuentes',s:'La disbiosis produce bacterias metanogénicas. Los LPS bacterianos activan receptores TLR4 en el epitelio intestinal.',cat:'Digestivo',etapa:'Moderado',sistema:'Digestivo'},
+  {e:'💩',t:'Colon irritable',s:'La activación del NLRP3 en la mucosa intestinal genera permeabilidad aumentada — el famoso "leaky gut" que alimenta la inflamación sistémica.',cat:'Digestivo',etapa:'Tardío',sistema:'Digestivo'},
   // PIEL Y CABELLO
-  {e:'🌸',t:'Acné persistente o brotes frecuentes',s:'La piel es el espejo de la inflamación interna. El acné crónico en adultos indica niveles elevados de andrógenos inflamatorios y disbiosis intestinal.',cat:'Piel y Cabello',etapa:'Temprano',sistema:'Cutáneo'},
-  {e:'🔴',t:'Rojez, rosácea o piel reactiva',s:'La rosácea es inflamación vascular periférica. La vasodilatación inflamatoria crónica produce el eritema permanente y la sensibilidad cutánea.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Cutáneo'},
-  {e:'🌑',t:'Manchas oscuras o hiperpigmentación',s:'La inflamación activa la melanogénesis. Las manchas post-inflamatorias y el melasma son señales cutáneas de inflamación sistémica de bajo grado.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Cutáneo'},
-  {e:'😤',t:'Piel seca, descamación o eczema',s:'La barrera cutánea inflamada pierde agua y lípidos. El eczema es una respuesta TH2 exagerada, idéntica a la que ocurre en el intestino con alimentos.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Cutáneo'},
-  {e:'💇‍♀️',t:'Caída de cabello o cabello sin brillo',s:'La inflamación del cuero cabelludo y los folículos pilosos reduce el ciclo anágeno (crecimiento). La deficiencia de hierro inflamatoria agrava la caída.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Cutáneo'},
-  {e:'💅',t:'Uñas frágiles, con estrías o que se rompen',s:'Las uñas reflejan el estado nutricional e inflamatorio. La inflamación sistémica reduce la absorción de zinc, biotina y silicio necesarios para su estructura.',cat:'Piel y Cabello',etapa:'Tardío',sistema:'Cutáneo'},
-  // DOLOR Y ARTICULACIONES
-  {e:'🦴',t:'Dolor articular sin lesión evidente',s:'Las citoquinas inflamatorias (IL-1β y TNF-alfa) atacan el tejido sinovial. El dolor articular "migratorio" sin causa es la firma de la inflamación sistémica.',cat:'Dolor',etapa:'Moderado',sistema:'Músculo-Esquelético'},
-  {e:'💪',t:'Dolor o rigidez muscular difusa',s:'La inflamación muscular no producida por ejercicio (mialgia inflamatoria) es causada por citoquinas que alteran la membrana de las células musculares.',cat:'Dolor',etapa:'Moderado',sistema:'Músculo-Esquelético'},
-  {e:'🌅',t:'Rigidez al despertar que tarda en mejorar',s:'El cortisol matutino (que normalmente suprime inflamación) está insuficiente. La rigidez matutina mayor a 30 min es criterio diagnóstico de artritis reumatoide temprana.',cat:'Dolor',etapa:'Moderado',sistema:'Músculo-Esquelético'},
-  {e:'🤕',t:'Dolores de cabeza frecuentes o migrañas',s:'La neuroinflamación y la vasodilatación inflamatoria intracraneal son los mecanismos detrás de la migraña crónica. La serotonina baja por inflamación la desencadena.',cat:'Dolor',etapa:'Moderado',sistema:'Neurológico'},
-  {e:'🦵',t:'Sensación de pesadez en piernas',s:'La inflamación vascular periférica aumenta la permeabilidad capilar, generando edema leve y sensación de piernas pesadas, especialmente en la tarde.',cat:'Dolor',etapa:'Temprano',sistema:'Cardiovascular'},
-  // SISTEMA INMUNE Y METABÓLICO
-  {e:'🤧',t:'Resfriados o infecciones más de 3 veces al año',s:'Paradoja inmune: la inflamación crónica agota los recursos del sistema inmune adaptativo. El cuerpo está tan ocupado "apagando" que no puede defender bien.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Inmune'},
-  {e:'🌡️',t:'Febrícula o temperatura basal levemente elevada',s:'Una temperatura de 37.0-37.4°C constante (sin infección activa) es signo de activación inmune crónica — el termómetro lo confirma.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Inmune'},
-  {e:'🤧',t:'Alergias o sensibilidades que han empeorado',s:'La histamina está elevada por hiperactivación mastocitaria inflamatoria. Las alergias que empeoran con el tiempo indican que la inflamación sistémica aumenta.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Inmune'},
-  {e:'⚖️',t:'Peso en abdomen difícil de perder',s:'El tejido adiposo visceral produce sus propias adipokinas proinflamatorias (leptina, resistina). Es un ciclo vicioso: inflamación produce grasa, grasa produce más inflamación.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Metabólico'},
-  {e:'🫀',t:'Presión arterial elevada sin causa clara',s:'La inflamación vascular rigidifica las arterias y aumenta la resistencia periférica. La hipertensión esencial en muchos casos es una enfermedad inflamatoria.',cat:'Inmune y Metabólico',etapa:'Tardío',sistema:'Cardiovascular'},
+  {e:'🧴',t:'Acné en adultos',s:'La IL-17 sobre-activa las glándulas sebáceas. El acné adulto casi siempre indica inflamación sistémica, no solo problemas de piel.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Piel'},
+  {e:'💇',t:'Caída excesiva del cabello',s:'El TNF-α inhibe el ciclo del folículo piloso, empujando más cabellos a la fase de caída (telógena) antes de tiempo.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Piel'},
+  {e:'🔥',t:'Piel rojiza o reactiva',s:'La barrera cutánea comprometida permite antígenos ambientales que activan mastocitos y generan respuesta inflamatoria local crónica.',cat:'Piel y Cabello',etapa:'Tardío',sistema:'Piel'},
+  {e:'🧩',t:'Psoriasis o eczema',s:'El eje piel-inmune-intestino: la disbiosis intestinal activa Th17 que ataca la piel. Son dos manifestaciones de la misma raíz inflamatoria.',cat:'Piel y Cabello',etapa:'Tardío',sistema:'Piel'},
+  {e:'👁️',t:'Bolsas persistentes bajo los ojos',s:'La acumulación de fluido inflamatorio y la degradación del colágeno periocular son señales tempranas de inflamación sistémica.',cat:'Piel y Cabello',etapa:'Moderado',sistema:'Piel'},
+  // DOLOR
+  {e:'🦵',t:'Rigidez al despertar',s:'Las citocinas se acumulan en tejido muscular y articular durante el sueño. La rigidez matutina >30 min es señal clásica de inflamación activa.',cat:'Dolor',etapa:'Moderado',sistema:'Músculo-Esquelético'},
+  {e:'🦴',t:'Dolor articular que va y viene',s:'El RANKL activado por citocinas aumenta la resorción ósea en articulaciones. Puede preceder años a una artritis diagnosticada.',cat:'Dolor',etapa:'Tardío',sistema:'Músculo-Esquelético'},
+  {e:'🤕',t:'Migrañas frecuentes',s:'El CGRP (péptido relacionado con el gen de la calcitonina) se libera por inflamación vascular craneal. Las migrañas son a menudo neuroinflama-ción.',cat:'Dolor',etapa:'Tardío',sistema:'Neurológico'},
+  {e:'💪',t:'Pérdida de masa muscular',s:'La IL-6 crónica activa vías catabólicas que degradan proteínas musculares, generando sarcopenia inflamatoria.',cat:'Dolor',etapa:'Tardío',sistema:'Músculo-Esquelético'},
+  // INMUNE Y METABÓLICO
+  {e:'💊',t:'Alergias nuevas en adultos',s:'La hipersensibilidad Th2 aumentada por inflamación crónica baja el umbral del sistema inmune, generando reactividad a nuevas sustancias.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Inmunológico'},
+  {e:'⚖️',t:'Peso resistente pese a dieta',s:'La IL-6 genera resistencia a la leptina (hormona de saciedad) y a la insulina. El tejido adiposo inflamado produce más citocinas — un ciclo.',cat:'Inmune y Metabólico',etapa:'Moderado',sistema:'Metabólico'},
+  {e:'🩸',t:'Glucosa levemente elevada',s:'El TNF-α bloquea la señalización del receptor de insulina. La prediabetes metabólica es frecuentemente una consecuencia de IBG no tratada.',cat:'Inmune y Metabólico',etapa:'Tardío',sistema:'Metabólico'},
+  {e:'🌡️',t:'Febrícula sin infección',s:'La IL-1β activa el termostato hipotalámico generando temperatura ligeramente elevada (37.2-37.8°C) que persiste semanas.',cat:'Inmune y Metabólico',etapa:'Tardío',sistema:'Inmunológico'},
+  {e:'🫁',t:'Tos crónica sin causa',s:'La inflamación de las vías respiratorias superiores genera hipersecreción de moco y sensibilización de receptores de la tos.',cat:'Inmune y Metabólico',etapa:'Tardío',sistema:'Respiratorio'},
   // BOCA Y MUCOSAS
-  {e:'🦷',t:'Encías que sangran o se inflaman fácilmente',s:'La periodontitis es inflamación bacteriana crónica. Estudios muestran que la inflamación bucal aumenta el riesgo cardiovascular — las mismas bacterias van al torrente sanguíneo.',cat:'Boca y Mucosas',etapa:'Temprano',sistema:'Digestivo'},
-  {e:'👅',t:'Lengua con capa blanca o saburra lingual',s:'La disbiosis oral e intestinal se refleja en la lengua. La saburra es bacterias y células muertas en un ambiente de microbioma alterado.',cat:'Boca y Mucosas',etapa:'Temprano',sistema:'Digestivo'},
-  {e:'🌬️',t:'Mal aliento persistente (halitosis)',s:'Las bacterias proinflamatorias en boca e intestino producen compuestos sulfurados. La halitosis crónica indica disbiosis intestinal y oral activa.',cat:'Boca y Mucosas',etapa:'Temprano',sistema:'Digestivo'},
+  {e:'🦷',t:'Sangrado de encías',s:'La PCR elevada amplifica la inflamación periodontal. La enfermedad de encías y la inflamación sistémica se retroalimentan mutuamente.',cat:'Boca y Mucosas',etapa:'Moderado',sistema:'Digestivo'},
+  {e:'😶',t:'Aftas bucales frecuentes',s:'Las úlceras aftosas recurrentes indican inmunidad de mucosas deprimida por inflamación crónica subyacente.',cat:'Boca y Mucosas',etapa:'Tardío',sistema:'Inmunológico'},
+  {e:'💧',t:'Ojos secos persistentes',s:'La inflamación crónica afecta las glándulas lagrimales (inflamación periocular), reduciendo la producción de lágrima.',cat:'Boca y Mucosas',etapa:'Temprano',sistema:'Inmunológico'},
+  {e:'🤧',t:'Sinusitis recurrente',s:'Las mucosas hiperreactivas por inflamación sistémica bajan el umbral de respuesta a patógenos y alergenos nasales.',cat:'Boca y Mucosas',etapa:'Temprano',sistema:'Respiratorio'},
   // HORMONAL
-  {e:'🌑',t:'Ciclo menstrual irregular o doloroso',s:'El exceso de prostaglandinas inflamatorias intensifica los cólicos. La inflamación pélvica crónica está detrás del 80% de dismenorreas severas y la endometriosis.',cat:'Hormonal',etapa:'Moderado',sistema:'Hormonal'},
-  {e:'🧬',t:'Síntomas tiroideos (frío, cansancio, caída de pelo)',s:'El hipotiroidismo de Hashimoto es la enfermedad autoinmune más común. Anticuerpos TPO elevados son inflamación crónica tiroidea confirmada en laboratorio.',cat:'Hormonal',etapa:'Tardío',sistema:'Hormonal'}
+  {e:'🌸',t:'Ciclo menstrual irregular',s:'La IL-6 altera el eje hipotálamo-hipófisis-ovario, afectando la producción y ritmo de LH, FSH y progesterona.',cat:'Hormonal',etapa:'Moderado',sistema:'Hormonal'},
+  {e:'🛑',t:'Libido baja sin causa',s:'La IL-6 reduce la producción de testosterona en mujeres y hombres. Las citocinas interfieren directamente con la síntesis de hormonas sexuales.',cat:'Hormonal',etapa:'Moderado',sistema:'Hormonal'},
+  {e:'🫀',t:'Palpitaciones esporádicas',s:'La inflamación miocárdica subclínica y el desequilibrio autonómico por citocinas pueden generar arritmia leve intermitente.',cat:'Hormonal',etapa:'Tardío',sistema:'Cardiovascular'},
+  {e:'🤤',t:'Antojo constante de dulce',s:'La IL-1β altera la señalización de leptina y grelina en el hipotálamo, generando señales de hambre aunque hayas comido suficiente.',cat:'Hormonal',etapa:'Temprano',sistema:'Metabólico'}
 ];
 
-// SISTEMAS Y ENFERMEDADES
-const sistemas = [
-  {e:'🫀',n:'Cardiovascular',diseases:[
-    {n:'Aterosclerosis',l:'Las placas de colesterol son lesiones inflamatorias — NF-κB activa macrófagos en las arterias que forman las placas.'},
-    {n:'Infarto agudo de miocardio',l:'El 70% de los infartos ocurren en placas que no obstruían — son placas inflamadas que se rompen súbitamente.'},
-    {n:'Hipertensión esencial',l:'La inflamación vascular rigidifica las arterias. Muchos casos de hipertensión sin causa son una enfermedad inflamatoria.'},
-    {n:'Arritmia crónica',l:'Las citoquinas inflamatorias alteran los canales iónicos del músculo cardíaco, generando ritmos anormales.'}
-  ]},
-  {e:'🧠',n:'Neurológico',diseases:[
-    {n:'Alzheimer',l:'Reconocido hoy como enfermedad inflamatoria neurológica. PCR elevada duplica el riesgo. La microglía activada destruye sinapsis.'},
-    {n:'Parkinson',l:'Neuroinflamación de la sustancia negra — la microglía inflamada destruye las neuronas productoras de dopamina.'},
-    {n:'Depresión crónica',l:'Los antidepresivos tienen efecto antiinflamatorio. La IL-6 baja la serotonina. El 40% de depresiones son resistentes porque no se trata la inflamación.'},
-    {n:'Ansiedad generalizada',l:'El cortisol crónico inflama el hipocampo y la amígdala, generando ansiedad estructural que no tiene causa psicológica evidente.'},
-    {n:'Migraña crónica',l:'Neuroinflamación + activación del nervio trigémino + vasodilatación inflamatoria intracraneal son el mecanismo base.'}
-  ]},
-  {e:'⚖️',n:'Metabólico',diseases:[
-    {n:'Diabetes tipo 2',l:'La resistencia a la insulina es causada por inflamación en los receptores celulares. NF-κB bloquea la señal insulínica directamente.'},
-    {n:'Obesidad visceral',l:'El tejido graso produce adipokinas inflamatorias: ciclo vicioso — más grasa = más inflamación = más grasa.'},
-    {n:'Síndrome metabólico',l:'La combinación glucosa alta + HDL baja + presión alta + cintura grande es un síndrome 100% inflamatorio.'},
-    {n:'Hígado graso (NASH)',l:'La inflamación hepática progresa silenciosamente de esteatosis → esteatohepatitis → cirrosis en 10-20 años sin síntomas.'}
-  ]},
-  {e:'🦴',n:'Músculo-Esquelético',diseases:[
-    {n:'Artritis reumatoide',l:'Sistema inmune ataca articulaciones propias. NF-κB es el mediador central. La rigidez matutina es su primer signo.'},
-    {n:'Fibromialgia',l:'Neuroinflamación que sensibiliza receptores de dolor. PCR e IL-6 elevadas en el 80% de pacientes.'},
-    {n:'Lumbalgia crónica',l:'La inflamación del disco intervertebral y músculos paraespinales mantiene el dolor. No es mecánico — es inflamatorio.'},
-    {n:'Osteoporosis',l:'Las citoquinas RANKL activan osteoclastos que destruyen hueso más rápido de lo que los osteoblastos lo forman.'}
-  ]},
-  {e:'🫃',n:'Digestivo',diseases:[
-    {n:'Intestino permeable (Leaky Gut)',l:'La inflamación abre las uniones estrechas intestinales. Toxinas bacterianas y proteínas no digeridas entran al torrente sanguíneo.'},
-    {n:'Síndrome de colon irritable',l:'Inflamación de bajo grado en mucosa intestinal + disfunción del eje intestino-cerebro. Muchos casos son post-infecciosos.'},
-    {n:'Enfermedad de Crohn',l:'Respuesta inmune exagerada contra flora bacteriana intestinal. La dieta antiinflamatoria puede inducir remisión en casos tempranos.'},
-    {n:'Reflujo gastroesofágico crónico',l:'Inflamación del esfínter esofágico inferior y mucosa gástrica. Los inhibidores de bomba de protones no resuelven la causa.'}
-  ]},
-  {e:'🛡️',n:'Autoinmune',diseases:[
-    {n:'Hipotiroidismo de Hashimoto',l:'Anticuerpos TPO atacan la tiroides inflamada. La dieta sin gluten y antiinflamatoria reduce los anticuerpos en muchos casos.'},
-    {n:'Lupus eritematoso sistémico',l:'Inflamación sistémica que ataca múltiples órganos. Los brotes se correlacionan con elevación de marcadores inflamatorios.'},
-    {n:'Psoriasis',l:'Queratinocitos inflamados proliferan en exceso. El intestino permeable es el detonante principal. Responde a dieta antiinflamatoria.'},
-    {n:'Endometriosis',l:'Tejido endometrial inflamado prolifera fuera del útero. La inflamación pélvica mantiene y expande las lesiones.'}
-  ]},
-  {e:'🔬',n:'Oncológico',diseases:[
-    {n:'Cáncer de colon',l:'La inflamación crónica intestinal es el mayor factor de riesgo independiente para cáncer colorrectal. La aspirina reduce riesgo un 40% — por su efecto antiinflamatorio.'},
-    {n:'Cáncer de mama',l:'El ambiente inflamatorio en tejido mamario promueve proliferación tumoral, angiogénesis y escape inmune.'},
-    {n:'Cáncer de hígado',l:'NASH → cirrosis → hepatocarcinoma es la ruta inflamatoria confirmada. Cada escalón es inflamación progresiva.'}
-  ]}
-];
-
-// SOLUCIONES
-const soluciones = [
-  {e:'🥗',n:'Alimentación Antiinflamatoria',tags:['Alta evidencia','Efecto en 2-4 semanas','Cada comida'],
-   desc:'Cada comida activa o desactiva NF-κB. Es el mayor modificador de inflamación a tu disposición.',
-   science:'El estudio PREDIMED (7,500 personas, 5 años) demostró que la dieta mediterránea reduce eventos cardiovasculares en 30%. La cúrcuma + pimienta negra reduce PCR en 38% en 4 semanas. El omega-3 del salmón inhibe COX-2 igual que el ibuprofeno sin efectos secundarios.',
-   ref:'Estruch R et al. Primary Prevention with Mediterranean Diet. NEJM, 2013.',
-   steps:['ELIMINA esta semana: azúcar blanca, harinas refinadas, aceites de girasol/maíz/canola','AGREGA cúrcuma ½ cdta + pimienta negra + aceite de oliva en cada comida','Come pescado azul 3-4x/semana: salmón, sardinas, atún, macarela','1 taza de frutos rojos diario: arándanos, moras o fresas (antocianinas)','Reemplaza snacks por nueces, almendras o semillas de chía'],
-   foods:[{e:'🌼',n:'Cúrcuma'},{e:'🐟',n:'Salmón'},{e:'🫐',n:'Arándanos'},{e:'🧄',n:'Ajo'},{e:'🫒',n:'AOVE'},{e:'🌿',n:'Jengibre'},{e:'🥦',n:'Brócoli'},{e:'🌰',n:'Nueces'}],
-   power:92},
-  {e:'🌍',n:'Grounding / Earthing',tags:['Evidencia moderada','Sin costo','20-30 min'],
-   desc:'Tus pies descalzos en la tierra transfieren electrones libres que neutralizan radicales libres inflamatorios.',
-   science:'La tierra tiene carga eléctrica negativa. Al hacer contacto descalza, absorbes electrones que neutralizan radicales libres. El estudio de Chevalier et al. (2012) mostró reducción de estrés oxidativo, cortisol nocturno y mejora de la viscosidad sanguínea (sangre más fluida = menos inflamación vascular) en personas que practicaron earthing 8 semanas.',
-   ref:'Chevalier G et al. Earthing: Health Implications. J Environmental and Public Health, 2012.',
-   steps:['Sal descalza a tierra, pasto, arena, playa o concreto natural (no asfalto)','20-30 minutos continuos — el contacto constante es la clave','Puedes estar parada, sentada o caminando lentamente','La mañana es ideal — el cortisol y la inflamación están más altos al despertar','El mar y ríos naturales tienen el mismo efecto — el agua conduce los electrones'],
-   foods:[],
-   power:73},
-  {e:'☀️',n:'Vitamina D — El sol como hormona',tags:['Alta evidencia','Gratis','15-20 min/día'],
-   desc:'La vitamina D es una hormona que regula directamente NF-κB — el interruptor maestro de la inflamación.',
-   science:'El 70% de la población latinoamericana tiene deficiencia de vitamina D. Niveles <30 ng/mL se asocian con IL-6, TNF-alfa y PCR elevados. 15-20 min de sol produce 10,000-20,000 UI de vitamina D3 en la piel. Esta vitamina activa el receptor VDR que inhibe NF-κB directamente en el núcleo celular, cortando la producción de citoquinas inflamatorias.',
-   ref:'Holick MF. Vitamin D Deficiency. New England Journal of Medicine, 2007;357:266-281.',
-   steps:['Expón brazos y piernas al sol entre 10am y 2pm (cuando el UVB llega)','15 min si tu piel es clara, 30-45 min si tu piel es oscura o morena','Sin bloqueador solar en esa ventana — el filtro bloquea la síntesis de vitamina D','Después de ese tiempo, sí aplica protección solar para el resto del día','Solicita niveles de vitamina D en tu próximo examen de sangre (ideal: 50-70 ng/mL)'],
-   foods:[],
-   power:80},
-  {e:'❄️',n:'Terapia de Frío',tags:['Evidencia moderada','En casa','30 seg - 3 min'],
-   desc:'El frío produce norepinefrina 300% — tu antiinflamatorio más rápido y gratuito.',
-   science:'La exposición al frío aumenta la norepinefrina hasta 300% en minutos. La norepinefrina inhibe directamente TNF-alfa (citoquina proinflamatoria central). 11 minutos semanales de inmersión en frío (14°C) producen beneficios antiinflamatorios medibles. El frío también activa el tejido adiposo marrón (BAT), que es metabólicamente antiinflamatorio y quema calorías sin inflamar.',
-   ref:'Shevchuk NA. Adapted cold shower as potential treatment. Med Hypotheses, 2008;70(5):995.',
-   steps:['Semana 1: últimos 30 segundos de tu ducha en frío','Semana 2: 1 minuto de agua fría al final de la ducha','Semana 3: 2-3 minutos. Respira lentamente — no hagas apnea','Durante el frío: exhala lentamente por la boca para controlar la reacción vagal','Meta: 11 min de frío total por semana divididos en sesiones'],
-   foods:[],
-   power:71},
-  {e:'🌲',n:'Baño de Bosque — Shinrin-yoku',tags:['Alta evidencia','Semanal','2 horas'],
-   desc:'Los árboles emiten fitoncidas que al inhalarlos activan tu sistema inmune antiinflamatorio y bajan el cortisol.',
-   science:'El Dr. Qing Li documentó que 2 horas en un parque arbolado reducen cortisol 12%, aumentan células NK (natural killers) antiinflamatorias en 50%, y reducen IL-6 y TNF-alfa. El efecto dura hasta 7 días post-visita. Los fitoncidas — especialmente α-pineno y limoneno — son los compuestos bioactivos que generan estos efectos al ser inhalados.',
-   ref:'Li Q et al. Forest bathing enhances human natural killer activity. Int J Immunopathol Pharmacol, 2007.',
-   steps:['Ve a un parque grande, jardín botánico o área arbolada 1-2 veces por semana','Camina lento o siéntate — el objetivo es absorber, no ejercitarte','Respira profundo y lento por la nariz — así inhalas más fitoncidas','Apaga el teléfono o siléncialo — el estrés cortisol contrarrestaría el efecto','Combínalo con grounding: quítate los zapatos sobre el pasto del parque'],
-   foods:[],
-   power:76},
-  {e:'🫁',n:'Respiración Consciente — Nervio Vago',tags:['Alta evidencia','Diario','10-15 min'],
-   desc:'El nervio vago activa el "reflejo antiinflamatorio colinérgico" — apaga TNF-alfa en segundos con la respiración correcta.',
-   science:'El Dr. Kevin Tracey (2002) descubrió que el nervio vago puede apagar la producción de TNF-alfa en macrófagos a través de la acetilcolina. La exhalación lenta (más larga que la inhalación) es el activador principal del nervio vago. 20 min de respiración diafragmática diaria reduce IL-6 en 14% en 8 semanas.',
-   ref:'Tracey KJ. The inflammatory reflex. Nature, 2002;420:853-859.',
-   steps:['Siéntate cómoda con espalda recta o acuéstate boca arriba','Inhala por nariz contando 4 tiempos (el abdomen sube, no el pecho)','Exhala por boca contando 6 a 8 tiempos — exhala todo el aire','La exhala más larga que la inhala es la clave del nervio vago','10-15 minutos: ideal al despertar y antes de dormir'],
-   foods:[],
-   power:77}
-];
-
-// PLANES POR NIVEL
-const planes = {
-  verde:{color:'#27ae60',bg:'linear-gradient(135deg,#27ae60,#1e8449)',e:'✅',t:'Inflamación Baja',
-   d:'Tu cuerpo está en buen estado. Estos hábitos te protegerán de que la inflamación de bajo grado tome control en el futuro.',
-   items:[
-     {e:'🥗',t:'Cúrcuma + pimienta negra en una comida del día',s:'Solo ½ cdta con un pellizco de pimienta — efecto antiinflamatorio comprobado'},
-     {e:'🌍',t:'20 min de grounding esta semana (3 veces)',s:'Descalza en pasto, tierra o playa — absorbe electrones'},
-     {e:'☀️',t:'15 min de sol en brazos y piernas diario',s:'Sin bloqueador en esa ventana — sintetiza vitamina D'},
-     {e:'🫁',t:'10 min de respiración 4-6 al despertar',s:'Inhala 4, exhala 6 — activa tu nervio vago cada mañana'},
-     {e:'🫐',t:'1 taza de frutos rojos cada día',s:'Arándanos, moras o fresas — antocianinas antiinflamatorias'}
+const sistemas=[
+  {e:'❤️',t:'Cardiovascular',s:'Inflamación endotelial → aterosclerosis',color:'#e74c3c',
+   dis:[
+    {n:'Aterosclerosis',d:'La PCR se deposita directamente en las placas arteriales y desestabiliza el endotelio. El 80% de los infartos ocurren en placas previamente "no obstructivas".'},
+    {n:'Hipertensión arterial',d:'El TNF-α daña las células endoteliales que producen óxido nítrico (vasodilatador). Sin óxido nítrico, las arterias se contraen y la presión sube.'},
+    {n:'Infarto de miocardio',d:'La IL-6 desestabiliza la placa aterosclerótica, aumentando el riesgo de ruptura y trombosis. Ridker et al. (NEJM 2009) demostró que reducir PCR reduce infarto en 47%.'},
+    {n:'ACV isquémico',d:'La inflamación crónica aumenta la adhesión plaquetaria y la coagulación, elevando el riesgo de formación de trombos cerebrovasculares.'}
    ]},
-  amarillo:{color:'#e67e22',bg:'linear-gradient(135deg,#e67e22,#d35400)',e:'⚠️',t:'Inflamación Moderada',
-   d:'Tu cuerpo está enviando señales claras. Es el momento ideal para actuar — la inflamación moderada responde muy bien a estos cambios en 2-4 semanas.',
-   items:[
-     {e:'🚫',t:'Elimina azúcar blanca y harinas refinadas esta semana',s:'Es el cambio de mayor impacto inmediato — activa NF-κB directo'},
-     {e:'🥗',t:'Cúrcuma + pimienta + aceite oliva en cada comida',s:'3 veces al día — tu ibuprofeno natural sin efectos secundarios'},
-     {e:'🐟',t:'Salmón o sardinas 3 veces esta semana',s:'Omega-3 EPA+DHA — antiinflamatorio más potente de la naturaleza'},
-     {e:'🌍',t:'Grounding diario — 30 minutos descalza',s:'Tierra, pasto, arena o playa — cada día de esta semana'},
-     {e:'☀️',t:'20 min de sol diario en brazos y piernas',s:'Vitamina D baja = inflamación alta — corrígela primero'},
-     {e:'🫁',t:'15 min de respiración 4-8 mañana y noche',s:'El reflejo antiinflamatorio del nervio vago — dos veces al día'},
-     {e:'🌲',t:'2 horas en parque arbolado esta semana',s:'Fitoncidas que reducen tus marcadores inflamatorios por días'}
+  {e:'🧠',t:'Neurológico',s:'Neuroinflamación → daño cognitivo',color:'#8e44ad',
+   dis:[
+    {n:'Depresión mayor',d:'La IL-1β convierte triptófano en kynurenina (no en serotonina). El 30-40% de los pacientes con depresión tienen PCR elevada — no es solo "química cerebral".'},
+    {n:'Alzheimer',d:'La neuroinflamación crónica activa la microglía que destruye conexiones neuronales. La amyloid-β es en parte una respuesta inflamatoria que se desborda.'},
+    {n:'Ansiedad generalizada',d:'La disfunción del eje HPA por citocinas genera cortisol desregulado y activación del sistema nervioso simpático sin amenaza real.'},
+    {n:'Esclerosis múltiple',d:'La barrera hematoencefálica comprometida por inflamación sistémica permite entrada de células inmunes que atacan la mielina.'}
    ]},
-  rojo:{color:'#e74c3c',bg:'linear-gradient(135deg,#e74c3c,#c0392b)',e:'🔴',t:'Inflamación Alta — Actúa Ahora',
-   d:'Tu cuerpo necesita atención urgente. Implementa TODOS estos hábitos y solicita una PCR ultrasensible a tu médico para confirmar el nivel.',
-   items:[
-     {e:'🚨',t:'Protocolo de emergencia alimentaria — esta semana',s:'Elimina TODO: azúcar, harinas blancas, aceites vegetales, ultraprocesados y alcohol'},
-     {e:'🐟',t:'Salmón o sardinas todos los días esta semana',s:'Omega-3 es el antiinflamatorio más potente — efecto en 72h'},
-     {e:'🌼',t:'Cúrcuma 1 cdta + pimienta + aceite en cada comida',s:'3 veces al día — este es tu ibuprofeno natural urgente'},
-     {e:'🌍',t:'Grounding: 30-60 min diarios sin excepción',s:'Descalza en tierra, pasto, arena o playa — reduce viscosidad sanguínea'},
-     {e:'❄️',t:'Ducha con 1-2 min de agua fría al final cada día',s:'Norepinefrina +300% — el antiinflamatorio más rápido que tienes'},
-     {e:'☀️',t:'Sol 20-30 min en brazos y piernas cada mañana',s:'Corrige la deficiencia de vitamina D — uno de los mayores gatillos'},
-     {e:'🫁',t:'20 min de respiración 4-8 mañana Y noche',s:'Nervio vago activo = TNF-alfa bloqueado — hazlo dos veces al día'},
-     {e:'🌲',t:'Parque arbolado 2h, dos veces esta semana',s:'Fitoncidas + grounding combinados = protocolo antiinflamatorio completo'},
-     {e:'🩺',t:'Solicita PCR ultrasensible y vitamina D a tu médico',s:'Confirma el nivel y monitorea el progreso de tus cambios'}
+  {e:'🩸',t:'Metabólico',s:'Resistencia a insulina → diabetes',color:'#e67e22',
+   dis:[
+    {n:'Diabetes tipo 2',d:'El TNF-α bloquea el receptor IRS-1 de insulina en el músculo y el hígado. La diabetes tipo 2 es fundamentalmente una enfermedad inflamatoria.'},
+    {n:'Obesidad inflamatoria',d:'El tejido adiposo visceral es un órgano endocrino que produce IL-6 y TNF-α. Más grasa = más inflamación = más resistencia a perder grasa.'},
+    {n:'Síndrome metabólico',d:'La combinación de glucosa alta + cintura amplia + HDL bajo + triglicéridos altos es el cuadro clásico de inflamación metabólica sistémica.'},
+    {n:'Hígado graso no alcohólico',d:'La inflamación portal activa células estrelladas hepáticas que generan fibrosis progresiva, incluso sin consumo de alcohol.'}
+   ]},
+  {e:'💪',t:'Músculo-Esquelético',s:'Destrucción articular y muscular',color:'#27ae60',
+   dis:[
+    {n:'Artritis reumatoide',d:'La sinovitis inflamatoria destruye cartílago y hueso articular. Las miokininas antiinflamatorias del ejercicio pueden frenar su progresión.'},
+    {n:'Osteoporosis',d:'El RANKL activado por citocinas supera al OPG, inclinando la balanza hacia resorción ósea. La IBG acelera la pérdida de densidad mineral.'},
+    {n:'Fibromialgia',d:'Las citocinas musculares generan sensibilización central al dolor. La fibromialgia tiene un componente neuroinflamatorio demostrado.'},
+    {n:'Tendinitis crónica',d:'La IL-1β en el tejido tendinoso inhibe la síntesis de colágeno tipo I, impidiendo la reparación normal después de microlesiones.'}
+   ]},
+  {e:'🫃',t:'Digestivo',s:'Intestino permeable → más inflamación',color:'#3498db',
+   dis:[
+    {n:'Enfermedad de Crohn',d:'La inflamación transmural de la pared intestinal daña todas las capas del tubo digestivo. Las citocinas Th1/Th17 son protagonistas.'},
+    {n:'Colitis ulcerativa',d:'La inflamación de la mucosa colónica genera úlceras recurrentes. El microbioma alterado amplifica la respuesta inflamatoria local.'},
+    {n:'Síndrome intestino irritable',d:'La hipersensibilidad visceral por inflamación de bajo grado genera dolor abdominal, diarrea o estreñimiento sin hallazgos estructurales.'},
+    {n:'Permeabilidad intestinal',d:'Los LPS bacterianos cruzan la barrera intestinal dañada y activan el NF-κB en todo el cuerpo — el intestino como generador de inflamación sistémica.'}
+   ]},
+  {e:'🛡️',t:'Autoinmune',s:'El sistema inmune ataca tejido propio',color:'#f39c12',
+   dis:[
+    {n:'Lupus eritematoso',d:'La inflamación sistémica activa autoanticuerpos anti-DNA que atacan múltiples órganos: piel, riñones, articulaciones, corazón.'},
+    {n:'Psoriasis',d:'El eje piel-intestino-inmune: la disbiosis intestinal activa linfocitos Th17 que migran a la piel y aceleran la renovación celular anormal.'},
+    {n:'Tiroiditis de Hashimoto',d:'Anticuerpos anti-TPO atacan la tiroides. La IBG aumenta la permeabilidad intestinal, y los antígenos alimentarios mimetizan proteínas tiroideas.'},
+    {n:'Síndrome de Sjögren',d:'La inflamación de glándulas exocrinas (lagrimales, salivales) genera sequedad crónica de ojos y boca — un autoinmune subestimado.'}
+   ]},
+  {e:'🧬',t:'Oncológico',s:'Entorno inflamatorio que favorece cáncer',color:'#555',
+   dis:[
+    {n:'Cáncer colorrectal',d:'La inflamación crónica intestinal aumenta el riesgo 2-3x. La COX-2, una enzima pro-inflamatoria, está sobre-expresada en el 85% de los adenomas.'},
+    {n:'Cáncer de mama',d:'El tejido adiposo inflamado peritumoral produce estrógenos y citocinas que crean un microambiente que favorece la proliferación tumoral.'},
+    {n:'Cáncer de páncreas',d:'La pancreatitis crónica por inflamación sostenida es el factor de riesgo más importante. La IBG precede décadas al diagnóstico.'},
+    {n:'Cáncer de pulmón (no fumador)',d:'La inflamación sistémica crónica genera estrés oxidativo que daña el ADN pulmonar, incluso en ausencia de exposición al tabaco.'}
    ]}
-};
+];
 
-// STATE
-let checked = new Set();
-let nivelActual = null;
-let activeCat = 'Todos';
-let openSymptom = null;
-let expandedSol = null;
-let planDone = JSON.parse(localStorage.getItem('moraima5_plan') || '{}');
+const soluciones=[
+  {e:'🥗',t:'Alimentación Antiinflamatoria',pwr:'Poder antiinflamatorio: 92% ↓ PCR',
+   desc:'El omega-3, la cúrcuma, el jengibre, las crucíferas y los berries inhiben directamente el NF-κB. Eliminar ultraprocesados, azúcares refinados y aceites vegetales procesados es tan poderoso como muchos medicamentos.',
+   ref:'Calder PC. Omega-3 fatty acids and inflammatory processes. Nutrients. 2010.',
+   steps:['Cada comida debe tener al menos 1 alimento antiinflamatorio (ver lista abajo)','Eliminar: azúcar refinada, harinas blancas, aceites de soya/maíz/girasol','Añadir 1 cucharadita de cúrcuma + pimienta negra diaria (la pimienta aumenta absorción 2000%)','Omega-3 de salmón, sardinas o semillas de chía 3x por semana','Evitar: ultraprocesados, bebidas azucaradas, alcohol, embutidos'],
+   foods:['🫐 Arándanos','🐟 Salmón','🥦 Brócoli','🥬 Espinaca','🫚 Aceite de oliva','🧅 Cebolla','🧄 Ajo','🫚 Cúrcuma','🫚 Jengibre','🍵 Té verde','🥑 Aguacate','🌰 Nueces']},
+  {e:'🌱',t:'Grounding / Earthing',pwr:'Poder: 73% reducción de marcadores inflamatorios',
+   desc:'El contacto de la piel con la tierra transfiere electrones negativos que neutralizan radicales libres pro-inflamatorios. La tierra actúa como antioxidante natural y también regula el cortisol circadiano.',
+   ref:'Chevalier G et al. Earthing: health implications. J Environ Public Health. 2012.',
+   steps:['10-15 minutos diarios descalza sobre pasto natural, tierra, arena o playa','Superficies válidas: pasto, tierra húmeda, arena, cemento natural (no asfalto)','Caminar o estar parada tranquila — el contacto con la planta del pie es suficiente','También en jardín, parque o patio — no necesita ser bosque','Combinarlo con movimiento duplica el efecto antiinflamatorio'],
+   foods:[]},
+  {e:'☀️',t:'Vitamina D / Exposición Solar',pwr:'Poder: 80% de la IBG asociada a déficit de vitamina D',
+   desc:'La vitamina D actúa como hormona que modula directamente el NF-κB. El déficit de vitamina D se encuentra en el 80% de los pacientes con enfermedades autoinmunes, depresión e inflamación crónica.',
+   ref:'Holick MF. Vitamin D deficiency. N Engl J Med. 2007;357:266-281.',
+   steps:['20 minutos de sol directo en brazos y cara entre 10am-2pm (sin protector esas 20 min)','Nivel óptimo de 25-OH vitamina D: 50-80 ng/mL (pide esta prueba a tu médico)','Si vives en clima sin sol: suplemento de 2000-4000 UI vitamina D3 + K2','Tomar con la comida que contenga grasa (vitamina D es liposoluble)','El magnesio activa la vitamina D — déficit de magnesio bloquea su función'],
+   foods:['🐟 Salmón','🥚 Yema de huevo','🍄 Champiñones (sol)','🥛 Leche enriquecida','🐟 Sardinas','☀️ Sol directo']},
+  {e:'🧊',t:'Terapia de Frío',pwr:'Norepinefrina +300% — antiinflamatorio endógeno potente',
+   desc:'La exposición al frío eleva la norepinefrina hasta 300%. Esta catecolamina inhibe el TNF-α y reduce la producción de citocinas proinflamatorias. También activa el tejido adiposo marrón que produce calor sin inflamación.',
+   ref:'Buijze GA et al. The Effect of Cold Showering on Health. PLOS ONE. 2016.',
+   steps:['Empieza: 20 segundos de agua fría al final de tu ducha normal','Progresa semanalmente: 20 → 40 → 60 → 90 segundos','Respira: inhala profundo antes del frío, exhala lento durante','El mayor beneficio es en el cuello y la parte alta del pecho','Baños de hielo (10-15 min a 10-15°C) para resultados máximos — opcional'],
+   foods:[]},
+  {e:'🌲',t:'Baño de Bosque / Shinrin-yoku',pwr:'NK cells +50% — inmunidad natural aumentada',
+   desc:'2 horas en naturaleza con árboles aumentan las células Natural Killer en 50% y reducen cortisol, IL-6 y adrenalina. Los fitoncidas (compuestos aromáticos de árboles) son la clave del efecto inmunológico.',
+   ref:'Li Q. Forest bathing enhances NK activity. Int J Immunopathol Pharmacol. 2007.',
+   steps:['2 horas en bosque, parque con árboles o zona verde densa (mínimo semanal)','Caminar lento, sin teléfono, prestando atención a sonidos y olores','Respirar profundo — los fitoncidas entran principalmente por vía respiratoria','El efecto dura 7-30 días después de una sola visita de 2-3 horas','Descalza potencia el efecto combinando grounding + fitoncidas'],
+   foods:[]},
+  {e:'🫁',t:'Respiración Consciente',pwr:'Nervio vago → bloquea TNF-α directo',
+   desc:'La respiración profunda y lenta activa el nervio vago (X par craneal). Este nervio libera acetilcolina que bloquea directamente los macrófagos que producen TNF-α. Es el "interruptor antiinflamatorio" del sistema nervioso.',
+   ref:'Tracey KJ. The inflammatory reflex. Nature. 2002;420:853-859.',
+   steps:['Técnica 4-7-8: inhala 4 seg, mantén 7 seg, exhala 8 seg — 4 ciclos','Técnica coherencia cardíaca: inhala 5 seg, exhala 5 seg — 5 minutos, 3x/día','Respirar por la nariz (no la boca) — el filtrado nasal produce óxido nítrico antiinflamatorio','Posición: sentada con espalda recta o acostada boca arriba','Mínimo 10 minutos diarios para efecto acumulativo medible en 4 semanas'],
+   foods:[]}
+];
 
-function enterApp(){
-  document.getElementById('s-welcome').classList.remove('active');
-  document.getElementById('bottom-nav').classList.add('visible');
-  showScreen('s-test');
-  renderCats();
-  renderSintomas();
-  renderSistemas();
-  renderSoluciones();
+// ━━━ STATE ━━━
+let marked=JSON.parse(localStorage.getItem('m5_marked')||'{}');
+let planDone=JSON.parse(localStorage.getItem('m5_plan')||'{}');
+let activeCat='Todos';
+let openSym=null;
+let openSys=null;
+let openSol=null;
+
+// ━━━ NAVIGATION ━━━
+function show(id){
+  document.getElementById('w').style.display='none';
+  document.getElementById('app').style.display='none';
+  document.getElementById(id).style.display='flex';
 }
 
-function goTo(id, idx){
-  showScreen(id);
-  document.querySelectorAll('.nav-item').forEach((el,i) => el.classList.toggle('active', i===idx));
+function startApp(){
+  show('app');
+  showTab('test');
+  renderTest();
+  renderResult();
+  renderSystems();
+  renderSolutions();
 }
 
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+function goWelcome(){
+  show('w');
 }
 
-// TEST
-const cats = ['Todos','Energía y Mente','Digestivo','Piel y Cabello','Dolor','Inmune y Metabólico','Boca y Mucosas','Hormonal'];
+function showTab(name){
+  const tabs=['test','result','enf','sol'];
+  tabs.forEach(t=>{
+    document.getElementById('p-'+t).classList.toggle('on',t===name);
+    document.getElementById('bn-'+t).classList.toggle('on',t===name);
+  });
+  if(name==='result') renderResult();
+}
 
-function renderCats(){
-  document.getElementById('cats-nav').innerHTML = cats.map(c =>
-    `<button class="cat-btn ${c===activeCat?'active':''}" onclick="setCat('${c}')">${c}</button>`
+// ━━━ TEST ━━━
+const cats=['Todos','Energía y Mente','Digestivo','Piel y Cabello','Dolor','Inmune y Metabólico','Boca y Mucosas','Hormonal'];
+
+function renderCatBar(){
+  document.getElementById('cat-bar').innerHTML=cats.map(c=>
+    `<button class="cbt ${activeCat===c?'on':''}" onclick="setCat('${c}')">${c}</button>`
   ).join('');
 }
 
-function setCat(cat){
-  activeCat = cat;
-  openSymptom = null;
-  renderCats();
-  renderSintomas();
-}
+function setCat(c){activeCat=c;renderTest();}
 
-function renderSintomas(){
-  let list = sintomas;
-  if(activeCat !== 'Todos') list = list.filter(s => s.cat === activeCat);
-  document.getElementById('showing-count').textContent = `Mostrando ${list.length} síntomas`;
-  document.getElementById('score-badge').textContent = `${checked.size} marcados`;
-  const etapaColor = {Temprano:'tag-early',Moderado:'tag-mid',Tardío:'tag-late'};
-  document.getElementById('symptom-list').innerHTML = list.map(s => {
-    const idx = sintomas.indexOf(s);
-    return `
-    <div class="symptom-card ${checked.has(idx)?'checked':''} ${openSymptom===idx?'open':''}" id="sc-${idx}">
-      <div class="sc-header" onclick="toggleSymptom(${idx})">
-        <div class="sc-emoji">${s.e}</div>
-        <div class="sc-info">
-          <div class="sc-title">${s.t}</div>
-          <div class="sc-system" style="color:var(--gray)">${s.cat} · ${s.sistema}</div>
+function renderTest(){
+  renderCatBar();
+  const filtered=activeCat==='Todos'?sintomas:sintomas.filter(s=>s.cat===activeCat);
+  const count=Object.keys(marked).filter(k=>marked[k]).length;
+  document.getElementById('sym-count-txt').textContent=`${filtered.length} síntomas${activeCat!=='Todos'?' en '+activeCat:''}`;
+  document.getElementById('score-badge').textContent=count+' marcados';
+  document.getElementById('tb-score').textContent=count+' síntoma'+(count===1?'':'s');
+  document.getElementById('syms-list').innerHTML=filtered.map((s,i)=>{
+    const idx=sintomas.indexOf(s);
+    const isMarked=!!marked[idx];
+    const isOpen=openSym===idx;
+    const etapaTag={Temprano:'stag-e',Moderado:'stag-m',Tardío:'stag-t'}[s.etapa]||'stag-e';
+    return `<div class="sym ${isMarked?'on':''} ${isOpen?'exp':''}" id="sym${idx}">
+      <div class="sym-hd" onclick="toggleSym(${idx})">
+        <div class="sym-e">${s.e}</div>
+        <div class="sym-info">
+          <div class="sym-t">${s.t}</div>
+          <div class="sym-sys">${s.sistema}</div>
         </div>
-        <div class="sc-check">${checked.has(idx)?'✓':''}</div>
+        <div class="sym-chk" onclick="event.stopPropagation();markSym(${idx})">${isMarked?'✓':''}</div>
       </div>
-      <div class="sc-detail">
-        ${s.s}
-        <div class="sc-tags">
-          <span class="sc-tag ${etapaColor[s.etapa]||'tag-mid'}">${s.etapa}</span>
-          <span class="sc-tag tag-system">🔬 ${s.sistema}</span>
-          <button onclick="markSymptom(event,${idx})" style="padding:3px 10px;border-radius:50px;font-size:10px;font-weight:700;cursor:pointer;border:2px solid ${checked.has(idx)?'var(--red)':'var(--green)'};background:${checked.has(idx)?'var(--red)':'var(--green)'};color:${checked.has(idx)?'white':'var(--navy)'};font-family:inherit">
-            ${checked.has(idx)?'✓ Lo tengo — marcado':'Marcar como presente'}
-          </button>
+      ${isOpen?`<div class="sym-detail">
+        <p>${s.s}</p>
+        <div class="sym-tags">
+          <span class="stag ${etapaTag}">${s.etapa}</span>
+          <span class="stag stag-s">${s.sistema}</span>
+          <span class="stag stag-s">${s.cat}</span>
         </div>
-      </div>
+      </div>`:''}
     </div>`;
   }).join('');
 }
 
-function toggleSymptom(i){
-  openSymptom = openSymptom===i?null:i;
-  renderSintomas();
+function toggleSym(idx){
+  openSym=openSym===idx?null:idx;
+  renderTest();
 }
 
-function markSymptom(e, i){
-  e.stopPropagation();
-  if(checked.has(i)) checked.delete(i); else checked.add(i);
-  renderSintomas();
+function markSym(idx){
+  marked[idx]=!marked[idx];
+  localStorage.setItem('m5_marked',JSON.stringify(marked));
+  renderTest();
 }
 
-function verResultado(){
-  const score = checked.size;
-  if(score <= 4) nivelActual = 'verde';
-  else if(score <= 12) nivelActual = 'amarillo';
-  else nivelActual = 'rojo';
-  renderResultado();
-  renderPlan();
-  goTo('s-resultado',1);
-}
-
-function renderResultado(){
-  const p = planes[nivelActual];
-  const score = checked.size;
-  const checkedItems = [...checked].map(i => sintomas[i]);
-  document.getElementById('resultado-content').innerHTML = `
-    <div class="resultado-card" style="background:${p.bg}">
-      <div class="rc-emoji">${p.e}</div>
-      <div class="rc-nivel-label">Nivel de inflamación silenciosa</div>
-      <div class="rc-title">${p.t}</div>
-      <div class="rc-score">${score}<span> / 32 síntomas</span></div>
-      <div class="rc-desc">${p.d}</div>
+// ━━━ RESULTADO ━━━
+function renderResult(){
+  const count=Object.keys(marked).filter(k=>marked[k]).length;
+  let nivel,color,emoji,title,desc;
+  if(count<=4){
+    nivel='🟢 Bajo';color='linear-gradient(135deg,#1e8449,#27ae60)';emoji='🌿';
+    title='Buenas noticias';
+    desc=`Tienes ${count} síntoma${count!==1?'s':''} marcado${count!==1?'s':''}. Tu carga inflamatoria es baja. Esto no significa que estés fuera de riesgo — la IBG puede existir sin síntomas visibles. Mantén los buenos hábitos y aplica las soluciones preventivamente.`;
+  } else if(count<=12){
+    nivel='🟡 Moderado';color='linear-gradient(135deg,#d35400,#e67e22)';emoji='⚠️';
+    title='Tu cuerpo está pidiendo atención';
+    desc=`Tienes ${count} síntomas marcados. Esto indica inflamación de bajo grado activa. No es una emergencia, pero sí una señal clara. Los cambios en alimentación, grounding, sol y respiración pueden revertir esto en 4-8 semanas.`;
+  } else {
+    nivel='🔴 Alto';color='linear-gradient(135deg,#922b21,#e74c3c)';emoji='🚨';
+    title='Inflamación sistémica activa';
+    desc=`Tienes ${count} síntomas marcados. Tu carga inflamatoria es alta. Esto no es una sentencia — es información valiosa. Te recomendamos revisión médica (pide PCR ultrasensible) y comenzar hoy con las 6 soluciones del módulo.`;
+  }
+  const plan=[
+    '🌅 10 min de sol directo en brazos y cara al levantarte',
+    '🥗 Incluye 1 alimento antiinflamatorio en cada comida',
+    '🌱 10-15 min de grounding (pies descalzos en pasto o tierra)',
+    '🚿 Termina tu ducha con 30-60 seg de agua fría',
+    '🫁 5 min de respiración 4-7-8 antes de dormir',
+    '🌙 Sin pantallas 1h antes de dormir (la luz azul activa NF-κB)'
+  ];
+  document.getElementById('res-wrap').innerHTML=`
+    <div class="res-card" style="background:${color}">
+      <div class="rc-e">${emoji}</div>
+      <div class="rc-lbl">${nivel}</div>
+      <div class="rc-title">${title}</div>
+      <div class="rc-score">${count} <span>/ 32 síntomas</span></div>
+      <div class="rc-desc">${desc}</div>
     </div>
-    ${score > 0 ? `
-    <div class="checked-list-card">
-      <div class="clc-title">🔍 Tus ${score} señales detectadas</div>
-      ${checkedItems.map(s=>`
-        <div class="clc-item">
-          <div class="clc-dot"></div>
-          <div class="clc-text">
-            <div class="clc-name">${s.e} ${s.t}</div>
-            <div class="clc-why">${s.s}</div>
-          </div>
+    <div class="plan-card">
+      <div class="plan-title">🗓️ Tu plan antiinflamatorio diario</div>
+      ${plan.map((p,i)=>`
+        <div class="plan-item ${planDone[i]?'done':''}" onclick="togglePlan(${i})">
+          <div class="pi-chk">${planDone[i]?'✓':''}</div>
+          <div class="pi-text">${p}</div>
         </div>`).join('')}
-    </div>` : '<div class="checked-list-card" style="text-align:center;color:var(--gray);font-size:13px;font-weight:600;padding:20px">✅ No marcaste síntomas — ¡Excelente estado inflamatorio!</div>'}
-    <div class="action-btns">
-      <button class="btn-primary" onclick="goTo('s-soluciones',3)">💚 Ver mis 6 soluciones naturales</button>
-      <button class="btn-secondary" onclick="goTo('s-enfermedades',2)">🧬 Ver enfermedades vinculadas</button>
     </div>`;
 }
 
-// ENFERMEDADES
-function renderSistemas(){
-  document.getElementById('systems-container').innerHTML = sistemas.map((s,i) => `
-    <div class="system-card" id="sys-${i}">
-      <div class="system-header" onclick="toggleSistema(${i})">
-        <div class="sys-emoji">${s.e}</div>
+function togglePlan(i){
+  planDone[i]=!planDone[i];
+  localStorage.setItem('m5_plan',JSON.stringify(planDone));
+  renderResult();
+}
+
+// ━━━ SISTEMAS ━━━
+function renderSystems(){
+  document.getElementById('systems-list').innerHTML=sistemas.map((s,i)=>`
+    <div class="sys-card ${openSys===i?'open':''}" style="border-left-color:${s.color}">
+      <div class="sys-hd" onclick="toggleSys(${i})">
+        <div class="sys-e">${s.e}</div>
         <div class="sys-info">
-          <div class="sys-name">${s.n}</div>
-          <div class="sys-count">${s.diseases.length} enfermedades — toca para ver</div>
+          <div class="sys-t">${s.t}</div>
+          <div class="sys-s">${s.s}</div>
         </div>
-        <div class="sys-arrow">›</div>
+        <div class="sys-arr">▼</div>
       </div>
-      <div class="disease-list">
-        ${s.diseases.map(d=>`
-          <div class="disease-item">
-            <div class="di-name">${d.n}</div>
-            <div class="di-link">${d.l}</div>
-            <div class="di-badge">🔥 NF-κB activado</div>
-          </div>`).join('')}
-      </div>
+      ${openSys===i?`<div class="sys-body">
+        <div class="dis-list">
+          ${s.dis.map(d=>`
+            <div class="dis-item">
+              <strong>${d.n}</strong><br>${d.d}
+            </div>`).join('')}
+        </div>
+      </div>`:''}
     </div>`).join('');
 }
 
-function toggleSistema(i){
-  document.getElementById(`sys-${i}`).classList.toggle('open');
+function toggleSys(i){
+  openSys=openSys===i?null:i;
+  renderSystems();
 }
 
-// SOLUCIONES
-function renderSoluciones(){
-  document.getElementById('soluciones-container').innerHTML = soluciones.map((s,i) => `
-    <div class="sol-card ${expandedSol===i?'expanded':''}" id="solc-${i}">
-      <div class="sol-header" onclick="toggleSol(${i})">
-        <div class="sol-emoji-big">${s.e}</div>
+// ━━━ SOLUCIONES ━━━
+function renderSolutions(){
+  document.getElementById('sols-list').innerHTML=soluciones.map((s,i)=>`
+    <div class="sol-card ${openSol===i?'open':''}">
+      <div class="sol-hd" onclick="toggleSol(${i})">
+        <div class="sol-e">${s.e}</div>
         <div class="sol-info">
-          <div class="sol-name">${s.n}</div>
-          <div class="sol-tags">
-            ${s.tags.map((t,ti)=>`<span class="sol-tag ${ti===0?'azul':''}">${t}</span>`).join('')}
-          </div>
-          <div class="sol-desc-short">${s.desc}</div>
+          <div class="sol-t">${s.t}</div>
+          <div class="sol-pwr">${s.pwr}</div>
         </div>
+        <div class="sol-arr">▼</div>
       </div>
-      <div class="sol-body">
-        <div class="sol-science-box">
-          <div class="ssb-title">🔬 La ciencia detrás</div>
-          <div class="ssb-text">${s.science}</div>
-          <div class="ssb-ref">Fuente: ${s.ref}</div>
-        </div>
-        <div class="sol-steps-title">Cómo aplicarlo esta semana</div>
-        ${s.steps.map((st,si)=>`
-          <div class="sol-step">
-            <div class="ss-num">${si+1}</div>
-            <div class="ss-text">${st}</div>
-          </div>`).join('')}
-        ${s.foods.length>0?`
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Top alimentos antiinflamatorios</div>
-          <div class="sol-foods-grid">${s.foods.map(f=>`<div class="sfood"><span>${f.e}</span>${f.n}</div>`).join('')}</div>
-        </div>`:''}
-        <div class="power-bar-wrap">
-          <div class="pbw-label">Poder antiinflamatorio medido: ${s.power}%</div>
-          <div class="pbw-bar"><div class="pbw-fill" style="width:${s.power}%"></div></div>
-        </div>
-      </div>
+      ${openSol===i?`<div class="sol-body">
+        <div class="sol-desc">${s.desc}</div>
+        <div class="sol-ref">📚 ${s.ref}</div>
+        <div class="sol-steps-t">Cómo aplicarlo</div>
+        ${s.steps.map(st=>`<div class="sol-step">${st}</div>`).join('')}
+        ${s.foods.length?`<div class="sol-foods">${s.foods.map(f=>`<span class="sol-food">${f}</span>`).join('')}</div>`:''}
+      </div>`:''}
     </div>`).join('');
 }
 
 function toggleSol(i){
-  expandedSol = expandedSol===i?null:i;
-  renderSoluciones();
-  if(expandedSol!==null) setTimeout(()=>{
-    const el=document.getElementById(`solc-${i}`);
-    if(el) el.scrollIntoView({behavior:'smooth',block:'nearest'});
-  },100);
+  openSol=openSol===i?null:i;
+  renderSolutions();
 }
 
-// PLAN (embedded in resultado)
-function renderPlan(){} // plan shown inline in resultado
+// ━━━ INIT ━━━
+show('w');
 </script>
 </body>
 </html>
