@@ -7,175 +7,211 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e74c3c;--orange:#f39c12;--purple:#9b59b6;--light:#f0f7ff;--gray:#6c757d}
+:root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e74c3c;--orange:#f39c12;--purple:#9b59b6;--gray:#6c757d;--light:#f0f7ff}
 body{font-family:'Montserrat',sans-serif;background:var(--light);color:var(--navy);min-height:100vh;overflow-x:hidden}
-.screen{display:none;min-height:100vh;padding-bottom:80px}
-.screen.active{display:block}
 
-/* WELCOME */
-#s-welcome{background:linear-gradient(135deg,var(--navy) 0%,#0d3d2a 60%,#1a5f1a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:36px 20px;min-height:100vh}
-.w-logo{font-size:70px;margin-bottom:18px;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-#s-welcome h1{color:var(--gold);font-size:26px;font-weight:900;margin-bottom:8px;line-height:1.2}
-#s-welcome p{color:rgba(255,255,255,0.75);font-size:13px;margin-bottom:32px;max-width:320px;line-height:1.6}
-.profile-cards{display:flex;flex-direction:column;gap:14px;width:100%;max-width:360px;margin-bottom:0}
-.profile-card{background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:20px;padding:18px 20px;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:16px;text-align:left}
-.profile-card:hover{background:rgba(255,255,255,0.15);transform:translateY(-2px)}
-.profile-card.beginner{border-color:rgba(93,226,140,0.4)}
-.profile-card.beginner:hover{border-color:var(--green)}
-.profile-card.moderate{border-color:rgba(93,173,226,0.4)}
-.profile-card.moderate:hover{border-color:var(--sky)}
-.profile-card.advanced{border-color:rgba(231,76,60,0.4)}
-.profile-card.advanced:hover{border-color:var(--red)}
-.pc-emoji{font-size:36px;flex-shrink:0}
-.pc-info{flex:1}
-.pc-title{font-size:15px;font-weight:800;color:white;margin-bottom:3px}
-.pc-sub{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.4}
-.pc-badge{padding:3px 10px;border-radius:50px;font-size:10px;font-weight:700;margin-top:6px;display:inline-block}
-.badge-g{background:rgba(93,226,140,0.2);color:var(--green)}
-.badge-b{background:rgba(93,173,226,0.2);color:var(--sky)}
-.badge-r{background:rgba(231,76,60,0.2);color:#ff8a80}
+/* ── SCREENS (all hidden by default, JS controls display) ── */
+.scr{display:none;min-height:100vh}
 
-/* BOTTOM NAV */
-#bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--navy);display:none;grid-template-columns:repeat(3,1fr);z-index:100;box-shadow:0 -4px 20px rgba(0,0,0,0.3)}
-#bottom-nav.visible{display:grid}
-.nav-item{display:flex;flex-direction:column;align-items:center;padding:10px 5px;cursor:pointer;color:rgba(255,255,255,0.5);transition:all .2s;border:none;background:none;font-family:'Montserrat',sans-serif}
-.nav-item.active,.nav-item:hover{color:var(--gold)}
-.nav-icon{font-size:22px;margin-bottom:3px}
-.nav-lbl{font-size:9px;font-weight:700;text-transform:uppercase}
+/* ── WELCOME ── */
+#w{background:linear-gradient(155deg,var(--navy) 0%,#0d3d2a 65%,#155a15 100%);
+   flex-direction:column;align-items:center;justify-content:center;
+   text-align:center;padding:36px 20px;min-height:100vh}
+.w-logo{font-size:64px;margin-bottom:14px;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.w-title{color:var(--gold);font-size:26px;font-weight:900;line-height:1.2;margin-bottom:8px}
+.w-sub{color:rgba(255,255,255,0.75);font-size:13px;margin-bottom:30px;max-width:300px;line-height:1.6}
+.profile-cards{display:flex;flex-direction:column;gap:14px;width:100%;max-width:360px}
+.pc{background:rgba(255,255,255,0.09);border:2px solid rgba(255,255,255,0.18);
+    border-radius:20px;padding:18px 20px;cursor:pointer;
+    display:flex;align-items:center;gap:14px;text-align:left;
+    transition:transform .2s,background .2s}
+.pc:active{transform:scale(0.97)}
+.pc-g{border-color:rgba(93,226,140,0.45)}
+.pc-b{border-color:rgba(93,173,226,0.45)}
+.pc-r{border-color:rgba(231,76,60,0.45)}
+.pc-e{font-size:38px;flex-shrink:0}
+.pc-t{font-size:15px;font-weight:800;color:white;margin-bottom:4px}
+.pc-s{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.4}
+.pc-badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:10px;font-weight:700;margin-top:6px}
+.bg{background:rgba(93,226,140,.18);color:var(--green)}
+.bb{background:rgba(93,173,226,.18);color:var(--sky)}
+.br{background:rgba(231,76,60,.18);color:#ff8080}
+.pc-arrow{font-size:20px;color:rgba(255,255,255,0.4);margin-left:auto;flex-shrink:0}
 
-/* PAGE HEADERS */
-.page-header{padding:22px 20px 18px;color:white;position:sticky;top:0;z-index:50}
-.ph-green{background:linear-gradient(135deg,#0d3d2a,#1a5f1a)}
-.ph-blue{background:linear-gradient(135deg,var(--navy),#1a4a6b)}
-.ph-red{background:linear-gradient(135deg,#3d0a0a,#7a1a1a)}
-.page-header h2{font-size:19px;font-weight:800;color:var(--gold)}
-.page-header p{font-size:12px;opacity:0.8;margin-top:3px}
+/* ── INNER APP (post-profile) ── */
+#app{flex-direction:column}
 
-/* ===================== BEGINNER ===================== */
-.begin-hero{margin:16px;background:linear-gradient(135deg,#0d3d2a,#27ae60);border-radius:20px;padding:20px;color:white}
-.bh-title{font-size:16px;font-weight:800;color:var(--gold);margin-bottom:6px}
-.bh-text{font-size:12px;opacity:0.85;line-height:1.6;margin-bottom:14px}
-.bh-stats{display:flex;gap:12px}
-.bhs{background:rgba(255,255,255,0.1);border-radius:10px;padding:10px;flex:1;text-align:center}
-.bhs .n{font-size:22px;font-weight:900;color:var(--gold)}
-.bhs .l{font-size:10px;opacity:0.75;margin-top:2px}
-.begin-weeks{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px}
-.week-card{background:white;border-radius:18px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,0.07)}
-.wk-header{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.wk-badge{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:white;flex-shrink:0}
+/* TOP BAR */
+.topbar{background:var(--navy);padding:14px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50}
+.btn-back{background:rgba(255,255,255,0.1);border:none;color:white;width:36px;height:36px;
+          border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.topbar-title{color:var(--gold);font-size:16px;font-weight:800;flex:1}
+.topbar-icon{font-size:26px}
+
+/* TABS */
+.tabs{background:white;display:flex;border-bottom:3px solid #e8eef5;position:sticky;top:64px;z-index:40}
+.tab{flex:1;padding:12px 6px;text-align:center;font-size:11px;font-weight:700;
+     color:var(--gray);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;
+     transition:color .2s}
+.tab.on{color:var(--navy);border-bottom-color:var(--gold)}
+.tab-icon{font-size:20px;display:block;margin-bottom:2px}
+
+/* PANELS */
+.panel{display:none;padding-bottom:30px}
+.panel.on{display:block}
+
+/* ── SHARED COMPONENTS ── */
+.hero-box{margin:16px;border-radius:20px;padding:20px;color:white}
+.hero-green{background:linear-gradient(135deg,#0d3d2a,#27ae60)}
+.hero-blue{background:linear-gradient(135deg,var(--navy),#1a6090)}
+.hero-red{background:linear-gradient(135deg,#3d0a0a,#c0392b)}
+.hero-title{font-size:16px;font-weight:800;color:var(--gold);margin-bottom:8px}
+.hero-text{font-size:12px;opacity:.85;line-height:1.6;margin-bottom:14px}
+.stats-row{display:flex;gap:10px}
+.stat-box{background:rgba(255,255,255,.12);border-radius:12px;padding:10px;flex:1;text-align:center}
+.stat-n{font-size:22px;font-weight:900;color:var(--gold)}
+.stat-l{font-size:10px;opacity:.75;margin-top:2px}
+
+/* ── BEGINNER: SEMANAS ── */
+.weeks{padding:0 16px;display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.wk{background:white;border-radius:18px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.wk-hd{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+.wk-badge{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+          font-size:20px;font-weight:900;color:white;flex-shrink:0}
 .wk-info{flex:1}
-.wk-title{font-size:14px;font-weight:800;color:var(--navy)}
+.wk-name{font-size:14px;font-weight:800;color:var(--navy)}
 .wk-sub{font-size:11px;color:var(--gray);margin-top:2px}
-.wk-pct{font-size:13px;font-weight:800;color:var(--green)}
-.wk-days{display:none;padding:0 16px 14px;flex-direction:column;gap:8px}
-.week-card.open .wk-days{display:flex}
-.day-item{background:#f8f9fa;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;border:2px solid transparent;transition:all .2s}
-.day-item.done{border-color:var(--green);background:#f0fff5}
-.di-num{background:var(--navy);color:var(--gold);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
-.di-num.rest{background:#e0e8f0;color:var(--gray)}
-.di-content{flex:1}
-.di-name{font-size:12px;font-weight:700;color:var(--navy)}
-.di-detail{font-size:11px;color:var(--gray);margin-top:2px}
-.di-emoji{font-size:20px}
-.di-check{font-size:18px;color:var(--green);opacity:0}
-.day-item.done .di-check{opacity:1}
-.begin-tips{margin:0 16px 16px;background:linear-gradient(135deg,#f0fff5,#d5f5e3);border-radius:16px;padding:16px;border:1px solid #a9dfbf}
-.bt-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:10px}
-.tip-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:var(--navy);line-height:1.5}
-.tip-icon{font-size:16px;flex-shrink:0}
+.wk-pct{font-size:14px;font-weight:800;color:var(--green)}
+.wk-arrow{font-size:16px;color:var(--gray);transition:transform .2s}
+.wk-body{display:none;padding:0 14px 14px;flex-direction:column;gap:8px}
+.wk.open .wk-body{display:flex}
+.wk.open .wk-arrow{transform:rotate(180deg)}
 
-/* ===================== MODERATE / AGENDA ===================== */
-.agenda-stats{display:flex;gap:10px;padding:14px 16px 0}
-.as-card{background:white;border-radius:14px;padding:12px;flex:1;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
-.as-num{font-size:22px;font-weight:900;color:var(--sky)}
-.as-lbl{font-size:10px;color:var(--gray);margin-top:2px;font-weight:600}
-.add-session-card{margin:14px 16px;background:linear-gradient(135deg,var(--sky),#2980b9);border-radius:18px;padding:16px;color:white;cursor:pointer;transition:all .2s}
-.asc-title{font-size:15px;font-weight:800;margin-bottom:4px}
-.asc-sub{font-size:12px;opacity:0.8}
-/* ADD SESSION FORM */
-.form-card{margin:14px 16px;background:white;border-radius:18px;padding:18px;box-shadow:0 4px 16px rgba(0,0,0,0.08);display:none}
-.form-card.open{display:block}
-.fc-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:16px}
-.form-group{margin-bottom:14px}
-.form-label{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:block}
-.form-input{width:100%;padding:10px 14px;border:2px solid #e0e8f0;border-radius:10px;font-size:13px;font-family:'Montserrat',sans-serif;outline:none;transition:border .2s;color:var(--navy)}
-.form-input:focus{border-color:var(--sky)}
+.day-row{background:#f8f9fa;border-radius:12px;padding:12px 14px;
+         display:flex;align-items:center;gap:10px;cursor:pointer;
+         border:2px solid transparent;transition:all .2s}
+.day-row.done{border-color:var(--green);background:#f0fff5}
+.day-row.rest{cursor:default;opacity:.75}
+.dn{background:var(--navy);color:var(--gold);width:28px;height:28px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+.dn.r{background:#e0e8f0;color:var(--gray)}
+.dc{flex:1}
+.dc-name{font-size:12px;font-weight:700;color:var(--navy)}
+.dc-detail{font-size:11px;color:var(--gray);margin-top:2px}
+.de{font-size:20px}
+.dchk{font-size:18px;color:var(--green);opacity:0}
+.day-row.done .dchk{opacity:1}
+
+.tips-box{margin:16px;background:linear-gradient(135deg,#f0fff5,#d5f5e3);
+          border-radius:16px;padding:16px;border:1px solid #a9dfbf}
+.tips-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:10px}
+.tip{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:#333;line-height:1.5}
+
+/* ── AGENDA (MODERATE) ── */
+.agenda-stats{display:flex;gap:10px;padding:16px 16px 0}
+.ag-stat{background:white;border-radius:14px;padding:12px;flex:1;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.ag-n{font-size:22px;font-weight:900;color:var(--sky)}
+.ag-l{font-size:10px;color:var(--gray);margin-top:2px;font-weight:600}
+
+.chart-box{margin:14px 16px 0;background:white;border-radius:16px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.chart-title{font-size:11px;font-weight:800;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.chart-bars{display:flex;gap:6px;align-items:flex-end;height:64px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:4px 4px 0 0;background:linear-gradient(var(--sky),#2980b9);min-height:4px;transition:height .4s}
+.bar-empty{background:#e0e8f0}
+.bar-lbl{font-size:9px;color:var(--gray);font-weight:700}
+
+.add-btn{margin:14px 16px;background:linear-gradient(135deg,var(--sky),#2980b9);
+         border-radius:18px;padding:16px 20px;color:white;cursor:pointer;display:flex;align-items:center;gap:12px}
+.add-btn-icon{font-size:28px}
+.add-btn-t{font-size:15px;font-weight:800}
+.add-btn-s{font-size:12px;opacity:.8}
+
+.form-box{margin:0 16px 14px;background:white;border-radius:18px;padding:18px;
+          box-shadow:0 4px 16px rgba(0,0,0,.09);display:none}
+.form-box.open{display:block}
+.fb-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:16px}
+.fl{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
+.fg{margin-bottom:14px}
 .type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.type-opt{background:#f8f9fa;border-radius:10px;padding:8px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .2s;font-size:11px;font-weight:700;color:var(--navy)}
-.type-opt.sel{border-color:var(--sky);background:#e8f4fd;color:var(--sky)}
-.type-opt .to-emoji{font-size:22px;display:block;margin-bottom:3px}
-.intensity-row{display:flex;gap:8px}
-.int-btn{flex:1;padding:10px;border-radius:10px;border:2px solid #e0e8f0;background:white;font-size:11px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s}
-.int-btn.sel{border-color:var(--sky);background:var(--sky);color:white}
-.feeling-row{display:flex;gap:8px}
-.feel-btn{flex:1;padding:8px;border-radius:10px;border:2px solid #e0e8f0;background:white;font-size:18px;cursor:pointer;transition:all .2s;text-align:center}
-.feel-btn.sel{border-color:var(--gold);background:#fef9e7}
-.btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--sky),#2980b9);color:white;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Montserrat',sans-serif;margin-top:6px}
-.btn-cancel{width:100%;padding:12px;background:none;border:none;color:var(--gray);font-size:12px;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;margin-top:4px}
-.sessions-title{padding:0 16px;font-size:13px;font-weight:800;color:var(--navy);margin-top:14px;margin-bottom:8px}
-.session-item{margin:0 16px 8px;background:white;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
-.si-icon{font-size:28px;flex-shrink:0}
-.si-body{flex:1}
+.topt{background:#f8f9fa;border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;
+      border:2px solid transparent;font-size:11px;font-weight:700;color:var(--navy);transition:all .2s}
+.topt.on{border-color:var(--sky);background:#e8f4fd;color:var(--sky)}
+.topt-e{font-size:22px;display:block;margin-bottom:3px}
+.int-row{display:flex;gap:8px}
+.ibt{flex:1;padding:10px;border-radius:10px;border:2px solid #e0e8f0;background:white;
+     font-size:11px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s}
+.ibt.on{border-color:var(--sky);background:var(--sky);color:white}
+.feel-row{display:flex;gap:8px}
+.fbt{flex:1;padding:8px;border-radius:10px;border:2px solid #e0e8f0;background:white;
+     font-size:20px;cursor:pointer;text-align:center;transition:all .2s}
+.fbt.on{border-color:var(--gold);background:#fef9e7}
+.dur-in{width:100%;padding:10px 14px;border:2px solid #e0e8f0;border-radius:10px;
+        font-size:14px;font-family:'Montserrat',sans-serif;outline:none;color:var(--navy)}
+.dur-in:focus{border-color:var(--sky)}
+.btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--sky),#2980b9);
+          color:white;border:none;border-radius:12px;font-size:14px;font-weight:800;
+          cursor:pointer;font-family:'Montserrat',sans-serif;margin-top:4px}
+.btn-cancel{width:100%;padding:11px;background:none;border:none;color:var(--gray);
+            font-size:12px;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif}
+
+.sessions-ttl{padding:0 16px;font-size:13px;font-weight:800;color:var(--navy);margin-top:14px;margin-bottom:8px}
+.sess-item{margin:0 16px 8px;background:white;border-radius:14px;padding:14px 16px;
+           display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.si-e{font-size:28px;flex-shrink:0}
+.si-b{flex:1}
 .si-name{font-size:13px;font-weight:700;color:var(--navy)}
 .si-meta{font-size:11px;color:var(--gray);margin-top:2px}
 .si-feel{font-size:20px}
-.si-delete{background:none;border:none;color:#e0e8f0;font-size:16px;cursor:pointer;padding:4px}
-.si-delete:hover{color:var(--red)}
-.no-sessions{text-align:center;padding:40px 20px;color:var(--gray)}
-.ns-icon{font-size:50px;margin-bottom:12px}
-.ns-text{font-size:13px;font-weight:600;line-height:1.6}
-.weekly-chart{margin:14px 16px 0;background:white;border-radius:16px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
-.wc-title{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
-.wc-bars{display:flex;gap:6px;align-items:flex-end;height:60px}
-.wc-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.wc-bar{width:100%;border-radius:4px 4px 0 0;background:linear-gradient(var(--sky),#2980b9);min-height:4px;transition:height .4s}
-.wc-bar-empty{background:#e0e8f0}
-.wc-day-lbl{font-size:9px;color:var(--gray);font-weight:700}
+.si-del{background:none;border:none;color:#ddd;font-size:18px;cursor:pointer;padding:4px}
+.si-del:hover{color:var(--red)}
+.empty-state{text-align:center;padding:40px 20px;color:var(--gray)}
+.es-icon{font-size:50px;margin-bottom:12px}
+.es-text{font-size:13px;font-weight:600;line-height:1.6}
 
-/* ===================== ADVANCED / RETO ===================== */
-.reto-hero{margin:16px;background:linear-gradient(135deg,#3d0a0a,#c0392b);border-radius:20px;padding:20px;color:white}
-.rh-title{font-size:16px;font-weight:800;color:var(--gold);margin-bottom:6px}
-.rh-text{font-size:12px;opacity:0.85;line-height:1.6}
-.challenges-container{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px;margin-top:14px}
-.challenge-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
-.cc-header{padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer}
-.cc-emoji{font-size:40px;flex-shrink:0}
-.cc-info{flex:1}
-.cc-title{font-size:15px;font-weight:800;color:var(--navy)}
-.cc-sub{font-size:11px;color:var(--gray);margin-top:3px}
-.cc-progress-mini{margin-top:6px;display:flex;align-items:center;gap:8px}
-.cpm-bar{flex:1;height:6px;background:#e0e8f0;border-radius:3px;overflow:hidden}
-.cpm-fill{height:100%;border-radius:3px;transition:width .4s}
-.cpm-pct{font-size:11px;font-weight:800;color:var(--navy)}
-.cc-body{display:none;padding:0 16px 16px;border-top:1px solid #f0f0f0}
-.challenge-card.open .cc-body{display:block}
-.cc-desc{font-size:12px;color:var(--gray);line-height:1.6;margin:12px 0}
-.cc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px}
-.cc-day{background:#f8f9fa;border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .2s;border:2px solid transparent}
-.cc-day.done{background:linear-gradient(135deg,var(--red),#c0392b);color:white;border-color:transparent}
-.cc-day.rest-day{background:#e0e8f0;cursor:default}
-.cc-day .cd-num{font-size:10px;font-weight:700;color:inherit;opacity:0.7}
-.cc-day .cd-val{font-size:14px;font-weight:900}
-.cc-day .cd-lbl{font-size:9px;font-weight:600;opacity:0.8}
-.cc-day.done .cd-num,.cc-day.done .cd-val,.cc-day.done .cd-lbl{color:white}
-.cc-day.rest-day .cd-val{font-size:18px}
-.record-section{background:linear-gradient(135deg,#fff5f5,#fdecea);border-radius:14px;padding:14px;margin-top:8px}
-.rs-title{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:10px}
-.record-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.record-item{background:white;border-radius:10px;padding:10px;text-align:center}
-.ri-label{font-size:10px;color:var(--gray);font-weight:600;margin-bottom:4px}
-.ri-value{font-size:20px;font-weight:900;color:var(--red)}
-.ri-unit{font-size:10px;color:var(--gray)}
-.ri-input{width:100%;border:2px solid #e0e8f0;border-radius:8px;padding:6px;font-size:16px;font-weight:800;text-align:center;font-family:inherit;color:var(--navy);outline:none}
-.ri-input:focus{border-color:var(--red)}
+/* ── RETOS (ADVANCED) ── */
+.challenges{padding:0 16px 16px;display:flex;flex-direction:column;gap:14px;margin-top:4px}
+.ch-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.ch-hd{padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;user-select:none}
+.ch-e{font-size:40px;flex-shrink:0}
+.ch-info{flex:1}
+.ch-t{font-size:15px;font-weight:800;color:var(--navy)}
+.ch-s{font-size:11px;color:var(--gray);margin-top:3px}
+.ch-prog-row{margin-top:6px;display:flex;align-items:center;gap:8px}
+.ch-pbar{flex:1;height:6px;background:#e0e8f0;border-radius:3px;overflow:hidden}
+.ch-pfill{height:100%;border-radius:3px;transition:width .4s}
+.ch-ppct{font-size:11px;font-weight:800;color:var(--navy)}
+.ch-arrow{font-size:18px;color:var(--gray);transition:transform .2s;flex-shrink:0}
+.ch-card.open .ch-arrow{transform:rotate(180deg)}
+.ch-body{display:none;padding:0 16px 16px;border-top:1px solid #f0f0f0}
+.ch-card.open .ch-body{display:block}
+.ch-desc{font-size:12px;color:var(--gray);line-height:1.6;margin:12px 0}
+.day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px}
+.dg-day{background:#f8f9fa;border-radius:10px;padding:8px 4px;text-align:center;
+        cursor:pointer;transition:all .2s;border:2px solid transparent}
+.dg-day.done{background:linear-gradient(135deg,var(--red),#c0392b);color:white;border-color:transparent}
+.dg-day.rest{background:#e0e8f0;cursor:default}
+.dg-num{font-size:10px;font-weight:700;opacity:.7}
+.dg-val{font-size:13px;font-weight:900}
+.dg-lbl{font-size:9px;font-weight:600;opacity:.8}
+.dg-day.done .dg-num,.dg-day.done .dg-val,.dg-day.done .dg-lbl{color:white;opacity:1}
+.rec-box{background:#fff5f5;border-radius:14px;padding:14px;margin-top:8px}
+.rec-title{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:10px}
+.rec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.rec-item{background:white;border-radius:10px;padding:10px;text-align:center}
+.ri-l{font-size:10px;color:var(--gray);font-weight:600;margin-bottom:4px}
+.ri-in{width:100%;border:2px solid #e0e8f0;border-radius:8px;padding:6px;
+       font-size:16px;font-weight:800;text-align:center;font-family:inherit;
+       color:var(--red);outline:none}
+.ri-in:focus{border-color:var(--red)}
 
-/* BIBLIOTECA */
-.biblioteca-container{padding:16px;display:flex;flex-direction:column;gap:10px}
-.ej-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);cursor:pointer;border:2px solid transparent;transition:all .2s}
-.ej-card.expanded{border-color:var(--sky)}
-.ej-header{padding:14px 16px;display:flex;align-items:center;gap:12px}
-.ej-emoji{font-size:34px;flex-shrink:0}
+/* ── EJERCICIOS ── */
+.ejercicios{padding:16px;display:flex;flex-direction:column;gap:10px}
+.ej{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer;border:2px solid transparent;transition:border .2s}
+.ej.open{border-color:var(--sky)}
+.ej-hd{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.ej-e{font-size:34px;flex-shrink:0}
 .ej-info{flex:1}
 .ej-name{font-size:13px;font-weight:800;color:var(--navy)}
 .ej-tags{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
@@ -184,158 +220,163 @@ body{font-family:'Montserrat',sans-serif;background:var(--light);color:var(--nav
 .etag-med{background:#fef9e7;color:#d35400}
 .etag-high{background:#fdecea;color:#c0392b}
 .etag-tipo{background:#e8f4fd;color:#1a5276}
-.ej-detail{display:none;padding:0 16px 14px;border-top:1px dashed #e0e8f0}
-.ej-card.expanded .ej-detail{display:block}
+.ej-arr{font-size:16px;color:var(--gray);transition:transform .2s;flex-shrink:0}
+.ej.open .ej-arr{transform:rotate(180deg)}
+.ej-body{display:none;padding:0 16px 14px;border-top:1px dashed #e0e8f0}
+.ej.open .ej-body{display:block}
 .ej-benefit{font-size:12px;color:var(--gray);line-height:1.6;margin-top:10px;margin-bottom:10px}
 .ej-steps-title{font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
 .ej-step{font-size:12px;color:var(--gray);padding:5px 0 5px 16px;position:relative;line-height:1.5;border-bottom:1px dashed #f5f5f5}
 .ej-step::before{content:'→';position:absolute;left:0;color:var(--green);font-weight:800}
-
-@media print{#bottom-nav{display:none!important}.screen{padding-bottom:0!important}.page-header{position:static!important}}
 </style>
 </head>
 <body>
 
-<!-- WELCOME / PERFIL -->
-<div id="s-welcome" class="screen active">
+<!-- ══ WELCOME ══ -->
+<div id="w" class="scr">
   <div class="w-logo">🏃‍♀️</div>
-  <h1>Módulo 6<br>MOVIMIENTO</h1>
-  <p>¿Cuál es tu punto de partida hoy? Elige tu perfil y recibirás exactamente lo que necesitas.</p>
+  <div class="w-title">Módulo 6<br>MOVIMIENTO</div>
+  <div class="w-sub">¿Cuál es tu punto de partida? Elige tu perfil para acceder a tu plan personalizado.</div>
   <div class="profile-cards">
-    <div class="profile-card beginner" onclick="setProfile('beginner')">
-      <div class="pc-emoji">🌱</div>
-      <div class="pc-info">
-        <div class="pc-title">No hago ejercicio</div>
-        <div class="pc-sub">Quiero empezar desde cero con un plan seguro y progresivo</div>
-        <div class="pc-badge badge-g">Guía de Inicio — 4 semanas</div>
+    <div class="pc pc-g" onclick="selProfile('beginner')">
+      <div class="pc-e">🌱</div>
+      <div style="flex:1">
+        <div class="pc-t">No hago ejercicio</div>
+        <div class="pc-s">Quiero empezar desde cero con un plan seguro y progresivo</div>
+        <div class="pc-badge bg">Guía de Inicio — 4 semanas</div>
+      </div>
+      <div class="pc-arrow">›</div>
+    </div>
+    <div class="pc pc-b" onclick="selProfile('moderate')">
+      <div class="pc-e">⚡</div>
+      <div style="flex:1">
+        <div class="pc-t">Ejercito moderadamente</div>
+        <div class="pc-s">Tengo hábito pero quiero registrar y mejorar mi consistencia</div>
+        <div class="pc-badge bb">Agenda de Registro semanal</div>
+      </div>
+      <div class="pc-arrow">›</div>
+    </div>
+    <div class="pc pc-r" onclick="selProfile('advanced')">
+      <div class="pc-e">🔥</div>
+      <div style="flex:1">
+        <div class="pc-t">Ejercito mucho — quiero retos</div>
+        <div class="pc-s">Desafíos progresivos y registro de mis marcas personales</div>
+        <div class="pc-badge br">Retos de 14 a 30 días</div>
+      </div>
+      <div class="pc-arrow">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APP (post-profile) ══ -->
+<div id="app" class="scr">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <button class="btn-back" onclick="goBack()">←</button>
+    <div class="topbar-title" id="topbar-title">Mi Plan</div>
+    <div class="topbar-icon" id="topbar-icon">🌱</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs" id="tabs-bar">
+    <div class="tab on" id="tab0" onclick="showTab(0)">
+      <span class="tab-icon" id="tab0-icon">📋</span>
+      <span id="tab0-lbl">Mi Plan</span>
+    </div>
+    <div class="tab" id="tab1" onclick="showTab(1)">
+      <span class="tab-icon">📖</span>
+      Ejercicios
+    </div>
+  </div>
+
+  <!-- PANEL 0: PLAN (content changes per profile) -->
+  <div class="panel on" id="panel0">
+
+    <!-- BEGINNER CONTENT -->
+    <div id="p-beginner" style="display:none">
+      <div class="hero-box hero-green">
+        <div class="hero-title">Tu primera misión: crear el hábito</div>
+        <div class="hero-text">No se trata de intensidad. 20 minutos diarios constantes reducen la inflamación crónica más que 1 hora intensa a la semana.</div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-n">4</div><div class="stat-l">Semanas</div></div>
+          <div class="stat-box"><div class="stat-n">28</div><div class="stat-l">Sesiones</div></div>
+          <div class="stat-box"><div class="stat-n" id="b-done">0</div><div class="stat-l">Hechas ✓</div></div>
+        </div>
+      </div>
+      <div class="weeks" id="weeks-list"></div>
+      <div class="tips-box">
+        <div class="tips-title">💡 Claves para principiantes</div>
+        <div class="tip"><span>⏰</span> Establece una hora fija — el hábito vive en la rutina, no en la motivación</div>
+        <div class="tip"><span>👟</span> Ropa cómoda puesta la noche anterior — elimina las excusas</div>
+        <div class="tip"><span>🌅</span> Lo ideal: ejercicio por la mañana antes de que el día te robe la energía</div>
+        <div class="tip"><span>💧</span> Hidratación antes, durante y después — la deshidratación infama</div>
+        <div class="tip"><span>🌍</span> Si puedes, hazlo descalza en el jardín — combinas movimiento + grounding</div>
       </div>
     </div>
-    <div class="profile-card moderate" onclick="setProfile('moderate')">
-      <div class="pc-emoji">⚡</div>
-      <div class="pc-info">
-        <div class="pc-title">Ejercito de forma moderada</div>
-        <div class="pc-sub">Tengo hábito pero quiero registrar y mejorar mi consistencia</div>
-        <div class="pc-badge badge-b">Agenda de Registro — tracking semanal</div>
+
+    <!-- MODERATE CONTENT -->
+    <div id="p-moderate" style="display:none">
+      <div class="agenda-stats">
+        <div class="ag-stat"><div class="ag-n" id="ag-week">0</div><div class="ag-l">Esta semana</div></div>
+        <div class="ag-stat"><div class="ag-n" id="ag-total">0</div><div class="ag-l">Total</div></div>
+        <div class="ag-stat"><div class="ag-n" id="ag-mins">0</div><div class="ag-l">Minutos</div></div>
+        <div class="ag-stat"><div class="ag-n" id="ag-streak">0</div><div class="ag-l">Racha</div></div>
       </div>
-    </div>
-    <div class="profile-card advanced" onclick="setProfile('advanced')">
-      <div class="pc-emoji">🔥</div>
-      <div class="pc-info">
-        <div class="pc-title">Ejercito mucho y quiero retarme</div>
-        <div class="pc-sub">Necesito desafíos progresivos y registro de mis marcas personales</div>
-        <div class="pc-badge badge-r">Retos de 14 a 30 días</div>
+      <div class="chart-box" id="chart-box"></div>
+      <div class="add-btn" onclick="toggleForm()">
+        <div class="add-btn-icon">+</div>
+        <div>
+          <div class="add-btn-t">Registrar sesión</div>
+          <div class="add-btn-s">Toca para agregar tu entrenamiento de hoy</div>
+        </div>
       </div>
+      <div class="form-box" id="form-box">
+        <div class="fb-title">Nueva sesión 💪</div>
+        <div class="fg">
+          <span class="fl">Tipo de ejercicio</span>
+          <div class="type-grid" id="type-grid"></div>
+        </div>
+        <div class="fg">
+          <span class="fl">Duración (minutos)</span>
+          <input type="number" class="dur-in" id="dur-in" placeholder="ej: 30" min="1" max="300">
+        </div>
+        <div class="fg">
+          <span class="fl">Intensidad</span>
+          <div class="int-row" id="int-row"></div>
+        </div>
+        <div class="fg">
+          <span class="fl">¿Cómo te sentiste?</span>
+          <div class="feel-row" id="feel-row"></div>
+        </div>
+        <button class="btn-save" onclick="saveSession()">Guardar sesión ✓</button>
+        <button class="btn-cancel" onclick="toggleForm()">Cancelar</button>
+      </div>
+      <div class="sessions-ttl">Historial de sesiones</div>
+      <div id="sessions-list"></div>
     </div>
-  </div>
-</div>
 
-<!-- BEGINNER: GUÍA DE INICIO -->
-<div id="s-beginner" class="screen">
-  <div class="page-header ph-green">
-    <h2>🌱 Tu Guía de Inicio</h2>
-    <p>4 semanas · progresivo · antiinflamatorio</p>
-  </div>
-  <div class="begin-hero">
-    <div class="bh-title">Tu primera misión: crear el hábito</div>
-    <div class="bh-text">No se trata de intensidad. Se trata de aparecerte todos los días. 20 minutos de movimiento constante reducen la inflamación crónica más que 1 hora intensa una vez a la semana.</div>
-    <div class="bh-stats">
-      <div class="bhs"><div class="n">4</div><div class="l">Semanas</div></div>
-      <div class="bhs"><div class="n">28</div><div class="l">Sesiones</div></div>
-      <div class="bhs"><div class="n" id="begin-done-count">0</div><div class="l">Completadas</div></div>
+    <!-- ADVANCED CONTENT -->
+    <div id="p-advanced" style="display:none">
+      <div class="hero-box hero-red">
+        <div class="hero-title">El reto es contigo misma 🔥</div>
+        <div class="hero-text">Elige uno o varios desafíos. Toca cada día para marcarlo. La consistencia siempre supera a la intensidad.</div>
+      </div>
+      <div class="challenges" id="challenges-list"></div>
     </div>
-  </div>
-  <div class="begin-weeks" id="begin-weeks"></div>
-  <div class="begin-tips">
-    <div class="bt-title">💡 Claves para principiantes</div>
-    <div class="tip-item"><div class="tip-icon">⏰</div>Establece una hora fija todos los días — el hábito vive en la rutina, no en la motivación</div>
-    <div class="tip-item"><div class="tip-icon">👟</div>Ropa cómoda puesta la noche anterior — elimina las excusas de la mañana</div>
-    <div class="tip-item"><div class="tip-icon">🌅</div>Lo ideal: ejercicio en la mañana antes de que el día te robe la energía</div>
-    <div class="tip-item"><div class="tip-icon">💧</div>Hidratación: toma agua antes, durante y después. La deshidratación infama</div>
-    <div class="tip-item"><div class="tip-icon">🌍</div>Si puedes, hazlo descalza en el jardín — combinas movimiento + grounding antiinflamatorio</div>
-  </div>
-</div>
 
-<!-- MODERATE: AGENDA -->
-<div id="s-moderate" class="screen">
-  <div class="page-header ph-blue">
-    <h2>⚡ Mi Agenda de Ejercicio</h2>
-    <p>Registra cada sesión — lo que se mide, mejora</p>
-  </div>
-  <div class="agenda-stats">
-    <div class="as-card"><div class="as-num" id="ag-week">0</div><div class="as-lbl">Esta semana</div></div>
-    <div class="as-card"><div class="as-num" id="ag-total">0</div><div class="as-lbl">Total sesiones</div></div>
-    <div class="as-card"><div class="as-num" id="ag-mins">0</div><div class="as-lbl">Minutos totales</div></div>
-    <div class="as-card"><div class="as-num" id="ag-streak">0</div><div class="as-lbl">Racha días</div></div>
-  </div>
-  <div class="weekly-chart" id="weekly-chart"></div>
-  <div class="add-session-card" onclick="toggleForm()">
-    <div class="asc-title">+ Registrar sesión de hoy</div>
-    <div class="asc-sub">Toca para agregar tu entrenamiento</div>
-  </div>
-  <div class="form-card" id="session-form">
-    <div class="fc-title">Nueva sesión 💪</div>
-    <div class="form-group">
-      <label class="form-label">Tipo de ejercicio</label>
-      <div class="type-grid" id="type-grid"></div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Duración (minutos)</label>
-      <input type="number" class="form-input" id="form-duration" placeholder="ej: 30" min="1" max="240">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Intensidad percibida</label>
-      <div class="intensity-row" id="int-row"></div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">¿Cómo te sentiste?</label>
-      <div class="feeling-row" id="feel-row"></div>
-    </div>
-    <button class="btn-save" onclick="saveSession()">Guardar sesión ✓</button>
-    <button class="btn-cancel" onclick="toggleForm()">Cancelar</button>
-  </div>
-  <div class="sessions-title" id="sessions-title">Historial de sesiones</div>
-  <div id="sessions-list"></div>
-</div>
+  </div><!-- /panel0 -->
 
-<!-- ADVANCED: RETO -->
-<div id="s-advanced" class="screen">
-  <div class="page-header ph-red">
-    <h2>🔥 Retos MORAIMA</h2>
-    <p>Desafíos progresivos — marca tu mejor versión</p>
+  <!-- PANEL 1: EJERCICIOS -->
+  <div class="panel" id="panel1">
+    <div class="ejercicios" id="ejercicios-list"></div>
   </div>
-  <div class="reto-hero">
-    <div class="rh-title">El reto es contigo misma</div>
-    <div class="rh-text">Elige uno o varios retos. Toca cada día para marcarlo como completado. Registra tus marcas personales. Comprueba que la consistencia siempre supera a la intensidad.</div>
-  </div>
-  <div class="challenges-container" id="challenges-container"></div>
-</div>
 
-<!-- BIBLIOTECA -->
-<div id="s-biblio" class="screen">
-  <div class="page-header ph-blue">
-    <h2>📖 Ejercicios Antiinflamatorios</h2>
-    <p>15 movimientos con ciencia — toca para aprender</p>
-  </div>
-  <div class="biblioteca-container" id="biblioteca-container"></div>
-</div>
-
-<!-- BOTTOM NAV -->
-<nav id="bottom-nav">
-  <button class="nav-item active" id="nav-main" onclick="showMain()">
-    <span class="nav-icon">👤</span><span class="nav-lbl">Mi Perfil</span>
-  </button>
-  <button class="nav-item" id="nav-section" onclick="showSection()">
-    <span class="nav-icon" id="nav-section-icon">📋</span><span class="nav-lbl" id="nav-section-lbl">Mi Plan</span>
-  </button>
-  <button class="nav-item" id="nav-biblio" onclick="goTo('s-biblio',2)">
-    <span class="nav-icon">📖</span><span class="nav-lbl">Ejercicios</span>
-  </button>
-</nav>
+</div><!-- /app -->
 
 <script>
-// ===== DATA =====
-const semanas = [
-  {title:'Semana 1 — Despertar',color:'#27ae60',emoji:'🌱',sub:'10-15 min diarios',days:[
+// ━━━ DATA ━━━
+const semanas=[
+  {title:'Semana 1 — Despertar',color:'#27ae60',e:'🌱',sub:'10-15 min diarios',days:[
     {e:'🚶‍♀️',n:'Caminata suave',d:'15 min a paso tranquilo. Solo empieza.'},
     {e:'🧘‍♀️',n:'Yoga básico',d:'10 min — estiramientos suaves en YouTube'},
     {e:'🚶‍♀️',n:'Caminata + respiración',d:'15 min — inhala 4, exhala 6 mientras caminas'},
@@ -344,7 +385,7 @@ const semanas = [
     {e:'🧘‍♀️',n:'Yoga + respiración',d:'12 min — clase básica en YouTube'},
     {e:'💤',n:'Descanso total',d:'Hoy solo hidratación y sueño temprano',rest:true}
   ]},
-  {title:'Semana 2 — Construir',color:'#2980b9',emoji:'⚡',sub:'15-20 min diarios',days:[
+  {title:'Semana 2 — Construir',color:'#2980b9',e:'⚡',sub:'15-20 min diarios',days:[
     {e:'🚶‍♀️',n:'Caminata 20 min',d:'20 minutos continuos — un poco más rápido'},
     {e:'🏋️‍♀️',n:'Sentadillas básicas',d:'3 series de 10 sentadillas suaves'},
     {e:'🚶‍♀️',n:'Caminata + brazos',d:'20 min caminata + movimiento de brazos activo'},
@@ -353,18 +394,18 @@ const semanas = [
     {e:'🚶‍♀️',n:'Caminata en cuestas',d:'20 min — busca una calle con pendiente'},
     {e:'💤',n:'Descanso total',d:'¡Felicidades por 2 semanas! Mereces descansar',rest:true}
   ]},
-  {title:'Semana 3 — Progresar',color:'#e67e22',emoji:'🔥',sub:'20-25 min diarios',days:[
-    {e:'🚶‍♀️',n:'Caminata rápida 25 min',d:'Ritmo donde puedas hablar pero no cantar'},
+  {title:'Semana 3 — Progresar',color:'#e67e22',e:'🔥',sub:'20-25 min diarios',days:[
+    {e:'🚶‍♀️',n:'Caminata rápida',d:'25 min — ritmo donde puedas hablar pero no cantar'},
     {e:'💪',n:'Fuerza básica',d:'Sentadillas + planchas + abdominales — 20 min'},
-    {e:'💃',n:'Baile libre 25 min',d:'Tu música favorita — muévete sin juzgar'},
+    {e:'💃',n:'Baile libre',d:'25 min — tu música favorita, muévete sin juzgar'},
     {e:'💤',n:'Descanso activo',d:'10 min estiramientos + 5 min respiración',rest:true},
     {e:'🚶‍♀️',n:'Caminata + yoga',d:'15 min caminata + 10 min yoga'},
     {e:'🏋️‍♀️',n:'Fuerza + equilibrio',d:'Sentadillas + lunges + plancha — 25 min'},
     {e:'💤',n:'Descanso total',d:'3 semanas completadas — estás cambiando tu vida',rest:true}
   ]},
-  {title:'Semana 4 — Consolidar',color:'#9b59b6',emoji:'🌟',sub:'25-30 min diarios',days:[
+  {title:'Semana 4 — Consolidar',color:'#9b59b6',e:'🌟',sub:'25-30 min diarios',days:[
     {e:'🚶‍♀️',n:'Caminata 30 min',d:'30 minutos continuos — ¡lo lograste!'},
-    {e:'🏊‍♀️',n:'Cardio de tu elección',d:'30 min: natación, bicicleta o bailar'},
+    {e:'🏊‍♀️',n:'Cardio a elegir',d:'30 min: natación, bicicleta o bailar'},
     {e:'🧘‍♀️',n:'Yoga de potencia',d:'30 min — yoga que también da fuerza'},
     {e:'💤',n:'Descanso activo',d:'Foam roller + estiramientos profundos 15 min',rest:true},
     {e:'💪',n:'Circuito completo',d:'30 min: caminata 10 + fuerza 10 + yoga 10'},
@@ -373,50 +414,50 @@ const semanas = [
   ]}
 ];
 
-const tiposEjercicio = [
+const tiposEj=[
   {e:'🚶‍♀️',n:'Caminata'},{e:'🏃‍♀️',n:'Trote'},{e:'🏊‍♀️',n:'Natación'},
   {e:'🚴‍♀️',n:'Ciclismo'},{e:'🧘‍♀️',n:'Yoga'},{e:'💃',n:'Baile'},
   {e:'🏋️‍♀️',n:'Fuerza'},{e:'🔥',n:'HIIT'},{e:'🤸‍♀️',n:'Funcional'}
 ];
 
-const retos = [
-  {id:'sent',e:'🏆',t:'Sentadillas 30 Días',sub:'De 20 a 100 sentadillas — antiinflamatorio total',
-   desc:'Activas el 70% de la musculatura corporal. Las miokininas liberadas tienen efecto antiinflamatorio sistémico medible desde el día 5.',
+const retos=[
+  {id:'sent',e:'🏆',t:'Sentadillas 30 Días',sub:'De 20 a 100 reps — antiinflamatorio total',
+   desc:'Activan el 70% de la musculatura. Miokininas liberadas con efecto antiinflamatorio sistémico medible desde el día 5.',
    color:'#e74c3c',
    days:[20,22,25,0,28,30,32,0,35,38,40,0,44,46,50,0,54,56,60,0,64,68,72,0,76,80,85,0,90,100],
-   labels:Array.from({length:30},(_,i)=>i%4===3?'💤':`${[20,22,25,0,28,30,32,0,35,38,40,0,44,46,50,0,54,56,60,0,64,68,72,0,76,80,85,0,90,100][i]}`),
-   units:'reps',
-   records:[{k:'maximo',l:'Máximo en 1 set'},{k:'tiempo',l:'Tiempo 50 squats (seg)'},{k:'peso',l:'Peso (kg) con lastre'}]},
+   lbls:['20','22','25','💤','28','30','32','💤','35','38','40','💤','44','46','50','💤','54','56','60','💤','64','68','72','💤','76','80','85','💤','90','100'],
+   u:'reps',
+   recs:[{k:'max1',l:'Máximo en 1 set'},{k:'t50',l:'Tiempo 50 squats (seg)'},{k:'peso',l:'Peso con lastre (kg)'}]},
   {id:'plancha',e:'⬛',t:'Planchas 21 Días',sub:'De 20 segundos a 3 minutos',
    desc:'Activan el core profundo. Isometría antiinflamatoria sin impacto articular — ideal para dolor lumbar crónico.',
    color:'#9b59b6',
    days:[20,25,30,0,35,40,45,0,50,60,70,0,80,90,100,0,120,140,160,0,180],
-   labels:['20s','25s','30s','💤','35s','40s','45s','💤','50s','60s','70s','💤','80s','90s','100s','💤','2m','2:20','2:40','💤','3m'],
-   units:'seg',
-   records:[{k:'maxtime',l:'Máximo sostenido (seg)'},{k:'sets',l:'Series de 60 seg completadas'}]},
-  {id:'hiit',e:'🔥',t:'HIIT Antiinflamatorio 14 Días',sub:'14 sesiones de 20 min — máximo impacto antiinflamatorio',
-   desc:'20 min de HIIT produce más miokininas antiinflamatorias que 45 min de cardio continuo. El afterburn dura 24h.',
+   lbls:['20s','25s','30s','💤','35s','40s','45s','💤','50s','60s','70s','💤','80s','90s','1:40','💤','2m','2:20','2:40','💤','3m'],
+   u:'seg',
+   recs:[{k:'maxT',l:'Máximo sostenido (seg)'},{k:'sets',l:'Series de 60s completadas'}]},
+  {id:'hiit',e:'🔥',t:'HIIT Antiinflamatorio 14 Días',sub:'14 sesiones de 20 min — máximo impacto',
+   desc:'20 min de HIIT produce más miokininas que 45 min de cardio continuo. El afterburn antiinflamatorio dura 24h.',
    color:'#e67e22',
    days:[1,1,1,0,1,1,1,0,1,1,1,0,1,1],
-   labels:['S1','S2','S3','💤','S4','S5','S6','💤','S7','S8','S9','💤','S10','S11'],
-   units:'sesión',
-   records:[{k:'fcmax',l:'FC máx promedio (ppm)'},{k:'calorias',l:'Calorías promedio'},{k:'recuperacion',l:'Tiempo recuperación FC (min)'}]},
-  {id:'burpees',e:'💥',t:'Burpees 14 Días',sub:'De 5 a 30 burpees — explosivo antiinflamatorio',
-   desc:'El burpee activa todos los grupos musculares en 1 repetición. Norepinefrina máxima — reduce inflamación sistémica en minutos.',
+   lbls:['S1','S2','S3','💤','S4','S5','S6','💤','S7','S8','S9','💤','S10','S11'],
+   u:'sesión',
+   recs:[{k:'fcmax',l:'FC máx promedio (ppm)'},{k:'cal',l:'Calorías promedio'},{k:'recup',l:'Recuperación FC (min)'}]},
+  {id:'burpees',e:'💥',t:'Burpees 14 Días',sub:'De 5 a 20 reps — explosivo antiinflamatorio',
+   desc:'El burpee activa todos los grupos musculares en 1 rep. Norepinefrina máxima — reduce inflamación sistémica en minutos.',
    color:'#c0392b',
    days:[5,6,7,0,8,9,10,0,12,14,16,0,18,20],
-   labels:['5','6','7','💤','8','9','10','💤','12','14','16','💤','18','20'],
-   units:'reps',
-   records:[{k:'max1',l:'Máximo en 1 min (reps)'},{k:'tiempo20',l:'Tiempo 20 burpees (seg)'}]}
+   lbls:['5','6','7','💤','8','9','10','💤','12','14','16','💤','18','20'],
+   u:'reps',
+   recs:[{k:'m1',l:'Máximo en 1 min (reps)'},{k:'t20',l:'Tiempo 20 burpees (seg)'}]}
 ];
 
-const ejercicios = [
+const ejercicios=[
   {e:'🚶‍♀️',n:'Caminata Antiinflamatoria',nivel:'Bajo',tiempo:'20-30 min',tipo:'Cardio',
    b:'Reduce PCR en 33% en 8 semanas. Activa miokininas y mejora sensibilidad a la insulina.',
    steps:['Camina a ritmo donde puedas hablar pero no cantar','Postura erguida, hombros relajados, brazos balanceados','Respira por la nariz en la inhalación','Si puedes hazlo descalza sobre pasto o tierra (doble efecto)','Aumenta 5 min por semana hasta llegar a 30 min diarios']},
   {e:'🧘‍♀️',n:'Yoga Antiestrés',nivel:'Bajo',tiempo:'20-40 min',tipo:'Mente-Cuerpo',
-   b:'Reduce cortisol 21%, baja IL-6 y TNF-alfa. Activa nervio vago — antiinflamatorio interno.',
-   steps:['Comienza con 5 min de respiración profunda','Fluye entre posturas sin forzar ni comparar','Mantén cada postura 30-60 segundos','Siempre termina con Savasana (5 min tumbada quieta)','Pratica con estómago vacío o 2h después de comer']},
+   b:'Reduce cortisol 21%, baja IL-6 y TNF-α. Activa nervio vago — antiinflamatorio interno.',
+   steps:['Comienza con 5 min de respiración profunda','Fluye entre posturas sin forzar ni comparar','Mantén cada postura 30-60 segundos','Siempre termina con Savasana (5 min tumbada quieta)','Practica con estómago vacío o 2h después de comer']},
   {e:'🏊‍♀️',n:'Natación',nivel:'Medio',tiempo:'30-45 min',tipo:'Cardio',
    b:'Antiinflamatoria por diseño: bajo impacto articular + resistencia uniforme + respiración controlada.',
    steps:['Calienta 5 min con movimientos fuera del agua','Alterna estilos para trabajar grupos musculares diferentes','Mantén un ritmo constante, sin sprints','Recupera 30 seg entre largos','Termina con estiramientos suaves dentro del agua']},
@@ -435,11 +476,8 @@ const ejercicios = [
   {e:'⬛',n:'Planchas Isométricas',nivel:'Medio',tiempo:'5-10 min',tipo:'Fuerza',
    b:'Core profundo sin impacto articular. Miokininas isométricas — ideales para dolor lumbar.',
    steps:['Antebrazos y puntas de pies en el suelo','Cuerpo recto como una tabla — sin subir ni bajar la cadera','Activa el ombligo hacia la columna','Respira normalmente — no hagas apnea','Empieza 20 seg, aumenta 5 seg por semana']},
-  {e:'🌊',n:'Caminata en Agua',nivel:'Bajo',tiempo:'20-30 min',tipo:'Cardio',
-   b:'La presión del agua mejora circulación linfática y reduce edema. Bajo impacto máximo.',
-   steps:['Camina en piscina a nivel de cintura o pecho','Mantén brazos bajo el agua para más resistencia','Camina hacia adelante y hacia atrás alternando','Eleva rodillas alternando para mayor activación','Ideal para articulaciones sensibles o personas mayores']},
   {e:'🫁',n:'Respiración Diafragmática',nivel:'Bajo',tiempo:'10-15 min',tipo:'Mente-Cuerpo',
-   b:'Activa nervio vago → inhibe TNF-alfa. 20 min diarios reduce IL-6 en 14% en 8 semanas.',
+   b:'Activa nervio vago → inhibe TNF-α. 20 min diarios reduce IL-6 en 14% en 8 semanas.',
    steps:['Acuéstate cómoda o siéntate con espalda recta','Una mano en pecho, otra en abdomen','Inhala por nariz 4 tiempos — el abdomen sube (no el pecho)','Exhala por boca 6-8 tiempos — exhala todo el aire','El pecho casi no se mueve — el abdomen hace todo el trabajo']},
   {e:'🤸‍♀️',n:'Estiramientos Dinámicos',nivel:'Bajo',tiempo:'15-20 min',tipo:'Flexibilidad',
    b:'Mejoran circulación linfática y reducen edema local. Previenen microlesiones proinflamatorias.',
@@ -448,92 +486,109 @@ const ejercicios = [
    b:'Libera fascia tensa que atrapa líquidos inflamatorios. Recuperación activa antiinflamatoria.',
    steps:['Aplica presión suave sobre el área — no aplastes duro','Rueda muy lentamente — 2-3 cm por segundo','Si encuentras un nudo doloroso, quédate ahí 30 seg y respira','Trabaja siempre de extremidades hacia el centro del cuerpo','Nunca sobre articulaciones ni columna vertebral directamente']},
   {e:'🥋',n:'Tai Chi',nivel:'Bajo',tiempo:'20-30 min',tipo:'Mente-Cuerpo',
-   b:'Reduce IL-6, TNF-alfa y cortisol simultáneamente. Especialmente efectivo en artritis y fibromialgia.',
-   steps:['Busca un video de tai chi para principiantes en YouTube','Practica al aire libre si puedes — potencia el efecto','Muévete muy lento y con intención — no hay prisa','Coordina cada movimiento con tu respiración','20 min diarios son suficientes para resultados medibles en 8 semanas']},
+   b:'Reduce IL-6, TNF-α y cortisol simultáneamente. Especialmente efectivo en artritis y fibromialgia.',
+   steps:['Busca un video de tai chi para principiantes en YouTube','Practica al aire libre si puedes — potencia el efecto','Muévete muy lento y con intención — no hay prisa','Coordina cada movimiento con tu respiración','20 min diarios producen resultados medibles en 8 semanas']},
   {e:'🚴‍♀️',n:'Ciclismo',nivel:'Bajo-Medio',tiempo:'30-45 min',tipo:'Cardio',
    b:'Cardio de bajo impacto articular. Activa grandes grupos musculares — miokininas antiinflamatorias.',
    steps:['Ajusta el sillín a la altura de tu cadera parada','Mantén cadencia 70-90 RPM — ritmo constante','Marcha cómoda que permita mantener ese ritmo','Alterna 5 min suave + 2 min moderado para mayor efecto','Estira piernas y espalda baja al terminar']},
+  {e:'🌊',n:'Caminata en Agua',nivel:'Bajo',tiempo:'20-30 min',tipo:'Cardio',
+   b:'La presión del agua mejora circulación linfática y reduce edema. Bajo impacto máximo.',
+   steps:['Camina en piscina a nivel de cintura o pecho','Mantén brazos bajo el agua para más resistencia','Camina hacia adelante y hacia atrás alternando','Eleva rodillas alternando para mayor activación','Ideal para articulaciones sensibles o personas mayores']},
   {e:'🤾‍♀️',n:'Entrenamiento Funcional',nivel:'Medio',tiempo:'30-40 min',tipo:'Fuerza',
    b:'Movimientos naturales activan múltiples grupos — más miokininas que ejercicios aislados.',
    steps:['Incluye: sentadilla, peso muerto, prensa, remo, plancha','Usa peso corporal o mancuernas ligeras para empezar','3 series de 12-15 repeticiones por movimiento','Descansa 60 seg entre series — no más','Termina siempre con 10 min de movilidad articular']}
 ];
 
-// STATE
-let currentProfile = null;
-let beginDone = JSON.parse(localStorage.getItem('moraima6_begin') || '{}');
-let sessions = JSON.parse(localStorage.getItem('moraima6_sessions') || '[]');
-let retoState = JSON.parse(localStorage.getItem('moraima6_reto') || '{}');
-let records = JSON.parse(localStorage.getItem('moraima6_records') || '{}');
-let formType = null;
-let formInt = null;
-let formFeel = null;
-let expandedEj = null;
-let openChallenge = null;
-let openWeek = null;
+// ━━━ STATE ━━━
+let profile=null;
+let openWeek=null;
+let openChallenge=null;
+let openEj=null;
+let formType=null,formInt=null,formFeel=null;
+let beginDone=JSON.parse(localStorage.getItem('m6_begin')||'{}');
+let sessions=JSON.parse(localStorage.getItem('m6_sessions')||'[]');
+let retoState=JSON.parse(localStorage.getItem('m6_reto')||'{}');
+let records=JSON.parse(localStorage.getItem('m6_records')||'{}');
 
-function setProfile(p){
-  currentProfile = p;
-  document.getElementById('s-welcome').classList.remove('active');
-  document.getElementById('bottom-nav').classList.add('visible');
-  const icons = {beginner:'🌱',moderate:'⚡',advanced:'🔥'};
-  const lbls = {beginner:'Mi Plan',moderate:'Mi Agenda',advanced:'Mis Retos'};
-  document.getElementById('nav-section-icon').textContent = icons[p];
-  document.getElementById('nav-section-lbl').textContent = lbls[p];
-  showSection();
-  renderBeginner();
-  renderAgenda();
-  renderRetos();
-  renderBiblioteca();
+// ━━━ NAVIGATION ━━━
+function show(id){
+  document.getElementById('w').style.display='none';
+  document.getElementById('app').style.display='none';
+  document.getElementById(id).style.display='flex';
 }
 
-function showMain(){
-  goTo('s-welcome',0);
+function selProfile(p){
+  profile=p;
+  const cfg={
+    beginner:{icon:'🌱',title:'Mi Plan — Semana a Semana',tab0:'📋 Mi Plan'},
+    moderate:{icon:'⚡',title:'Mi Agenda de Ejercicio',tab0:'📊 Mi Agenda'},
+    advanced:{icon:'🔥',title:'Mis Retos MORAIMA',tab0:'🏆 Mis Retos'}
+  };
+  document.getElementById('topbar-icon').textContent=cfg[p].icon;
+  document.getElementById('topbar-title').textContent=cfg[p].title;
+  document.getElementById('tab0-icon').textContent=cfg[p].icon;
+  document.getElementById('tab0-lbl').textContent=cfg[p].tab0.split(' ').slice(1).join(' ');
+
+  // hide all profile panels
+  ['beginner','moderate','advanced'].forEach(x=>
+    document.getElementById('p-'+x).style.display='none');
+  document.getElementById('p-'+p).style.display='block';
+
+  // switch to tab 0
+  showTab(0);
+
+  // render
+  if(p==='beginner') renderBeginner();
+  if(p==='moderate') renderAgenda();
+  if(p==='advanced') renderRetos();
+  renderEjercicios();
+
+  show('app');
 }
 
-function showSection(){
-  if(!currentProfile) return;
-  const map = {beginner:'s-beginner',moderate:'s-moderate',advanced:'s-advanced'};
-  goTo(map[currentProfile],1);
+function goBack(){
+  show('w');
 }
 
-function goTo(id, idx){
-  showScreen(id);
-  document.querySelectorAll('.nav-item').forEach((el,i) => el.classList.toggle('active', i===idx));
+function showTab(n){
+  document.querySelectorAll('.panel').forEach((el,i)=>{
+    el.classList.toggle('on',i===n);
+  });
+  document.querySelectorAll('.tab').forEach((el,i)=>{
+    el.classList.toggle('on',i===n);
+  });
 }
 
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// BEGINNER
+// ━━━ BEGINNER ━━━
 function renderBeginner(){
-  const totalDone = Object.keys(beginDone).filter(k=>beginDone[k]).length;
-  document.getElementById('begin-done-count').textContent = totalDone;
-  document.getElementById('begin-weeks').innerHTML = semanas.map((sem,si) => {
-    const semDone = sem.days.filter((_,di)=>beginDone[`${si}_${di}`]).length;
-    const semTotal = sem.days.filter(d=>!d.rest).length;
-    const pct = semTotal > 0 ? Math.round((semDone/semTotal)*100) : 0;
-    return `
-    <div class="week-card ${openWeek===si?'open':''}" id="wk-${si}">
-      <div class="wk-header" onclick="toggleWeek(${si})">
-        <div class="wk-badge" style="background:${sem.color}">${sem.emoji}</div>
+  const done=Object.keys(beginDone).filter(k=>beginDone[k]).length;
+  document.getElementById('b-done').textContent=done;
+  const el=document.getElementById('weeks-list');
+  el.innerHTML=semanas.map((s,si)=>{
+    const semDone=s.days.filter((_,di)=>beginDone[si+'_'+di]).length;
+    const semTotal=s.days.filter(d=>!d.rest).length;
+    const pct=semTotal>0?Math.round(semDone/semTotal*100):0;
+    return `<div class="wk ${openWeek===si?'open':''}" id="wk${si}">
+      <div class="wk-hd" onclick="toggleWeek(${si})">
+        <div class="wk-badge" style="background:${s.color}">${s.e}</div>
         <div class="wk-info">
-          <div class="wk-title">${sem.title}</div>
-          <div class="wk-sub">${sem.sub}</div>
+          <div class="wk-name">${s.title}</div>
+          <div class="wk-sub">${s.sub}</div>
         </div>
         <div class="wk-pct">${pct}%</div>
+        <div class="wk-arrow">▼</div>
       </div>
-      <div class="wk-days">
-        ${sem.days.map((d,di)=>`
-          <div class="day-item ${beginDone[`${si}_${di}`]?'done':''}" onclick="${d.rest?'':'toggleBeginDay('+si+','+di+')'}">
-            <div class="di-num ${d.rest?'rest':'}">${si*7+di+1}</div>
-            <div class="di-content">
-              <div class="di-name">${d.n}</div>
-              <div class="di-detail">${d.d}</div>
+      <div class="wk-body">
+        ${s.days.map((d,di)=>`
+          <div class="day-row${beginDone[si+'_'+di]?' done':''}${d.rest?' rest':''}"
+               onclick="${d.rest?'':('toggleDay('+si+','+di+')')}">
+            <div class="dn${d.rest?' r':''}">${si*7+di+1}</div>
+            <div class="dc">
+              <div class="dc-name">${d.n}</div>
+              <div class="dc-detail">${d.d}</div>
             </div>
-            <div class="di-emoji">${d.e}</div>
-            <div class="di-check">✓</div>
+            <div class="de">${d.e}</div>
+            <div class="dchk">✓</div>
           </div>`).join('')}
       </div>
     </div>`;
@@ -541,186 +596,173 @@ function renderBeginner(){
 }
 
 function toggleWeek(i){
-  openWeek = openWeek===i?null:i;
+  openWeek=openWeek===i?null:i;
   renderBeginner();
 }
 
-function toggleBeginDay(si,di){
-  const k = `${si}_${di}`;
-  beginDone[k] = !beginDone[k];
-  localStorage.setItem('moraima6_begin', JSON.stringify(beginDone));
+function toggleDay(si,di){
+  const k=si+'_'+di;
+  beginDone[k]=!beginDone[k];
+  localStorage.setItem('m6_begin',JSON.stringify(beginDone));
   renderBeginner();
 }
 
-// AGENDA
+// ━━━ AGENDA ━━━
 function renderAgenda(){
-  const now = new Date();
-  const startOfWeek = new Date(now);
-  startOfWeek.setDate(now.getDate() - now.getDay());
-  startOfWeek.setHours(0,0,0,0);
-  const weekSessions = sessions.filter(s => new Date(s.date) >= startOfWeek);
-  const totalMins = sessions.reduce((a,b)=>a+(b.duration||0),0);
-  document.getElementById('ag-week').textContent = weekSessions.length;
-  document.getElementById('ag-total').textContent = sessions.length;
-  document.getElementById('ag-mins').textContent = totalMins;
-  const streak = calcStreak();
-  document.getElementById('ag-streak').textContent = streak;
-  renderWeekChart(weekSessions, now);
-  renderSessionForm();
-  renderSessionList();
+  const now=new Date();
+  const sow=new Date(now);
+  sow.setDate(now.getDate()-now.getDay());sow.setHours(0,0,0,0);
+  const wkSess=sessions.filter(s=>new Date(s.date)>=sow);
+  const totalMins=sessions.reduce((a,b)=>a+(b.dur||0),0);
+  document.getElementById('ag-week').textContent=wkSess.length;
+  document.getElementById('ag-total').textContent=sessions.length;
+  document.getElementById('ag-mins').textContent=totalMins;
+  document.getElementById('ag-streak').textContent=calcStreak();
+  renderChart(wkSess,now);
+  renderTypeGrid();
+  renderSessions();
 }
 
 function calcStreak(){
-  if(!sessions.length) return 0;
-  const dates = [...new Set(sessions.map(s=>s.date))].sort().reverse();
-  let streak = 0;
-  const today = new Date(); today.setHours(0,0,0,0);
+  if(!sessions.length)return 0;
+  const dates=[...new Set(sessions.map(s=>s.date))].sort().reverse();
+  let streak=0;
+  const today=new Date();today.setHours(0,0,0,0);
   for(let i=0;i<dates.length;i++){
-    const d = new Date(dates[i]); d.setHours(0,0,0,0);
-    const diff = Math.round((today-d)/(1000*60*60*24));
-    if(diff===i) streak++;
-    else break;
+    const d=new Date(dates[i]);d.setHours(0,0,0,0);
+    if(Math.round((today-d)/86400000)===i)streak++;else break;
   }
   return streak;
 }
 
-function renderWeekChart(weekSessions, now){
-  const days = ['D','L','M','X','J','V','S'];
-  const today = now.getDay();
-  const bars = days.map((_,i) => {
-    const daySessions = weekSessions.filter(s => new Date(s.date).getDay()===i);
-    const mins = daySessions.reduce((a,b)=>a+(b.duration||0),0);
-    const height = mins > 0 ? Math.min(100, (mins/90)*100) : 0;
-    return {lbl:days[i], mins, height, isToday:i===today};
-  });
-  document.getElementById('weekly-chart').innerHTML = `
-    <div class="wc-title">Esta semana — minutos por día</div>
-    <div class="wc-bars">
-      ${bars.map(b=>`
-        <div class="wc-bar-wrap">
-          <div class="wc-bar ${b.height===0?'wc-bar-empty':''}" style="height:${Math.max(b.height,4)}%;${b.isToday?'background:linear-gradient(var(--gold),#e67e22)':''}"></div>
-          <div class="wc-day-lbl" style="${b.isToday?'color:var(--gold);font-weight:900':''}">${b.lbl}</div>
-        </div>`).join('')}
-    </div>`;
+function renderChart(wkSess,now){
+  const lbls=['D','L','M','X','J','V','S'];
+  const today=now.getDay();
+  const html=`<div class="chart-title">Esta semana — minutos por día</div>
+  <div class="chart-bars">
+    ${lbls.map((_,i)=>{
+      const mins=wkSess.filter(s=>new Date(s.date).getDay()===i).reduce((a,b)=>a+(b.dur||0),0);
+      const h=mins>0?Math.min(100,mins/90*100):0;
+      const isToday=i===today;
+      return `<div class="bar-col">
+        <div class="bar ${h===0?'bar-empty':''}" style="height:${Math.max(h,4)}%;${isToday?'background:linear-gradient(var(--gold),#e67e22)':''}"></div>
+        <div class="bar-lbl" style="${isToday?'color:var(--gold);font-weight:900':''}">${lbls[i]}</div>
+      </div>`;
+    }).join('')}
+  </div>`;
+  document.getElementById('chart-box').innerHTML=html;
 }
 
-function renderSessionForm(){
-  document.getElementById('type-grid').innerHTML = tiposEjercicio.map((t,i)=>
-    `<div class="type-opt ${formType===i?'sel':''}" onclick="selectType(${i})"><span class="to-emoji">${t.e}</span>${t.n}</div>`
-  ).join('');
-  const ints = ['Suave','Moderado','Intenso','Máximo'];
-  document.getElementById('int-row').innerHTML = ints.map((t,i)=>
-    `<button class="int-btn ${formInt===i?'sel':''}" onclick="selectInt(${i})">${t}</button>`
-  ).join('');
-  const feels = ['😴','😐','😊','🔥','💪'];
-  document.getElementById('feel-row').innerHTML = feels.map((f,i)=>
-    `<div class="feel-btn ${formFeel===i?'sel':''}" onclick="selectFeel(${i})">${f}</div>`
-  ).join('');
+function renderTypeGrid(){
+  document.getElementById('type-grid').innerHTML=tiposEj.map((t,i)=>
+    `<div class="topt ${formType===i?'on':''}" onclick="selType(${i})">
+       <span class="topt-e">${t.e}</span>${t.n}
+     </div>`).join('');
+  const ints=['Suave','Moderado','Intenso','Máximo'];
+  document.getElementById('int-row').innerHTML=ints.map((t,i)=>
+    `<button class="ibt ${formInt===i?'on':''}" onclick="selInt(${i})">${t}</button>`).join('');
+  const feels=['😴','😐','😊','🔥','💪'];
+  document.getElementById('feel-row').innerHTML=feels.map((f,i)=>
+    `<div class="fbt ${formFeel===i?'on':''}" onclick="selFeel(${i})">${f}</div>`).join('');
 }
 
 function toggleForm(){
-  const f = document.getElementById('session-form');
-  f.classList.toggle('open');
-  if(f.classList.contains('open')){
-    formType=null;formInt=null;formFeel=null;
-    document.getElementById('form-duration').value='';
-    renderSessionForm();
-  }
+  const fb=document.getElementById('form-box');
+  const opening=!fb.classList.contains('open');
+  fb.classList.toggle('open');
+  if(opening){formType=null;formInt=null;formFeel=null;document.getElementById('dur-in').value='';renderTypeGrid();}
 }
 
-function selectType(i){formType=i;renderSessionForm()}
-function selectInt(i){formInt=i;renderSessionForm()}
-function selectFeel(i){formFeel=i;renderSessionForm()}
+function selType(i){formType=i;renderTypeGrid()}
+function selInt(i){formInt=i;renderTypeGrid()}
+function selFeel(i){formFeel=i;renderTypeGrid()}
 
 function saveSession(){
-  const dur = parseInt(document.getElementById('form-duration').value);
+  const dur=parseInt(document.getElementById('dur-in').value);
   if(formType===null){alert('Elige el tipo de ejercicio');return}
   if(!dur||dur<1){alert('Ingresa la duración');return}
-  const feels = ['😴','😐','😊','🔥','💪'];
+  const feels=['😴','😐','😊','🔥','💪'];
   sessions.unshift({
     id:Date.now(),
-    date: new Date().toISOString().split('T')[0],
-    type: formType,
-    typeName: tiposEjercicio[formType].n,
-    typeEmoji: tiposEjercicio[formType].e,
-    duration: dur,
-    intensity: formInt!==null?['Suave','Moderado','Intenso','Máximo'][formInt]:'',
-    feel: formFeel!==null?feels[formFeel]:''
+    date:new Date().toISOString().split('T')[0],
+    type:formType,
+    name:tiposEj[formType].n,
+    emoji:tiposEj[formType].e,
+    dur:dur,
+    int:formInt!=null?['Suave','Moderado','Intenso','Máximo'][formInt]:'',
+    feel:formFeel!=null?feels[formFeel]:''
   });
-  localStorage.setItem('moraima6_sessions', JSON.stringify(sessions));
-  toggleForm();
+  localStorage.setItem('m6_sessions',JSON.stringify(sessions));
+  document.getElementById('form-box').classList.remove('open');
   renderAgenda();
 }
 
-function deleteSession(id){
-  sessions = sessions.filter(s=>s.id!==id);
-  localStorage.setItem('moraima6_sessions', JSON.stringify(sessions));
+function delSession(id){
+  sessions=sessions.filter(s=>s.id!==id);
+  localStorage.setItem('m6_sessions',JSON.stringify(sessions));
   renderAgenda();
 }
 
-function renderSessionList(){
-  const title = document.getElementById('sessions-title');
-  if(sessions.length===0){
-    title.style.display='none';
-    document.getElementById('sessions-list').innerHTML=`
-      <div class="no-sessions"><div class="ns-icon">📋</div><div class="ns-text">Aún no tienes sesiones registradas.<br>¡Agrega tu primera sesión hoy!</div></div>`;
+function renderSessions(){
+  const el=document.getElementById('sessions-list');
+  if(!sessions.length){
+    el.innerHTML=`<div class="empty-state"><div class="es-icon">🏃‍♀️</div><div class="es-text">Sin sesiones aún.<br>¡Registra tu primer entrenamiento!</div></div>`;
     return;
   }
-  title.style.display='block';
-  title.textContent=`Historial (${sessions.length} sesiones)`;
-  document.getElementById('sessions-list').innerHTML = sessions.slice(0,20).map(s=>`
-    <div class="session-item">
-      <div class="si-icon">${s.typeEmoji}</div>
-      <div class="si-body">
-        <div class="si-name">${s.typeName} ${s.intensity?'· '+s.intensity:''}</div>
-        <div class="si-meta">${s.date} · ${s.duration} min</div>
+  el.innerHTML=sessions.map(s=>`
+    <div class="sess-item">
+      <div class="si-e">${s.emoji}</div>
+      <div class="si-b">
+        <div class="si-name">${s.name} · ${s.dur} min</div>
+        <div class="si-meta">${s.date}${s.int?' · '+s.int:''}</div>
       </div>
       <div class="si-feel">${s.feel||''}</div>
-      <button class="si-delete" onclick="deleteSession(${s.id})">✕</button>
+      <button class="si-del" onclick="delSession(${s.id})">✕</button>
     </div>`).join('');
 }
 
-// RETOS
+// ━━━ RETOS ━━━
 function renderRetos(){
-  document.getElementById('challenges-container').innerHTML = retos.map((r,ri)=>{
-    const done = (retoState[r.id]||[]);
-    const doneCount = done.filter((v,i)=>v&&r.days[i]>0).length;
-    const total = r.days.filter(d=>d>0).length;
-    const pct = total>0?Math.round((doneCount/total)*100):0;
-    return `
-    <div class="challenge-card ${openChallenge===ri?'open':''}" id="ch-${ri}">
-      <div class="cc-header" onclick="toggleChallenge(${ri})">
-        <div class="cc-emoji">${r.e}</div>
-        <div class="cc-info">
-          <div class="cc-title">${r.t}</div>
-          <div class="cc-sub">${r.sub}</div>
-          <div class="cc-progress-mini">
-            <div class="cpm-bar"><div class="cpm-fill" style="width:${pct}%;background:${r.color}"></div></div>
-            <div class="cpm-pct">${pct}%</div>
+  const el=document.getElementById('challenges-list');
+  el.innerHTML=retos.map(r=>{
+    const done=r.days.filter((_,i)=>retoState[r.id+'_'+i]).length;
+    const total=r.days.filter(d=>d!==0).length;
+    const pct=total>0?Math.round(done/total*100):0;
+    return `<div class="ch-card ${openChallenge===r.id?'open':''}" id="ch-${r.id}">
+      <div class="ch-hd" onclick="toggleChallenge('${r.id}')">
+        <div class="ch-e">${r.e}</div>
+        <div class="ch-info">
+          <div class="ch-t">${r.t}</div>
+          <div class="ch-s">${r.sub}</div>
+          <div class="ch-prog-row">
+            <div class="ch-pbar"><div class="ch-pfill" style="width:${pct}%;background:${r.color}"></div></div>
+            <div class="ch-ppct">${pct}%</div>
           </div>
         </div>
+        <div class="ch-arrow">▼</div>
       </div>
-      <div class="cc-body">
-        <div class="cc-desc">${r.desc}</div>
-        <div class="cc-grid">
+      <div class="ch-body">
+        <p class="ch-desc">${r.desc}</p>
+        <div class="day-grid">
           ${r.days.map((d,i)=>{
-            const isDone = (retoState[r.id]||[])[i];
-            const isRest = d===0;
-            return `<div class="cc-day ${isDone?'done':''} ${isRest?'rest-day':''}" onclick="${isRest?'':'toggleRetoDay(\''+r.id+'\','+i+')'}" style="${isDone&&!isRest?'background:linear-gradient(135deg,'+r.color+','+r.color+'cc)':''}">
-              <div class="cd-num">D${i+1}</div>
-              <div class="cd-val">${isRest?'💤':isDone?'✅':r.labels[i]}</div>
-              <div class="cd-lbl">${isRest?'Descanso':isDone?'¡Listo!':r.units}</div>
+            if(d===0) return `<div class="dg-day rest"><div class="dg-val">💤</div><div class="dg-lbl">Descanso</div></div>`;
+            const isDone=!!retoState[r.id+'_'+i];
+            return `<div class="dg-day ${isDone?'done':''}" onclick="toggleRetoDay('${r.id}',${i})">
+              <div class="dg-num">D${i+1}</div>
+              <div class="dg-val">${isDone?'✓':r.lbls[i]}</div>
+              <div class="dg-lbl">${r.u}</div>
             </div>`;
           }).join('')}
         </div>
-        <div class="record-section">
-          <div class="rs-title">🏅 Mis marcas personales</div>
-          <div class="record-grid">
-            ${r.records.map(rec=>`
-              <div class="record-item">
-                <div class="ri-label">${rec.l}</div>
-                <input class="ri-input" type="number" placeholder="—" value="${(records[r.id+'_'+rec.k])||''}" onchange="saveRecord('${r.id}','${rec.k}',this.value)">
-                <div class="ri-unit">${r.units}</div>
+        <div class="rec-box">
+          <div class="rec-title">🏅 Mis Marcas Personales</div>
+          <div class="rec-grid">
+            ${r.recs.map(rec=>`
+              <div class="rec-item">
+                <div class="ri-l">${rec.l}</div>
+                <input class="ri-in" type="number" placeholder="—"
+                  value="${records[r.id+'_'+rec.k]||''}"
+                  onchange="saveRecord('${r.id}','${rec.k}',this.value)">
               </div>`).join('')}
           </div>
         </div>
@@ -729,55 +771,58 @@ function renderRetos(){
   }).join('');
 }
 
-function toggleChallenge(i){
-  openChallenge = openChallenge===i?null:i;
+function toggleChallenge(id){
+  openChallenge=openChallenge===id?null:id;
   renderRetos();
 }
 
-function toggleRetoDay(id,i){
-  if(!retoState[id]) retoState[id]=[];
-  retoState[id][i] = !retoState[id][i];
-  localStorage.setItem('moraima6_reto', JSON.stringify(retoState));
+function toggleRetoDay(rid,i){
+  const k=rid+'_'+i;
+  retoState[k]=!retoState[k];
+  localStorage.setItem('m6_reto',JSON.stringify(retoState));
   renderRetos();
 }
 
-function saveRecord(retoId, key, val){
-  records[retoId+'_'+key] = parseFloat(val)||val;
-  localStorage.setItem('moraima6_records', JSON.stringify(records));
+function saveRecord(rid,key,val){
+  records[rid+'_'+key]=val;
+  localStorage.setItem('m6_records',JSON.stringify(records));
 }
 
-// BIBLIOTECA
-function renderBiblioteca(){
-  const nivColor = {'Bajo':'etag-low','Bajo-Medio':'etag-low','Medio':'etag-med','Alto':'etag-high'};
-  document.getElementById('biblioteca-container').innerHTML = ejercicios.map((ej,i)=>`
-    <div class="ej-card ${expandedEj===i?'expanded':''}" onclick="toggleEj(${i})">
-      <div class="ej-header">
-        <div class="ej-emoji">${ej.e}</div>
+// ━━━ EJERCICIOS ━━━
+function renderEjercicios(){
+  const el=document.getElementById('ejercicios-list');
+  el.innerHTML=ejercicios.map((ej,i)=>{
+    const isOpen=openEj===i;
+    const nivColor={Bajo:'etag-low','Bajo-Medio':'etag-med',Medio:'etag-med',Alto:'etag-high'};
+    return `<div class="ej ${isOpen?'open':''}" onclick="toggleEj(${i})">
+      <div class="ej-hd">
+        <div class="ej-e">${ej.e}</div>
         <div class="ej-info">
           <div class="ej-name">${ej.n}</div>
           <div class="ej-tags">
             <span class="etag ${nivColor[ej.nivel]||'etag-med'}">${ej.nivel}</span>
-            <span class="etag etag-tipo">⏱ ${ej.tiempo}</span>
             <span class="etag etag-tipo">${ej.tipo}</span>
+            <span class="etag" style="background:#f0f0f0;color:#555">${ej.tiempo}</span>
           </div>
         </div>
+        <div class="ej-arr">▼</div>
       </div>
-      <div class="ej-detail">
-        <div class="ej-benefit">${ej.b}</div>
+      ${isOpen?`<div class="ej-body">
+        <div class="ej-benefit">💡 ${ej.b}</div>
         <div class="ej-steps-title">Cómo hacerlo</div>
         ${ej.steps.map(s=>`<div class="ej-step">${s}</div>`).join('')}
-      </div>
-    </div>`).join('');
+      </div>`:''}
+    </div>`;
+  }).join('');
 }
 
 function toggleEj(i){
-  expandedEj = expandedEj===i?null:i;
-  renderBiblioteca();
-  if(expandedEj!==null) setTimeout(()=>{
-    const cards=document.querySelectorAll('.ej-card');
-    if(cards[i]) cards[i].scrollIntoView({behavior:'smooth',block:'nearest'});
-  },100);
+  openEj=openEj===i?null:i;
+  renderEjercicios();
 }
+
+// ━━━ INIT ━━━
+show('w');
 </script>
 </body>
 </html>
