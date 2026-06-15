@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía M6 — Movimiento Antiinflamatorio | MORAIMA 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e74c3c;--orange:#f39c12;--gray:#6c757d}
+body{font-family:'Montserrat',sans-serif;background:#fff;color:var(--navy);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;min-height:297mm;margin:0 auto;position:relative;overflow:hidden;background:#fff}
+
+/* PAGE 1 — PORTADA */
+.cover{background:linear-gradient(160deg,var(--navy) 0%,#0d3d2a 60%,#1a5f1a 100%);display:flex;flex-direction:column;justify-content:space-between;padding:50px 45px;min-height:297mm;position:relative}
+.cover::before{content:'';position:absolute;top:0;right:0;width:220px;height:220px;background:radial-gradient(circle,rgba(93,226,140,0.15),transparent);border-radius:50%}
+.cover::after{content:'';position:absolute;bottom:60px;left:20px;width:150px;height:150px;background:radial-gradient(circle,rgba(244,208,63,0.1),transparent);border-radius:50%}
+.cover-top{}
+.cover-module-label{display:inline-block;background:rgba(93,226,140,0.2);border:1px solid rgba(93,226,140,0.4);color:var(--green);padding:8px 20px;border-radius:50px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:40px}
+.cover-title{font-size:52px;font-weight:900;color:#fff;line-height:1.05;margin-bottom:16px}
+.cover-title span{color:var(--green)}
+.cover-subtitle{font-size:18px;color:rgba(255,255,255,0.75);font-weight:400;line-height:1.5;margin-bottom:50px;max-width:380px}
+.cover-divider{width:60px;height:4px;background:var(--green);border-radius:2px;margin-bottom:40px}
+.cover-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:50px}
+.cstat{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:18px;text-align:center}
+.cstat-num{font-size:32px;font-weight:900;color:var(--green)}
+.cstat-lbl{font-size:11px;color:rgba(255,255,255,0.6);margin-top:4px;font-weight:600}
+.cover-footer{display:flex;justify-content:space-between;align-items:center}
+.cover-brand{color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;letter-spacing:1px}
+.cover-brand span{color:var(--sky)}
+.cover-page-num{color:rgba(255,255,255,0.3);font-size:12px}
+
+/* INNER PAGES */
+.inner-page{padding:38px 45px;min-height:297mm;display:flex;flex-direction:column;position:relative}
+.inner-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;padding-bottom:14px;border-bottom:2px solid var(--green)}
+.ih-module{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:2px}
+.ih-title{font-size:12px;color:var(--gray);font-weight:600}
+.section-title{font-size:22px;font-weight:800;color:var(--navy);line-height:1.25;margin-bottom:8px}
+.section-title span{color:var(--green)}
+.section-intro{font-size:13px;color:var(--gray);line-height:1.7;margin-bottom:22px}
+.highlight-box{background:linear-gradient(135deg,#f0fff5,#e8f8f0);border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:18px}
+.highlight-box p{font-size:13px;color:var(--navy);line-height:1.6;font-weight:600}
+.highlight-box .ref{font-size:11px;color:var(--gray);margin-top:6px;font-style:italic}
+
+/* PAGE 2 — MIOKININAS */
+.myo-explainer{background:linear-gradient(135deg,#e8f8f0,#d5f5e3);border-radius:16px;padding:22px;margin-bottom:20px}
+.myo-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.myo-flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.myo-step{background:white;border-radius:10px;padding:10px 14px;text-align:center;flex:1;min-width:100px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.myo-step .ms-icon{font-size:24px;margin-bottom:4px}
+.myo-step .ms-text{font-size:10px;font-weight:700;color:var(--navy);line-height:1.3}
+.myo-arrow{font-size:18px;color:var(--green);font-weight:900;flex-shrink:0}
+.myo-effect{font-size:12px;color:var(--gray);line-height:1.6}
+.benefit-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+.benefit-card{background:#f8fcff;border-radius:12px;padding:14px;border:1px solid #e0f0ff}
+.bc-icon{font-size:28px;margin-bottom:6px}
+.bc-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.bc-text{font-size:11px;color:var(--gray);line-height:1.5}
+
+/* PAGE 3 — TIPOS DE MOVIMIENTO */
+.movement-table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-bottom:20px}
+.movement-table thead th{background:var(--navy);color:white;padding:10px 14px;font-size:11px;font-weight:700;text-align:left;text-transform:uppercase;letter-spacing:0.5px}
+.movement-table thead th:first-child{border-radius:8px 0 0 8px}
+.movement-table thead th:last-child{border-radius:0 8px 8px 0}
+.movement-table tbody tr{background:white;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.movement-table tbody td{padding:10px 14px;font-size:11px;color:var(--navy);vertical-align:top;border-bottom:none}
+.movement-table tbody td:first-child{border-radius:8px 0 0 8px;font-weight:700}
+.movement-table tbody td:last-child{border-radius:0 8px 8px 0}
+.infla-bar{display:flex;gap:3px;align-items:center}
+.infla-dot{width:10px;height:10px;border-radius:50%;background:#e0e8f0}
+.infla-dot.on{background:var(--green)}
+
+/* PAGE 4 — GOLDILOCKS + CORTISOL */
+.goldilocks{background:linear-gradient(135deg,var(--navy),#1a4a6b);border-radius:16px;padding:22px;margin-bottom:20px;color:white}
+.gk-title{font-size:15px;font-weight:800;color:var(--gold);margin-bottom:16px}
+.gk-zones{display:flex;gap:10px}
+.gk-zone{background:rgba(255,255,255,0.08);border-radius:12px;padding:14px;flex:1;text-align:center;border:2px solid transparent}
+.gk-zone.danger-low{border-color:#e74c3c}
+.gk-zone.optimal{border-color:var(--green);background:rgba(93,226,140,0.15)}
+.gk-zone.danger-high{border-color:#e74c3c}
+.gz-icon{font-size:28px;margin-bottom:6px}
+.gz-label{font-size:12px;font-weight:700;margin-bottom:6px}
+.gz-desc{font-size:10px;opacity:0.8;line-height:1.4}
+.cortisol-section{margin-bottom:20px}
+.cs-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:12px}
+.cortisol-flow{display:flex;flex-direction:column;gap:6px}
+.cf-row{display:flex;align-items:flex-start;gap:10px;background:#fff5f5;border-radius:10px;padding:10px 14px}
+.cf-row.good{background:#f0fff5}
+.cf-icon{font-size:18px;flex-shrink:0}
+.cf-text{font-size:11px;color:var(--navy);line-height:1.5}
+.cf-text strong{display:block;font-weight:700;margin-bottom:2px}
+.squat-science{background:#fffbf0;border-radius:14px;padding:18px;margin-bottom:18px;border:2px solid var(--gold)}
+.sq-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sq-benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.sq-benefit{font-size:11px;color:var(--navy);padding:6px 10px;background:white;border-radius:8px;display:flex;align-items:center;gap:6px}
+.sq-benefit::before{content:'✓';color:var(--green);font-weight:900}
+
+/* PAGE 5 — PROTOCOLO + REFERENCIAS */
+.protocol-days{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.pd-row{display:grid;grid-template-columns:60px 1fr;gap:12px;align-items:center}
+.pd-day{background:var(--navy);color:var(--gold);border-radius:10px;padding:8px;text-align:center;font-size:11px;font-weight:800}
+.pd-card{background:white;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.pd-title{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:2px}
+.pd-detail{font-size:11px;color:var(--gray);line-height:1.4}
+.pd-emoji{float:right;font-size:22px}
+.refs-box{background:#f8f9fa;border-radius:14px;padding:18px}
+.refs-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--green)}
+.ref-item{font-size:10px;color:var(--gray);line-height:1.6;margin-bottom:6px;padding-left:14px;position:relative}
+.ref-item::before{content:'[';position:absolute;left:0;color:var(--green);font-weight:800}
+.cover-epimedik{margin-top:auto;padding-top:20px;border-top:1px solid #e0e8f0;display:flex;justify-content:space-between;align-items:center}
+.ce-brand{font-size:12px;font-weight:600;color:var(--gray)}
+.ce-brand span{color:var(--sky);font-weight:800}
+.page-footer{position:absolute;bottom:25px;left:45px;right:45px;display:flex;justify-content:space-between;align-items:center}
+.pf-page{font-size:11px;color:var(--gray)}
+.pf-program{font-size:11px;color:var(--green);font-weight:700}
+
+@media print{
+  body{background:white}
+  .page{margin:0;page-break-after:always}
+  .page:last-child{page-break-after:avoid}
+  @page{size:A4;margin:0}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+button.print-btn{display:block;margin:20px auto;padding:14px 40px;background:var(--navy);color:var(--gold);border:none;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif}
+@media print{button.print-btn{display:none}}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨️ Guardar como PDF</button>
+
+<!-- PAGE 1: PORTADA -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-top">
+      <div class="cover-module-label">Módulo 6 · MORAIMA 21</div>
+      <div class="cover-title">Movimiento<br><span>Antiinflamatorio</span></div>
+      <div class="cover-subtitle">La ciencia del movimiento como medicina — miokininas, cortisol y el ejercicio que cura</div>
+      <div class="cover-divider"></div>
+      <div class="cover-stats">
+        <div class="cstat"><div class="cstat-num">33%</div><div class="cstat-lbl">Reducción PCR en 8 semanas</div></div>
+        <div class="cstat"><div class="cstat-num">20+</div><div class="cstat-lbl">Tipos de miokininas</div></div>
+        <div class="cstat"><div class="cstat-num">21</div><div class="cstat-lbl">Días de plan personalizado</div></div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-brand"><span>epimedik</span> · MORAIMA 21</div>
+      <div class="cover-page-num">Guía Científica M6 · 1/5</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: MIOKININAS -->
+<div class="page">
+  <div class="inner-page">
+    <div class="inner-header">
+      <div class="ih-module">M6 · Movimiento</div>
+      <div class="ih-title">El músculo como órgano endocrino</div>
+    </div>
+    <div class="section-title">Las <span>Miokininas</span> — el medicamento que produces al moverte</div>
+    <div class="section-intro">En 2003, el fisiólogo Bente Pedersen descubrió algo que cambió la medicina del ejercicio para siempre: cuando el músculo se contrae, produce y secreta más de 20 proteínas bioactivas llamadas miokininas. Estas moléculas viajan al torrente sanguíneo y generan efectos antiinflamatorios sistémicos en hígado, tejido graso, cerebro y sistema inmune.</div>
+    <div class="myo-explainer">
+      <div class="myo-title">🔬 Cómo funciona el músculo antiinflamatorio</div>
+      <div class="myo-flow">
+        <div class="myo-step"><div class="ms-icon">💪</div><div class="ms-text">Músculo se contrae</div></div>
+        <div class="myo-arrow">→</div>
+        <div class="myo-step"><div class="ms-icon">🧬</div><div class="ms-text">Libera IL-6 muscular</div></div>
+        <div class="myo-arrow">→</div>
+        <div class="myo-step"><div class="ms-icon">🛡️</div><div class="ms-text">Activa IL-10 y IL-1ra</div></div>
+        <div class="myo-arrow">→</div>
+        <div class="myo-step"><div class="ms-icon">✅</div><div class="ms-text">Reduce inflamación sistémica</div></div>
+      </div>
+      <div class="myo-effect"><strong>Paradoja:</strong> La IL-6 (interleucina-6) que produce el músculo durante el ejercicio tiene efectos OPUESTOS a la IL-6 que produce el tejido graso. La muscular es antiinflamatoria; la del tejido graso, proinflamatoria. El ejercicio es literalmente una fábrica de antiinflamatorios naturales.</div>
+    </div>
+    <div class="benefit-cards">
+      <div class="benefit-card">
+        <div class="bc-icon">🧠</div>
+        <div class="bc-title">Cerebro antiinflamatorio</div>
+        <div class="bc-text">La irisina y el BDNF (producidos durante el ejercicio) reducen neuroinflamación. El movimiento protege contra Alzheimer y depresión.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="bc-icon">🫀</div>
+        <div class="bc-title">Corazón protegido</div>
+        <div class="bc-text">Las miokininas reducen la placa aterosclerótica y mejoran la función endotelial. 30 min/día de caminata = -28% riesgo cardiovascular.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="bc-icon">⚖️</div>
+        <div class="bc-title">Insulina sensible</div>
+        <div class="bc-text">El ejercicio de fuerza 2x/semana reduce la resistencia a la insulina en 34%, cortando el ciclo glucosa-insulina-inflamación.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="bc-icon">🦴</div>
+        <div class="bc-title">Articulaciones fuertes</div>
+        <div class="bc-text">El movimiento fortalece el cartílago articular y reduce inflamación sinovial. La inactividad es la causa #1 de artritis progresiva.</div>
+      </div>
+    </div>
+    <div class="highlight-box">
+      <p>📊 Una caminata de 20 minutos reduce TNF-alfa y otras citoquinas proinflamatorias durante 2-3 horas después de realizarla. El efecto es acumulativo: quienes caminan diario reducen su PCR en promedio 33% en 8 semanas.</p>
+      <div class="ref">Pedersen BK & Febbraio MA. Muscles, exercise and obesity. Nature Reviews Endocrinology, 2012.</div>
+    </div>
+    <div class="page-footer"><div class="pf-page">2 / 5</div><div class="pf-program">MORAIMA 21 · epimedik</div></div>
+  </div>
+</div>
+
+<!-- PAGE 3: TIPOS DE MOVIMIENTO -->
+<div class="page">
+  <div class="inner-page">
+    <div class="inner-header">
+      <div class="ih-module">M6 · Movimiento</div>
+      <div class="ih-title">Los 6 movimientos más antiinflamatorios</div>
+    </div>
+    <div class="section-title">Tipos de <span>Movimiento</span> y su Poder Antiinflamatorio</div>
+    <div class="section-intro">No todos los ejercicios generan el mismo efecto antiinflamatorio. La clave está en la combinación: cardio de baja-moderada intensidad activa las miokininas más potentes, mientras el yoga y la meditación activan el eje vagal antiinflamatorio.</div>
+    <table class="movement-table">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Mecanismo principal</th>
+          <th>Tiempo óptimo</th>
+          <th>Poder AI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🚶‍♀️ Caminata moderada</td>
+          <td>Miokininas + reducción PCR directa</td>
+          <td>30 min diarios</td>
+          <td><div class="infla-bar"><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div></div></td>
+        </tr>
+        <tr>
+          <td>🧘‍♀️ Yoga / Meditación</td>
+          <td>Nervio vago + baja cortisol</td>
+          <td>20-40 min</td>
+          <td><div class="infla-bar"><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div></div></td>
+        </tr>
+        <tr>
+          <td>🏊‍♀️ Natación</td>
+          <td>Bajo impacto + respiración controlada</td>
+          <td>30-45 min</td>
+          <td><div class="infla-bar"><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div></div></td>
+        </tr>
+        <tr>
+          <td>💪 Fuerza moderada</td>
+          <td>Miokininas + sensibilidad insulínica</td>
+          <td>30-40 min, 3x/sem</td>
+          <td><div class="infla-bar"><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot"></div></div></td>
+        </tr>
+        <tr>
+          <td>💃 Baile</td>
+          <td>Miokininas + dopamina + serotonina</td>
+          <td>30 min</td>
+          <td><div class="infla-bar"><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div></div></td>
+        </tr>
+        <tr>
+          <td>🔥 HIIT (moderado)</td>
+          <td>Miokininas intensas + afterburn</td>
+          <td>20-25 min, 2x/sem</td>
+          <td><div class="infla-bar"><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot on"></div><div class="infla-dot"></div></div></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="highlight-box">
+      <p>🕺 El baile a 30 minutos reduce cortisol 15% más que caminar a la misma intensidad. El placer y la música potencian el efecto antiinflamatorio del movimiento. El cerebro libera endorfinas adicionales que modulan la respuesta inmune.</p>
+      <div class="ref">Koch S et al. Effects of dance movement therapy on depression. Arts in Psychotherapy, 2019.</div>
+    </div>
+    <div class="highlight-box" style="background:linear-gradient(135deg,#fef9e7,#fdebd0);border-color:var(--orange)">
+      <p>⚠️ La clave antiinflamatoria está en la regularidad, no en la intensidad. 30 minutos diarios de intensidad moderada produce más beneficio antiinflamatorio acumulado que 90 minutos 2 veces por semana.</p>
+      <div class="ref">Gleeson M et al. The anti-inflammatory effects of exercise. Nature Reviews Immunology, 2011.</div>
+    </div>
+    <div class="page-footer"><div class="pf-page">3 / 5</div><div class="pf-program">MORAIMA 21 · epimedik</div></div>
+  </div>
+</div>
+
+<!-- PAGE 4: GOLDILOCKS + SENTADILLAS -->
+<div class="page">
+  <div class="inner-page">
+    <div class="inner-header">
+      <div class="ih-module">M6 · Movimiento</div>
+      <div class="ih-title">El equilibrio del ejercicio antiinflamatorio</div>
+    </div>
+    <div class="section-title">La Zona de <span>Goldilocks</span> del Ejercicio</div>
+    <div class="section-intro">El ejercicio tiene una curva en U invertida para la inflamación. Muy poco ejercicio mantiene niveles altos de inflamación crónica. Demasiado ejercicio sin recuperación eleva el cortisol y activa vías proinflamatorias. El punto óptimo es la intensidad moderada sostenida.</div>
+    <div class="goldilocks">
+      <div class="gk-title">⚖️ Las tres zonas del ejercicio</div>
+      <div class="gk-zones">
+        <div class="gk-zone danger-low">
+          <div class="gz-icon">🛋️</div>
+          <div class="gz-label" style="color:#e74c3c">Sedentarismo</div>
+          <div class="gz-desc">Inflamación crónica alta · Miokininas mínimas · Resistencia a insulina</div>
+        </div>
+        <div class="gk-zone optimal">
+          <div class="gz-icon">✅</div>
+          <div class="gz-label" style="color:var(--green)">Zona Óptima</div>
+          <div class="gz-desc">30-60 min moderado · Miokininas máximas · PCR reducida</div>
+        </div>
+        <div class="gk-zone danger-high">
+          <div class="gz-icon">🔴</div>
+          <div class="gz-label" style="color:#e74c3c">Exceso</div>
+          <div class="gz-desc">Cortisol elevado · Microlesiones · Inmunosupresión</div>
+        </div>
+      </div>
+    </div>
+    <div class="cortisol-section">
+      <div class="cs-title">🧠 Cortisol: el aliado que se convierte en enemigo</div>
+      <div class="cortisol-flow">
+        <div class="cf-row good">
+          <div class="cf-icon">✅</div>
+          <div class="cf-text"><strong>Ejercicio moderado (30-60 min)</strong>El cortisol sube ligeramente durante el ejercicio y regresa a niveles basales en 1-2h. Este pico transitorio ayuda a movilizar energía y tiene efecto antiinflamatorio puntual.</div>
+        </div>
+        <div class="cf-row">
+          <div class="cf-icon">⚠️</div>
+          <div class="cf-text"><strong>Ejercicio extenuante sin recuperación (&gt;90 min alta intensidad)</strong>El cortisol permanece elevado 12-24h. Suprime el sistema inmune, destruye tejido muscular, aumenta permeabilidad intestinal e inflama la mucosa digestiva.</div>
+        </div>
+        <div class="cf-row good">
+          <div class="cf-icon">💡</div>
+          <div class="cf-text"><strong>La señal de recuperación adecuada</strong>Energía sostenida 1-2h después del ejercicio. Si terminas agotada y no puedes con las actividades del día, el estrés físico superó tu capacidad de recuperación.</div>
+        </div>
+      </div>
+    </div>
+    <div class="squat-science">
+      <div class="sq-title">🏆 La Sentadilla — el ejercicio antiinflamatorio más completo</div>
+      <div class="sq-benefits">
+        <div class="sq-benefit">Activa 70% de la musculatura total</div>
+        <div class="sq-benefit">Libera miokininas en grandes grupos</div>
+        <div class="sq-benefit">Mejora sensibilidad a insulina</div>
+        <div class="sq-benefit">Fortalece rodillas y caderas</div>
+        <div class="sq-benefit">Aumenta testosterona naturalmente</div>
+        <div class="sq-benefit">Mejora densidad ósea</div>
+        <div class="sq-benefit">Reduce dolor lumbar crónico</div>
+        <div class="sq-benefit">Acelera metabolismo basal</div>
+      </div>
+    </div>
+    <div class="page-footer"><div class="pf-page">4 / 5</div><div class="pf-program">MORAIMA 21 · epimedik</div></div>
+  </div>
+</div>
+
+<!-- PAGE 5: PROTOCOLO + REFERENCIAS -->
+<div class="page">
+  <div class="inner-page">
+    <div class="inner-header">
+      <div class="ih-module">M6 · Movimiento</div>
+      <div class="ih-title">Protocolo de inicio + Referencias</div>
+    </div>
+    <div class="section-title">Protocolo de Movimiento <span>Antiinflamatorio</span> — Primeros 7 Días</div>
+    <div class="section-intro">Este protocolo está diseñado para cualquier perfil. Es el punto de partida mínimo para comenzar a reducir marcadores inflamatorios en la primera semana. A partir del día 8, tu app te guiará con el plan personalizado según tu perfil.</div>
+    <div class="protocol-days">
+      <div class="pd-row">
+        <div class="pd-day">DÍA 1</div>
+        <div class="pd-card"><div class="pd-emoji">🚶‍♀️</div><div class="pd-title">Caminata diagnóstica — 20 minutos</div><div class="pd-detail">Camina a tu ritmo natural. Sin meta de velocidad. Solo observa cómo se siente tu cuerpo. Registra: ¿Tienes dolor articular? ¿Te falta el aire? ¿Cuántos minutos puedes caminar sin cansarte?</div></div>
+      </div>
+      <div class="pd-row">
+        <div class="pd-day">DÍA 2</div>
+        <div class="pd-card"><div class="pd-emoji">🧘‍♀️</div><div class="pd-title">Yoga de 15 minutos — Clase básica en YouTube</div><div class="pd-detail">Busca "yoga para principiantes antiinflamatorio" o "yoga de 15 minutos para soltar estrés". No importa el nivel. El objetivo es activar el nervio vago.</div></div>
+      </div>
+      <div class="pd-row">
+        <div class="pd-day">DÍA 3</div>
+        <div class="pd-card"><div class="pd-emoji">🏆</div><div class="pd-title">Reto de sentadillas — Día 1 (10 sentadillas)</div><div class="pd-detail">Haz tus primeras 10 sentadillas de la forma correcta: pies al ancho de hombros, baja como en una silla, rodillas sobre los pies, espalda recta. Marca el día en tu app.</div></div>
+      </div>
+      <div class="pd-row">
+        <div class="pd-day">DÍA 4</div>
+        <div class="pd-card"><div class="pd-emoji">💤</div><div class="pd-title">Descanso activo — 10 min estiramientos</div><div class="pd-detail">El descanso es parte del protocolo, no una omisión. Haz 10 minutos de estiramientos suaves: cuello, hombros, cadera, gemelos. El cuerpo repara durante el descanso.</div></div>
+      </div>
+      <div class="pd-row">
+        <div class="pd-day">DÍA 5</div>
+        <div class="pd-card"><div class="pd-emoji">🚶‍♀️</div><div class="pd-title">Caminata 25 minutos + respiración consciente</div><div class="pd-detail">Agrega 5 minutos a la caminata del día 1. Los últimos 5 minutos: inhala 4 tiempos, exhala 6. Esta combinación potencia el efecto antiinflamatorio.</div></div>
+      </div>
+      <div class="pd-row">
+        <div class="pd-day">DÍA 6</div>
+        <div class="pd-card"><div class="pd-emoji">💃</div><div class="pd-title">30 minutos de baile libre en casa</div><div class="pd-detail">Pon tu playlist favorita. Muévete sin juzgar. 30 minutos de baile libre reduce cortisol 15% más que caminar. Es medicina y es alegría al mismo tiempo.</div></div>
+      </div>
+      <div class="pd-row">
+        <div class="pd-day">DÍA 7</div>
+        <div class="pd-card"><div class="pd-emoji">🎉</div><div class="pd-title">Celebración y evaluación — Descanso total</div><div class="pd-detail">Completaste la primera semana. Hoy descansas completamente. Reflexiona: ¿Cómo está tu energía comparado al lunes? ¿Tienes menos tensión muscular? El cambio empieza aquí.</div></div>
+      </div>
+    </div>
+    <div class="refs-box">
+      <div class="refs-title">Referencias Científicas</div>
+      <div class="ref-item">Pedersen BK. Muscles and their myokines. Journal of Experimental Biology, 2011;214:337-346]</div>
+      <div class="ref-item">Gleeson M et al. The anti-inflammatory effects of exercise: mechanisms and implications for the prevention and treatment of disease. Nat Rev Immunol, 2011;11:607-615]</div>
+      <div class="ref-item">Petersen AM & Pedersen BK. The anti-inflammatory effect of exercise. J Appl Physiol, 2005;98(4):1154-1162]</div>
+      <div class="ref-item">Nieman DC & Wentz LM. The compelling link between physical activity and the body's defense system. J Sport Health Sci, 2019;8(3):201-217]</div>
+      <div class="ref-item">Koch SC et al. Effects of dance movement therapy on depression. Arts in Psychotherapy, 2019;62:45-52]</div>
+    </div>
+    <div class="cover-epimedik">
+      <div class="ce-brand"><span>epimedik</span> · Dra. Monica Arellano</div>
+      <div style="font-size:11px;color:var(--gray)">MORAIMA 21 · Guía Científica M6 · 5/5</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

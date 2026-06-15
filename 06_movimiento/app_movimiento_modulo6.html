@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M6 Movimiento — MORAIMA 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e74c3c;--orange:#f39c12;--purple:#9b59b6;--light:#f0f7ff;--gray:#6c757d}
+body{font-family:'Montserrat',sans-serif;background:var(--light);color:var(--navy);min-height:100vh;overflow-x:hidden}
+.screen{display:none;min-height:100vh;padding-bottom:80px}
+.screen.active{display:block}
+
+/* WELCOME */
+#s-welcome{background:linear-gradient(135deg,#0a2942 0%,#1a4a6b 40%,#0d5f2a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;min-height:100vh}
+.logo-run{font-size:80px;margin-bottom:20px;animation:run 1s infinite alternate}
+@keyframes run{0%{transform:translateY(0) rotate(-5deg)}100%{transform:translateY(-12px) rotate(5deg)}}
+#s-welcome h1{color:var(--gold);font-size:28px;font-weight:900;margin-bottom:8px;line-height:1.2}
+#s-welcome h2{color:white;font-size:16px;font-weight:600;margin-bottom:6px;opacity:0.9}
+#s-welcome p{color:rgba(255,255,255,0.7);font-size:13px;margin-bottom:36px;max-width:340px;line-height:1.6}
+.stats-row{display:flex;gap:16px;margin-bottom:36px}
+.stat-card{background:rgba(255,255,255,0.1);border-radius:16px;padding:14px 18px;text-align:center;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2)}
+.stat-card .snum{color:var(--gold);font-size:28px;font-weight:900}
+.stat-card .slbl{color:rgba(255,255,255,0.8);font-size:10px;font-weight:600;margin-top:3px}
+.btn-start{background:linear-gradient(135deg,var(--green),#27ae60);color:var(--navy);border:none;padding:18px 50px;border-radius:50px;font-size:17px;font-weight:800;cursor:pointer;box-shadow:0 8px 30px rgba(93,226,140,0.4);transition:all .3s}
+.btn-start:hover{transform:translateY(-3px)}
+
+/* BOTTOM NAV */
+#bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--navy);display:none;grid-template-columns:repeat(4,1fr);z-index:100;box-shadow:0 -4px 20px rgba(0,0,0,0.3)}
+#bottom-nav.visible{display:grid}
+.nav-item{display:flex;flex-direction:column;align-items:center;padding:10px 5px;cursor:pointer;color:rgba(255,255,255,0.5);transition:all .2s;border:none;background:none;font-family:'Montserrat',sans-serif}
+.nav-item.active,.nav-item:hover{color:var(--gold)}
+.nav-icon{font-size:22px;margin-bottom:3px}
+.nav-lbl{font-size:9px;font-weight:700;text-transform:uppercase}
+
+/* PAGE HEADERS */
+.page-header{background:linear-gradient(135deg,var(--navy),#1a4a6b);padding:24px 20px 20px;color:white;position:sticky;top:0;z-index:50}
+.page-header h2{font-size:20px;font-weight:800;color:var(--gold)}
+.page-header p{font-size:12px;opacity:0.8;margin-top:4px}
+
+/* QUIZ */
+.quiz-container{padding:20px}
+.quiz-progress-bar{height:6px;background:#e0e8f0;border-radius:3px;margin-bottom:24px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--sky));border-radius:3px;transition:width .4s}
+.quiz-question-num{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.quiz-question{font-size:19px;font-weight:800;color:var(--navy);line-height:1.3;margin-bottom:24px}
+.quiz-options{display:flex;flex-direction:column;gap:12px}
+.quiz-option{background:white;border:2px solid #e0e8f0;border-radius:16px;padding:16px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px;text-align:left}
+.quiz-option:hover{border-color:var(--sky);background:#f8fcff}
+.quiz-option.selected{border-color:var(--green);background:#f0fff5}
+.opt-emoji{font-size:28px;flex-shrink:0}
+.opt-text{flex:1}
+.opt-title{font-size:14px;font-weight:700;color:var(--navy)}
+.opt-desc{font-size:11px;color:var(--gray);margin-top:2px}
+.btn-next{width:100%;margin-top:24px;padding:16px;background:var(--navy);color:var(--gold);border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Montserrat',sans-serif;display:none}
+.btn-next.visible{display:block}
+
+/* PERFIL RESULT */
+.perfil-card{margin:20px;background:white;border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.1)}
+.perfil-header{padding:30px 24px;text-align:center}
+.perfil-emoji{font-size:64px;margin-bottom:12px}
+.perfil-badge{display:inline-block;padding:4px 16px;border-radius:50px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.perfil-name{font-size:22px;font-weight:900;color:var(--navy);margin-bottom:8px}
+.perfil-desc{font-size:13px;color:var(--gray);line-height:1.6;max-width:320px;margin:0 auto}
+.perfil-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #f0f0f0}
+.pstat{padding:16px;text-align:center;border-right:1px solid #f0f0f0}
+.pstat:last-child{border-right:none}
+.pstat .pnum{font-size:22px;font-weight:900;color:var(--navy)}
+.pstat .plbl{font-size:10px;color:var(--gray);margin-top:3px}
+.btn-ver-plan{width:calc(100% - 40px);margin:0 20px 20px;padding:16px;background:linear-gradient(135deg,var(--green),#27ae60);color:white;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Montserrat',sans-serif}
+
+/* PLAN 21 DÍAS */
+.plan-perfil-badge{margin:16px;background:white;border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.ppb-emoji{font-size:32px}
+.ppb-name{font-size:14px;font-weight:800;color:var(--navy)}
+.ppb-sub{font-size:11px;color:var(--gray)}
+.semana-section{margin:0 16px 16px}
+.semana-title{font-size:13px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.semana-badge{background:var(--gold);color:var(--navy);padding:3px 10px;border-radius:50px;font-size:10px;font-weight:800}
+.dia-row{background:white;border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 6px rgba(0,0,0,0.04)}
+.dia-num{background:var(--navy);color:var(--gold);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+.dia-num.descanso{background:#e0e8f0;color:var(--gray)}
+.dia-content{flex:1}
+.dia-name{font-size:13px;font-weight:700;color:var(--navy)}
+.dia-det{font-size:11px;color:var(--gray);margin-top:2px}
+.dia-emoji{font-size:20px}
+
+/* RETO SENTADILLAS */
+.reto-header-card{margin:16px;background:linear-gradient(135deg,var(--navy),#1a4a6b);border-radius:20px;padding:20px;color:white;text-align:center}
+.reto-title{font-size:18px;font-weight:800;color:var(--gold);margin-bottom:4px}
+.reto-sub{font-size:12px;opacity:0.8}
+.reto-total{margin-top:14px;display:flex;justify-content:center;gap:20px}
+.rt-item .rt-num{font-size:28px;font-weight:900;color:var(--gold)}
+.rt-item .rt-lbl{font-size:10px;opacity:0.7}
+.reto-grid{padding:0 16px 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.reto-dia{background:white;border-radius:16px;padding:14px 10px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.reto-dia.completado{background:linear-gradient(135deg,var(--green),#27ae60);border-color:transparent;color:white}
+.reto-dia.completado .rd-num,.reto-dia.completado .rd-squats,.reto-dia.completado .rd-lbl{color:white}
+.reto-dia.descanso-dia{background:#f0f4f8;border:2px dashed #cdd}
+.reto-dia.descanso-dia .rd-squats{color:var(--gray)}
+.rd-num{font-size:10px;font-weight:700;color:var(--gray);margin-bottom:4px}
+.rd-squats{font-size:22px;font-weight:900;color:var(--navy)}
+.rd-lbl{font-size:10px;color:var(--gray);margin-top:3px;font-weight:600}
+.rd-check{font-size:18px}
+
+/* BIBLIOTECA */
+.ejercicios-grid{padding:16px;display:flex;flex-direction:column;gap:10px}
+.ejercicio-card{background:white;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06);cursor:pointer;border:2px solid transparent;transition:all .2s}
+.ejercicio-card.expanded{border-color:var(--sky)}
+.ej-header{display:flex;align-items:center;gap:12px}
+.ej-emoji{font-size:36px;flex-shrink:0}
+.ej-info{flex:1}
+.ej-name{font-size:14px;font-weight:800;color:var(--navy)}
+.ej-meta{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+.ej-tag{padding:2px 8px;border-radius:50px;font-size:10px;font-weight:700}
+.tag-nivel-bajo{background:#d5f5e3;color:#1e8449}
+.tag-nivel-med{background:#fef9e7;color:#d35400}
+.tag-nivel-alto{background:#fdecea;color:#c0392b}
+.tag-tiempo{background:#e8f4fd;color:#1a5276}
+.tag-tipo{background:#f4ecf7;color:#7d3c98}
+.ej-detail{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed #e0e8f0}
+.ejercicio-card.expanded .ej-detail{display:block}
+.ej-beneficio{font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:10px}
+.ej-como h4{font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ej-steps{list-style:none;display:flex;flex-direction:column;gap:4px}
+.ej-steps li{font-size:12px;color:var(--gray);padding-left:16px;position:relative;line-height:1.5}
+.ej-steps li::before{content:'→';position:absolute;left:0;color:var(--green);font-weight:800}
+.infla-score{display:flex;align-items:center;gap:6px;margin-top:10px}
+.infla-label{font-size:11px;font-weight:700;color:var(--navy)}
+.infla-dots{display:flex;gap:3px}
+.infla-dot{width:12px;height:12px;border-radius:50%;background:#e0e8f0}
+.infla-dot.on{background:var(--green)}
+
+@media print{#bottom-nav{display:none!important}.screen{padding-bottom:0!important}.page-header{position:static}}
+</style>
+</head>
+<body>
+
+<!-- WELCOME -->
+<div id="s-welcome" class="screen active">
+  <div class="logo-run">🏃‍♀️</div>
+  <h1>Módulo 6<br>MOVIMIENTO</h1>
+  <h2>Ejercita sin inflamar</h2>
+  <p>Descubre tu perfil de movimiento, obtén tu plan antiinflamatorio de 21 días y completa el reto de sentadillas MORAIMA.</p>
+  <div class="stats-row">
+    <div class="stat-card"><div class="snum">3</div><div class="slbl">Perfiles</div></div>
+    <div class="stat-card"><div class="snum">21</div><div class="slbl">Días</div></div>
+    <div class="stat-card"><div class="snum">20</div><div class="slbl">Ejercicios</div></div>
+  </div>
+  <button class="btn-start" onclick="enterApp()">¡Descubrir mi perfil! 💪</button>
+</div>
+
+<!-- QUIZ -->
+<div id="s-quiz" class="screen">
+  <div class="page-header">
+    <h2>💪 Test de Movimiento</h2>
+    <p>5 preguntas — descubre tu perfil antiinflamatorio</p>
+  </div>
+  <div class="quiz-container">
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress" style="width:20%"></div></div>
+    <div class="quiz-question-num" id="q-num">Pregunta 1 de 5</div>
+    <div class="quiz-question" id="q-text"></div>
+    <div class="quiz-options" id="q-options"></div>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- PERFIL RESULTADO -->
+<div id="s-perfil" class="screen">
+  <div class="page-header">
+    <h2>🎯 Tu Perfil MORAIMA</h2>
+    <p>Basado en tus respuestas</p>
+  </div>
+  <div id="perfil-content"></div>
+</div>
+
+<!-- PLAN 21 DÍAS -->
+<div id="s-plan" class="screen">
+  <div class="page-header">
+    <h2>📅 Tu Plan de 21 Días</h2>
+    <p>Movimiento antiinflamatorio personalizado</p>
+  </div>
+  <div id="plan-content"></div>
+</div>
+
+<!-- RETO SENTADILLAS -->
+<div id="s-reto" class="screen">
+  <div class="page-header">
+    <h2>🏆 Reto Sentadillas MORAIMA</h2>
+    <p>21 días — progresivo — antiinflamatorio</p>
+  </div>
+  <div class="reto-header-card">
+    <div class="reto-title">Reto de Sentadillas</div>
+    <div class="reto-sub">Toca cada día para marcarlo como completado</div>
+    <div class="reto-total">
+      <div class="rt-item"><div class="rt-num" id="reto-completed">0</div><div class="rt-lbl">Días<br>completados</div></div>
+      <div class="rt-item"><div class="rt-num" id="reto-total-sq">0</div><div class="rt-lbl">Sentadillas<br>totales</div></div>
+      <div class="rt-item"><div class="rt-num" id="reto-streak">0</div><div class="rt-lbl">Racha<br>actual</div></div>
+    </div>
+  </div>
+  <div class="reto-grid" id="reto-grid"></div>
+</div>
+
+<!-- BIBLIOTECA -->
+<div id="s-biblio" class="screen">
+  <div class="page-header">
+    <h2>📖 Biblioteca de Ejercicios</h2>
+    <p>20 movimientos antiinflamatorios — toca para ver cómo</p>
+  </div>
+  <div class="ejercicios-grid" id="ejercicios-grid"></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav id="bottom-nav">
+  <button class="nav-item active" onclick="goTo('s-quiz',0)" id="nav-quiz">
+    <span class="nav-icon">💪</span><span class="nav-lbl">Mi Perfil</span>
+  </button>
+  <button class="nav-item" onclick="goTo('s-plan',1)">
+    <span class="nav-icon">📅</span><span class="nav-lbl">Mi Plan</span>
+  </button>
+  <button class="nav-item" onclick="goTo('s-reto',2)">
+    <span class="nav-icon">🏆</span><span class="nav-lbl">Reto</span>
+  </button>
+  <button class="nav-item" onclick="goTo('s-biblio',3)">
+    <span class="nav-icon">📖</span><span class="nav-lbl">Ejercicios</span>
+  </button>
+</nav>
+
+<script>
+// QUIZ DATA
+const preguntas = [
+  {
+    q: '¿Cuántos días a la semana haces actividad física actualmente?',
+    opts: [
+      {e:'🛋️',t:'Casi ninguno',d:'0-1 días por semana',v:0},
+      {e:'🚶‍♀️',t:'1 a 2 días',d:'Caminatas o actividad ligera',v:1},
+      {e:'🏃‍♀️',t:'3 a 4 días',d:'Ejercicio moderado regular',v:2},
+      {e:'🏋️‍♀️',t:'5 o más días',d:'Entrenamiento constante',v:3}
+    ]
+  },
+  {
+    q: '¿Cómo describes tu nivel de energía durante el día?',
+    opts: [
+      {e:'😴',t:'Muy bajo',d:'Me canso con actividades básicas',v:0},
+      {e:'😐',t:'Irregular',d:'Tengo altibajos frecuentes',v:1},
+      {e:'😊',t:'Bueno',d:'Tengo energía para mis actividades',v:2},
+      {e:'⚡',t:'Excelente',d:'Me siento con mucha energía',v:3}
+    ]
+  },
+  {
+    q: '¿Qué tipo de ejercicio has hecho en el último mes?',
+    opts: [
+      {e:'🏠',t:'Nada o muy poco',d:'Solo actividades del hogar',v:0},
+      {e:'🚶‍♀️',t:'Caminatas',d:'Caminatas tranquilas o yoga suave',v:1},
+      {e:'🏊‍♀️',t:'Cardio o fuerza',d:'Natación, bicicleta, pesas',v:2},
+      {e:'🔥',t:'Entrenamiento intenso',d:'HIIT, crossfit, deporte competitivo',v:3}
+    ]
+  },
+  {
+    q: '¿Cómo se siente tu cuerpo después de hacer ejercicio?',
+    opts: [
+      {e:'😰',t:'Muy agotada',d:'No puedo con las actividades del día',v:0},
+      {e:'😮‍💨',t:'Bastante cansada',d:'Necesito descanso prolongado',v:1},
+      {e:'😌',t:'Satisfecha',d:'Cansancio agradable y recupero rápido',v:2},
+      {e:'💪',t:'Energizada',d:'Me siento mejor después de entrenar',v:3}
+    ]
+  },
+  {
+    q: '¿Cuál es tu meta principal de movimiento en este programa?',
+    opts: [
+      {e:'🌱',t:'Empezar desde cero',d:'Quiero crear un hábito de movimiento',v:0},
+      {e:'⚖️',t:'Mejorar consistencia',d:'Quiero ser más regular',v:1},
+      {e:'💚',t:'Optimizar mi salud',d:'Quiero reducir inflamación activamente',v:2},
+      {e:'🚀',t:'Elevar mi rendimiento',d:'Quiero llevar mi fitness al siguiente nivel',v:3}
+    ]
+  }
+];
+
+const perfiles = [
+  {
+    id: 0,
+    emoji: '🌱',
+    nombre: 'Guerrera Despertando',
+    color: '#27ae60',
+    bg: 'linear-gradient(135deg,#d5f5e3,#a9dfbf)',
+    badgeColor: '#1e8449',
+    desc: 'Tu cuerpo está listo para despertar. Empezar desde donde estás, con pasos pequeños y constantes, es la estrategia más poderosa para reducir la inflamación crónica.',
+    minutos: 20,
+    diasSemana: 3,
+    tipo: 'Suave y constante',
+    plan: [
+      {dia:1,e:'🚶‍♀️',n:'Caminata suave',d:'20 minutos a paso tranquilo al aire libre'},
+      {dia:2,e:'🧘‍♀️',n:'Yoga restaurativo',d:'10 min — estiramientos suaves'},
+      {dia:3,e:'🚶‍♀️',n:'Caminata suave',d:'20 minutos, mantén ritmo cómodo'},
+      {dia:4,e:'🌿',n:'Descanso activo',d:'5 min respiración profunda + estiramientos'},
+      {dia:5,e:'🚶‍♀️',n:'Caminata + respiración',d:'20 min caminata + 5 min respiración'},
+      {dia:6,e:'🧘‍♀️',n:'Yoga suave',d:'15 min — enfócate en tu respiración'},
+      {dia:7,e:'💤',n:'Descanso total',d:'Recuperación — hidratación y sueño'},
+      {dia:8,e:'🚶‍♀️',n:'Caminata con intención',d:'25 min a paso moderado'},
+      {dia:9,e:'🧘‍♀️',n:'Yoga + sentadillas',d:'10 min yoga + 10 sentadillas suaves'},
+      {dia:10,e:'🚶‍♀️',n:'Caminata progresiva',d:'25 min — aumenta un poco el ritmo'},
+      {dia:11,e:'🤸‍♀️',n:'Estiramientos dinámicos',d:'15 min — movilidad articular'},
+      {dia:12,e:'🚶‍♀️',n:'Caminata + brazos',d:'25 min caminata + movimiento de brazos'},
+      {dia:13,e:'🧘‍♀️',n:'Yoga antiestrés',d:'20 min — yoga para reducir cortisol'},
+      {dia:14,e:'💤',n:'Descanso total',d:'Recuperación — premiarte por la semana'},
+      {dia:15,e:'🚶‍♀️',n:'Caminata 30 min',d:'30 minutos continuos — logro desbloqueado'},
+      {dia:16,e:'🧘‍♀️',n:'Yoga + sentadillas',d:'15 min yoga + 15 sentadillas'},
+      {dia:17,e:'🚶‍♀️',n:'Caminata rápida',d:'30 min — comienza a caminar más rápido'},
+      {dia:18,e:'🤸‍♀️',n:'Movilidad + fuerza suave',d:'20 min — sentadillas, planchas de rodillas'},
+      {dia:19,e:'🚶‍♀️',n:'Caminata con cuestas',d:'30 min — busca inclinaciones'},
+      {dia:20,e:'🧘‍♀️',n:'Yoga completo',d:'25 min — clase completa de yoga'},
+      {dia:21,e:'🎉',n:'¡Celebración activa!',d:'30 min de lo que más disfrutas — ¡lo lograste!'}
+    ]
+  },
+  {
+    id: 1,
+    emoji: '⚡',
+    nombre: 'Guerrera en Marcha',
+    color: '#2980b9',
+    bg: 'linear-gradient(135deg,#d6eaf8,#a9cce3)',
+    badgeColor: '#1a5276',
+    desc: 'Ya tienes el hábito del movimiento. Ahora es momento de optimizarlo para que sea verdaderamente antiinflamatorio. La consistencia inteligente es tu superpoder.',
+    minutos: 35,
+    diasSemana: 4,
+    tipo: 'Moderado y variado',
+    plan: [
+      {dia:1,e:'🚴‍♀️',n:'Ciclismo o caminata rápida',d:'30 min cardio moderado'},
+      {dia:2,e:'🧘‍♀️',n:'Yoga antiestrés',d:'30 min — enfocado en movilidad'},
+      {dia:3,e:'🏋️‍♀️',n:'Fuerza básica',d:'30 min — sentadillas, planchas, glúteos'},
+      {dia:4,e:'💤',n:'Descanso activo',d:'10 min estiramientos + foam roller'},
+      {dia:5,e:'🏊‍♀️',n:'Cardio de bajo impacto',d:'35 min natación o elíptica'},
+      {dia:6,e:'🧘‍♀️',n:'Pilates mat',d:'30 min — core y estabilidad'},
+      {dia:7,e:'💤',n:'Descanso total',d:'Recuperación completa'},
+      {dia:8,e:'🔥',n:'HIIT suave',d:'25 min HIIT de bajo impacto'},
+      {dia:9,e:'🚴‍♀️',n:'Cardio rítmico',d:'35 min bicicleta o caminata enérgica'},
+      {dia:10,e:'🏋️‍♀️',n:'Fuerza + movilidad',d:'35 min — pesas + estiramientos'},
+      {dia:11,e:'🧘‍♀️',n:'Yoga de recuperación',d:'30 min — yoga restaurativo'},
+      {dia:12,e:'🔥',n:'HIIT cardiovascular',d:'25 min HIIT moderado'},
+      {dia:13,e:'🤸‍♀️',n:'Funcional completo',d:'35 min — movimientos funcionales'},
+      {dia:14,e:'💤',n:'Descanso total',d:'Recuperación profunda'},
+      {dia:15,e:'🏊‍♀️',n:'Cardio acuático',d:'40 min natación o aeróbicos acuáticos'},
+      {dia:16,e:'🏋️‍♀️',n:'Fuerza progresiva',d:'40 min — aumenta resistencia'},
+      {dia:17,e:'🔥',n:'HIIT avanzado',d:'30 min HIIT moderado-alto'},
+      {dia:18,e:'🧘‍♀️',n:'Yoga + meditación',d:'35 min — yoga y 10 min meditación'},
+      {dia:19,e:'🚴‍♀️',n:'Cardio largo',d:'45 min cardio continuo'},
+      {dia:20,e:'🤸‍♀️',n:'Funcional + yoga',d:'40 min — combina fuerza y flexibilidad'},
+      {dia:21,e:'🎉',n:'¡Gran reto final!',d:'45 min — combina cardio + fuerza + yoga'}
+    ]
+  },
+  {
+    id: 2,
+    emoji: '🔥',
+    nombre: 'Guerrera de Élite',
+    color: '#e74c3c',
+    bg: 'linear-gradient(135deg,#fdecea,#f5b7b1)',
+    badgeColor: '#c0392b',
+    desc: 'Tu nivel físico es alto. Ahora el desafío es integrar el movimiento antiinflamatorio con recuperación inteligente. El descanso estratégico es tan importante como el entrenamiento.',
+    minutos: 50,
+    diasSemana: 5,
+    tipo: 'Intenso y recuperador',
+    plan: [
+      {dia:1,e:'🏋️‍♀️',n:'Fuerza funcional',d:'45 min entrenamiento funcional completo'},
+      {dia:2,e:'🧘‍♀️',n:'Yoga de movilidad',d:'30 min — movilidad articular avanzada'},
+      {dia:3,e:'🔥',n:'HIIT avanzado',d:'35 min HIIT de alta intensidad'},
+      {dia:4,e:'🏊‍♀️',n:'Natación activa',d:'45 min natación técnica'},
+      {dia:5,e:'💤',n:'Recuperación activa',d:'20 min foam roller + estiramientos profundos'},
+      {dia:6,e:'🏋️‍♀️',n:'Fuerza explosiva',d:'50 min — potencia y resistencia'},
+      {dia:7,e:'💤',n:'Descanso total',d:'Recuperación completa — nutrición antiinflamatoria'},
+      {dia:8,e:'🔥',n:'Circuito metabólico',d:'40 min circuito de alta intensidad'},
+      {dia:9,e:'🏊‍♀️',n:'Cardio acuático intenso',d:'50 min natación o aqua jogging'},
+      {dia:10,e:'🏋️‍♀️',n:'Fuerza máxima',d:'50 min — trabajo de fuerza máxima'},
+      {dia:11,e:'🧘‍♀️',n:'Yoga profundo',d:'40 min — yoga avanzado y respiración'},
+      {dia:12,e:'🔥',n:'HIIT de resistencia',d:'40 min — intervalos largos'},
+      {dia:13,e:'🤸‍♀️',n:'Agilidad y coordinación',d:'45 min — escalera, conos, saltos'},
+      {dia:14,e:'💤',n:'Descanso total',d:'Recuperación estratégica'},
+      {dia:15,e:'🏋️‍♀️',n:'Fuerza + potencia',d:'55 min — pesos pesados + pliometría'},
+      {dia:16,e:'🏊‍♀️',n:'Cardio de resistencia',d:'55 min natación o ciclismo'},
+      {dia:17,e:'🔥',n:'HIIT máximo',d:'35 min HIIT de alta intensidad completo'},
+      {dia:18,e:'🧘‍♀️',n:'Yoga restaurativo',d:'45 min — recuperación profunda'},
+      {dia:19,e:'🤸‍♀️',n:'Funcional explosivo',d:'50 min — entrenamiento completo'},
+      {dia:20,e:'🏋️‍♀️',n:'Fuerza final',d:'55 min — tu mejor entrenamiento del programa'},
+      {dia:21,e:'🎉',n:'¡Reto máximo final!',d:'60 min — circuito completo celebración'}
+    ]
+  }
+];
+
+// SQUAT CHALLENGE
+const retoDias = [
+  {dia:1,sq:10},{dia:2,sq:12},{dia:3,sq:15},{dia:4,sq:0,desc:'DESCANSO'},
+  {dia:5,sq:18},{dia:6,sq:20},{dia:7,sq:22},{dia:8,sq:0,desc:'DESCANSO'},
+  {dia:9,sq:25},{dia:10,sq:28},{dia:11,sq:30},{dia:12,sq:0,desc:'DESCANSO'},
+  {dia:13,sq:35},{dia:14,sq:38},{dia:15,sq:40},{dia:16,sq:0,desc:'DESCANSO'},
+  {dia:17,sq:44},{dia:18,sq:48},{dia:19,sq:50},{dia:20,sq:0,desc:'DESCANSO'},
+  {dia:21,sq:60}
+];
+
+// EXERCISES
+const ejercicios = [
+  {e:'🚶‍♀️',n:'Caminata Antiinflamatoria',nivel:'Bajo',tiempo:'20-30 min',tipo:'Cardio',
+   b:'Reduce PCR en 33% en 8 semanas. Activa macrófagos antiinflamatorios y mejora sensibilidad a la insulina. El ejercicio más accesible y estudiado.',
+   c:['Camina a un ritmo donde puedas hablar pero no cantar','Mantén postura erguida, hombros relajados','Balancea los brazos naturalmente','Respira por la nariz en la inhalación','Aumenta gradualmente el tiempo cada semana'],infla:5},
+  {e:'🧘‍♀️',n:'Yoga Antiestrés',nivel:'Bajo',tiempo:'20-40 min',tipo:'Mente-Cuerpo',
+   b:'Reduce cortisol en 21%, baja IL-6 y TNF-alfa. El yoga activa el nervio vago y cambia el sistema nervioso de modo inflamatorio a modo reparador.',
+   c:['Comienza con respiración profunda 5 min','Fluye entre posturas sin forzar','Mantén cada postura 30-60 segundos','Termina siempre con Savasana (5 min tumbada)','Practica en ayunas o 2h después de comer'],infla:5},
+  {e:'🏊‍♀️',n:'Natación',nivel:'Medio',tiempo:'30-45 min',tipo:'Cardio',
+   b:'Antiinflamatoria por definición: bajo impacto articular + resistencia uniforme + respiración controlada. Reduce PCR y marcadores inflamatorios musculares.',
+   c:['Calienta 5 min con movimientos de brazos fuera del agua','Alterna estilos: crol, espalda, pecho','Mantén un ritmo constante, sin sprints','Recupera 30 seg entre largos','Enfría con estiramientos dentro del agua'],infla:5},
+  {e:'🚴‍♀️',n:'Ciclismo Suave',nivel:'Bajo',tiempo:'30-45 min',tipo:'Cardio',
+   b:'Cardio de bajo impacto que activa grandes grupos musculares. Mejora glucosa en sangre e insulina. Las miokininas liberadas reducen inflamación articular.',
+   c:['Ajusta el sillín a la altura de tu cadera','Mantén cadencia de 70-90 RPM','Usa una marcha cómoda para mantener ritmo','Alterna 5 min suave + 2 min moderado','Estira piernas y espalda al terminar'],infla:5},
+  {e:'🥋',n:'Tai Chi',nivel:'Bajo',tiempo:'20-30 min',tipo:'Mente-Cuerpo',
+   b:'Reduce IL-6, TNF-alfa y cortisol simultáneamente. Mejora el equilibrio del sistema nervioso autónomo. Especialmente efectivo en adultos con artritis o fibromialgia.',
+   c:['Busca un video guiado para principiantes','Practica al aire libre si es posible','Muévete lento y con intención','Coordina cada movimiento con tu respiración','Practica 20 min diarios para mejores resultados'],infla:5},
+  {e:'🤸‍♀️',n:'Pilates Mat',nivel:'Medio',tiempo:'30-40 min',tipo:'Fuerza',
+   b:'Fortalece el core y mejora postura. Reduce dolor lumbar inflamatorio. Al fortalecer músculos estabilizadores reduce la carga articular que genera inflamación local.',
+   c:['Activa el core antes de cada ejercicio','Mantén la respiración coordinada con el movimiento','Precisa > velocidad: menos repeticiones bien hechas','Conecta con el suelo en cada ejercicio','Termina con el rollo de columna vertebral'],infla:4},
+  {e:'💃',n:'Baile Libre',nivel:'Bajo-Medio',tiempo:'30 min',tipo:'Cardio',
+   b:'Reduce cortisol mejor que caminar a la misma intensidad. El placer y la música potencian el efecto antiinflamatorio. Aumenta serotonina y dopamina simultáneamente.',
+   c:['Pon música que te encante y te mueva','Muévete sin juzgar ni controlar','Deja que el cuerpo fluya naturalmente','Incluye movimientos de todo el cuerpo','30 minutos continuos para el efecto óptimo'],infla:5},
+  {e:'🏋️‍♀️',n:'Entrenamiento de Fuerza',nivel:'Medio',tiempo:'30-45 min',tipo:'Fuerza',
+   b:'2-3 veces/semana reduce resistencia a la insulina y marcadores inflamatorios. El músculo actúa como órgano endocrino produciendo miokininas antiinflamatorias.',
+   c:['Calienta 5 min con cardio ligero','Usa un peso que te permita 10-15 repeticiones','Descansa 60-90 seg entre series','3 series de cada ejercicio','Estira bien al terminar — 10 min mínimo'],infla:4},
+  {e:'🔥',n:'HIIT de Bajo Impacto',nivel:'Medio',tiempo:'20-25 min',tipo:'Cardio',
+   b:'20 min de HIIT moderado produce más miokininas antiinflamatorias que 45 min de cardio continuo. El efecto afterburn continúa 24h después.',
+   c:['30 seg trabajo / 30 seg descanso','Ejercicios: marcha elevada, squat, mountain climbers sin salto','Nunca lleges al punto de no poder hablar','3-4 rondas de 4 ejercicios','Enfría 5 min con estiramientos obligatorio'],infla:4},
+  {e:'🏃‍♀️',n:'Trote Moderado',nivel:'Medio',tiempo:'25-40 min',tipo:'Cardio',
+   b:'A intensidad moderada (puedes hablar) activa miokininas y reduce PCR. A alta intensidad sin recuperación puede elevar cortisol e inflamar más.',
+   c:['Mantén el ritmo donde puedas hablar en frases cortas','Aterriza con el mediopié, no con el talón','Mantén la postura erguida','Alterna 3 min trote + 1 min caminata al inicio','Aumenta 10% el tiempo por semana máximo'],infla:3},
+  {e:'🤸‍♀️',n:'Estiramientos Dinámicos',nivel:'Bajo',tiempo:'15-20 min',tipo:'Flexibilidad',
+   b:'Mejoran la circulación linfática y reducen edema local. Aumentan el rango articular y previenen microlesiones que generan inflamación crónica local.',
+   c:['Haz los estiramientos cuando el cuerpo esté caliente','Muévete dentro del estiramiento, no lo mantengas quieto','Círculos de cadera, oscilaciones de piernas, rotaciones de hombros','10-15 repeticiones por movimiento','Siente el estiramiento sin dolor'],infla:4},
+  {e:'🧗‍♀️',n:'Escalada de Escaleras',nivel:'Bajo-Medio',tiempo:'15-20 min',tipo:'Cardio',
+   b:'Activa glúteos, cuádriceps e isquiotibiales con bajo impacto. Mejora capacidad cardiovascular y produce miokininas en grandes grupos musculares.',
+   c:['Sube un piso a la vez sin prisa','Usa el pasamanos para seguridad','Sube en la punta del pie para activar más glúteo','Baja en elevador si tus rodillas lo requieren','Aumenta pisos gradualmente'],infla:3},
+  {e:'🏄‍♀️',n:'Yoga de Potencia',nivel:'Alto',tiempo:'45-60 min',tipo:'Fuerza',
+   b:'Combina fuerza, flexibilidad y respiración. Reduce cortisol y marcadores inflamatorios sistémicos mientras construye músculo con bajo impacto articular.',
+   c:['Fluye entre posturas sin pausas largas','Mantén el ujjayi (respiración oceánica)','Usa los tres bandhas (Mula, Uddiyana, Jalandhara)','Termina con 10 min de Savasana obligatorio','Practica en ayunas o 2h después de comer'],infla:5},
+  {e:'🎯',n:'Sentadillas',nivel:'Bajo-Medio',tiempo:'10-15 min',tipo:'Fuerza',
+   b:'El ejercicio compuesto más antiinflamatorio para piernas. Activa más del 70% de la musculatura corporal. Las miokininas liberadas tienen efecto sistémico.',
+   c:['Pies separados al ancho de hombros','Baja como si fueras a sentarte en una silla','Rodillas sobre los pies, no hacia adentro','Mantén la espalda recta todo el tiempo','Empuja desde los talones al subir'],infla:5},
+  {e:'⬛',n:'Planchas Isométricas',nivel:'Medio',tiempo:'5-10 min',tipo:'Fuerza',
+   b:'Activan el core profundo y mejoran postura. La activación isométrica produce miokininas sin impacto articular. Ideales para problemas de espalda baja.',
+   c:['Apoya antebrazos y puntas de pies','Mantén el cuerpo recto como tabla','Activa el ombligo hacia la columna','Respira normalmente durante la postura','Empieza con 20 seg, aumenta 5 seg por semana'],infla:4},
+  {e:'🫁',n:'Respiración Diafragmática',nivel:'Bajo',tiempo:'10-15 min',tipo:'Mente-Cuerpo',
+   b:'Activa el nervio vago y cambia el sistema nervioso de simpático a parasimpático. Reduce cortisol, adrenalina y marcadores inflamatorios en 20 minutos de práctica.',
+   c:['Acuéstate o siéntate cómodamente','Pon una mano en el pecho y otra en el abdomen','Inhala por nariz 4 seg (el abdomen sube)','Exhala por boca 6 seg (el abdomen baja)','El pecho no debe moverse casi nada'],infla:5},
+  {e:'🌊',n:'Caminata en el Agua',nivel:'Bajo',tiempo:'20-30 min',tipo:'Cardio',
+   b:'El agua ejerce presión uniforme que mejora circulación linfática y reduce edema. Bajo impacto máximo con efecto cardiovascular moderado.',
+   c:['Camina en la piscina a nivel de cintura o pecho','Mantén los brazos bajo el agua para mayor resistencia','Camina hacia adelante y hacia atrás','Eleva las rodillas alternando','Excelente para articulaciones sensibles'],infla:5},
+  {e:'🎻',n:'Foam Roller (Rodillo)',nivel:'Bajo',tiempo:'15-20 min',tipo:'Recuperación',
+   b:'Libera la fascia tensa que atrapa líquidos inflamatorios. Mejora la circulación local y reduce dolor de inicio tardío. Es recuperación activa antiinflamatoria.',
+   c:['Aplica presión suave sobre el área tensa','Rueda lentamente — 2-3 cm por segundo','Si encuentras un nudo, detente 30 seg y respira','Trabaja de abajo hacia arriba','Evita rodar sobre articulaciones directamente'],infla:5},
+  {e:'🤾‍♀️',n:'Funcional Básico',nivel:'Medio',tiempo:'30-40 min',tipo:'Fuerza',
+   b:'Movimientos que imitan actividades cotidianas. Activan múltiples grupos musculares generando más miokininas antiinflamatorias que ejercicios aislados.',
+   c:['Incluye: sentadilla, peso muerto, prensa, remo','Usa el peso corporal o mancuernas ligeras','3 series de 12-15 repeticiones','Descansa 60 seg entre series','Termina con 10 min de movilidad'],infla:4},
+  {e:'🏇',n:'Abdominales Hipopresivos',nivel:'Medio',tiempo:'15-20 min',tipo:'Fuerza',
+   b:'Reduce la presión intraabdominal y fortalece el suelo pélvico. Antiinflamatorio para intestino y zona lumbar. Ideal para embarazadas y posparto.',
+   c:['Postura de pie con espalda erguida','Exhala todo el aire y aguanta sin inhalar','Abre costillas hacia afuera (apnea)','Mantén 10-20 segundos, luego inhala','Empieza con 5 repeticiones y aumenta gradualmente'],infla:4}
+];
+
+// STATE
+let answers = [];
+let currentQ = 0;
+let selectedOpt = null;
+let perfilActual = null;
+let retoState = JSON.parse(localStorage.getItem('moraima_reto') || '{}');
+let expandedEj = null;
+
+function enterApp(){
+  document.getElementById('s-welcome').classList.remove('active');
+  document.getElementById('bottom-nav').classList.add('visible');
+  showScreen('s-quiz');
+  renderQuestion();
+  renderReto();
+  renderEjercicios();
+}
+
+function goTo(id, idx){
+  showScreen(id);
+  document.querySelectorAll('.nav-item').forEach((el,i) => el.classList.toggle('active', i===idx));
+  if(id==='s-quiz' && perfilActual !== null){
+    showScreen('s-perfil');
+    document.querySelectorAll('.nav-item').forEach((el,i) => el.classList.toggle('active', i===idx));
+  }
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// QUIZ
+function renderQuestion(){
+  const q = preguntas[currentQ];
+  document.getElementById('quiz-progress').style.width = ((currentQ+1)/5*100)+'%';
+  document.getElementById('q-num').textContent = `Pregunta ${currentQ+1} de 5`;
+  document.getElementById('q-text').textContent = q.q;
+  selectedOpt = null;
+  document.getElementById('btn-next').classList.remove('visible');
+  document.getElementById('q-options').innerHTML = q.opts.map((o,i) => `
+    <div class="quiz-option" onclick="selectOption(${i}, ${o.v})">
+      <div class="opt-emoji">${o.e}</div>
+      <div class="opt-text">
+        <div class="opt-title">${o.t}</div>
+        <div class="opt-desc">${o.d}</div>
+      </div>
+    </div>`).join('');
+}
+
+function selectOption(idx, val){
+  selectedOpt = val;
+  document.querySelectorAll('.quiz-option').forEach((el,i) => el.classList.toggle('selected', i===idx));
+  document.getElementById('btn-next').classList.add('visible');
+}
+
+function nextQuestion(){
+  if(selectedOpt === null) return;
+  answers.push(selectedOpt);
+  currentQ++;
+  if(currentQ >= preguntas.length){
+    calcPerfil();
+  } else {
+    renderQuestion();
+  }
+}
+
+function calcPerfil(){
+  const total = answers.reduce((a,b) => a+b, 0);
+  let pIdx = 0;
+  if(total >= 9) pIdx = 2;
+  else if(total >= 5) pIdx = 1;
+  else pIdx = 0;
+  perfilActual = perfiles[pIdx];
+  showPerfil();
+  renderPlan();
+}
+
+function showPerfil(){
+  showScreen('s-perfil');
+  document.querySelectorAll('.nav-item').forEach((el,i) => el.classList.toggle('active', i===0));
+  const p = perfilActual;
+  document.getElementById('perfil-content').innerHTML = `
+    <div class="perfil-card">
+      <div class="perfil-header" style="background:${p.bg}">
+        <div class="perfil-emoji">${p.emoji}</div>
+        <div class="perfil-badge" style="background:${p.badgeColor};color:white">Perfil MORAIMA</div>
+        <div class="perfil-name">${p.nombre}</div>
+        <div class="perfil-desc">${p.desc}</div>
+      </div>
+      <div class="perfil-stats">
+        <div class="pstat"><div class="pnum">${p.minutos}</div><div class="plbl">Min/sesión</div></div>
+        <div class="pstat"><div class="pnum">${p.diasSemana}</div><div class="plbl">Días/semana</div></div>
+        <div class="pstat"><div class="pnum">21</div><div class="plbl">Días de plan</div></div>
+      </div>
+    </div>
+    <button class="btn-ver-plan" onclick="goTo('s-plan',1)">Ver mi plan de 21 días →</button>`;
+}
+
+// PLAN
+function renderPlan(){
+  if(!perfilActual) return;
+  const p = perfilActual;
+  const semanas = [[],[],[]];
+  p.plan.forEach((d,i) => semanas[Math.floor(i/7)].push(d));
+  const names = ['Semana 1 — Despertar','Semana 2 — Consolidar','Semana 3 — Transformar'];
+  let html = `
+    <div class="plan-perfil-badge">
+      <div class="ppb-emoji">${p.emoji}</div>
+      <div><div class="ppb-name">${p.nombre}</div><div class="ppb-sub">${p.tipo} · ${p.minutos} min/sesión</div></div>
+    </div>`;
+  semanas.forEach((sem, si) => {
+    html += `<div class="semana-section"><div class="semana-title"><span class="semana-badge">S${si+1}</span>${names[si]}</div>`;
+    sem.forEach(d => {
+      const isRest = d.dia % 7 === 4 || d.dia === 7 || d.dia === 14;
+      html += `
+        <div class="dia-row">
+          <div class="dia-num ${isRest?'descanso':''}">${d.dia}</div>
+          <div class="dia-content">
+            <div class="dia-name">${d.n}</div>
+            <div class="dia-det">${d.d}</div>
+          </div>
+          <div class="dia-emoji">${d.e}</div>
+        </div>`;
+    });
+    html += '</div>';
+  });
+  document.getElementById('plan-content').innerHTML = html;
+}
+
+// RETO SENTADILLAS
+function renderReto(){
+  let completed = 0, totalSq = 0, streak = 0, streakCount = 0;
+  retoDias.forEach((d,i) => {
+    if(retoState[i] && d.sq > 0){ completed++; totalSq += d.sq; streakCount++; streak = Math.max(streak, streakCount); }
+    else if(!retoState[i]){ streakCount = 0; }
+  });
+  document.getElementById('reto-completed').textContent = completed;
+  document.getElementById('reto-total-sq').textContent = totalSq;
+  document.getElementById('reto-streak').textContent = streak;
+  document.getElementById('reto-grid').innerHTML = retoDias.map((d,i) => {
+    const done = retoState[i];
+    const isRest = d.sq === 0;
+    return `
+      <div class="reto-dia ${done?'completado':''} ${isRest?'descanso-dia':''}" onclick="${isRest?'':(`toggleReto(${i})`)}">
+        <div class="rd-num">Día ${d.dia}</div>
+        <div class="rd-squats">${isRest?'💤':done?'✅':d.sq}</div>
+        <div class="rd-lbl">${isRest?(d.desc||'Descanso'):done?'¡Hecho!':'sentadillas'}</div>
+      </div>`;
+  }).join('');
+}
+
+function toggleReto(idx){
+  retoState[idx] = !retoState[idx];
+  localStorage.setItem('moraima_reto', JSON.stringify(retoState));
+  renderReto();
+}
+
+// EJERCICIOS
+function renderEjercicios(){
+  const nColor = {Bajo:'tag-nivel-bajo','Bajo-Medio':'tag-nivel-bajo',Medio:'tag-nivel-med',Alto:'tag-nivel-alto','Medio-Alto':'tag-nivel-med'};
+  document.getElementById('ejercicios-grid').innerHTML = ejercicios.map((ej,i) => `
+    <div class="ejercicio-card ${expandedEj===i?'expanded':''}" onclick="toggleEj(${i})">
+      <div class="ej-header">
+        <div class="ej-emoji">${ej.e}</div>
+        <div class="ej-info">
+          <div class="ej-name">${ej.n}</div>
+          <div class="ej-meta">
+            <span class="ej-tag ${nColor[ej.nivel]||'tag-nivel-med'}">${ej.nivel}</span>
+            <span class="ej-tag tag-tiempo">⏱ ${ej.tiempo}</span>
+            <span class="ej-tag tag-tipo">${ej.tipo}</span>
+          </div>
+        </div>
+      </div>
+      <div class="ej-detail">
+        <div class="ej-beneficio">${ej.b}</div>
+        <div class="ej-como">
+          <h4>Cómo hacerlo</h4>
+          <ul class="ej-steps">${ej.c.map(s=>`<li>${s}</li>`).join('')}</ul>
+        </div>
+        <div class="infla-score">
+          <span class="infla-label">Poder antiinflamatorio:</span>
+          <div class="infla-dots">${[1,2,3,4,5].map(n=>`<div class="infla-dot ${n<=ej.infla?'on':''}"></div>`).join('')}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleEj(i){
+  expandedEj = expandedEj===i?null:i;
+  renderEjercicios();
+  if(expandedEj!==null) setTimeout(()=>{
+    const cards = document.querySelectorAll('.ejercicio-card');
+    if(cards[i]) cards[i].scrollIntoView({behavior:'smooth',block:'nearest'});
+  },100);
+}
+</script>
+</body>
+</html>
