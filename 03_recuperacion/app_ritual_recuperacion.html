@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ritual de Recuperación — MORAIMA 21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0a2942; --sky:#5dade2; --gold:#f4d03f; --green:#5de28c; --red:#e25d5d; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Montserrat',sans-serif;
+    background:linear-gradient(145deg,#0a2942 0%,#0d3a5c 60%,#071e30 100%);
+    min-height:100vh; color:#fff;
+    display:flex; align-items:center; justify-content:center; padding:16px;
+  }
+  .screen { display:none; width:100%; max-width:440px; }
+  .screen.active { display:flex; flex-direction:column; align-items:center; }
+  .logo-bar { font-size:10px; letter-spacing:3px; color:var(--gold); text-transform:uppercase; margin-bottom:6px; text-align:center; }
+  .module-tag { background:rgba(93,173,226,0.18); border:1px solid rgba(93,173,226,0.35); border-radius:20px; padding:4px 14px; font-size:10px; letter-spacing:2px; color:var(--sky); text-transform:uppercase; margin-bottom:20px; }
+  h1 { font-size:22px; font-weight:800; text-align:center; line-height:1.3; margin-bottom:8px; }
+  .subtitle { font-size:12px; color:rgba(255,255,255,0.55); text-align:center; margin-bottom:24px; line-height:1.6; }
+
+  .btn-primary { width:100%; padding:15px; border-radius:50px; background:linear-gradient(135deg,var(--sky),#3a8fc7); color:#fff; font-family:'Montserrat',sans-serif; font-size:14px; font-weight:700; letter-spacing:1px; border:none; cursor:pointer; margin-top:20px; transition:transform 0.15s,box-shadow 0.15s; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(93,173,226,0.4); }
+  .btn-back { background:transparent; border:none; color:rgba(255,255,255,0.4); font-family:'Montserrat',sans-serif; font-size:12px; cursor:pointer; padding:8px; margin-top:10px; }
+
+  /* PROGRESS BAR */
+  .progress-wrap { width:100%; margin-bottom:24px; }
+  .progress-label { display:flex; justify-content:space-between; font-size:10px; color:rgba(255,255,255,0.45); letter-spacing:1px; margin-bottom:6px; }
+  .progress-bar { width:100%; height:5px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--gold); border-radius:10px; transition:width 0.4s ease; }
+
+  /* QUESTION CARD */
+  .question-icon { font-size:48px; margin-bottom:12px; }
+  .question-title { font-size:17px; font-weight:700; text-align:center; margin-bottom:6px; line-height:1.3; }
+  .question-hint { font-size:11px; color:rgba(255,255,255,0.5); text-align:center; margin-bottom:24px; }
+
+  /* OPTIONS */
+  .options-grid { display:flex; flex-direction:column; gap:10px; width:100%; }
+  .option-card {
+    background:rgba(255,255,255,0.06); border:2px solid rgba(255,255,255,0.1);
+    border-radius:14px; padding:14px 18px; cursor:pointer;
+    display:flex; align-items:center; gap:14px; transition:all 0.2s;
+  }
+  .option-card:hover { border-color:var(--sky); background:rgba(93,173,226,0.1); }
+  .option-card.selected-good { border-color:var(--green); background:rgba(93,226,140,0.12); }
+  .option-card.selected-ok   { border-color:var(--gold); background:rgba(244,208,63,0.1); }
+  .option-card.selected-bad  { border-color:var(--red);  background:rgba(226,93,93,0.1); }
+  .option-emoji { font-size:24px; flex-shrink:0; }
+  .option-text { font-size:13px; font-weight:600; }
+  .option-sub  { font-size:10px; color:rgba(255,255,255,0.5); margin-top:2px; }
+  .option-pts  { margin-left:auto; font-size:12px; font-weight:700; flex-shrink:0; }
+
+  /* SCIENCE TIP */
+  .science-tip { background:rgba(244,208,63,0.08); border:1px solid rgba(244,208,63,0.2); border-radius:12px; padding:12px 14px; margin-top:16px; font-size:11px; color:rgba(244,208,63,0.8); line-height:1.6; width:100%; display:none; }
+  .science-tip.visible { display:block; }
+
+  /* RESULTS */
+  .score-ring {
+    width:160px; height:160px; border-radius:50%;
+    border:6px solid var(--navy); position:relative;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    margin:16px auto 24px;
+  }
+  .score-svg { position:absolute; top:0; left:0; transform:rotate(-90deg); }
+  .score-num { font-size:42px; font-weight:800; position:relative; z-index:2; }
+  .score-max { font-size:11px; color:rgba(255,255,255,0.5); position:relative; z-index:2; }
+  .score-label { font-size:11px; font-weight:700; letter-spacing:2px; position:relative; z-index:2; margin-top:2px; }
+
+  .result-grade { font-size:26px; font-weight:800; text-align:center; margin-bottom:6px; }
+  .result-sub   { font-size:12px; color:rgba(255,255,255,0.6); text-align:center; margin-bottom:24px; line-height:1.6; }
+
+  .review-list { width:100%; margin-bottom:20px; }
+  .review-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .review-item:last-child { border:none; }
+  .ri-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+  .ri-text { font-size:11px; line-height:1.6; color:rgba(255,255,255,0.8); }
+  .ri-text strong { color:#fff; font-weight:700; }
+
+  .challenge-box { background:rgba(93,226,140,0.1); border:1px solid rgba(93,226,140,0.25); border-radius:14px; padding:16px; width:100%; margin-bottom:16px; }
+  .challenge-box h3 { font-size:11px; color:var(--green); letter-spacing:2px; margin-bottom:8px; }
+  .challenge-box p  { font-size:12px; line-height:1.6; color:rgba(255,255,255,0.8); }
+
+  .rec-item { background:rgba(255,255,255,0.05); border-left:3px solid var(--sky); border-radius:0 12px 12px 0; padding:12px 14px; margin-bottom:10px; }
+  .rec-item.urgent { border-left-color:var(--red); }
+  .rec-item.ok     { border-left-color:var(--gold); }
+  .rec-title { font-size:12px; font-weight:700; margin-bottom:4px; }
+  .rec-action { font-size:11px; color:rgba(255,255,255,0.7); line-height:1.6; }
+  .rec-tip { font-size:10px; color:var(--gold); margin-top:5px; }
+</style>
+</head>
+<body>
+
+<!-- ══ SCREEN 1: WELCOME ══ -->
+<div class="screen active" id="screen-welcome">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Módulo 3 · Recuperación · Días 7-9</div>
+  <div style="font-size:56px;margin-bottom:16px;">🌙</div>
+  <h1>Construye tu<br>Ritual Nocturno</h1>
+  <p class="subtitle">Descubre qué tan bien estás recuperando tu cuerpo cada noche — y qué pequeños cambios pueden transformar tu descanso.</p>
+  <div style="background:rgba(255,255,255,0.05);border-radius:14px;padding:16px;width:100%;margin-bottom:8px;">
+    <div style="font-size:11px;color:var(--sky);letter-spacing:2px;margin-bottom:8px;">📋 CÓMO FUNCIONA</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.8;">
+      7 preguntas sobre tus hábitos nocturnos<br>
+      → Cada respuesta suma puntos<br>
+      → Obtienes tu <strong style="color:var(--gold)">Puntaje de Recuperación</strong><br>
+      → Con recomendaciones personalizadas
+    </div>
+  </div>
+  <button class="btn-primary" onclick="startGame()">Empezar diagnóstico →</button>
+</div>
+
+<!-- ══ SCREEN 2: QUESTIONS ══ -->
+<div class="screen" id="screen-questions">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="q-progress-label">Pregunta 1 de 7</span>
+      <span id="q-score-running">0 pts</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="question-icon" id="q-icon">🌙</div>
+  <div class="question-title" id="q-title"></div>
+  <div class="question-hint"  id="q-hint"></div>
+  <div class="options-grid"   id="q-options"></div>
+  <div class="science-tip"    id="science-tip"></div>
+  <button class="btn-primary" id="btn-next" onclick="nextQuestion()" style="display:none">Siguiente →</button>
+  <button class="btn-back" onclick="showScreen('screen-welcome')">← Volver</button>
+</div>
+
+<!-- ══ SCREEN 3: RESULTS ══ -->
+<div class="screen" id="screen-results">
+  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="module-tag">Tu Puntaje de Recuperación</div>
+
+  <div class="score-ring" id="score-ring">
+    <svg class="score-svg" width="160" height="160" viewBox="0 0 160 160">
+      <circle cx="80" cy="80" r="68" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6"/>
+      <circle cx="80" cy="80" r="68" fill="none" stroke-width="6"
+        stroke-dasharray="427" stroke-dashoffset="427"
+        stroke-linecap="round" id="score-arc" stroke="var(--sky)"/>
+    </svg>
+    <div class="score-num" id="score-num">0</div>
+    <div class="score-max">/70 pts</div>
+    <div class="score-label" id="score-label">—</div>
+  </div>
+
+  <div class="result-grade" id="result-grade"></div>
+  <div class="result-sub"   id="result-sub"></div>
+
+  <div class="review-list" id="review-list"></div>
+
+  <div id="recs-section" style="width:100%;margin-bottom:16px;display:none;">
+    <div style="font-size:10px;letter-spacing:2px;color:var(--sky);text-transform:uppercase;margin-bottom:10px;">🔧 TUS RECOMENDACIONES PERSONALIZADAS</div>
+    <div id="recs-list"></div>
+  </div>
+
+  <div class="challenge-box" id="challenge-box">
+    <h3>🎯 TU RETO DE 3 DÍAS</h3>
+    <p id="challenge-text"></p>
+  </div>
+
+  <button class="btn-primary" onclick="resetGame()">Repetir diagnóstico</button>
+  <p style="font-size:10px;color:rgba(255,255,255,0.25);margin-top:20px;text-align:center;letter-spacing:1px;">Vive la vida al cien · epimedik</p>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    icon:'🕙', title:'¿A qué hora te vas a dormir normalmente?',
+    hint:'La ventana de recuperación hormonal ideal es entre 10pm y 6am.',
+    options:[
+      { text:'Antes de las 10pm',     sub:'Óptimo para melatonina',      pts:12, type:'good', science:'La producción de melatonina inicia ~2h antes y alcanza su pico entre 2-4am. Acostarte antes de las 10pm maximiza ese ciclo.' },
+      { text:'Entre 10pm y 11pm',     sub:'Buena ventana de recuperación',pts:9,  type:'ok',   science:'Aún en la ventana óptima. Si puedes adelantarlo 30 min, notarás diferencia en cómo despiertas.' },
+      { text:'Entre 11pm y 1am',      sub:'Cortisol aún elevado',         pts:5,  type:'ok',   science:'Después de las 11pm el cortisol empieza a elevarse de nuevo, interrumpiendo la recuperación muscular y cerebral.' },
+      { text:'Después de la 1am',     sub:'Ciclo circadiano roto',        pts:1,  type:'bad',  science:'El sueño después de la 1am tiene menos sueño profundo (fase N3), donde se produce la hormona de crecimiento y se reparan los tejidos.' }
+    ]
+  },
+  {
+    icon:'📱', title:'¿Cuándo apagas pantallas antes de dormir?',
+    hint:'La luz azul bloquea la melatonina hasta 3 horas después de la exposición.',
+    options:[
+      { text:'Más de 1h antes de dormir', sub:'Melatonina libre para trabajar', pts:12, type:'good', science:'Sin luz azul, la melatonina sube naturalmente, reduces el tiempo para dormir y aumentas el sueño profundo.' },
+      { text:'30-60 min antes',           sub:'Bien — sigue bajando',           pts:8,  type:'ok',  science:'30 minutos es el mínimo recomendado. Ponle un temporizador a tu teléfono para hacerlo automático.' },
+      { text:'Justo antes de dormir',     sub:'La pantalla aún te activa',       pts:3,  type:'bad', science:'Harvard (2012) demostró que 2h de pantalla antes de dormir suprimen la melatonina hasta un 22%.' },
+      { text:'Me duermo con el celular',  sub:'Ciclo de sueño interrumpido',     pts:0,  type:'bad', science:'Las notificaciones nocturas y la luz del celular activan el sistema de alerta del cerebro incluso si no te despiertas consciente.' }
+    ]
+  },
+  {
+    icon:'🌡️', title:'¿Cómo está la temperatura de tu cuarto por la noche?',
+    hint:'El cuerpo necesita bajar 1-2°C su temperatura central para entrar en sueño profundo.',
+    options:[
+      { text:'Fresco — entre 17°C y 20°C', sub:'Temperatura ideal para sueño profundo', pts:10, type:'good', science:'Walker (2017) confirmó que la temperatura ideal del cuarto para sueño profundo está entre 18-19°C. El frío señala al cerebro que es hora de dormir.' },
+      { text:'Agradable — entre 20°C y 23°C', sub:'Aceptable, podría ser mejor',       pts:7,  type:'ok',  science:'Aún funcional pero al límite superior. Intenta bajar el aire o usar sábanas más livianas.' },
+      { text:'Caliente — más de 23°C',     sub:'Reduce el sueño profundo',              pts:3,  type:'bad', science:'El calor excesivo reduce las fases de sueño lento profundo (N3) y REM, donde ocurre la recuperación hormonal.' },
+      { text:'No sé / no controlo la temp', sub:'Oportunidad de mejora',               pts:2,  type:'ok',  science:'Considera un ventilador, temperatura del A/C o una botella de agua fría en la cama — son soluciones accesibles.' }
+    ]
+  },
+  {
+    icon:'☕', title:'¿Consumes cafeína después del mediodía?',
+    hint:'La cafeína tiene una vida media de 5-7 horas en el cuerpo.',
+    options:[
+      { text:'No consumo cafeína',          sub:'Recuperación sin interferencia',    pts:10, type:'good', science:'Sin cafeína, la adenosina (señal de sueño) se acumula libremente durante el día, generando sueño más profundo.' },
+      { text:'Solo antes del mediodía',     sub:'Sin efecto nocturno',               pts:10, type:'good', science:'Perfecto timing. La cafeína se habrá eliminado en su mayor parte al momento de dormir.' },
+      { text:'Café de la tarde (1-4pm)',    sub:'Puede afectar el sueño profundo',   pts:5,  type:'ok',  science:'Matthew Walker (2017): incluso el café de las 2pm puede reducir el sueño profundo un 20% esa noche.' },
+      { text:'Café nocturno o energizantes', sub:'Bloquea el sueño reparador',       pts:0,  type:'bad', science:'Los energizantes contienen hasta 150mg de cafeína, equivalente a 2 espressos — su efecto puede durar hasta las 3am.' }
+    ]
+  },
+  {
+    icon:'🧘', title:'¿Tienes algún ritual de transición antes de dormir?',
+    hint:'El cerebro necesita una "rampa de desaceleración" de 30-60 minutos.',
+    options:[
+      { text:'Sí — rutina fija (ducha, lectura, meditación)', sub:'Sistema nervioso preparado', pts:10, type:'good', science:'Los rituales nocturnos bajan el cortisol, activan el sistema parasimpático y reducen el tiempo para conciliar el sueño hasta un 35%.' },
+      { text:'A veces — no es consistente',                   sub:'El cuerpo no lo espera',    pts:6,  type:'ok',  science:'La consistencia es clave. El cerebro aprende los rituales y empieza a liberar melatonina anticipando el sueño.' },
+      { text:'Solo me lavo los dientes',                      sub:'Mínimo funcional',           pts:3,  type:'ok',  science:'Pequeño pero válido. Añade 5 minutos de respiración 4-7-8 después y potencias el efecto significativamente.' },
+      { text:'Me quedo dormida sin ritual',                   sub:'Sueño reactivo, no elegido', pts:1,  type:'bad', science:'Dormirse "de golpe" por agotamiento es diferente a dormir de forma reparadora. Tu calidad de sueño profundo será menor.' }
+    ]
+  },
+  {
+    icon:'🥗', title:'¿Comes pesado en la noche?',
+    hint:'La digestión activa eleva la temperatura corporal y compite con la recuperación.',
+    options:[
+      { text:'Cena ligera — 3h antes de dormir', sub:'Digestión completa al dormir',   pts:8, type:'good', science:'Cenar 2-3h antes libera al intestino para descansar también. La digestión nocturna aumenta la temperatura corporal e interrumpe el sueño profundo.' },
+      { text:'Cena moderada — 1-2h antes',       sub:'Digestión aún activa',            pts:5, type:'ok',  science:'El cuerpo aún digiere. Evita proteínas pesadas (carnes rojas) y prefiere cenas con triptófano: huevo, plátano, avena.' },
+      { text:'Cena abundante justo antes',        sub:'Competencia digestión/sueño',     pts:2, type:'bad', science:'Una cena copiosa eleva la insulina y la temperatura corporal, fragmentando el sueño y reduciendo la hormona de crecimiento nocturna.' },
+      { text:'No ceno / ayuno nocturno',          sub:'Depende del contexto',            pts:6, type:'ok',  science:'El ayuno nocturno puede mejorar la autofagia celular, pero si produces cortisol de estrés por hambre, puede fragmentar el sueño.' }
+    ]
+  },
+  {
+    icon:'💡', title:'¿Cómo es la oscuridad en tu cuarto?',
+    hint:'Una sola fuente de luz puede reducir la melatonina hasta un 50%.',
+    options:[
+      { text:'Oscuridad total — cortinas blackout', sub:'Máxima producción de melatonina', pts:8, type:'good', science:'Czeisler et al. (1995) demostraron que incluso luz débil durante el sueño suprime la melatonina y aumenta el cortisol. Blackout es el estándar de oro.' },
+      { text:'Bastante oscuro — solo luz exterior',  sub:'Aceptable, mejorable',           pts:6, type:'ok',  science:'La luz de las farolas tiene picos de luz azul que penetran párpados cerrados. Una antifaz resuelve esto sin costo.' },
+      { text:'Algo de luz — pantalla o foco',        sub:'Melatonina reducida',             pts:3, type:'bad', science:'Cualquier fuente de luz visible durante el sueño activa el sistema de alerta. Cubre las luces de aparatos eléctricos también.' },
+      { text:'Cuarto iluminado',                     sub:'Ciclo melatonina interrumpido',   pts:0, type:'bad', science:'Dormir con luz encendida se asocia con mayor riesgo de resistencia a insulina, obesidad y depresión en estudios longitudinales.' }
+    ]
+  }
+];
+
+let currentQ = 0;
+let totalScore = 0;
+let answers = [];
+let selectedIdx = null;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startGame() {
+  currentQ = 0; totalScore = 0; answers = []; selectedIdx = null;
+  showScreen('screen-questions');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  selectedIdx = null;
+
+  document.getElementById('q-progress-label').textContent = `Pregunta ${currentQ+1} de ${QUESTIONS.length}`;
+  document.getElementById('q-score-running').textContent   = totalScore + ' pts';
+  document.getElementById('progress-fill').style.width     = (currentQ / QUESTIONS.length * 100) + '%';
+  document.getElementById('q-icon').textContent  = q.icon;
+  document.getElementById('q-title').textContent = q.title;
+  document.getElementById('q-hint').textContent  = q.hint;
+  document.getElementById('science-tip').classList.remove('visible');
+  document.getElementById('science-tip').textContent = '';
+  document.getElementById('btn-next').style.display = 'none';
+
+  const container = document.getElementById('q-options');
+  container.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const cls = opt.type === 'good' ? '' : opt.type === 'ok' ? '' : '';
+    container.innerHTML += `
+      <div class="option-card" id="opt-${i}" onclick="selectOption(${i})">
+        <div class="option-emoji">${['🟢','🟡','🟠','🔴'][['good','ok','ok','bad'].indexOf(opt.type)]}</div>
+        <div style="flex:1">
+          <div class="option-text">${opt.text}</div>
+          <div class="option-sub">${opt.sub}</div>
+        </div>
+        <div class="option-pts" style="color:${opt.pts>=8?'var(--green)':opt.pts>=4?'var(--gold)':'var(--red)'}">+${opt.pts}</div>
+      </div>`;
+  });
+}
+
+function selectOption(idx) {
+  if (selectedIdx !== null) return; // already answered
+  selectedIdx = idx;
+  const q   = QUESTIONS[currentQ];
+  const opt = q.options[idx];
+
+  // Highlight selected
+  const cls = opt.type === 'good' ? 'selected-good' : opt.type === 'bad' ? 'selected-bad' : 'selected-ok';
+  document.getElementById('opt-' + idx).classList.add(cls);
+
+  // Dim others
+  q.options.forEach((_, i) => {
+    if (i !== idx) document.getElementById('opt-' + i).style.opacity = '0.4';
+  });
+
+  // Show science tip
+  const tip = document.getElementById('science-tip');
+  tip.textContent = '🔬 ' + opt.science;
+  tip.classList.add('visible');
+
+  totalScore += opt.pts;
+  document.getElementById('q-score-running').textContent = totalScore + ' pts';
+
+  answers.push({ question: q.title, icon: q.icon, pts: opt.pts, max: Math.max(...q.options.map(o=>o.pts)), text: opt.text, type: opt.type });
+
+  document.getElementById('btn-next').style.display = 'block';
+  document.getElementById('btn-next').textContent   = currentQ < QUESTIONS.length - 1 ? 'Siguiente →' : 'Ver mi resultado →';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= QUESTIONS.length) { showResults(); return; }
+  renderQuestion();
+}
+
+function showResults() {
+  const maxScore = QUESTIONS.reduce((s,q) => s + Math.max(...q.options.map(o=>o.pts)), 0);
+  const pct = totalScore / maxScore;
+
+  let grade, sub, color, challenge;
+  if (pct >= 0.85) {
+    grade = '🏆 Recuperación Excelente';
+    sub   = 'Tu cuerpo está descansando y reparándose de forma óptima. Mantén este ritual — es tu mayor inversión en longevidad.';
+    color = 'var(--green)';
+    challenge = 'Tu reto: Agrega 5 minutos de la Respiración 4-7-8 (Módulo 2) justo antes de dormir durante los 3 días. Registra cómo cambia tu energía al despertar.';
+  } else if (pct >= 0.65) {
+    grade = '✨ Recuperación Buena';
+    sub   = 'Tienes buenas bases. Con 2-3 ajustes estratégicos puedes subir significativamente tu calidad de sueño y recuperación hormonal.';
+    color = 'var(--sky)';
+    challenge = 'Tu reto: Identifica tu respuesta más roja y corrige solo ese hábito en los próximos 3 días. Un cambio a la vez tiene más impacto que diez a medias.';
+  } else if (pct >= 0.45) {
+    grade = '⚠️ Recuperación Comprometida';
+    sub   = 'Tu cuerpo está en déficit de recuperación. Esto afecta el cortisol, el metabolismo, la inflamación y el estado de ánimo — todo lo que trabajamos en MORAIMA 21.';
+    color = 'var(--gold)';
+    challenge = 'Tu reto: Escoge una hora fija de dormir y cúmplela los 3 días sin excepción. La consistencia del horario de sueño es el cambio con mayor impacto comprobado.';
+  } else {
+    grade = '🚨 Recuperación Crítica';
+    sub   = 'Tu cuerpo no está recuperándose. Sin sueño de calidad, ningún otro esfuerzo de salud puede funcionar al 100%. Este módulo es tu prioridad número uno.';
+    color = 'var(--red)';
+    challenge = 'Tu reto: Esta semana, acuéstate 1 hora antes de lo normal y apaga pantallas 30 minutos antes. Solo eso. Es el cambio más transformador que puedes hacer ahora mismo.';
+  }
+
+  // Arc animation
+  const arc  = document.getElementById('score-arc');
+  const circ = 2 * Math.PI * 68; // ≈427
+  const offset = circ * (1 - pct);
+  arc.style.stroke = color;
+  setTimeout(() => { arc.style.transition = 'stroke-dashoffset 1.2s ease'; arc.style.strokeDashoffset = offset; }, 100);
+
+  document.getElementById('score-num').textContent   = totalScore;
+  document.getElementById('score-label').textContent  = pct >= 0.85 ? 'ÓPTIMO' : pct >= 0.65 ? 'BUENO' : pct >= 0.45 ? 'MEJORAR' : 'CRÍTICO';
+  document.getElementById('score-label').style.color  = color;
+  document.getElementById('result-grade').textContent = grade;
+  document.getElementById('result-sub').textContent   = sub;
+  document.getElementById('challenge-text').textContent = challenge;
+
+  // Review list
+  const list = document.getElementById('review-list');
+  list.innerHTML = '';
+  answers.forEach(a => {
+    const icon = a.type === 'good' ? '✅' : a.type === 'bad' ? '❌' : '🔶';
+    const pctQ  = a.pts / a.max;
+    const color = pctQ >= 0.8 ? 'var(--green)' : pctQ >= 0.5 ? 'var(--gold)' : 'var(--red)';
+    list.innerHTML += `
+      <div class="review-item">
+        <div class="ri-icon">${icon}</div>
+        <div class="ri-text"><strong>${a.icon} ${a.text}</strong><br>${a.pts}/${a.max} puntos</div>
+        <div style="margin-left:auto;font-size:13px;font-weight:700;color:${color}">${a.pts}</div>
+      </div>`;
+  });
+
+  // Personalized recommendations for weak answers
+  const RECS = {
+    '¿A qué hora te vas a dormir normalmente?': {
+      urgent: { title:'⏰ Ajusta tu hora de dormir', action:'Establece una alarma para recordarte ir a la cama. Empieza moviéndola 15 minutos antes cada 3 días hasta llegar a antes de las 10:30pm. El cuerpo necesita consistencia para regular la melatonina.', tip:'Truco: activa el "Modo No Molestar" en tu teléfono a las 9:30pm.' },
+      ok:     { title:'🕙 Adelanta tu hora de dormir', action:'Estás cerca. Intenta acostarte 20-30 min antes esta semana. Verás la diferencia en cómo te sientes al despertar.', tip:'Truco: prepara tu ropa del día siguiente antes de las 9pm — te quita una decisión nocturna.' }
+    },
+    '¿Cuándo apagas pantallas antes de dormir?': {
+      urgent: { title:'📵 Crea una zona libre de pantallas', action:'Pon el celular en carga FUERA del cuarto o en modo avión 30 min antes de dormir. Reemplaza el scrolling por 5 minutos de respiración 4-7-8 (Módulo 2). Tu melatonina te lo agradecerá.', tip:'Truco: usa un despertador de mesa para no necesitar el celular en la habitación.' },
+      ok:     { title:'📱 Añade 15 min más sin pantalla', action:'Ya tienes el hábito parcialmente. Extiende el tiempo de desconexión 15 minutos más. Usa eso para leer, estirar o hacer la Respiración 4-7-8.', tip:'Truco: cambia las apps nocturnas por un libro físico o digital en modo oscuro.' }
+    },
+    '¿Cómo está la temperatura de tu cuarto por la noche?': {
+      urgent: { title:'🌡️ Baja la temperatura de tu cuarto', action:'Si tienes A/C, ponlo entre 18-20°C al dormir. Sin A/C: abre la ventana 30 min antes, usa sábanas de algodón ligero, o pon una bolsa de hielo en los pies (bajan la temperatura central rápido).', tip:'Truco: un ventilador de techo en velocidad baja reduce la temperatura percibida 3-4°C sin costo.' },
+      ok:     { title:'🌬️ Fresca un poco más el cuarto', action:'Intenta bajar 2-3°C la temperatura de tu habitación. Ese pequeño cambio puede aumentar el sueño profundo notablemente.', tip:'Truco: ventila el cuarto 20 min antes de acostarte — el aire renovado también mejora la calidad del sueño.' }
+    },
+    '¿Consumes cafeína después del mediodía?': {
+      urgent: { title:'☕ Elimina la cafeína después del mediodía', action:'Por 3 días, corta todo café, té negro y energizantes después de las 12pm. Reemplaza el café de la tarde por té de manzanilla, rooibos o agua con limón. Notarás diferencia en el sueño profundo esa misma noche.', tip:'Truco: el té verde tiene L-teanina que calma sin el bajón de la cafeína. Úsalo si necesitas el ritual de la taza.' },
+      ok:     { title:'🍵 Mueve el último café más temprano', action:'Si tomas café a las 3pm, muévelo a las 11am. La cafeína tarda 5-7 horas en eliminarse. Un café a las 3pm sigue activo a las 10pm.', tip:'Truco: el "café del engaño" funciona — toma agua caliente con canela cuando necesites el ritual sin la cafeína.' }
+    },
+    '¿Tienes algún ritual de transición antes de dormir?': {
+      urgent: { title:'🧘 Crea un ritual mínimo de 10 minutos', action:'Esta noche: ducha tibia → 5 min respiración 4-7-8 → apagar pantallas. Eso es todo. No necesita ser perfecto, necesita ser consistente. El cerebro aprende el ritual y empieza a liberar melatonina al verlo venir.', tip:'Truco: ponle un nombre a tu ritual — "mi ritual MORAIMA" — el naming hace que lo cumplas más.' },
+      ok:     { title:'🌙 Hazlo consistente', action:'Ya tienes un ritual pero no es fijo. El poder está en la consistencia. El mismo ritual a la misma hora le dice al cerebro: "es hora de dormir" y la melatonina sube antes de que te acuestes.', tip:'Truco: añade solo una cosa más a lo que ya haces — 3 respiraciones profundas antes de cerrar los ojos.' }
+    },
+    '¿Comes pesado en la noche?': {
+      urgent: { title:'🥗 Adelanta y aligera la cena', action:'Por 3 días, cena antes de las 7pm con una comida ligera: ensalada con proteína, sopa, o huevos. Evita carnes rojas, pastas y frituras en la noche. Tu digestión terminará antes de dormir y el cuerpo podrá enfocar energía en recuperarse.', tip:'Truco: si tienes hambre tarde, un puñado de nueces o un vaso de leche de almendras son saciantes y antiinflamatorios.' },
+      ok:     { title:'⏱ Adelanta la cena 30 minutos', action:'Solo 30 minutos antes marca una diferencia. Y elige alimentos con triptófano para la cena: huevo, pavo, plátano, avena — son precursores de la serotonina y melatonina.', tip:'Truco: el plátano con mantequilla de maní antes de dormir es el snack pre-sueño más respaldado científicamente.' }
+    },
+    '¿Cómo es la oscuridad en tu cuarto?': {
+      urgent: { title:'🌑 Oscurece tu cuarto esta noche', action:'Soluciones inmediatas: cubre las luces LED de aparatos con cinta negra, pon una toalla en la rendija de la puerta, usa una antifaz de sueño ($5-15 USD). La oscuridad total puede incrementar la melatonina hasta un 50%.', tip:'Truco: el mejor antifaz es el de seda — cómodo y bloquea luz sin presión sobre los ojos.' },
+      ok:     { title:'💡 Reduce la luz exterior', action:'Una antifaz de sueño resuelve el problema de la luz exterior sin necesidad de cortinas blackout. Es la solución más económica y efectiva.', tip:'Truco: prueba apagar también las luces LED de cargadores y routers — suman más de lo que crees.' }
+    }
+  };
+
+  const recsSection = document.getElementById('recs-section');
+  const recsList    = document.getElementById('recs-list');
+  const weakAnswers = answers.filter(a => a.pts / a.max < 0.8);
+
+  if (weakAnswers.length > 0) {
+    recsList.innerHTML = '';
+    weakAnswers.slice(0,4).forEach(a => {
+      const rec = RECS[a.question];
+      if (!rec) return;
+      const isUrgent = a.pts / a.max < 0.4;
+      const r = isUrgent ? rec.urgent : rec.ok;
+      if (!r) return;
+      recsList.innerHTML += `
+        <div class="rec-item ${isUrgent ? 'urgent' : 'ok'}">
+          <div class="rec-title">${r.title}</div>
+          <div class="rec-action">${r.action}</div>
+          <div class="rec-tip">💡 ${r.tip}</div>
+        </div>`;
+    });
+    recsSection.style.display = 'block';
+  }
+
+  showScreen('screen-results');
+}
+
+function resetGame() { startGame(); }
+</script>
+</body>
+</html>
