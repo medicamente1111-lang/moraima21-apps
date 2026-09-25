@@ -3,263 +3,802 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guía Científica Módulo 5 — Inflamación | MORAIMA 21</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>Guía Científica — Módulo 5: Inflamación | Reset21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root{--navy:#0a2942;--sky:#5dade2;--gold:#f4d03f;--green:#5de28c;--red:#e25d5d;--orange:#f4a03f;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Montserrat',sans-serif;background:#f5f7fa;color:#1a1a2e;}
-  .page{width:210mm;min-height:297mm;margin:0 auto 20px;padding:16mm 15mm;background:#fff;position:relative;overflow:hidden;}
-  .cover{background:linear-gradient(155deg,#2c0a0a 0%,#5c1a1a 50%,#8b2020 100%);color:#fff;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
-  .cover-logo{font-size:9px;letter-spacing:4px;color:rgba(244,208,63,0.7);text-transform:uppercase;margin-bottom:8px;}
-  .cover-tag{background:rgba(244,208,63,0.15);border:1px solid rgba(244,208,63,0.4);border-radius:30px;padding:5px 18px;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:28px;}
-  .cover-title{font-size:34px;font-weight:900;line-height:1.2;margin-bottom:10px;text-transform:uppercase;}
-  .cover-title span{color:var(--gold);}
-  .cover-sub{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:44px;max-width:350px;line-height:1.7;}
-  .divider{width:60px;height:3px;background:var(--gold);border-radius:2px;margin:0 auto 28px;}
-  .cover-author{font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:2px;}
-  .cover-author strong{color:var(--sky);}
-  .deco{position:absolute;border-radius:50%;border:1.5px solid rgba(226,93,93,0.12);pointer-events:none;}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Montserrat', sans-serif; background: #f0f4f8; }
 
-  .stag{display:inline-block;background:var(--navy);color:var(--gold);font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:12px;}
-  h2.stitle{font-size:21px;font-weight:800;color:var(--navy);line-height:1.25;margin-bottom:8px;}
-  h2.stitle span{color:var(--red);}
-  .intro{font-size:12px;color:#444;line-height:1.85;margin-bottom:18px;border-left:3px solid var(--red);padding-left:14px;}
-  p.bt{font-size:12px;color:#333;line-height:1.85;margin-bottom:12px;}
-
-  .stats{display:flex;gap:0;margin:18px 0;border-radius:12px;overflow:hidden;}
-  .sbox{flex:1;padding:14px 10px;text-align:center;}
-  .sbox:nth-child(1){background:#5c1a1a;}
-  .sbox:nth-child(2){background:#8b2020;}
-  .sbox:nth-child(3){background:#b03030;}
-  .sbox:nth-child(4){background:var(--orange);}
-  .sv{font-size:22px;font-weight:900;color:var(--gold);}
-  .sl{font-size:8px;color:rgba(255,255,255,0.65);letter-spacing:1px;margin-top:2px;}
-
-  .hbox{background:var(--navy);color:#fff;border-radius:14px;padding:18px 20px;margin:16px 0;}
-  .hbox h3{font-size:12px;color:var(--gold);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
-  .hbox p{font-size:11px;line-height:1.75;color:rgba(255,255,255,0.82);}
-  .dato{background:#fff0f0;border-left:4px solid var(--red);border-radius:0 12px 12px 0;padding:12px 16px;margin:12px 0;}
-  .dato .dlabel{font-size:9px;letter-spacing:2px;color:#8b1a1a;text-transform:uppercase;margin-bottom:4px;font-weight:700;}
-  .dato p{font-size:11px;color:#5c1a1a;line-height:1.7;}
-  .warn{background:#fffbea;border:1.5px solid var(--gold);border-radius:12px;padding:12px 16px;margin:12px 0;}
-  .warn .wlabel{font-size:9px;letter-spacing:2px;color:#8b6914;text-transform:uppercase;margin-bottom:4px;font-weight:700;}
-  .warn p{font-size:11px;color:#555;line-height:1.7;}
-  .good-box{background:#f0fff5;border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:12px 16px;margin:12px 0;}
-  .good-box .glabel{font-size:9px;letter-spacing:2px;color:#1a5c2e;text-transform:uppercase;margin-bottom:4px;font-weight:700;}
-  .good-box p{font-size:11px;color:#1a4a2e;line-height:1.7;}
-
-  .symptom-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0;}
-  .sym-card{background:#fff0f0;border:1px solid #f4c6c6;border-radius:10px;padding:10px;text-align:center;}
-  .sym-icon{font-size:20px;margin-bottom:4px;}
-  .sym-name{font-size:10px;font-weight:700;color:#8b1a1a;}
-
-  .cascade{display:flex;flex-direction:column;gap:0;margin:16px 0;}
-  .casc-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid #e0e8f0;background:#f8fafc;}
-  .casc-item:first-child{border-radius:12px 12px 0 0;}
-  .casc-item:last-child{border-radius:0 0 12px 12px;border-top:none;}
-  .casc-item:not(:first-child):not(:last-child){border-top:none;}
-  .casc-num{width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .casc-text{font-size:11px;color:#333;line-height:1.65;}
-  .casc-title{font-weight:700;color:var(--navy);display:block;margin-bottom:2px;}
-
-  .phead{background:linear-gradient(135deg,#5c1a1a,#8b2020);color:#fff;border-radius:14px 14px 0 0;padding:14px 18px;text-align:center;}
-  .phead h3{font-size:13px;font-weight:700;color:var(--gold);}
-  .phead p{font-size:10px;color:rgba(255,255,255,0.6);margin-top:3px;}
-  .pbody{border:1.5px solid #f4c6c6;border-top:none;border-radius:0 0 14px 14px;}
-  .prow{display:flex;align-items:flex-start;gap:12px;padding:12px 18px;border-bottom:1px solid #fdf0f0;}
-  .prow:last-child{border-bottom:none;}
-  .ptime{width:52px;font-size:10px;font-weight:700;color:var(--navy);letter-spacing:1px;flex-shrink:0;}
-  .pdot{width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:3px;}
-  .ptext{font-size:11px;color:#333;line-height:1.6;}
-  .ptech{font-weight:700;color:var(--navy);}
-
-  .cit{font-size:10px;color:#666;line-height:1.6;margin-bottom:7px;padding-left:14px;position:relative;}
-  .cit::before{content:'[';position:absolute;left:0;color:var(--red);}
-
-  .back{background:linear-gradient(145deg,#2c0a0a 0%,#5c1a1a 100%);color:#fff;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
-  .mantra{font-size:26px;font-weight:900;color:var(--gold);line-height:1.3;margin-bottom:12px;text-transform:uppercase;}
-
-  @media print{
-    @page{size:A4;margin:0;}
-    html,body{background:#fff;margin:0;padding:0;}
-    .page{margin:0;box-shadow:none;width:210mm;height:297mm;min-height:unset;overflow:hidden;page-break-after:always;}
-    .page:last-child{page-break-after:avoid;}
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto 8mm;
+    background: white;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
   }
-  .print-btn{display:block;width:100%;max-width:300px;margin:32px auto 0;padding:13px;border-radius:50px;background:rgba(226,93,93,0.1);border:2px solid rgba(226,93,93,0.3);color:var(--red);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:center;}
-  @media print{.print-btn{display:none;}}
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── PALETA ── */
+  :root {
+    --navy: #0a2942;
+    --sky: #5dade2;
+    --gold: #f4d03f;
+    --green: #5de28c;
+    --red: #e74c3c;
+    --orange: #e67e22;
+    --light: #eaf4fb;
+  }
+
+  /* ────────────────────────────────
+     PÁGINA 1 — PORTADA
+  ──────────────────────────────── */
+  .p1-bg {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, var(--navy) 0%, #1a3a5c 60%, #0d2035 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 18mm 16mm;
+    position: relative;
+  }
+  .p1-module-tag {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 9pt; font-weight: 800;
+    letter-spacing: 3px;
+    padding: 5px 18px; border-radius: 20px;
+    margin-bottom: 10mm;
+    text-transform: uppercase;
+  }
+  .p1-emoji { font-size: 52pt; margin-bottom: 6mm; }
+  .p1-title {
+    color: white; font-size: 28pt; font-weight: 900;
+    text-align: center; line-height: 1.15;
+    margin-bottom: 5mm;
+  }
+  .p1-subtitle {
+    color: var(--sky); font-size: 13pt; font-weight: 600;
+    text-align: center; margin-bottom: 10mm;
+    line-height: 1.4;
+  }
+  .p1-tagline {
+    color: rgba(255,255,255,0.7); font-size: 9.5pt;
+    font-style: italic; text-align: center;
+    margin-bottom: 12mm;
+  }
+  .p1-stats {
+    display: flex; gap: 8mm;
+    margin-bottom: 14mm;
+  }
+  .p1-stat {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 5mm 7mm;
+    text-align: center;
+  }
+  .p1-stat-num { color: var(--gold); font-size: 18pt; font-weight: 900; }
+  .p1-stat-label { color: rgba(255,255,255,0.75); font-size: 7.5pt; font-weight: 600; margin-top: 2px; }
+  .p1-bar {
+    width: 80mm; height: 2px;
+    background: linear-gradient(90deg, var(--sky), var(--gold), var(--green));
+    border-radius: 2px; margin-bottom: 10mm;
+  }
+  .p1-brand {
+    color: rgba(255,255,255,0.5); font-size: 8pt;
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+  .p1-deco {
+    position: absolute; bottom: -20mm; right: -20mm;
+    width: 80mm; height: 80mm;
+    border-radius: 50%;
+    background: rgba(93,173,226,0.07);
+  }
+  .p1-deco2 {
+    position: absolute; top: -15mm; left: -15mm;
+    width: 55mm; height: 55mm;
+    border-radius: 50%;
+    background: rgba(244,208,63,0.06);
+  }
+
+  /* ────────────────────────────────
+     PÁGINAS 2-5 — HEADER
+  ──────────────────────────────── */
+  .page-header {
+    background: var(--navy);
+    padding: 5mm 12mm;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .page-header-title { color: white; font-size: 10pt; font-weight: 700; }
+  .page-header-mod { color: var(--gold); font-size: 8pt; font-weight: 600; letter-spacing: 1.5px; }
+  .page-body { padding: 7mm 12mm 6mm; }
+
+  /* section titles */
+  .sec-title {
+    font-size: 13pt; font-weight: 800; color: var(--navy);
+    margin-bottom: 4mm; display: flex; align-items: center; gap: 3mm;
+  }
+  .sec-title span { font-size: 16pt; }
+  .sec-subtitle {
+    font-size: 8.5pt; color: #555; margin-bottom: 5mm; line-height: 1.5;
+  }
+
+  /* ────────────────────────────────
+     PÁGINA 2 — ¿QUÉ ES IBG? + DIAL
+  ──────────────────────────────── */
+  .p2-intro-box {
+    background: linear-gradient(135deg, #fef9e7, #fef5d4);
+    border-left: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 5mm 6mm;
+    margin-bottom: 5mm;
+  }
+  .p2-intro-title { font-size: 10pt; font-weight: 800; color: var(--navy); margin-bottom: 2mm; }
+  .p2-intro-text { font-size: 8pt; color: #333; line-height: 1.6; }
+
+  .p2-dial-row {
+    display: flex; gap: 4mm; margin-bottom: 5mm;
+  }
+  .p2-dial-card {
+    flex: 1; border-radius: 10px; padding: 4mm 5mm; text-align: center;
+    position: relative;
+  }
+  .dial-aguda {
+    background: linear-gradient(135deg, #d5f5e3, #a9dfbf);
+    border: 2px solid #27ae60;
+  }
+  .dial-baja {
+    background: linear-gradient(135deg, #fdebd0, #f9c784);
+    border: 2px solid var(--orange);
+  }
+  .dial-cronica {
+    background: linear-gradient(135deg, #fadbd8, #f1948a);
+    border: 2px solid var(--red);
+  }
+  .dial-emoji { font-size: 20pt; margin-bottom: 2mm; }
+  .dial-label { font-size: 7.5pt; font-weight: 800; color: var(--navy); margin-bottom: 1mm; }
+  .dial-desc { font-size: 7pt; color: #444; line-height: 1.4; }
+
+  .p2-nfkb-box {
+    background: linear-gradient(135deg, var(--navy), #1a3a5c);
+    border-radius: 12px;
+    padding: 5mm 6mm;
+    color: white;
+    margin-bottom: 5mm;
+  }
+  .p2-nfkb-title { font-size: 10pt; font-weight: 800; color: var(--gold); margin-bottom: 3mm; }
+  .p2-nfkb-grid { display: flex; gap: 3mm; }
+  .p2-nfkb-item {
+    flex: 1; background: rgba(255,255,255,0.08); border-radius: 8px;
+    padding: 3mm; text-align: center;
+  }
+  .p2-nfkb-item-emoji { font-size: 14pt; }
+  .p2-nfkb-item-label { font-size: 7pt; color: rgba(255,255,255,0.9); margin-top: 1mm; line-height: 1.3; }
+
+  .p2-stat-row { display: flex; gap: 3mm; }
+  .p2-stat-box {
+    flex: 1; background: var(--light); border-radius: 8px;
+    padding: 3mm 4mm; text-align: center;
+    border-top: 3px solid var(--sky);
+  }
+  .p2-stat-num { font-size: 14pt; font-weight: 900; color: var(--navy); }
+  .p2-stat-lbl { font-size: 6.5pt; color: #555; line-height: 1.3; margin-top: 1mm; }
+
+  /* ────────────────────────────────
+     PÁGINA 3 — LOS 32 MINI-SÍNTOMAS
+  ──────────────────────────────── */
+  .p3-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5mm;
+    margin-bottom: 5mm;
+  }
+  .p3-sym {
+    border-radius: 7px;
+    padding: 2.5mm 3mm;
+    text-align: center;
+  }
+  .sym-early { background: #eafaf1; border: 1px solid #a9dfbf; }
+  .sym-mid   { background: #fef9e7; border: 1px solid #f9c784; }
+  .sym-late  { background: #fdedec; border: 1px solid #f1948a; }
+  .p3-sym-e  { font-size: 14pt; }
+  .p3-sym-n  { font-size: 6.5pt; font-weight: 700; color: var(--navy); margin-top: 1mm; line-height: 1.2; }
+  .p3-sym-s  { font-size: 5.5pt; color: #666; margin-top: 0.5mm; line-height: 1.2; }
+
+  .p3-legend { display: flex; gap: 4mm; margin-bottom: 4mm; }
+  .p3-legend-item { display: flex; align-items: center; gap: 2mm; }
+  .p3-legend-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .dot-early { background: #27ae60; }
+  .dot-mid   { background: var(--orange); }
+  .dot-late  { background: var(--red); }
+  .p3-legend-label { font-size: 7pt; color: #555; font-weight: 600; }
+
+  /* ────────────────────────────────
+     PÁGINA 4 — ENFERMEDADES + SISTEMAS
+  ──────────────────────────────── */
+  .p4-sys-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3mm;
+    margin-bottom: 5mm;
+  }
+  .p4-sys-card {
+    border-radius: 10px; padding: 3.5mm 4mm;
+    border-left: 4px solid;
+  }
+  .sys-cv  { background: #fdedec; border-color: var(--red); }
+  .sys-neu { background: #f4ecf7; border-color: #8e44ad; }
+  .sys-met { background: #fef9e7; border-color: var(--orange); }
+  .sys-mus { background: #eafaf1; border-color: #27ae60; }
+  .sys-dig { background: #eaf4fb; border-color: var(--sky); }
+  .sys-aut { background: #fef5d4; border-color: var(--gold); }
+  .sys-onc { background: #f0f0f0; border-color: #555; }
+  .p4-sys-title { font-size: 8pt; font-weight: 800; color: var(--navy); margin-bottom: 1.5mm; }
+  .p4-sys-diseases { font-size: 7pt; color: #444; line-height: 1.5; }
+
+  .p4-timeline {
+    background: linear-gradient(135deg, var(--navy), #1a3a5c);
+    border-radius: 12px; padding: 4.5mm 6mm;
+    color: white; margin-bottom: 5mm;
+  }
+  .p4-tl-title { font-size: 9pt; font-weight: 800; color: var(--gold); margin-bottom: 3mm; }
+  .p4-tl-row { display: flex; align-items: center; gap: 3mm; margin-bottom: 2mm; }
+  .p4-tl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .p4-tl-text { font-size: 7.5pt; color: rgba(255,255,255,0.9); line-height: 1.4; }
+  .p4-tl-arrow { font-size: 8pt; color: var(--gold); margin-bottom: 2mm; margin-left: 4.5mm; }
+
+  /* ────────────────────────────────
+     PÁGINA 5 — SOLUCIONES + REFS
+  ──────────────────────────────── */
+  .p5-sol-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 3mm; margin-bottom: 5mm;
+  }
+  .p5-sol-card {
+    background: white; border-radius: 10px;
+    padding: 4mm; text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-top: 3px solid var(--green);
+  }
+  .p5-sol-emoji { font-size: 22pt; margin-bottom: 2mm; }
+  .p5-sol-title { font-size: 8pt; font-weight: 800; color: var(--navy); margin-bottom: 1.5mm; }
+  .p5-sol-desc { font-size: 6.5pt; color: #555; line-height: 1.4; }
+  .p5-sol-pwr {
+    margin-top: 2mm;
+    font-size: 7pt; font-weight: 800;
+    color: var(--green);
+  }
+
+  .p5-plan {
+    background: linear-gradient(135deg, #eafaf1, #d5f5e3);
+    border-radius: 12px; padding: 4.5mm 6mm;
+    margin-bottom: 5mm; border-left: 4px solid var(--green);
+  }
+  .p5-plan-title { font-size: 9pt; font-weight: 800; color: var(--navy); margin-bottom: 3mm; }
+  .p5-plan-row { display: flex; gap: 2mm; align-items: flex-start; margin-bottom: 1.5mm; }
+  .p5-plan-icon { font-size: 10pt; flex-shrink: 0; }
+  .p5-plan-text { font-size: 7.5pt; color: #333; line-height: 1.4; }
+
+  .refs-box {
+    border-top: 2px solid #e0e0e0; padding-top: 4mm;
+  }
+  .refs-title { font-size: 8pt; font-weight: 700; color: var(--navy); margin-bottom: 2mm; }
+  .refs-text { font-size: 6pt; color: #777; line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    position: absolute; bottom: 4mm; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 12mm;
+  }
+  .footer-brand { font-size: 7pt; color: #aaa; font-weight: 600; letter-spacing: 1px; }
+  .footer-page { font-size: 7pt; color: #ccc; }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: white; }
+    .page { margin: 0; page-break-after: always; }
+    .page:last-child { page-break-after: avoid; }
+  }
 </style>
 </head>
 <body>
 
-<!-- PORTADA -->
-<div class="page cover">
-  <div class="deco" style="width:400px;height:400px;top:-80px;right:-90px;"></div>
-  <div class="deco" style="width:250px;height:250px;bottom:-50px;left:-70px;border-color:rgba(244,208,63,0.08)"></div>
-  <div class="cover-logo">epimedik · MORAIMA 21</div>
-  <div class="cover-tag">Módulo 5 · Inflamación · Días 13 al 15</div>
-  <div style="font-size:52px;margin-bottom:16px;">🔥</div>
-  <div class="cover-title">La <span>inflamación</span><br>silenciosa</div>
-  <div class="cover-sub">El fuego invisible que está detrás del cansancio, el dolor, el sobrepeso resistente y las enfermedades crónicas — y cómo apagarlo desde hoy</div>
-  <div class="divider"></div>
-  <div class="cover-author">Guía científica presentada por<br><strong>Dra. Monica Arellano · epimedik</strong></div>
-</div>
-
-<!-- PÁG 1: QUÉ ES LA INFLAMACIÓN -->
+<!-- ══════════════════════════════════════════
+     PÁGINA 1 — PORTADA
+══════════════════════════════════════════ -->
 <div class="page">
-  <div class="stag">El fuego que no se ve pero se siente</div>
-  <h2 class="stitle">La inflamación <span>crónica de bajo grado</span> — la raíz de todo</h2>
-  <p class="intro">Existe un tipo de inflamación que no duele, no da fiebre ni se ve en una radiografía. Se llama inflamación crónica de bajo grado (CIBD), y según la ciencia actual es el denominador común de más del 60% de las muertes a nivel mundial.</p>
-
-  <div class="stats">
-    <div class="sbox"><div class="sv">60%</div><div class="sl">MUERTES VINCULADAS A INFLAMACIÓN CRÓNICA</div></div>
-    <div class="sbox"><div class="sv">IL-6</div><div class="sl">CITOCINA PRINCIPAL — BUEN INDICADOR EN SANGRE</div></div>
-    <div class="sbox"><div class="sv">PCR</div><div class="sl">PROTEÍNA C-REACTIVA — MARCADOR ESTÁNDAR</div></div>
-    <div class="sbox"><div class="sv">21 d</div><div class="sl">MÍNIMO PARA REDUCIR MARCADORES INFLAMATORIOS</div></div>
-  </div>
-
-  <p class="bt">La inflamación aguda es buena: cuando te cortas, el cuerpo inflama la zona para reparar. El problema es cuando ese proceso nunca se apaga. La inflamación crónica es un sistema inmune que permanece en alerta máxima indefinidamente — dañando tejidos sanos, envejeciendo células prematuramente y creando las condiciones perfectas para la enfermedad.</p>
-
-  <div class="hbox">
-    <h3>🔬 NF-κB: el interruptor maestro de la inflamación</h3>
-    <p>El factor nuclear kappa B (NF-κB) es la molécula que activa los genes inflamatorios en prácticamente todas las células del cuerpo. Cuando se activa crónicamente por el estrés, el azúcar, los tóxicos ambientales o el intestino permeable, el cuerpo produce un exceso continuo de citocinas inflamatorias (IL-1β, IL-6, TNF-α) que dañan vasos sanguíneos, articulaciones, neuronas y tejido adiposo. La buena noticia: múltiples nutrientes y hábitos lo inhiben directamente.</p>
-  </div>
-
-  <div class="warn">
-    <div class="wlabel">⚠️ Los 9 síntomas de inflamación crónica que ignoramos</div>
-    <div class="symptom-grid">
-      <div class="sym-card"><div class="sym-icon">😴</div><div class="sym-name">Fatiga sin causa</div></div>
-      <div class="sym-card"><div class="sym-icon">🧠</div><div class="sym-name">Brain fog</div></div>
-      <div class="sym-card"><div class="sym-icon">🫃</div><div class="sym-name">Abdomen inflamado</div></div>
-      <div class="sym-card"><div class="sym-icon">🦴</div><div class="sym-name">Dolor articular</div></div>
-      <div class="sym-card"><div class="sym-icon">😰</div><div class="sym-name">Ansiedad crónica</div></div>
-      <div class="sym-card"><div class="sym-icon">🤧</div><div class="sym-name">Alergias frecuentes</div></div>
-      <div class="sym-card"><div class="sym-icon">⚖️</div><div class="sym-name">Peso resistente</div></div>
-      <div class="sym-card"><div class="sym-icon">😤</div><div class="sym-name">Irritabilidad</div></div>
-      <div class="sym-card"><div class="sym-icon">🌙</div><div class="sym-name">Mal sueño</div></div>
+  <div class="p1-bg">
+    <div class="p1-deco"></div>
+    <div class="p1-deco2"></div>
+    <div class="p1-module-tag">Módulo 5 · Reset21</div>
+    <div class="p1-emoji">🔥</div>
+    <div class="p1-title">Inflamación<br>de Bajo Grado</div>
+    <div class="p1-subtitle">El origen silencioso de casi<br>todas las enfermedades crónicas</div>
+    <div class="p1-tagline">"Tu cuerpo lleva años mandando señales. Es hora de escucharlas."</div>
+    <div class="p1-stats">
+      <div class="p1-stat">
+        <div class="p1-stat-num">32</div>
+        <div class="p1-stat-label">Mini-síntomas<br>identificables</div>
+      </div>
+      <div class="p1-stat">
+        <div class="p1-stat-num">6</div>
+        <div class="p1-stat-label">Sistemas del<br>cuerpo afectados</div>
+      </div>
+      <div class="p1-stat">
+        <div class="p1-stat-num">6</div>
+        <div class="p1-stat-label">Soluciones<br>naturales</div>
+      </div>
     </div>
-    <p style="font-size:11px;color:#555;margin-top:8px;">Si tienes 3 o más de estos síntomas de forma regular, tu cuerpo probablemente está en estado inflamatorio crónico — aunque tus análisis de rutina salgan "normales".</p>
+    <div class="p1-bar"></div>
+    <div class="p1-brand">epimedik · Medicina Preventiva · 2026</div>
   </div>
 </div>
 
-<!-- PÁG 2: CAUSAS Y CASCADA -->
+<!-- ══════════════════════════════════════════
+     PÁGINA 2 — ¿QUÉ ES LA IBG? + NF-κB
+══════════════════════════════════════════ -->
 <div class="page">
-  <div class="stag">Las causas — lo que activa el fuego</div>
-  <h2 class="stitle">Qué <span>enciende</span> la inflamación crónica</h2>
-  <p class="intro">La inflamación crónica no tiene una sola causa. Es el resultado acumulado de múltiples señales de alarma que el cuerpo recibe día tras día. Identificar cuáles aplican en tu vida es el primer paso para apagarla.</p>
-
-  <div class="cascade">
-    <div class="casc-item">
-      <div class="casc-num">1</div>
-      <div class="casc-text"><span class="casc-title">Alimentación inflamatoria crónica</span>Azúcar refinada, harinas procesadas, aceites omega-6 en exceso y ultraprocesados activan el NF-κB directamente y alteran la microbiota intestinal, generando permeabilidad intestinal (leaky gut) que introduce bacterias al torrente sanguíneo.</div>
-    </div>
-    <div class="casc-item">
-      <div class="casc-num">2</div>
-      <div class="casc-text"><span class="casc-title">Estrés psicosocial crónico</span>El cortisol elevado sostenidamente suprime la respuesta antiinflamatoria regulatoria e incrementa la producción de IL-6 y PCR. El estrés psicológico activa la inflamación igual que una infección — la ciencia lo llama "inflamación neuroinmune".</div>
-    </div>
-    <div class="casc-item">
-      <div class="casc-num">3</div>
-      <div class="casc-text"><span class="casc-title">Privación del sueño</span>Una sola noche de sueño menor a 6 horas aumenta los niveles de IL-6 y TNF-α. La privación crónica mantiene el sistema inmune en estado de alerta permanente, acelerando el envejecimiento celular y el riesgo cardiovascular.</div>
-    </div>
-    <div class="casc-item">
-      <div class="casc-num">4</div>
-      <div class="casc-text"><span class="casc-title">Sedentarismo</span>El músculo en reposo no libera mioquinas antiinflamatorias (especialmente IL-10 e IL-1Ra). El movimiento regular es literalmente una terapia antiinflamatoria — sin movimiento, el sistema inflamatorio se desregula.</div>
-    </div>
-    <div class="casc-item">
-      <div class="casc-num">5</div>
-      <div class="casc-text"><span class="casc-title">Exposición a tóxicos ambientales</span>Pesticidas, plásticos (BPA, ftalatos), metales pesados y contaminantes del aire activan receptores inflamatorios celulares. La detoxificación hepática y renal eficiente es la primera línea de defensa.</div>
-    </div>
-    <div class="casc-item">
-      <div class="casc-num">6</div>
-      <div class="casc-text"><span class="casc-title">Soledad y aislamiento social</span>Los estudios de Cacioppo y Cole (UCLA, 2007) demostraron que la soledad crónica activa genes proinflamatorios y suprime genes antivirales — la conexión social es literalmente antiinflamatoria a nivel genético.</div>
-    </div>
+  <div class="page-header">
+    <div class="page-header-title">¿Qué es la Inflamación de Bajo Grado?</div>
+    <div class="page-header-mod">MÓDULO 5 · INFLAMACIÓN</div>
   </div>
+  <div class="page-body">
 
-  <div class="dato">
-    <div class="dlabel">📊 El dato que cambia la perspectiva</div>
-    <p>Un metaanálisis de 2017 (Furman et al., Nature Medicine) confirmó que la inflamación crónica de bajo grado predice mejor el riesgo de mortalidad a 10 años que el colesterol, la presión arterial o el IMC. La PCR y la IL-6 son hoy consideradas por muchos especialistas los biomarcadores de envejecimiento más importantes disponibles.</p>
+    <div class="p2-intro-box">
+      <div class="p2-intro-title">🔬 La inflamación tiene dos caras muy distintas</div>
+      <div class="p2-intro-text">
+        La inflamación <strong>aguda</strong> es tu aliada: es la respuesta rápida y localizada que activa tu sistema inmune para sanar una herida o combatir una infección. Dura días y se resuelve. El problema es la inflamación <strong>de bajo grado (IBG)</strong> — también llamada inflamación crónica silenciosa — que se instala en todo el cuerpo de manera invisible durante meses o años, sin que sientas dolor localizado ni fiebre. Sin embargo, va dañando tejidos, órganos y sistemas de forma progresiva e imperceptible.
+      </div>
+    </div>
+
+    <div class="p2-dial-row">
+      <div class="p2-dial-card dial-aguda">
+        <div class="dial-emoji">⚡</div>
+        <div class="dial-label">Inflamación Aguda</div>
+        <div class="dial-desc">Corta duración (1-7 días). Localizada. Fiebre, enrojecimiento, dolor. Respuesta normal y necesaria. ✅ Aliada</div>
+      </div>
+      <div class="p2-dial-card dial-baja">
+        <div class="dial-emoji">🌡️</div>
+        <div class="dial-label">Inflamación de Bajo Grado</div>
+        <div class="dial-desc">Meses o años. Sistémica y silenciosa. Sin síntomas claros. PCR elevada entre 1–3 mg/L. ⚠️ Traidora</div>
+      </div>
+      <div class="p2-dial-card dial-cronica">
+        <div class="dial-emoji">💥</div>
+        <div class="dial-label">Inflamación Crónica</div>
+        <div class="dial-desc">Años de IBG no tratada. Daño orgánico establecido. Enfermedades crónicas declaradas. 🚨 Enfermedad</div>
+      </div>
+    </div>
+
+    <div class="p2-nfkb-box">
+      <div class="p2-nfkb-title">⚡ NF-κB — El Interruptor Maestro de la Inflamación</div>
+      <div style="font-size:7.5pt; color:rgba(255,255,255,0.8); margin-bottom:3mm; line-height:1.5;">
+        El <strong>factor nuclear kappa-B (NF-κB)</strong> es una proteína que vive dentro de casi todas tus células. En condiciones normales está "apagado". Pero cuando el cuerpo percibe estrés, mala alimentación, toxinas, falta de sueño o sedentarismo, NF-κB se activa y ordena producir sustancias inflamatorias (IL-6, TNF-α, PCR) en todo el cuerpo al mismo tiempo. Es el origen molecular de la IBG.
+      </div>
+      <div class="p2-nfkb-grid">
+        <div class="p2-nfkb-item">
+          <div class="p2-nfkb-item-emoji">🍕</div>
+          <div class="p2-nfkb-item-label">Ultra­procesados activan NF-κB</div>
+        </div>
+        <div class="p2-nfkb-item">
+          <div class="p2-nfkb-item-emoji">😴</div>
+          <div class="p2-nfkb-item-label">Falta de sueño activa NF-κB</div>
+        </div>
+        <div class="p2-nfkb-item">
+          <div class="p2-nfkb-item-emoji">🧘</div>
+          <div class="p2-nfkb-item-label">Meditación inhibe NF-κB</div>
+        </div>
+        <div class="p2-nfkb-item">
+          <div class="p2-nfkb-item-emoji">🥦</div>
+          <div class="p2-nfkb-item-label">Sulforafano bloquea NF-κB</div>
+        </div>
+        <div class="p2-nfkb-item">
+          <div class="p2-nfkb-item-emoji">😰</div>
+          <div class="p2-nfkb-item-label">Estrés crónico activa NF-κB</div>
+        </div>
+        <div class="p2-nfkb-item">
+          <div class="p2-nfkb-item-emoji">🌿</div>
+          <div class="p2-nfkb-item-label">Omega-3 inhibe NF-κB</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p2-stat-row">
+      <div class="p2-stat-box">
+        <div class="p2-stat-num">+50%</div>
+        <div class="p2-stat-lbl">de las muertes en el mundo se deben a enfermedades relacionadas con inflamación (Furman, Nat Med 2019)</div>
+      </div>
+      <div class="p2-stat-box">
+        <div class="p2-stat-num">PCR ↑</div>
+        <div class="p2-stat-lbl">Proteína C reactiva &gt;1 mg/L indica IBG activa, incluso sin síntomas</div>
+      </div>
+      <div class="p2-stat-box">
+        <div class="p2-stat-num">Años</div>
+        <div class="p2-stat-lbl">puede avanzar en silencio antes de manifestarse como enfermedad crónica</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <div class="footer-brand">epimedik · Reset21</div>
+    <div class="footer-page">2 / 5</div>
   </div>
 </div>
 
-<!-- PÁG 3: APAGAR EL FUEGO + PROTOCOLO -->
+<!-- ══════════════════════════════════════════
+     PÁGINA 3 — LOS 32 MINI-SÍNTOMAS
+══════════════════════════════════════════ -->
 <div class="page">
-  <div class="stag">Cómo apagar el fuego</div>
-  <h2 class="stitle">Las intervenciones <span>más efectivas</span> para reducir la inflamación</h2>
-
-  <div class="good-box">
-    <div class="glabel">🌿 Los 5 antiinflamatorios más potentes validados por la ciencia</div>
-    <p><strong>1. Omega-3 (EPA+DHA):</strong> Precursores de resolvinas y protectinas — moléculas que apagan activamente la respuesta inflamatoria. 2-4g/día reduce PCR e IL-6 significativamente en ensayos clínicos.<br><br>
-    <strong>2. Cúrcuma + pimienta negra:</strong> La curcumina inhibe NF-κB con efectividad comparable a algunos AINEs. La piperina aumenta su absorción 2000%. Dosis efectiva: 500-1000mg curcumina/día.<br><br>
-    <strong>3. Movimiento moderado regular:</strong> 30 minutos de ejercicio aeróbico 5 veces/semana reduce la PCR un 35% en 12 semanas (Church et al., NEJM). Las mioquinas liberadas son más potentes que muchos fármacos antiinflamatorios.<br><br>
-    <strong>4. Meditación/respiración consciente:</strong> Reduce la expresión génica de NF-κB y la producción de cortisol. 20 min/día durante 8 semanas reducen PCR de forma medible (Davidson et al., Psychosomatic Medicine).<br><br>
-    <strong>5. Sueño reparador (7-9h):</strong> Durante el sueño profundo el sistema glinfático elimina proteínas inflamatorias del cerebro. Sin sueño suficiente, ninguna otra intervención antiinflamatoria funciona al 100%.</p>
+  <div class="page-header">
+    <div class="page-header-title">Los 32 Mini-Síntomas de la Inflamación Silenciosa</div>
+    <div class="page-header-mod">MÓDULO 5 · INFLAMACIÓN</div>
   </div>
+  <div class="page-body">
 
-  <div class="stag" style="margin-top:18px;">Protocolo de los 3 días</div>
-  <h2 class="stitle">Tu <span>plan antiinflamatorio</span> para días 13, 14 y 15</h2>
+    <div class="sec-subtitle">
+      Estos síntomas rara vez se diagnostican como inflamación — pero son las primeras señales que envía tu cuerpo.
+      Cuantos más presentes, mayor la carga inflamatoria sistémica.
+    </div>
 
-  <div class="phead">
-    <h3>🔥 Protocolo INFLAMACIÓN — Módulo 5</h3>
-    <p>Usa la App de Alacena para identificar y decidir sobre tus inflamatorios</p>
+    <div class="p3-legend">
+      <div class="p3-legend-item"><div class="p3-legend-dot dot-early"></div><div class="p3-legend-label">Etapa Temprana — señal inicial</div></div>
+      <div class="p3-legend-item"><div class="p3-legend-dot dot-mid"></div><div class="p3-legend-label">Etapa Moderada — patrón establecido</div></div>
+      <div class="p3-legend-item"><div class="p3-legend-dot dot-late"></div><div class="p3-legend-label">Etapa Tardía — daño en curso</div></div>
+    </div>
+
+    <div class="p3-grid">
+      <!-- Temprano -->
+      <div class="p3-sym sym-early">
+        <div class="p3-sym-e">😴</div>
+        <div class="p3-sym-n">Fatiga sin razón</div>
+        <div class="p3-sym-s">IL-6 altera el ciclo vigilia-sueño</div>
+      </div>
+      <div class="p3-sym sym-early">
+        <div class="p3-sym-e">🧠</div>
+        <div class="p3-sym-n">Niebla mental</div>
+        <div class="p3-sym-s">Neuroinflamación leve</div>
+      </div>
+      <div class="p3-sym sym-early">
+        <div class="p3-sym-e">😡</div>
+        <div class="p3-sym-n">Irritabilidad</div>
+        <div class="p3-sym-s">TNF-α altera neurotransmisores</div>
+      </div>
+      <div class="p3-sym sym-early">
+        <div class="p3-sym-e">💤</div>
+        <div class="p3-sym-n">Sueño no reparador</div>
+        <div class="p3-sym-s">Citocinas interrumpen ondas delta</div>
+      </div>
+      <div class="p3-sym sym-early">
+        <div class="p3-sym-e">🤤</div>
+        <div class="p3-sym-n">Antojo de dulces</div>
+        <div class="p3-sym-s">IL-1β altera señal de saciedad</div>
+      </div>
+      <div class="p3-sym sym-early">
+        <div class="p3-sym-e">🎯</div>
+        <div class="p3-sym-n">Falta de concentración</div>
+        <div class="p3-sym-s">Neuroinflamación afecta el enfoque</div>
+      </div>
+      <div class="p3-sym sym-early">
+        <div class="p3-sym-e">💧</div>
+        <div class="p3-sym-n">Ojos secos</div>
+        <div class="p3-sym-s">Inflamación en glándulas lagrimales</div>
+      </div>
+      <div class="p3-sym sym-early">
+        <div class="p3-sym-e">🤧</div>
+        <div class="p3-sym-n">Sinusitis recurrente</div>
+        <div class="p3-sym-s">Mucosas hiperreactivas</div>
+      </div>
+
+      <!-- Moderado -->
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">🫃</div>
+        <div class="p3-sym-n">Abdomen inflado</div>
+        <div class="p3-sym-s">Disbiosis + permeabilidad intestinal</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">🧴</div>
+        <div class="p3-sym-n">Acné adulto</div>
+        <div class="p3-sym-s">IL-17 activa sebáceas</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">💇</div>
+        <div class="p3-sym-n">Caída del cabello</div>
+        <div class="p3-sym-s">TNF-α inhibe folículo piloso</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">⚖️</div>
+        <div class="p3-sym-n">Peso difícil de bajar</div>
+        <div class="p3-sym-s">IL-6 genera resistencia a leptina</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">🦷</div>
+        <div class="p3-sym-n">Sangrado de encías</div>
+        <div class="p3-sym-s">Encías inflamadas elevan la PCR</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">🤢</div>
+        <div class="p3-sym-n">Gases frecuentes</div>
+        <div class="p3-sym-s">Disbiosis con endotoxinas LPS</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">🌙</div>
+        <div class="p3-sym-n">Ansiedad nocturna</div>
+        <div class="p3-sym-s">Cortisol-citocinas desincronizados</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">🌸</div>
+        <div class="p3-sym-n">Ciclo menstrual irregular</div>
+        <div class="p3-sym-s">IL-6 altera eje hipotálamo-hipófisis</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">💊</div>
+        <div class="p3-sym-n">Alergias nuevas</div>
+        <div class="p3-sym-s">Hipersensibilidad Th2 aumentada</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">🦵</div>
+        <div class="p3-sym-n">Rigidez matutina</div>
+        <div class="p3-sym-s">Citocinas acumuladas en tejido</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">😪</div>
+        <div class="p3-sym-n">Depresión leve</div>
+        <div class="p3-sym-s">IL-1β reduce serotonina</div>
+      </div>
+      <div class="p3-sym sym-mid">
+        <div class="p3-sym-e">👁️</div>
+        <div class="p3-sym-n">Bolsas bajo los ojos</div>
+        <div class="p3-sym-s">Retención de líquidos y mal descanso</div>
+      </div>
+
+      <!-- Tardío -->
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">🫀</div>
+        <div class="p3-sym-n">Palpitaciones</div>
+        <div class="p3-sym-s">Sistema nervioso en modo alerta</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">🦴</div>
+        <div class="p3-sym-n">Dolor articular</div>
+        <div class="p3-sym-s">RANKL activa resorción ósea</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">🔥</div>
+        <div class="p3-sym-n">Piel rojiza-reactiva</div>
+        <div class="p3-sym-s">Barrera cutánea comprometida</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">🩸</div>
+        <div class="p3-sym-n">Glucosa elevada</div>
+        <div class="p3-sym-s">TNF-α genera resistencia a insulina</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">💪</div>
+        <div class="p3-sym-n">Pérdida de músculo</div>
+        <div class="p3-sym-s">IL-6 crónica activa catabolismo</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">😶</div>
+        <div class="p3-sym-n">Aftas bucales frecuentes</div>
+        <div class="p3-sym-s">Inmunidad de mucosas deprimida</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">🤕</div>
+        <div class="p3-sym-n">Migrañas</div>
+        <div class="p3-sym-s">CGRP inflamatorio en vascular</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">🌡️</div>
+        <div class="p3-sym-n">Febrícula</div>
+        <div class="p3-sym-s">IL-1β activa termostato hipotal.</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">🫁</div>
+        <div class="p3-sym-n">Tos crónica</div>
+        <div class="p3-sym-s">Inflamación de vías respiratorias</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">🧩</div>
+        <div class="p3-sym-n">Psoriasis / eczema</div>
+        <div class="p3-sym-s">Eje piel-inmune-intestino</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">💩</div>
+        <div class="p3-sym-n">Colon irritable</div>
+        <div class="p3-sym-s">LPS activan NLRP3 en mucosa</div>
+      </div>
+      <div class="p3-sym sym-late">
+        <div class="p3-sym-e">🛑</div>
+        <div class="p3-sym-n">Libido baja</div>
+        <div class="p3-sym-s">IL-6 reduce testosterona/estradiol</div>
+      </div>
+    </div>
+
   </div>
-  <div class="pbody">
-    <div class="prow">
-      <div class="ptime">DÍA 13</div><div class="pdot"></div>
-      <div class="ptext"><span class="ptech">Auditoría de tu alacena</span> · Abre la App, revisa cada categoría y marca lo que tienes en casa. Identifica tus inflamatorios sin juzgarte — solo observa lo que hay.</div>
-    </div>
-    <div class="prow">
-      <div class="ptime">DÍA 14</div><div class="pdot" style="background:var(--orange);"></div>
-      <div class="ptext"><span class="ptech">Toma tus decisiones</span> · Por cada inflamatorio identificado: ¿lo reemplazas o lo eliminas? No tienes que hacerlo todo hoy — elige 3 cambios que puedas mantener esta semana.</div>
-    </div>
-    <div class="prow">
-      <div class="ptime">DÍA 15</div><div class="pdot" style="background:var(--green);"></div>
-      <div class="ptext"><span class="ptech">Un antiinflamatorio extra al día</span> · Agrega al menos un alimento o hábito antiinflamatorio nuevo que no tenías. Cúrcuma al café, un puñado de nueces, aceite de oliva crudo en la ensalada. Lo pequeño, acumulado, transforma.</div>
-    </div>
-    <div class="prow">
-      <div class="ptime">CLAVE</div><div class="pdot" style="background:transparent;border:2px solid var(--gold);"></div>
-      <div class="ptext">Examina de laboratorio que puedes pedir: <strong>PCR ultrasensible + IL-6 + homocisteína</strong>. Con tu médico, monitorea estos marcadores antes y después del programa. Son el termómetro real de la inflamación sistémica.</div>
-    </div>
+  <div class="page-footer">
+    <div class="footer-brand">epimedik · Reset21</div>
+    <div class="footer-page">3 / 5</div>
   </div>
 </div>
 
-<!-- PÁG 4: REFERENCIAS -->
+<!-- ══════════════════════════════════════════
+     PÁGINA 4 — ENFERMEDADES DE LA IBG
+══════════════════════════════════════════ -->
 <div class="page">
-  <div class="stag">Evidencia científica</div>
-  <h2 class="stitle">Referencias de <span>este módulo</span></h2>
-  <p class="bt" style="margin-bottom:18px;">Todo el contenido está respaldado por investigación indexada en PubMed y revistas científicas revisadas por pares.</p>
+  <div class="page-header">
+    <div class="page-header-title">Las Enfermedades que Nacen de la Inflamación Silenciosa</div>
+    <div class="page-header-mod">MÓDULO 5 · INFLAMACIÓN</div>
+  </div>
+  <div class="page-body">
 
-  <div class="cit">Furman D et al. (2019). "Chronic inflammation in the etiology of disease across the life span." <em>Nature Medicine.</em> PMID 31806905</div>
-  <div class="cit">Libby P (2021). "Inflammation during the life cycle of the atherosclerotic plaque." <em>Cardiovascular Research.</em> PMID 33585951</div>
-  <div class="cit">Calder PC (2015). "Functional roles of fatty acids and their effects on human health." <em>JPEN Journal of Parenteral and Enteral Nutrition.</em> PMID 26385186</div>
-  <div class="cit">Hewlings SJ & Kalman DS (2017). "Curcumin: a review of its effects on human health." <em>Foods.</em> PMID 28930929</div>
-  <div class="cit">Church TS et al. (2007). "Reduction of C-reactive protein levels through use of a multivitamin." <em>NEJM — related analysis in Am J Med.</em></div>
-  <div class="cit">Davidson RJ et al. (2003). "Alterations in brain and immune function produced by mindfulness meditation." <em>Psychosomatic Medicine.</em> PMID 12883106</div>
-  <div class="cit">Irwin MR & Opp MR (2017). "Sleep health: reciprocal regulation of sleep and innate immunity." <em>Neuropsychopharmacology.</em> PMID 27669980</div>
-  <div class="cit">Cole SW et al. (2007). "Social regulation of gene expression in human leukocytes." <em>Genome Biology.</em> PMID 17634951</div>
-  <div class="cit">Minihane AM et al. (2015). "Low-grade inflammation, diet composition and health." <em>British Journal of Nutrition.</em> PMID 26228057</div>
+    <div class="sec-subtitle">
+      La IBG no tratada durante años es el terreno donde germinan las enfermedades crónicas.
+      Estos son 6 de los sistemas del cuerpo que pueden verse afectados.
+    </div>
 
-  <div style="margin-top:22px;padding:16px 18px;background:#fff0f0;border-radius:14px;border:1px solid #f4c6c6;">
-    <p style="font-size:11px;color:#5c1a1a;line-height:1.8;">
-      <strong>Nota de la Dra. Monica Arellano:</strong> La inflamación silenciosa no es un diagnóstico de moda — es el lenguaje del cuerpo cuando lleva demasiado tiempo procesando señales de alarma. Este módulo no busca asustarte: busca darte el conocimiento que convierte cada decisión cotidiana en un acto de medicina preventiva. Tú tienes el poder de apagar el fuego.
-    </p>
+    <div class="p4-sys-grid">
+      <div class="p4-sys-card sys-cv">
+        <div class="p4-sys-title">❤️ Sistema Cardiovascular</div>
+        <div class="p4-sys-diseases">• Aterosclerosis (inflamación de la pared arterial)<br>• Hipertensión arterial (endotelio dañado)<br>• Infarto de miocardio (IL-6 desestabiliza placa)<br>• ACV isquémico</div>
+      </div>
+      <div class="p4-sys-card sys-neu">
+        <div class="p4-sys-title">🧠 Sistema Neurológico</div>
+        <div class="p4-sys-diseases">• Depresión mayor (IL-1β ↓ serotonina)<br>• Alzheimer (neuroinflamación crónica)<br>• Ansiedad generalizada<br>• Deterioro cognitivo</div>
+      </div>
+      <div class="p4-sys-card sys-met">
+        <div class="p4-sys-title">🩸 Sistema Metabólico</div>
+        <div class="p4-sys-diseases">• Diabetes tipo 2 (resistencia a insulina)<br>• Obesidad inflamatoria (tejido adiposo)<br>• Síndrome metabólico<br>• Hígado graso no alcohólico</div>
+      </div>
+      <div class="p4-sys-card sys-mus">
+        <div class="p4-sys-title">💪 Músculo-Esquelético</div>
+        <div class="p4-sys-diseases">• Artritis reumatoide (sinovial)<br>• Osteoporosis (RANKL↑)<br>• Fibromialgia (citocinas musculares)<br>• Tendinitis crónica</div>
+      </div>
+      <div class="p4-sys-card sys-dig">
+        <div class="p4-sys-title">🫃 Sistema Digestivo</div>
+        <div class="p4-sys-diseases">• Enfermedad de Crohn (mucosa)<br>• Colitis ulcerativa<br>• Síndrome intestino irritable<br>• Permeabilidad intestinal ("leaky gut")</div>
+      </div>
+      <div class="p4-sys-card sys-aut">
+        <div class="p4-sys-title">🛡️ Sistema Autoinmune</div>
+        <div class="p4-sys-diseases">• Lupus eritematoso sistémico<br>• Psoriasis (eje piel-inmune)<br>• Tiroiditis de Hashimoto<br>• Síndrome de Sjögren</div>
+      </div>
+    </div>
+
+    <div class="p4-timeline">
+      <div class="p4-tl-title">📅 La Línea del Tiempo Silenciosa — De la IBG a la Enfermedad</div>
+      <div class="p4-tl-row">
+        <div class="p4-tl-dot" style="background:#5de28c;"></div>
+        <div class="p4-tl-text"><strong>Años 1-3:</strong> Fatiga, niebla mental, insomnio leve, antojos, digestión irregular. Sin diagnóstico. "Es el estrés."</div>
+      </div>
+      <div class="p4-tl-arrow">↓</div>
+      <div class="p4-tl-row">
+        <div class="p4-tl-dot" style="background:var(--gold);"></div>
+        <div class="p4-tl-text"><strong>Años 3-7:</strong> PCR levemente elevada, glucosa en límite, presión alta, acné recurrente, peso resistente. "Tienes prediabetes leve."</div>
+      </div>
+      <div class="p4-tl-arrow">↓</div>
+      <div class="p4-tl-row">
+        <div class="p4-tl-dot" style="background:var(--orange);"></div>
+        <div class="p4-tl-text"><strong>Años 7-12:</strong> Diabetes tipo 2, hipertensión establecida, artritis inicial, psoriasis, depresión diagnosticada.</div>
+      </div>
+      <div class="p4-tl-arrow">↓</div>
+      <div class="p4-tl-row">
+        <div class="p4-tl-dot" style="background:var(--red);"></div>
+        <div class="p4-tl-text"><strong>Años 12+:</strong> Mayor riesgo de enfermedad cardiovascular, deterioro cognitivo y algunos tipos de cáncer. Daño orgánico establecido.</div>
+      </div>
+    </div>
+
+    <div style="background:#fef9e7; border-radius:10px; padding:4mm 5mm; border-left:4px solid var(--gold);">
+      <div style="font-size:8.5pt; font-weight:800; color:var(--navy); margin-bottom:2mm;">💡 El punto de inflexión está en los primeros 3 años</div>
+      <div style="font-size:7.5pt; color:#444; line-height:1.5;">
+        En etapas tempranas, la IBG responde muy bien a los cambios de estilo de vida. En el estudio JUPITER (Ridker et al., Lancet 2009), las personas que lograron bajar su PCR por debajo de 2 mg/L tuvieron <strong>menos infartos y ACV</strong> que quienes no lo lograron. Ese estudio usó medicamento, pero confirma que bajar la inflamación importa — y tu estilo de vida es la primera herramienta. Estás en el momento correcto: <em>antes</em> de que los síntomas se conviertan en diagnósticos.
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <div class="footer-brand">epimedik · Reset21</div>
+    <div class="footer-page">4 / 5</div>
   </div>
 </div>
 
-<!-- CONTRAPORTADA -->
-<div class="page back">
-  <div class="deco" style="width:350px;height:350px;top:-60px;left:-60px;border-color:rgba(226,93,93,0.15);"></div>
-  <div class="deco" style="width:220px;height:220px;bottom:-40px;right:-40px;border-color:rgba(244,208,63,0.1);"></div>
-  <div class="cover-tag" style="margin-bottom:28px;">Módulo 5 completado · Día 15 de 21</div>
-  <div class="mantra">Apagaste<br>el fuego.</div>
-  <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:36px;">Ahora vamos a mantenerlo apagado.</div>
-  <div class="divider"></div>
-  <p style="font-size:12px;color:rgba(255,255,255,0.5);max-width:300px;text-align:center;line-height:1.8;margin-bottom:36px;">Llevas 15 días reprogramando tu biología. En el Módulo 6 aprenderás cómo el movimiento es la terapia antiinflamatoria más subestimada y accesible que existe.</p>
-  <div style="font-size:11px;color:var(--sky);letter-spacing:3px;text-transform:uppercase;margin-bottom:5px;">Hablemos MedicaMente</div>
-  <div style="font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:2px;">epimedik · Vive la vida al cien</div>
+<!-- ══════════════════════════════════════════
+     PÁGINA 5 — SOLUCIONES + PLAN + REFS
+══════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">6 Soluciones Naturales Anti-Inflamatorias</div>
+    <div class="page-header-mod">MÓDULO 5 · INFLAMACIÓN</div>
+  </div>
+  <div class="page-body">
+
+    <div class="p5-sol-grid">
+      <div class="p5-sol-card">
+        <div class="p5-sol-emoji">🥗</div>
+        <div class="p5-sol-title">Alimentación Antiinflamatoria</div>
+        <div class="p5-sol-desc">Omega-3, cúrcuma, jengibre, crucíferas, berries. Eliminan ultraprocesados y azúcares refinados que activan NF-κB.</div>
+        <div class="p5-sol-pwr">Cúrcuma: ↓ PCR en 66 ensayos</div>
+      </div>
+      <div class="p5-sol-card">
+        <div class="p5-sol-emoji">🌱</div>
+        <div class="p5-sol-title">Grounding / Earthing</div>
+        <div class="p5-sol-desc">Se propone que el contacto descalzo con la tierra transfiere electrones con efecto antioxidante. Evidencia preliminar, práctica sencilla.</div>
+        <div class="p5-sol-pwr">Chevalier et al. 2012 — revisión</div>
+      </div>
+      <div class="p5-sol-card">
+        <div class="p5-sol-emoji">☀️</div>
+        <div class="p5-sol-title">Vitamina D / Sol</div>
+        <div class="p5-sol-desc">El déficit de vitamina D es muy frecuente y se asocia a más inflamación. El sol es tu fuente principal: 10-20 min de sol en brazos y cara.</div>
+        <div class="p5-sol-pwr">Holick, NEJM 2007</div>
+      </div>
+      <div class="p5-sol-card">
+        <div class="p5-sol-emoji">🧊</div>
+        <div class="p5-sol-title">Terapia de Frío</div>
+        <div class="p5-sol-desc">La inmersión en agua fría eleva con fuerza la noradrenalina (Šrámek 2000). Terminar la ducha con 30-60 s de agua fría es la versión suave.</div>
+        <div class="p5-sol-pwr">Šrámek et al. 2000 — noradrenalina ↑</div>
+      </div>
+      <div class="p5-sol-card">
+        <div class="p5-sol-emoji">🌲</div>
+        <div class="p5-sol-title">Baño de Bosque</div>
+        <div class="p5-sol-desc">Shinrin-yoku: en un estudio, 3 días de paseos por el bosque aumentaron la actividad de las células NK, defensoras del sistema inmune.</div>
+        <div class="p5-sol-pwr">Li Q. 2007 — células NK ↑</div>
+      </div>
+      <div class="p5-sol-card">
+        <div class="p5-sol-emoji">🫁</div>
+        <div class="p5-sol-title">Respiración Consciente</div>
+        <div class="p5-sol-desc">El nervio vago activado por respiración profunda libera acetilcolina que bloquea directamente la producción de TNF-α.</div>
+        <div class="p5-sol-pwr">Tracey, Nature 2002</div>
+      </div>
+    </div>
+
+    <div class="p5-plan">
+      <div class="p5-plan-title">🗓️ Tu Mini-Plan Anti-IBG para los 21 Días</div>
+      <div class="p5-plan-row">
+        <div class="p5-plan-icon">🌅</div>
+        <div class="p5-plan-text"><strong>Mañana:</strong> 10 min de sol directo en brazos y cara + 2 min de respiración profunda (4-7-8) antes de comer</div>
+      </div>
+      <div class="p5-plan-row">
+        <div class="p5-plan-icon">🥗</div>
+        <div class="p5-plan-text"><strong>En cada comida:</strong> Al menos 1 alimento antiinflamatorio: arándanos, salmón, espinaca, cúrcuma, jengibre, brócoli</div>
+      </div>
+      <div class="p5-plan-row">
+        <div class="p5-plan-icon">🌱</div>
+        <div class="p5-plan-text"><strong>Tarde:</strong> 10-15 min de grounding (pies descalzos en pasto o tierra) — también sirve playa y jardín</div>
+      </div>
+      <div class="p5-plan-row">
+        <div class="p5-plan-icon">🚿</div>
+        <div class="p5-plan-text"><strong>Ducha:</strong> Terminar con 30-60 segundos de agua fría — activa nervio vago + norepinefrina antiinflamatoria</div>
+      </div>
+      <div class="p5-plan-row">
+        <div class="p5-plan-icon">🌙</div>
+        <div class="p5-plan-text"><strong>Noche:</strong> Sin pantallas 1h antes de dormir — la luz de las pantallas retrasa la melatonina y empeora el sueño, clave para bajar la inflamación</div>
+      </div>
+    </div>
+
+    <div class="refs-box">
+      <div class="refs-title">Referencias Científicas</div>
+      <div class="refs-text">
+        1. Libby P. Inflammation and cardiovascular disease mechanisms. Am J Clin Nutr. 2006;83:456S-460S. ·
+        2. Ridker PM et al. Reduction in C-reactive protein and LDL cholesterol and cardiovascular event rates after initiation of rosuvastatin. Lancet. 2009;373:1175-1182. ·
+        3. Chevalier G et al. Earthing: health implications of reconnecting the human body to the Earth's surface electrons. J Environ Public Health. 2012. ·
+        4. Holick MF. Vitamin D deficiency. N Engl J Med. 2007;357:266-281. ·
+        5. Li Q et al. Forest bathing enhances human natural killer activity and expression of anti-cancer proteins. Int J Immunopathol Pharmacol. 2007. ·
+        6. Tracey KJ. The inflammatory reflex. Nature. 2002;420:853-859. ·
+        7. Hotamisligil GS. Inflammation and metabolic disorders. Nature. 2006;444:860-867. ·
+        8. Calder PC. Omega-3 fatty acids and inflammatory processes. Nutrients. 2010;2:355-374. ·
+        9. Furman D et al. Chronic inflammation in the etiology of disease across the life span. Nat Med. 2019;25:1822-1832. ·
+        10. Šrámek P et al. Human physiological responses to immersion into water of different temperatures. Eur J Appl Physiol. 2000;81:436-442. ·
+        11. Dehzad MJ et al. Anti-inflammatory effects of curcumin/turmeric supplementation in adults: meta-analysis of RCTs. Cytokine. 2023;164:156144.
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <div class="footer-brand">epimedik · Reset21</div>
+    <div class="footer-page">5 / 5</div>
+  </div>
 </div>
 
-<button class="print-btn" onclick="window.print()">📄 Descargar / Imprimir guía</button>
 </body>
 </html>

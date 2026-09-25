@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ritual de Recuperación — MORAIMA 21</title>
+<title>Ritual de Recuperación — Reset21</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root { --navy:#0a2942; --sky:#5dade2; --gold:#f4d03f; --green:#5de28c; --red:#e25d5d; }
@@ -94,7 +94,7 @@
 
 <!-- ══ SCREEN 1: WELCOME ══ -->
 <div class="screen active" id="screen-welcome">
-  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="logo-bar">epimedik · Reset21</div>
   <div class="module-tag">Módulo 3 · Recuperación · Días 7-9</div>
   <div style="font-size:56px;margin-bottom:16px;">🌙</div>
   <h1>Construye tu<br>Ritual Nocturno</h1>
@@ -113,7 +113,7 @@
 
 <!-- ══ SCREEN 2: QUESTIONS ══ -->
 <div class="screen" id="screen-questions">
-  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="logo-bar">epimedik · Reset21</div>
   <div class="progress-wrap">
     <div class="progress-label">
       <span id="q-progress-label">Pregunta 1 de 7</span>
@@ -133,7 +133,7 @@
 
 <!-- ══ SCREEN 3: RESULTS ══ -->
 <div class="screen" id="screen-results">
-  <div class="logo-bar">epimedik · MORAIMA 21</div>
+  <div class="logo-bar">epimedik · Reset21</div>
   <div class="module-tag">Tu Puntaje de Recuperación</div>
 
   <div class="score-ring" id="score-ring">
@@ -185,7 +185,7 @@ const QUESTIONS = [
     options:[
       { text:'Más de 1h antes de dormir', sub:'Melatonina libre para trabajar', pts:12, type:'good', science:'Sin luz azul, la melatonina sube naturalmente, reduces el tiempo para dormir y aumentas el sueño profundo.' },
       { text:'30-60 min antes',           sub:'Bien — sigue bajando',           pts:8,  type:'ok',  science:'30 minutos es el mínimo recomendado. Ponle un temporizador a tu teléfono para hacerlo automático.' },
-      { text:'Justo antes de dormir',     sub:'La pantalla aún te activa',       pts:3,  type:'bad', science:'Harvard (2012) demostró que 2h de pantalla antes de dormir suprimen la melatonina hasta un 22%.' },
+      { text:'Justo antes de dormir',     sub:'La pantalla aún te activa',       pts:3,  type:'bad', science:'Chang et al. (PNAS, 2015): leer en pantalla antes de dormir retrasó la melatonina y el sueño comparado con un libro impreso.' },
       { text:'Me duermo con el celular',  sub:'Ciclo de sueño interrumpido',     pts:0,  type:'bad', science:'Las notificaciones nocturas y la luz del celular activan el sistema de alerta del cerebro incluso si no te despiertas consciente.' }
     ]
   },
@@ -205,7 +205,7 @@ const QUESTIONS = [
     options:[
       { text:'No consumo cafeína',          sub:'Recuperación sin interferencia',    pts:10, type:'good', science:'Sin cafeína, la adenosina (señal de sueño) se acumula libremente durante el día, generando sueño más profundo.' },
       { text:'Solo antes del mediodía',     sub:'Sin efecto nocturno',               pts:10, type:'good', science:'Perfecto timing. La cafeína se habrá eliminado en su mayor parte al momento de dormir.' },
-      { text:'Café de la tarde (1-4pm)',    sub:'Puede afectar el sueño profundo',   pts:5,  type:'ok',  science:'Matthew Walker (2017): incluso el café de las 2pm puede reducir el sueño profundo un 20% esa noche.' },
+      { text:'Café de la tarde (1-4pm)',    sub:'Puede afectar el sueño profundo',   pts:5,  type:'ok',  science:'Drake et al. (2013): cafeína tomada incluso 6 horas antes de dormir redujo el sueño en más de 1 hora.' },
       { text:'Café nocturno o energizantes', sub:'Bloquea el sueño reparador',       pts:0,  type:'bad', science:'Los energizantes contienen hasta 150mg de cafeína, equivalente a 2 espressos — su efecto puede durar hasta las 3am.' }
     ]
   },
@@ -213,7 +213,7 @@ const QUESTIONS = [
     icon:'🧘', title:'¿Tienes algún ritual de transición antes de dormir?',
     hint:'El cerebro necesita una "rampa de desaceleración" de 30-60 minutos.',
     options:[
-      { text:'Sí — rutina fija (ducha, lectura, meditación)', sub:'Sistema nervioso preparado', pts:10, type:'good', science:'Los rituales nocturnos bajan el cortisol, activan el sistema parasimpático y reducen el tiempo para conciliar el sueño hasta un 35%.' },
+      { text:'Sí — rutina fija (ducha, lectura, meditación)', sub:'Sistema nervioso preparado', pts:10, type:'good', science:'Los rituales nocturnos bajan el cortisol, activan el sistema parasimpático y le enseñan a tu cuerpo que es hora de dormir.' },
       { text:'A veces — no es consistente',                   sub:'El cuerpo no lo espera',    pts:6,  type:'ok',  science:'La consistencia es clave. El cerebro aprende los rituales y empieza a liberar melatonina anticipando el sueño.' },
       { text:'Solo me lavo los dientes',                      sub:'Mínimo funcional',           pts:3,  type:'ok',  science:'Pequeño pero válido. Añade 5 minutos de respiración 4-7-8 después y potencias el efecto significativamente.' },
       { text:'Me quedo dormida sin ritual',                   sub:'Sueño reactivo, no elegido', pts:1,  type:'bad', science:'Dormirse "de golpe" por agotamiento es diferente a dormir de forma reparadora. Tu calidad de sueño profundo será menor.' }
@@ -340,7 +340,7 @@ function showResults() {
     challenge = 'Tu reto: Identifica tu respuesta más roja y corrige solo ese hábito en los próximos 3 días. Un cambio a la vez tiene más impacto que diez a medias.';
   } else if (pct >= 0.45) {
     grade = '⚠️ Recuperación Comprometida';
-    sub   = 'Tu cuerpo está en déficit de recuperación. Esto afecta el cortisol, el metabolismo, la inflamación y el estado de ánimo — todo lo que trabajamos en MORAIMA 21.';
+    sub   = 'Tu cuerpo está en déficit de recuperación. Esto afecta el cortisol, el metabolismo, la inflamación y el estado de ánimo — todo lo que trabajamos en Reset21.';
     color = 'var(--gold)';
     challenge = 'Tu reto: Escoge una hora fija de dormir y cúmplela los 3 días sin excepción. La consistencia del horario de sueño es el cambio con mayor impacto comprobado.';
   } else {
@@ -398,7 +398,7 @@ function showResults() {
       ok:     { title:'🍵 Mueve el último café más temprano', action:'Si tomas café a las 3pm, muévelo a las 11am. La cafeína tarda 5-7 horas en eliminarse. Un café a las 3pm sigue activo a las 10pm.', tip:'Truco: el "café del engaño" funciona — toma agua caliente con canela cuando necesites el ritual sin la cafeína.' }
     },
     '¿Tienes algún ritual de transición antes de dormir?': {
-      urgent: { title:'🧘 Crea un ritual mínimo de 10 minutos', action:'Esta noche: ducha tibia → 5 min respiración 4-7-8 → apagar pantallas. Eso es todo. No necesita ser perfecto, necesita ser consistente. El cerebro aprende el ritual y empieza a liberar melatonina al verlo venir.', tip:'Truco: ponle un nombre a tu ritual — "mi ritual MORAIMA" — el naming hace que lo cumplas más.' },
+      urgent: { title:'🧘 Crea un ritual mínimo de 10 minutos', action:'Esta noche: ducha tibia → 5 min respiración 4-7-8 → apagar pantallas. Eso es todo. No necesita ser perfecto, necesita ser consistente. El cerebro aprende el ritual y empieza a liberar melatonina al verlo venir.', tip:'Truco: ponle un nombre a tu ritual — "mi ritual Reset21" — el naming hace que lo cumplas más.' },
       ok:     { title:'🌙 Hazlo consistente', action:'Ya tienes un ritual pero no es fijo. El poder está en la consistencia. El mismo ritual a la misma hora le dice al cerebro: "es hora de dormir" y la melatonina sube antes de que te acuestes.', tip:'Truco: añade solo una cosa más a lo que ya haces — 3 respiraciones profundas antes de cerrar los ojos.' }
     },
     '¿Comes pesado en la noche?': {
@@ -406,7 +406,7 @@ function showResults() {
       ok:     { title:'⏱ Adelanta la cena 30 minutos', action:'Solo 30 minutos antes marca una diferencia. Y elige alimentos con triptófano para la cena: huevo, pavo, plátano, avena — son precursores de la serotonina y melatonina.', tip:'Truco: el plátano con mantequilla de maní antes de dormir es el snack pre-sueño más respaldado científicamente.' }
     },
     '¿Cómo es la oscuridad en tu cuarto?': {
-      urgent: { title:'🌑 Oscurece tu cuarto esta noche', action:'Soluciones inmediatas: cubre las luces LED de aparatos con cinta negra, pon una toalla en la rendija de la puerta, usa una antifaz de sueño ($5-15 USD). La oscuridad total puede incrementar la melatonina hasta un 50%.', tip:'Truco: el mejor antifaz es el de seda — cómodo y bloquea luz sin presión sobre los ojos.' },
+      urgent: { title:'🌑 Oscurece tu cuarto esta noche', action:'Soluciones inmediatas: cubre las luces LED de aparatos con cinta negra, pon una toalla en la rendija de la puerta, usa una antifaz de sueño ($5-15 USD). La oscuridad total favorece la producción natural de melatonina.', tip:'Truco: el mejor antifaz es el de seda — cómodo y bloquea luz sin presión sobre los ojos.' },
       ok:     { title:'💡 Reduce la luz exterior', action:'Una antifaz de sueño resuelve el problema de la luz exterior sin necesidad de cortinas blackout. Es la solución más económica y efectiva.', tip:'Truco: prueba apagar también las luces LED de cargadores y routers — suman más de lo que crees.' }
     }
   };

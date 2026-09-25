@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Amor Propio — Módulo 7 · Reset21</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Montserrat', sans-serif; background: #e8f0f8; }
+
+.page {
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto 10mm;
+  background: white;
+  overflow: hidden;
+  position: relative;
+  page-break-after: always;
+}
+.page:last-child { page-break-after: avoid; }
+
+:root {
+  --navy:   #0a2942;
+  --sky:    #5dade2;
+  --gold:   #f4d03f;
+  --green:  #5de28c;
+  --rose:   #f1a7c0;   /* acento suave solo para Amor Propio */
+  --light:  #eaf4fb;
+  --navy2:  #1a3a5c;
+}
+
+/* ══════════════════════════════════
+   PÁGINA 1 — PORTADA
+══════════════════════════════════ */
+.p1 {
+  background: linear-gradient(155deg, var(--navy) 0%, var(--navy2) 55%, #0d3d2a 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 18mm 16mm;
+  position: relative; overflow: hidden; height: 100%;
+}
+.p1-d1 { position:absolute;top:-30mm;right:-30mm;width:100mm;height:100mm;border-radius:50%;background:rgba(93,173,226,.07); }
+.p1-d2 { position:absolute;bottom:-20mm;left:-20mm;width:70mm;height:70mm;border-radius:50%;background:rgba(244,208,63,.06); }
+.p1-d3 { position:absolute;top:45mm;left:-12mm;width:45mm;height:45mm;border-radius:50%;background:rgba(93,226,140,.05); }
+.p1-d4 { position:absolute;bottom:30mm;right:-8mm;width:35mm;height:35mm;border-radius:50%;background:rgba(241,167,192,.06); }
+
+.p1-program { color:rgba(255,255,255,.45);font-size:8pt;letter-spacing:4px;text-transform:uppercase;margin-bottom:5mm; }
+.p1-tag { background:rgba(244,208,63,.15);border:1px solid rgba(244,208,63,.35);
+  color:var(--gold);padding:5px 18px;border-radius:50px;font-size:9pt;
+  font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8mm;display:inline-block; }
+.p1-emoji { font-size:54pt;margin-bottom:5mm; }
+.p1-title { font-family:'Playfair Display',serif;color:white;font-size:34pt;
+  font-weight:700;margin-bottom:4mm;line-height:1.1; }
+.p1-subtitle { color:var(--rose);font-size:12pt;font-weight:300;
+  font-family:'Playfair Display',serif;font-style:italic;margin-bottom:7mm; }
+.p1-quote { color:rgba(255,255,255,.65);font-size:10pt;font-style:italic;
+  line-height:1.75;margin-bottom:9mm;max-width:128mm; }
+.p1-bar { width:80mm;height:2px;margin:0 auto 8mm;
+  background:linear-gradient(90deg,var(--sky),var(--gold),var(--green));border-radius:2px; }
+.p1-metodo { color:rgba(255,255,255,.6);font-size:7.5pt;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:3mm; }
+.p1-moraima { display:flex;gap:3.5mm;justify-content:center;margin-bottom:10mm;flex-wrap:wrap; }
+.p1-l { text-align:center; }
+.p1-ll { font-size:17pt;font-weight:900;color:var(--gold);line-height:1; }
+.p1-lw { font-size:6.5pt;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.3px; }
+.p1-brand { color:rgba(255,255,255,.35);font-size:8pt;letter-spacing:2px;text-transform:uppercase; }
+
+/* ══════════════════════════════════
+   HEADER INTERIOR
+══════════════════════════════════ */
+.pg-hd { background:linear-gradient(135deg,var(--navy),var(--navy2));
+  padding:5mm 12mm;display:flex;align-items:center;justify-content:space-between; }
+.pg-hd-title { color:white;font-size:10pt;font-weight:700; }
+.pg-hd-mod { color:var(--gold);font-size:8pt;font-weight:600;letter-spacing:1.5px; }
+.pg-body { padding:7mm 12mm 5mm; }
+.sec-sub { font-size:8.5pt;color:#555;margin-bottom:5mm;line-height:1.55; }
+
+/* ══════════════════════════════════
+   PÁGINA 2 — RESUMEN 21 DÍAS
+══════════════════════════════════ */
+.jt { width:100%;border-collapse:collapse;font-size:7.5pt; }
+.jt th { background:var(--navy);color:white;padding:5px 7px;
+  text-align:left;font-size:7pt;font-weight:700;text-transform:uppercase;letter-spacing:.5px; }
+.jt td { padding:5px 7px;border-bottom:1px solid var(--light);vertical-align:top; }
+.jt tr:nth-child(even) td { background:var(--light); }
+.jt tr:last-child td { border-bottom:none; }
+.jt-mod { font-weight:900;color:var(--sky);font-size:8.5pt; }
+.jt-mod-a { font-weight:900;color:var(--rose);font-size:8.5pt; }
+.jt-name { font-weight:700;color:var(--navy); }
+.jt-key { color:#555;font-size:7pt;line-height:1.4; }
+.jt-chk { text-align:center; }
+.cb { display:inline-block;width:12px;height:12px;border:2px solid var(--sky);border-radius:3px; }
+
+.days-grid { display:grid;grid-template-columns:repeat(7,1fr);gap:2.5mm;margin-top:3mm; }
+.dg-day { border:1.5px solid #c8dff0;border-radius:7px;padding:2.5mm;text-align:center; }
+.dg-day-last { border:2px solid var(--sky);background:var(--light); }
+.dg-n { font-size:7pt;font-weight:800;color:var(--navy); }
+.dg-box { height:9mm;border:1.5px dashed #b8d8f0;border-radius:4px;margin-top:1.5mm;background:#f8fcff; }
+.dg-box-last { border:1.5px dashed var(--sky);background:#e8f4fb; }
+
+/* ══════════════════════════════════
+   PÁGINA 3 — VOZ INTERNA
+══════════════════════════════════ */
+.vi-box { background:linear-gradient(135deg,var(--light),#d0ebf8);
+  border-left:4px solid var(--sky);border-radius:10px;padding:5mm 6mm;margin-bottom:5mm; }
+.vi-title { font-size:10pt;font-weight:800;color:var(--navy);margin-bottom:2mm; }
+.vi-text { font-size:8pt;color:#333;line-height:1.6; }
+.vi-text strong { color:var(--sky); }
+
+.vt { width:100%;border-collapse:collapse; }
+.vt th { padding:6px 10px;font-size:8pt;font-weight:800;text-align:left; }
+.th-neg { background:linear-gradient(135deg,#fadbd8,#f1948a);color:#7b241c;border-radius:8px 0 0 0; }
+.th-arr { width:8mm;background:#f0f7ff;text-align:center;color:var(--sky); }
+.th-pos { background:linear-gradient(135deg,#d5f5e3,#82e0aa);color:#1e8449;border-radius:0 8px 0 0; }
+.vt td { border:1px solid #e0eef8;padding:0;vertical-align:top; }
+.v-in { width:100%;min-height:14mm;padding:4mm 5mm;font-size:8pt;
+  color:#333;line-height:1.8;font-family:'Montserrat',sans-serif;border:none;background:transparent; }
+.td-neg { background:#fff8f8; }
+.td-arr { width:8mm;background:#f0f7ff;text-align:center;font-size:12pt;color:var(--sky);vertical-align:middle; }
+.td-pos { background:#f5fff8; }
+
+.vf { margin-top:4mm;background:linear-gradient(135deg,var(--light),#d0ebf8);
+  border-radius:10px;padding:4mm 5mm; }
+.vf-t { font-size:8.5pt;font-weight:800;color:var(--navy);margin-bottom:2mm; }
+.vf-s { font-size:7.5pt;color:#555;line-height:1.7;font-style:italic; }
+
+/* ══════════════════════════════════
+   PÁGINA 4 — CARTA DE AMOR PROPIO
+══════════════════════════════════ */
+.carta-hd { background:linear-gradient(135deg,var(--navy),var(--navy2));
+  padding:7mm 12mm;text-align:center; }
+.carta-hd-title { font-family:'Playfair Display',serif;color:white;font-size:18pt;
+  font-style:italic;margin-bottom:2mm; }
+.carta-hd-sub { color:rgba(255,255,255,.65);font-size:8.5pt;font-style:italic; }
+.carta-body { padding:7mm 12mm 5mm; }
+.carta-deco { float:right;margin-left:5mm;margin-bottom:3mm;width:44mm; }
+.carta-deco-box { background:linear-gradient(150deg,var(--navy),var(--navy2));
+  border-radius:14px;padding:5mm 4mm;color:white;text-align:center; }
+.cdb-cross { font-size:22pt;color:var(--gold);margin-bottom:3mm; }
+.cdb-verse { font-family:'Playfair Display',serif;font-style:italic;
+  font-size:7.5pt;line-height:1.75;color:rgba(255,255,255,.9); }
+.cdb-ref { font-size:7pt;color:var(--gold);font-weight:700;margin-top:3mm; }
+.carta-deco-sub { margin-top:3mm;background:var(--light);border-radius:10px;
+  padding:4mm;border:1px solid #b8d8f0;text-align:center; }
+.cds-name { font-size:7pt;font-weight:800;color:var(--navy);margin-bottom:2mm; }
+.cds-sub { font-size:6.5pt;color:#666;line-height:1.5; }
+
+.carta-open { font-family:'Playfair Display',serif;font-size:11pt;font-style:italic;
+  color:var(--navy);margin-bottom:5mm; }
+.carta-line { border-bottom:1px solid #ddeeff;height:9.5mm;width:100%; }
+.carta-close { font-family:'Dancing Script',cursive;font-size:14pt;
+  color:var(--navy);margin-top:5mm;text-align:right; }
+.carta-para { font-family:'Playfair Display',serif;font-size:8.5pt;
+  color:#1a2a3a;line-height:1.8;margin-bottom:3.5mm;font-style:italic; }
+.carta-date { border-bottom:1px solid #ddeeff;width:58mm;margin-left:auto;margin-top:6mm;margin-bottom:2mm; }
+.carta-date-lbl { font-size:7.5pt;color:#aaa;text-align:right; }
+
+/* ══════════════════════════════════
+   PÁGINA 5 — CIENCIA
+══════════════════════════════════ */
+.sci-stats { display:flex;gap:3mm;margin-bottom:5mm; }
+.ss { flex:1;background:linear-gradient(135deg,var(--navy),var(--navy2));
+  border-radius:10px;padding:4mm;text-align:center;color:white; }
+.ss-n { font-size:18pt;font-weight:900;color:var(--gold); }
+.ss-l { font-size:7pt;opacity:.85;line-height:1.3;margin-top:1mm; }
+
+.sci-cards { display:grid;grid-template-columns:repeat(2,1fr);gap:4mm;margin-bottom:5mm; }
+.sc { border-radius:12px;padding:4mm 5mm; }
+.sc-sky   { background:linear-gradient(135deg,var(--light),#c8e8f8);border-left:3px solid var(--sky); }
+.sc-gold  { background:linear-gradient(135deg,#fef9e7,#fde68a44);border-left:3px solid var(--gold); }
+.sc-green { background:linear-gradient(135deg,#eafaf1,#c3e6cb);border-left:3px solid var(--green); }
+.sc-rose  { background:linear-gradient(135deg,#fff0f5,#fdd0e0);border-left:3px solid var(--rose); }
+.sc-t { font-size:8.5pt;font-weight:800;color:var(--navy);margin-bottom:2mm; }
+.sc-b { font-size:7.5pt;color:#444;line-height:1.5; }
+.sc-ref { font-size:6.5pt;color:#888;margin-top:2mm;font-style:italic; }
+
+.mol-box { background:linear-gradient(135deg,var(--navy),var(--navy2));
+  border-radius:12px;padding:4.5mm 6mm;margin-bottom:5mm; }
+.mol-t { font-size:9pt;font-weight:800;color:var(--gold);margin-bottom:3mm; }
+.mol-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2mm; }
+.mol-item { background:rgba(255,255,255,.08);border-radius:8px;padding:3mm;text-align:center; }
+.mol-e { font-size:14pt; }
+.mol-l { font-size:7pt;color:rgba(255,255,255,.88);margin-top:1mm;line-height:1.3; }
+
+.refs-box { border-top:2px solid var(--light);padding-top:4mm; }
+.refs-t { font-size:8pt;font-weight:700;color:var(--navy);margin-bottom:2mm; }
+.refs-txt { font-size:6pt;color:#777;line-height:1.8; }
+
+/* ══════════════════════════════════
+   PÁGINA 6 — NOTA FINAL
+══════════════════════════════════ */
+.p6 {
+  background:linear-gradient(155deg,var(--navy) 0%,var(--navy2) 55%,#0d3d2a 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:18mm 16mm;
+  position:relative;overflow:hidden;height:100%;
+}
+.p6-d1 { position:absolute;top:-25mm;right:-25mm;width:80mm;height:80mm;border-radius:50%;background:rgba(93,173,226,.07); }
+.p6-d2 { position:absolute;bottom:-15mm;left:-15mm;width:60mm;height:60mm;border-radius:50%;background:rgba(93,226,140,.06); }
+.p6-d3 { position:absolute;top:40mm;left:-10mm;width:30mm;height:30mm;border-radius:50%;background:rgba(244,208,63,.05); }
+.p6-cross { font-size:30pt;color:var(--gold);margin-bottom:5mm;opacity:.95; }
+.p6-title { font-family:'Playfair Display',serif;color:white;font-size:16pt;
+  font-style:italic;margin-bottom:7mm;line-height:1.4; }
+.p6-text { color:rgba(255,255,255,.85);font-size:9.5pt;line-height:1.9;
+  max-width:155mm;text-align:justify;margin-bottom:7mm;font-style:italic; }
+.p6-verse { background:rgba(93,173,226,.12);border:1px solid rgba(93,173,226,.25);
+  border-radius:14px;padding:5mm 8mm;margin-bottom:7mm;max-width:150mm; }
+.p6-verse-text { font-family:'Playfair Display',serif;color:white;font-size:10pt;
+  font-style:italic;line-height:1.75;margin-bottom:2mm; }
+.p6-verse-ref { font-size:8pt;color:var(--sky);font-weight:700; }
+.p6-bar { width:80mm;height:2px;margin:0 auto 7mm;
+  background:linear-gradient(90deg,var(--sky),var(--gold),var(--green));border-radius:2px; }
+.p6-firma { font-family:'Dancing Script',cursive;font-size:22pt;color:var(--gold);margin-bottom:2mm; }
+.p6-firma-sub { color:rgba(255,255,255,.5);font-size:8.5pt;letter-spacing:1px; }
+.p6-brand { margin-top:8mm;color:rgba(255,255,255,.28);font-size:7.5pt;letter-spacing:2px; }
+
+/* FOOTER */
+.pg-ft { position:absolute;bottom:4mm;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;padding:0 12mm; }
+.ft-l { font-size:7pt;color:#bbb;font-weight:600;letter-spacing:1px; }
+.ft-r { font-size:7pt;color:#ccc; }
+.ft-l-dark { font-size:7pt;color:rgba(255,255,255,.28);font-weight:600;letter-spacing:1px; }
+.ft-r-dark { font-size:7pt;color:rgba(255,255,255,.22); }
+
+@page { size: A4; margin: 0; }
+@media print {
+  body { background: white; }
+  .page { margin: 0; page-break-after: always; }
+  .page:last-child { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     PÁGINA 1 — PORTADA
+══════════════════════════════════ -->
+<div class="page">
+<div class="p1">
+  <div class="p1-d1"></div><div class="p1-d2"></div>
+  <div class="p1-d3"></div><div class="p1-d4"></div>
+  <div class="p1-program">Reset21 · Medicina Preventiva · epimedik</div>
+  <div class="p1-tag">Módulo 7 — Amor Propio</div>
+  <div class="p1-emoji">💛</div>
+  <div class="p1-title">Amor<br>Propio</div>
+  <div class="p1-subtitle" style="color:var(--rose)">La medicina más poderosa<br>que nadie te recetó</div>
+  <div class="p1-quote">"Cuidarte no es un lujo. Es el acto más valiente y revolucionario que puedes hacer por ti misma y por todos los que amas."</div>
+  <div class="p1-bar"></div>
+  <div class="p1-metodo">El Método MORAIMA · 7 pilares</div>
+  <div class="p1-moraima">
+    <div class="p1-l"><div class="p1-ll">M</div><div class="p1-lw">Mente</div></div>
+    <div class="p1-l"><div class="p1-ll">O</div><div class="p1-lw">Oxigenación</div></div>
+    <div class="p1-l"><div class="p1-ll">R</div><div class="p1-lw">Recuperación</div></div>
+    <div class="p1-l"><div class="p1-ll">A</div><div class="p1-lw">Alimentación</div></div>
+    <div class="p1-l"><div class="p1-ll">I</div><div class="p1-lw">Inflamación</div></div>
+    <div class="p1-l"><div class="p1-ll">M</div><div class="p1-lw">Movimiento</div></div>
+    <div class="p1-l"><div class="p1-ll" style="color:var(--rose)">A</div><div class="p1-lw">Amor Propio</div></div>
+  </div>
+  <div class="p1-brand">epimedik · 2026 · Vive la vida al cien.</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════
+     PÁGINA 2 — RESUMEN 21 DÍAS + TRACKER
+══════════════════════════════════ -->
+<div class="page">
+<div class="pg-hd">
+  <div class="pg-hd-title">Tu Viaje Completo — Resumen de los 21 Días</div>
+  <div class="pg-hd-mod">MÓDULO 7 · AMOR PROPIO</div>
+</div>
+<div class="pg-body">
+
+  <div class="sec-sub">Cada pilar del Método MORAIMA activó una dimensión diferente de tu salud. Aquí está el mapa completo de todo lo que transformaste.</div>
+
+  <table class="jt">
+    <thead>
+      <tr>
+        <th style="width:8mm">Mod.</th>
+        <th style="width:22mm">Pilar</th>
+        <th>Concepto Clave</th>
+        <th style="width:36mm">Hábito Principal</th>
+        <th style="width:16mm;text-align:center">¿Lo tengo?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="jt-mod">M</span></td>
+        <td><span class="jt-name">🧠 Mente</span></td>
+        <td><span class="jt-key">Neuroplasticidad: el cerebro cambia con lo que piensas. Los pensamientos repetidos construyen redes neuronales reales.</span></td>
+        <td>Sonidos binaurales 5 min + nuevas creencias</td>
+        <td class="jt-chk"><div class="cb"></div></td>
+      </tr>
+      <tr>
+        <td><span class="jt-mod">O</span></td>
+        <td><span class="jt-name">🌬️ Oxigenación</span></td>
+        <td><span class="jt-key">La respiración diafragmática activa el nervio vago y reduce el cortisol. 6 respiraciones por minuto calman el sistema nervioso.</span></td>
+        <td>Respiración consciente 5-10 min al día</td>
+        <td class="jt-chk"><div class="cb"></div></td>
+      </tr>
+      <tr>
+        <td><span class="jt-mod">R</span></td>
+        <td><span class="jt-name">🌙 Recuperación</span></td>
+        <td><span class="jt-key">El sueño profundo es cuando el cuerpo produce hormona del crecimiento y repara tejidos. Sin sueño, todo lo demás falla.</span></td>
+        <td>Ritual nocturno + 7-9h sueño</td>
+        <td class="jt-chk"><div class="cb"></div></td>
+      </tr>
+      <tr>
+        <td><span class="jt-mod">A</span></td>
+        <td><span class="jt-name">🥗 Alimentación</span></td>
+        <td><span class="jt-key">Los alimentos antiinflamatorios inhiben el NF-κB. Lo que comes es información molecular para tus células, no solo calorías.</span></td>
+        <td>1 alimento antiinflamatorio por comida</td>
+        <td class="jt-chk"><div class="cb"></div></td>
+      </tr>
+      <tr>
+        <td><span class="jt-mod">I</span></td>
+        <td><span class="jt-name">🔥 Inflamación</span></td>
+        <td><span class="jt-key">La inflamación de bajo grado es el origen de casi todas las enfermedades crónicas. El NF-κB es el interruptor maestro.</span></td>
+        <td>Grounding + sol 20 min + ducha fría</td>
+        <td class="jt-chk"><div class="cb"></div></td>
+      </tr>
+      <tr>
+        <td><span class="jt-mod">M</span></td>
+        <td><span class="jt-name">💪 Movimiento</span></td>
+        <td><span class="jt-key">Las miocinas musculares son antiinflamatorias naturales. El músculo es un órgano endocrino que produce medicina.</span></td>
+        <td>20-30 min de movimiento diario</td>
+        <td class="jt-chk"><div class="cb"></div></td>
+      </tr>
+      <tr style="background:var(--light)">
+        <td><span class="jt-mod-a">A</span></td>
+        <td><span class="jt-name">💛 Amor Propio</span></td>
+        <td><span class="jt-key">La autocompasión activa el sistema parasimpático. Hablarte bien reduce cortisol y activa oxitocina endógena.</span></td>
+        <td>Carta de amor propio + voz amable</td>
+        <td class="jt-chk"><div class="cb" style="border-color:var(--rose)"></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:5mm">
+    <div style="font-size:9pt;font-weight:800;color:var(--navy);margin-bottom:3mm">📅 Mi Racha de 21 Días — Marca cada día completado</div>
+    <div class="days-grid">
+      <div class="dg-day"><div class="dg-n">Día 1</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 2</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 3</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 4</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 5</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 6</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 7</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 8</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 9</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 10</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 11</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 12</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 13</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 14</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 15</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 16</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 17</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 18</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 19</div><div class="dg-box"></div></div>
+      <div class="dg-day"><div class="dg-n">Día 20</div><div class="dg-box"></div></div>
+      <div class="dg-day dg-day-last"><div class="dg-n" style="color:var(--sky);font-weight:900">Día 21 🎉</div><div class="dg-box dg-box-last"></div></div>
+    </div>
+  </div>
+
+</div>
+<div class="pg-ft"><div class="ft-l">epimedik · Reset21</div><div class="ft-r">2 / 6</div></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PÁGINA 3 — VOZ INTERNA
+══════════════════════════════════ -->
+<div class="page">
+<div class="pg-hd">
+  <div class="pg-hd-title">Lo que me digo → Lo que elegiré decirme</div>
+  <div class="pg-hd-mod">MÓDULO 7 · AMOR PROPIO</div>
+</div>
+<div class="pg-body">
+
+  <div class="vi-box">
+    <div class="vi-title">🧠 Tu voz interna moldea tu biología — literalmente</div>
+    <div class="vi-text">Cada pensamiento activa una cascada neuroquímica real. La autocrítica crónica eleva el cortisol e inhibe la serotonina. La autocompasión activa la <strong>oxitocina</strong> y el sistema parasimpático. Hablarte bien no es debilidad — es <strong>neurociencia aplicada</strong>. Escribe en la columna izquierda lo que te has dicho. En la derecha, reescríbelo con la voz que usarías con alguien que amas profundamente.</div>
+  </div>
+
+  <table class="vt">
+    <thead>
+      <tr>
+        <th class="th-neg">😔 Lo que me he dicho (voz crítica)</th>
+        <th class="th-arr">→</th>
+        <th class="th-pos">💛 Lo que elegiré decirme (voz amable)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-neg"><div class="v-in" style="color:#c0392b;font-style:italic;font-size:8pt">Ej: "Nunca termino lo que empiezo..."</div></td>
+        <td class="td-arr">→</td>
+        <td class="td-pos"><div class="v-in" style="color:#1e8449;font-style:italic;font-size:8pt">Ej: "Estoy aprendiendo a mantener mis compromisos. Cada día mejoro."</div></td>
+      </tr>
+      <tr><td class="td-neg"><div class="v-in"></div></td><td class="td-arr">→</td><td class="td-pos"><div class="v-in"></div></td></tr>
+      <tr><td class="td-neg"><div class="v-in"></div></td><td class="td-arr">→</td><td class="td-pos"><div class="v-in"></div></td></tr>
+      <tr><td class="td-neg"><div class="v-in"></div></td><td class="td-arr">→</td><td class="td-pos"><div class="v-in"></div></td></tr>
+      <tr><td class="td-neg"><div class="v-in"></div></td><td class="td-arr">→</td><td class="td-pos"><div class="v-in"></div></td></tr>
+      <tr><td class="td-neg"><div class="v-in"></div></td><td class="td-arr">→</td><td class="td-pos"><div class="v-in"></div></td></tr>
+      <tr><td class="td-neg"><div class="v-in"></div></td><td class="td-arr">→</td><td class="td-pos"><div class="v-in"></div></td></tr>
+      <tr><td class="td-neg"><div class="v-in"></div></td><td class="td-arr">→</td><td class="td-pos"><div class="v-in"></div></td></tr>
+    </tbody>
+  </table>
+
+  <div class="vf">
+    <div class="vf-t">📌 Recuerda: no se trata de eliminar los pensamientos negativos — se trata de no creerles sin cuestionarlos</div>
+    <div class="vf-s">"Tú no eres tus pensamientos. Eres quien puede elegir cuáles alimentar. La neuroplasticidad confirma que esta práctica, sostenida en el tiempo, construye nuevas conexiones reales en tu cerebro." — Inspirado en el programa de autocompasión de Neff & Germer (2013).</div>
+  </div>
+
+</div>
+<div class="pg-ft"><div class="ft-l">epimedik · Reset21</div><div class="ft-r">3 / 6</div></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PÁGINA 4 — CARTA DE AMOR PROPIO
+══════════════════════════════════ -->
+<div class="page">
+<div class="carta-hd">
+  <div class="carta-hd-title">Mi Carta de Amor Propio</div>
+  <div class="carta-hd-sub">"La relación más importante de tu vida es la que tienes contigo."</div>
+</div>
+<div class="carta-body">
+
+  <!-- Caja decorativa flotando a la derecha -->
+  <div class="carta-deco">
+    <div class="carta-deco-box">
+      <div style="font-size:26pt;color:var(--gold);margin-bottom:3mm;">✦</div>
+      <div class="cdb-verse">"Tu cuerpo tiene una capacidad de sanación que aún la ciencia sigue descubriendo."</div>
+      <div class="cdb-ref">Dra. Monica Arellano</div>
+    </div>
+    <div class="carta-deco-sub">
+      <div class="cds-name">Dra. Monica Arellano</div>
+      <div class="cds-sub">Medicina Preventiva<br>y Biorregulación<br><strong style="color:var(--sky)">epimedik</strong></div>
+    </div>
+  </div>
+
+  <div class="carta-open">Quien llega hasta aquí,</div>
+
+  <div class="carta-para">ya demostró algo que muchos no logran: la voluntad de cuidarse.</div>
+
+  <div class="carta-para">Quiero que sepas algo que aprendí en años de práctica médica y en muchas noches de fe: mis pacientes no caminan solos hacia sus metas de salud. Caminan con Dios, y Él me puso a mí para acompañarlos en ese camino. No es casualidad que estés leyendo esto hoy.</div>
+
+  <div class="carta-para">La salud es un privilegio divino. Y ese privilegio nos abre puertas que van mucho más allá del cuerpo — nos permite amar más, soñar más, dar más. Mantenerse en salud no es una meta que se alcanza un día y se olvida. Es un proceso continuo de consciencia, de decisiones pequeñas y poderosas que, una a una, te acercan a tu máximo potencial.</div>
+
+  <div class="carta-para">La medicina preventiva no es un tratamiento. Son las acciones que eliges cada día para mantener tu salud celular, orgánica y sistémica de la forma más natural posible. Es tu cuerpo funcionando bien porque tú lo cuidas bien.</div>
+
+  <div class="carta-para">Estos 21 días fueron un comienzo. Una conversación entre tú y tu cuerpo. Un acto de amor propio. Y si algo aprendiste, si un hábito cambió, si hoy te tratas con más gentileza de la que te tratabas antes — ya ganaste.</div>
+
+  <div class="carta-para">No pares aquí. El cuerpo que tienes hoy es el resultado de lo que hiciste ayer. El cuerpo que tendrás mañana depende de lo que elijas hoy. Yo seguiré aquí, acompañándote.</div>
+
+  <div style="margin-top:5mm;display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="carta-date"></div>
+      <div class="carta-date-lbl">Fecha</div>
+    </div>
+    <div class="carta-close">Con amor incondicional,<br><span style="font-size:10pt;font-family:'Montserrat',sans-serif;font-style:normal;font-weight:700;">Dra. Monica Arellano · epimedik</span><br><span style="font-size:16pt">✦</span></div>
+  </div>
+
+</div>
+<div class="pg-ft"><div class="ft-l">epimedik · Reset21</div><div class="ft-r">4 / 6</div></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PÁGINA 5 — CIENCIA DEL AMOR PROPIO
+══════════════════════════════════ -->
+<div class="page">
+<div class="pg-hd">
+  <div class="pg-hd-title">La Ciencia detrás del Amor Propio</div>
+  <div class="pg-hd-mod">MÓDULO 7 · AMOR PROPIO</div>
+</div>
+<div class="pg-body">
+
+  <div class="sec-sub">El amor propio no es autoindulgencia ni egoísmo. Es neurobiología aplicada. La ciencia confirma que cómo te tratas determina tu química cerebral, tu sistema inmune y tu longevidad.</div>
+
+  <div class="sci-stats">
+    <div class="ss"><div class="ss-n">8 sem</div><div class="ss-l">de mindfulness bajaron genes proinflamatorios</div></div>
+    <div class="ss"><div class="ss-n">↑ Ox.</div><div class="ss-l">Oxitocina sube al hablarte con amabilidad</div></div>
+    <div class="ss"><div class="ss-n">↓ Ans.</div><div class="ss-l">Menos ansiedad, estrés y depresión con autocompasión</div></div>
+    <div class="ss"><div class="ss-n">↑ NK</div><div class="ss-l">Células inmunes NK aumentan con emociones positivas</div></div>
+  </div>
+
+  <div class="sci-cards">
+    <div class="sc sc-sky">
+      <div class="sc-t">🧠 Neuroplasticidad y Autocompasión</div>
+      <div class="sc-b">La autocompasión activa el sistema de cuidado (parasimpático), liberando oxitocina y reduciendo la amígdala hiperactiva. La autocrítica crónica mantiene el eje HPA (estrés) activado, dañando el hipocampo y la memoria.</div>
+      <div class="sc-ref">Neff KD & Germer CK. A pilot study of mindful self-compassion program. J Clin Psychol. 2013;69(1):28-44.</div>
+    </div>
+    <div class="sc sc-gold">
+      <div class="sc-t">💛 Autoestima vs Autocompasión</div>
+      <div class="sc-b">La autoestima fluctúa con el éxito y el fracaso; la autocompasión es estable. Los estudios demuestran que predice mejor el bienestar psicológico a largo plazo. No requiere compararse ni "ganar" para activarse.</div>
+      <div class="sc-ref">Neff KD. Self-compassion: An alternative conceptualization. Self and Identity. 2003;2(2):85-101.</div>
+    </div>
+    <div class="sc sc-green">
+      <div class="sc-t">🌿 Mindfulness e Inflamación</div>
+      <div class="sc-b">En un ensayo aleatorizado, 8 semanas de mindfulness (MBSR) redujeron la soledad y la expresión de genes proinflamatorios relacionados con NF-κB en adultos mayores. La calma interior también se mide en las células.</div>
+      <div class="sc-ref">Creswell JD et al. Mindfulness-Based Stress Reduction reduces loneliness and pro-inflammatory gene expression. Brain Behav Immun. 2012;26(7):1095-1101.</div>
+    </div>
+    <div class="sc sc-rose">
+      <div class="sc-t">🫀 El Cuerpo Escucha lo que te Dices</div>
+      <div class="sc-b">Cada pensamiento genera una respuesta neuroendocrina real. La autocrítica activa amígdala + cortisol + adrenalina. La amabilidad interna activa oxitocina + serotonina + DHEA. Tu cuerpo no distingue entre amenaza externa e interna.</div>
+      <div class="sc-ref">Gilbert P. The Origins and Nature of Compassion Focused Therapy. Br J Clin Psychol. 2014;53(1):6-41.</div>
+    </div>
+  </div>
+
+  <div class="mol-box">
+    <div class="mol-t">💡 El Amor Propio como Antiinflamatorio — Mecanismos Moleculares</div>
+    <div class="mol-grid">
+      <div class="mol-item"><div class="mol-e">🧘‍♀️</div><div class="mol-l">Meditación inhibe NF-κB (Kaliman et al., 2014)</div></div>
+      <div class="mol-item"><div class="mol-e">💛</div><div class="mol-l">Oxitocina reduce IL-6 y TNF-α sistémicos</div></div>
+      <div class="mol-item"><div class="mol-e">😊</div><div class="mol-l">Emociones positivas activan telomerasa (+longevidad)</div></div>
+      <div class="mol-item"><div class="mol-e">🌙</div><div class="mol-l">Paz interior mejora calidad del sueño reparador</div></div>
+      <div class="mol-item"><div class="mol-e">🤗</div><div class="mol-l">El perdón hacia ti misma alivia el estrés crónico</div></div>
+      <div class="mol-item"><div class="mol-e">✨</div><div class="mol-l">Un propósito de vida fuerte se asocia a menor mortalidad (Alimujiang, 2019)</div></div>
+    </div>
+  </div>
+
+  <div class="refs-box">
+    <div class="refs-t">Referencias Científicas Indexadas</div>
+    <div class="refs-txt">
+      1. Neff KD. Self-compassion: An alternative conceptualization. Self and Identity. 2003;2(2):85-101. ·
+      2. Neff KD, Germer CK. A pilot study of mindful self-compassion. J Clin Psychol. 2013;69(1):28-44. ·
+      3. Gilbert P. The origins and nature of Compassion Focused Therapy. Br J Clin Psychol. 2014;53(1):6-41. ·
+      4. Creswell JD et al. Mindfulness-Based Stress Reduction reduces loneliness and pro-inflammatory gene expression. Brain Behav Immun. 2012;26(7):1095-1101. ·
+      5. Kaliman P et al. Rapid changes in histone deacetylases and inflammatory gene expression in expert meditators. Psychoneuroendocrinology. 2014;40:96-107. ·
+      6. Fredrickson BL et al. A functional genomic perspective on human well-being. PNAS. 2013;110(33):13684-13689. ·
+      7. Alimujiang A et al. Association between life purpose and mortality. JAMA Netw Open. 2019;2(5):e194270. ·
+      8. Slavich GM, Irwin MR. From stress to inflammation and major depressive disorder. Psychol Bull. 2014;140(3):774-815.
+    </div>
+  </div>
+
+</div>
+<div class="pg-ft"><div class="ft-l">epimedik · Reset21</div><div class="ft-r">5 / 6</div></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PÁGINA 6 — NOTA FINAL DRA. MONICA
+══════════════════════════════════ -->
+<div class="page">
+<div class="p6">
+  <div class="p6-d1"></div><div class="p6-d2"></div><div class="p6-d3"></div>
+
+  <div style="font-size:32pt;color:var(--gold);margin-bottom:5mm;">✦</div>
+  <div class="p6-title">Una nota de mi corazón al tuyo</div>
+
+  <div class="p6-text">
+    Todo lo que soy como médica nació de una certeza: Dios me puso en este camino con un propósito. No elegí la medicina preventiva — ella me eligió a mí, y la entendí no como carrera sino como llamado. Un llamado que cada día me recuerda que mis pacientes no caminan solos hacia su salud, porque hay algo más grande que nos conecta y nos acompaña.
+    <br><br>
+    Ese propósito me llevó a comprender que la salud es un privilegio que, cuando se honra con consciencia, lo transforma todo. No solo el cuerpo — la energía, la claridad mental, la capacidad de amar, de crear, de estar presente. Mantenerse en salud no es un destino que se alcanza: es un proceso continuo de decisiones cotidianas que van moldeando silenciosamente el estado de cada célula, cada órgano, cada sistema. Eso es la medicina preventiva — no el tratamiento que llega cuando algo falla, sino la elección inteligente que protege lo que ya tienes.
+    <br><br>
+    En estos 21 días construiste esa elección. Y quien comprende que su cuerpo responde a cómo lo trata, que la plenitud no es un lujo sino el resultado natural de vivir en consciencia — ya no puede volver atrás. Esa es la promesa de Reset21: no solo hábitos nuevos, sino una versión de ti que no se conforma con sobrevivir cuando tiene todo para vivir al cien.
+  </div>
+
+  <div class="p6-verse">
+    <div class="p6-verse-text">"Tu cuerpo tiene una capacidad de sanación que aún la ciencia sigue descubriendo. Cuidarlo con consciencia es el acto de amor más poderoso que existe."</div>
+    <div class="p6-verse-ref">Dra. Monica Arellano · epimedik</div>
+  </div>
+
+  <div class="p6-bar"></div>
+  <div class="p6-firma">Dra. Monica Arellano</div>
+  <div class="p6-firma-sub">Fundadora · epimedik · Medicina Preventiva y Biorregulación</div>
+  <div class="p6-brand">epimedik · Reset21 · 2026 · Vive la vida al cien.</div>
+
+  <div class="pg-ft">
+    <div class="ft-l-dark">epimedik · Reset21</div>
+    <div class="ft-r-dark">6 / 6</div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>

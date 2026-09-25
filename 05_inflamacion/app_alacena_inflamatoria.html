@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M5 Inflamación — MORAIMA 21</title>
+<title>M5 Inflamación — Reset21</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -287,14 +287,14 @@ const sintomas=[
 const sistemas=[
   {e:'❤️',t:'Cardiovascular',s:'Inflamación endotelial → aterosclerosis',color:'#e74c3c',
    dis:[
-    {n:'Aterosclerosis',d:'La PCR se deposita directamente en las placas arteriales y desestabiliza el endotelio. El 80% de los infartos ocurren en placas previamente "no obstructivas".'},
+    {n:'Aterosclerosis',d:'La inflamación daña el endotelio y hace más inestables las placas arteriales. El 80% de los infartos ocurren en placas previamente "no obstructivas".'},
     {n:'Hipertensión arterial',d:'El TNF-α daña las células endoteliales que producen óxido nítrico (vasodilatador). Sin óxido nítrico, las arterias se contraen y la presión sube.'},
-    {n:'Infarto de miocardio',d:'La IL-6 desestabiliza la placa aterosclerótica, aumentando el riesgo de ruptura y trombosis. Ridker et al. (NEJM 2009) demostró que reducir PCR reduce infarto en 47%.'},
+    {n:'Infarto de miocardio',d:'La IL-6 desestabiliza la placa aterosclerótica, aumentando el riesgo de ruptura y trombosis. En el estudio JUPITER (Ridker et al., Lancet 2009), quienes bajaron su PCR tuvieron menos infartos y ACV.'},
     {n:'ACV isquémico',d:'La inflamación crónica aumenta la adhesión plaquetaria y la coagulación, elevando el riesgo de formación de trombos cerebrovasculares.'}
    ]},
   {e:'🧠',t:'Neurológico',s:'Neuroinflamación → daño cognitivo',color:'#8e44ad',
    dis:[
-    {n:'Depresión mayor',d:'La IL-1β convierte triptófano en kynurenina (no en serotonina). El 30-40% de los pacientes con depresión tienen PCR elevada — no es solo "química cerebral".'},
+    {n:'Depresión mayor',d:'La IL-1β convierte triptófano en kynurenina (no en serotonina). Alrededor de 1 de cada 4 pacientes con depresión tiene PCR elevada — no es solo "química cerebral".'},
     {n:'Alzheimer',d:'La neuroinflamación crónica activa la microglía que destruye conexiones neuronales. La amyloid-β es en parte una respuesta inflamatoria que se desborda.'},
     {n:'Ansiedad generalizada',d:'La disfunción del eje HPA por citocinas genera cortisol desregulado y activación del sistema nervioso simpático sin amenaza real.'},
     {n:'Esclerosis múltiple',d:'La barrera hematoencefálica comprometida por inflamación sistémica permite entrada de células inmunes que atacan la mielina.'}
@@ -329,7 +329,7 @@ const sistemas=[
    ]},
   {e:'🧬',t:'Oncológico',s:'Entorno inflamatorio que favorece cáncer',color:'#555',
    dis:[
-    {n:'Cáncer colorrectal',d:'La inflamación crónica intestinal aumenta el riesgo 2-3x. La COX-2, una enzima pro-inflamatoria, está sobre-expresada en el 85% de los adenomas.'},
+    {n:'Cáncer colorrectal',d:'La inflamación crónica intestinal aumenta el riesgo 2-3x. La COX-2, una enzima pro-inflamatoria, está sobre-expresada en la mayoría de los cánceres colorrectales.'},
     {n:'Cáncer de mama',d:'El tejido adiposo inflamado peritumoral produce estrógenos y citocinas que crean un microambiente que favorece la proliferación tumoral.'},
     {n:'Cáncer de páncreas',d:'La pancreatitis crónica por inflamación sostenida es el factor de riesgo más importante. La IBG precede décadas al diagnóstico.'},
     {n:'Cáncer de pulmón (no fumador)',d:'La inflamación sistémica crónica genera estrés oxidativo que daña el ADN pulmonar, incluso en ausencia de exposición al tabaco.'}
@@ -337,28 +337,28 @@ const sistemas=[
 ];
 
 const soluciones=[
-  {e:'🥗',t:'Alimentación Antiinflamatoria',pwr:'Poder antiinflamatorio: 92% ↓ PCR',
+  {e:'🥗',t:'Alimentación Antiinflamatoria',pwr:'Cúrcuma: ↓ PCR, IL-6 y TNF-α en 66 ensayos',
    desc:'El omega-3, la cúrcuma, el jengibre, las crucíferas y los berries inhiben directamente el NF-κB. Eliminar ultraprocesados, azúcares refinados y aceites vegetales procesados es tan poderoso como muchos medicamentos.',
    ref:'Calder PC. Omega-3 fatty acids and inflammatory processes. Nutrients. 2010.',
    steps:['Cada comida debe tener al menos 1 alimento antiinflamatorio (ver lista abajo)','Eliminar: azúcar refinada, harinas blancas, aceites de soya/maíz/girasol','Añadir 1 cucharadita de cúrcuma + pimienta negra diaria (la pimienta aumenta absorción 2000%)','Omega-3 de salmón, sardinas o semillas de chía 3x por semana','Evitar: ultraprocesados, bebidas azucaradas, alcohol, embutidos'],
    foods:['🫐 Arándanos','🐟 Salmón','🥦 Brócoli','🥬 Espinaca','🫚 Aceite de oliva','🧅 Cebolla','🧄 Ajo','🫚 Cúrcuma','🫚 Jengibre','🍵 Té verde','🥑 Aguacate','🌰 Nueces']},
-  {e:'🌱',t:'Grounding / Earthing',pwr:'Poder: 73% reducción de marcadores inflamatorios',
-   desc:'El contacto de la piel con la tierra transfiere electrones negativos que neutralizan radicales libres pro-inflamatorios. La tierra actúa como antioxidante natural y también regula el cortisol circadiano.',
+  {e:'🌱',t:'Grounding / Earthing',pwr:'Evidencia preliminar — práctica sencilla',
+   desc:'Se propone que el contacto de la piel con la tierra transfiere electrones que neutralizan radicales libres pro-inflamatorios. La tierra actúa como antioxidante natural y también regula el cortisol circadiano.',
    ref:'Chevalier G et al. Earthing: health implications. J Environ Public Health. 2012.',
-   steps:['10-15 minutos diarios descalza sobre pasto natural, tierra, arena o playa','Superficies válidas: pasto, tierra húmeda, arena, cemento natural (no asfalto)','Caminar o estar parada tranquila — el contacto con la planta del pie es suficiente','También en jardín, parque o patio — no necesita ser bosque','Combinarlo con movimiento duplica el efecto antiinflamatorio'],
+   steps:['10-15 minutos diarios descalza sobre pasto natural, tierra, arena o playa','Superficies válidas: pasto, tierra húmeda, arena, cemento natural (no asfalto)','Caminar o estar parada tranquila — el contacto con la planta del pie es suficiente','También en jardín, parque o patio — no necesita ser bosque','Combínalo con una caminata suave para sumar beneficios'],
    foods:[]},
-  {e:'☀️',t:'Vitamina D / Exposición Solar',pwr:'Poder: 80% de la IBG asociada a déficit de vitamina D',
-   desc:'La vitamina D actúa como hormona que modula directamente el NF-κB. El déficit de vitamina D se encuentra en el 80% de los pacientes con enfermedades autoinmunes, depresión e inflamación crónica.',
+  {e:'☀️',t:'Vitamina D / Exposición Solar',pwr:'El déficit de vitamina D se asocia a más inflamación',
+   desc:'La vitamina D actúa como hormona que modula directamente el NF-κB. El déficit de vitamina D es muy frecuente en personas con enfermedades autoinmunes, depresión e inflamación crónica.',
    ref:'Holick MF. Vitamin D deficiency. N Engl J Med. 2007;357:266-281.',
    steps:['20 minutos de sol directo en brazos y cara entre 10am-2pm (sin protector esas 20 min)','Nivel óptimo de 25-OH vitamina D: 50-80 ng/mL (pide esta prueba a tu médico)','Si vives en clima sin sol: suplemento de 2000-4000 UI vitamina D3 + K2','Tomar con la comida que contenga grasa (vitamina D es liposoluble)','El magnesio activa la vitamina D — déficit de magnesio bloquea su función'],
    foods:['🐟 Salmón','🥚 Yema de huevo','🍄 Champiñones (sol)','🥛 Leche enriquecida','🐟 Sardinas','☀️ Sol directo']},
-  {e:'🧊',t:'Terapia de Frío',pwr:'Norepinefrina +300% — antiinflamatorio endógeno potente',
-   desc:'La exposición al frío eleva la norepinefrina hasta 300%. Esta catecolamina inhibe el TNF-α y reduce la producción de citocinas proinflamatorias. También activa el tejido adiposo marrón que produce calor sin inflamación.',
+  {e:'🧊',t:'Terapia de Frío',pwr:'Noradrenalina ↑ — respuesta antiinflamatoria',
+   desc:'La inmersión en agua fría eleva con fuerza la noradrenalina (Šrámek, 2000). Esta catecolamina inhibe el TNF-α y reduce la producción de citocinas proinflamatorias. También activa el tejido adiposo marrón que produce calor sin inflamación.',
    ref:'Buijze GA et al. The Effect of Cold Showering on Health. PLOS ONE. 2016.',
    steps:['Empieza: 20 segundos de agua fría al final de tu ducha normal','Progresa semanalmente: 20 → 40 → 60 → 90 segundos','Respira: inhala profundo antes del frío, exhala lento durante','El mayor beneficio es en el cuello y la parte alta del pecho','Baños de hielo (10-15 min a 10-15°C) para resultados máximos — opcional'],
    foods:[]},
-  {e:'🌲',t:'Baño de Bosque / Shinrin-yoku',pwr:'NK cells +50% — inmunidad natural aumentada',
-   desc:'2 horas en naturaleza con árboles aumentan las células Natural Killer en 50% y reducen cortisol, IL-6 y adrenalina. Los fitoncidas (compuestos aromáticos de árboles) son la clave del efecto inmunológico.',
+  {e:'🌲',t:'Baño de Bosque / Shinrin-yoku',pwr:'Células NK ↑ — inmunidad natural',
+   desc:'En un estudio, 3 días de paseos por el bosque aumentaron la actividad de las células Natural Killer (Li, 2007). Estar en naturaleza también baja el cortisol. Los fitoncidas (compuestos aromáticos de árboles) son la clave del efecto inmunológico.',
    ref:'Li Q. Forest bathing enhances NK activity. Int J Immunopathol Pharmacol. 2007.',
    steps:['2 horas en bosque, parque con árboles o zona verde densa (mínimo semanal)','Caminar lento, sin teléfono, prestando atención a sonidos y olores','Respirar profundo — los fitoncidas entran principalmente por vía respiratoria','El efecto dura 7-30 días después de una sola visita de 2-3 horas','Descalza potencia el efecto combinando grounding + fitoncidas'],
    foods:[]},

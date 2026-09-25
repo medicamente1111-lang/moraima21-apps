@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>MENTE — Módulo 1 | MORAIMA21</title>
+<title>MENTE — Módulo 1 | Reset21</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -263,7 +263,7 @@ input[type=range]::-webkit-slider-thumb {
 
 <!-- ══════════════════════════ SCREEN 0 — WELCOME ══════════════════════════ -->
 <div class="screen active" id="screen-welcome">
-  <p class="badge">MORAIMA21 · Módulo 1</p>
+  <p class="badge">Reset21 · Módulo 1</p>
   <h1 class="main-title">Tu <span>MENTE</span><br>es tu primer<br>médico</h1>
 
   <div style="background:var(--gold);border-radius:16px;padding:16px 20px;max-width:360px;width:100%;margin-bottom:24px;text-align:center">
@@ -792,14 +792,14 @@ function showResults(){
 
   // Message
   const msg = score >= 38 ? 'Tu mente ya está alineada con la salud. Este programa potenciará lo que ya sabes.'
-    : score >= 25 ? 'Tienes una base sólida. MORAIMA21 va a reforzar y expandir esas creencias.'
+    : score >= 25 ? 'Tienes una base sólida. Reset21 va a reforzar y expandir esas creencias.'
     : 'Estás en el lugar correcto. Hay creencias que transformar — y eso es exactamente para lo que estás aquí.';
   document.getElementById('score-message').textContent = msg;
 
   // Insights
   const insights = [];
   if((answers.mente_cuerpo||0) < 6){
-    insights.push({ icon:'🧠', title:'Conexión mente-cuerpo', text:'La ciencia muestra que el 80% de los diagnósticos están influenciados por el estado mental. Estos 21 días te lo demostrarán.' });
+    insights.push({ icon:'🧠', title:'Conexión mente-cuerpo', text:'La ciencia muestra que el estrés crónico y tus creencias influyen en tus hormonas, tu inflamación y tu sistema inmune. Estos 21 días te lo demostrarán.' });
   }
   if((answers.sintoma_reaccion||0) <= 2){
     insights.push({ icon:'💛', title:'Relación con los síntomas', text:'El miedo al síntoma activa inflamación. Aprender a escuchar tu cuerpo es el primer acto de medicina preventiva.' });
