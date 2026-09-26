@@ -214,6 +214,10 @@ input[type=range]::-webkit-slider-thumb {
   0%,100% { transform:scaleY(1); }
   50% { transform:scaleY(1.8); }
 }
+.amb-row { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; width:100%; max-width:380px; margin-bottom:24px; }
+.amb-chip { flex:1 1 40%; background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.12); color:var(--white); border-radius:50px; padding:10px 12px; font-family:Montserrat,sans-serif; font-size:13px; font-weight:600; cursor:pointer; transition:all .2s; }
+.amb-chip.on { background:rgba(93,173,226,0.14); border:2px solid var(--sky); }
+.session-tip { font-size:11px; color:rgba(255,255,255,0.45); text-align:center; max-width:300px; line-height:1.6; margin-top:4px; }
 @keyframes mantra-pulse {
   0%,100% { opacity:.06; letter-spacing:4px; }
   50% { opacity:.15; letter-spacing:6px; }
@@ -301,6 +305,14 @@ input[type=range]::-webkit-slider-thumb {
     </div>
   </div>
 
+  <p style="font-size:11px;letter-spacing:2px;color:var(--sky);text-transform:uppercase;margin-bottom:10px">Sonido de fondo</p>
+  <div class="amb-row">
+    <button class="amb-chip" data-k="mar" onclick="selectAmbient('mar')">🌊 Mar</button>
+    <button class="amb-chip" data-k="lluvia" onclick="selectAmbient('lluvia')">🌧️ Lluvia</button>
+    <button class="amb-chip" data-k="cuenco" onclick="selectAmbient('cuenco')">🔔 Cuenco</button>
+    <button class="amb-chip" data-k="solo" onclick="selectAmbient('solo')">Solo tono</button>
+  </div>
+
   <!-- Botones dinámicos según si ya hizo evaluación -->
   <div id="welcome-btns"></div>
 </div>
@@ -366,10 +378,7 @@ input[type=range]::-webkit-slider-thumb {
     style="background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.2);border-radius:50px;padding:12px 28px;font-family:Montserrat,sans-serif;font-size:14px;font-weight:600;color:var(--white);cursor:pointer;margin-bottom:16px;letter-spacing:1px">
     ⏸ Pausar sonido
   </button>
-
-  <p style="font-size:13px;color:rgba(255,255,255,0.08);letter-spacing:4px;text-align:center;font-weight:700;text-transform:uppercase;animation:mantra-pulse 8s ease-in-out infinite;margin-top:8px" id="mantra-bg">
-    vivo al cien · con salud plena
-  </p>
+  <p class="session-tip">Mantén la app abierta y la pantalla encendida. Si sales, la sesión se pausa y la retomas aquí.</p>
 </div>
 
 <!-- ══════════════════════════ SCREEN 3 — RESULTS ══════════════════════════ -->
@@ -395,7 +404,7 @@ input[type=range]::-webkit-slider-thumb {
     <button class="btn-secondary" onclick="location.reload()">Repetir sesión</button>
   </div>
 
-  <p class="epimedik-footer">epimedik · Vive la vida al 100</p>
+  <p class="epimedik-footer">epimedik · Reset21</p>
 </div>
 
 
@@ -566,65 +575,180 @@ function startAssessment(){
 
 // ══════════════════════════ AUDIO ENGINE ══════════════════════════
 let audioCtx = null;
-let oscL=null, oscR=null, noise=null, masterGain=null;
+let oscL=null, oscR=null, masterGain=null;
+let bowlTimer = null, wakeLock = null, unlockAudioEl = null;
+
+// ── Fondo ambiental elegido (se recuerda en este celular) ──
+let selectedAmbient = 'mar';
+try { const s = localStorage.getItem('reset21_ambient'); if(s) selectedAmbient = s; } catch(e){}
+
+// iPhone: que el sonido salga aunque el botón de silencio esté activado
+function unlockIOSAudio(){
+  try { if(navigator.audioSession) navigator.audioSession.type = 'playback'; } catch(e){}
+  try {
+    if(!unlockAudioEl){
+      const sr=8000, n=sr/2, buf=new ArrayBuffer(44+n*2), v=new DataView(buf);
+      const w=(o,s)=>{ for(let i=0;i<s.length;i++) v.setUint8(o+i,s.charCodeAt(i)); };
+      w(0,'RIFF'); v.setUint32(4,36+n*2,true); w(8,'WAVE'); w(12,'fmt ');
+      v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true);
+      v.setUint32(24,sr,true); v.setUint32(28,sr*2,true); v.setUint16(32,2,true); v.setUint16(34,16,true);
+      w(36,'data'); v.setUint32(40,n*2,true);
+      unlockAudioEl = new Audio(URL.createObjectURL(new Blob([buf],{type:'audio/wav'})));
+      unlockAudioEl.loop = true; unlockAudioEl.setAttribute('playsinline','');
+    }
+    const p = unlockAudioEl.play(); if(p && p.catch) p.catch(()=>{});
+  } catch(e){}
+}
+
+// Mantener la pantalla encendida durante la sesión
+async function keepScreenOn(){
+  try { if('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch(e){}
+}
+function releaseScreen(){
+  try { if(wakeLock){ wakeLock.release(); wakeLock=null; } } catch(e){}
+}
+
+function makeNoiseBuffer(ctx, type){
+  const len = ctx.sampleRate * 12;
+  const buffer = ctx.createBuffer(2, len, ctx.sampleRate);
+  for(let ch=0; ch<2; ch++){
+    const d = buffer.getChannelData(ch);
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,last=0;
+    for(let i=0;i<len;i++){
+      const white = Math.random()*2-1;
+      if(type==='brown'){ last=(last+0.02*white)/1.02; d[i]=last*3.5; }
+      else {
+        b0=0.99886*b0+white*0.0555179; b1=0.99332*b1+white*0.0750759;
+        b2=0.96900*b2+white*0.1538520; b3=0.86650*b3+white*0.3104856;
+        b4=0.55000*b4+white*0.5329522; b5=-0.7616*b5-white*0.0168980;
+        d[i]=(b0+b1+b2+b3+b4+b5+b6+white*0.5362)*0.11; b6=white*0.115926;
+      }
+    }
+    // Fundido en los extremos para que el bucle no "salte"
+    const fade = ctx.sampleRate*0.5;
+    for(let i=0;i<fade;i++){ const k=i/fade; d[i]*=k; d[len-1-i]*=k; }
+  }
+  return buffer;
+}
+
+function startNoise(ctx, type, dest){
+  // Dos copias desfasadas para disimular el bucle
+  [0, 6].forEach(offset=>{
+    const src = ctx.createBufferSource();
+    src.buffer = makeNoiseBuffer(ctx, type); src.loop = true;
+    src.connect(dest); src.start(ctx.currentTime, offset);
+  });
+}
+
+function buildAmbient(ctx, out, cfg){
+  const amb = ctx.createGain(); amb.connect(out);
+  amb.gain.setValueAtTime(0, ctx.currentTime);
+  amb.gain.linearRampToValueAtTime(1, ctx.currentTime + 6);
+
+  if(selectedAmbient === 'mar'){
+    // Olas: ruido grave filtrado que sube y baja cada ~11 s
+    const lp = ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = 520; lp.Q.value = 0.3;
+    const swell = ctx.createGain(); swell.gain.value = 0.32;
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.09;
+    const depth = ctx.createGain(); depth.gain.value = 0.26;
+    lfo.connect(depth); depth.connect(swell.gain);
+    const lfo2 = ctx.createOscillator(); lfo2.frequency.value = 0.09;
+    const fdepth = ctx.createGain(); fdepth.gain.value = 260;
+    lfo2.connect(fdepth); fdepth.connect(lp.frequency);
+    startNoise(ctx, 'brown', lp); lp.connect(swell); swell.connect(amb);
+    lfo.start(); lfo2.start();
+  } else if(selectedAmbient === 'lluvia'){
+    const hp = ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value = 350;
+    const lp = ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = 5200;
+    const g = ctx.createGain(); g.gain.value = 0.55;
+    startNoise(ctx, 'pink', hp); hp.connect(lp); lp.connect(g); g.connect(amb);
+    // Rumor grave de fondo
+    const lp2 = ctx.createBiquadFilter(); lp2.type='lowpass'; lp2.frequency.value = 180;
+    const g2 = ctx.createGain(); g2.gain.value = 0.25;
+    startNoise(ctx, 'brown', lp2); lp2.connect(g2); g2.connect(amb);
+  } else if(selectedAmbient === 'cuenco'){
+    // Colchón suave + un cuenco que suena cada ~18 s
+    const base = cfg.carrier / 3;
+    const pad = ctx.createGain(); pad.gain.value = 0.05; pad.connect(amb);
+    [1, 1.5, 2].forEach((m,i)=>{
+      const o = ctx.createOscillator(); o.type='sine'; o.frequency.value = base*m;
+      const og = ctx.createGain(); og.gain.value = [1,0.5,0.35][i];
+      o.connect(og); og.connect(pad); o.start();
+    });
+    const strike = ()=>{
+      if(!audioCtx || audioCtx!==ctx) return;
+      const now = ctx.currentTime;
+      [[1,0.22,14],[2.76,0.08,9],[5.4,0.035,5]].forEach(([m,vol,dec])=>{
+        const o = ctx.createOscillator(); o.type='sine'; o.frequency.value = base*2*m;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(vol, now+0.04);
+        g.gain.exponentialRampToValueAtTime(0.0001, now+dec);
+        o.connect(g); g.connect(amb); o.start(now); o.stop(now+dec+0.1);
+      });
+    };
+    setTimeout(strike, 2500);
+    bowlTimer = setInterval(()=>{ if(!isPaused) strike(); }, 18000);
+  }
+}
 
 function initAudio(){
   try {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    masterGain = audioCtx.createGain();
-    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(masterVolume * 0.30, audioCtx.currentTime+3);
-    masterGain.connect(audioCtx.destination);
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    audioCtx = ctx;
+    if(ctx.state === 'suspended') ctx.resume();
+    masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(0, ctx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(masterVolume, ctx.currentTime+3);
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -18; comp.ratio.value = 3;
+    masterGain.connect(comp); comp.connect(ctx.destination);
 
-    // Pink noise (background)
-    const bufferSize = audioCtx.sampleRate * 2;
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const data = buffer.getChannelData(0);
-    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
-    for(let i=0;i<bufferSize;i++){
-      const white = Math.random()*2-1;
-      b0=0.99886*b0+white*0.0555179; b1=0.99332*b1+white*0.0750759;
-      b2=0.96900*b2+white*0.1538520; b3=0.86650*b3+white*0.3104856;
-      b4=0.55000*b4+white*0.5329522; b5=-0.7616*b5-white*0.0168980;
-      data[i]=(b0+b1+b2+b3+b4+b5+b6+white*0.5362)/7;
-      b6=white*0.115926;
-    }
-    const noiseSource = audioCtx.createBufferSource();
-    noiseSource.buffer = buffer; noiseSource.loop = true;
-    const noiseGain = audioCtx.createGain(); noiseGain.gain.value = 0.04;
-    noiseSource.connect(noiseGain); noiseGain.connect(masterGain);
-    noiseSource.start();
-
-    // Binaural — frequency set by user selection
     const cfg = SOUNDS[selectedSound];
-    const binauralGain = audioCtx.createGain();
-    binauralGain.gain.setValueAtTime(0, audioCtx.currentTime);
-    binauralGain.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 4);
+
+    // Binaural (más suave que antes, para que el fondo lo envuelva)
+    const binauralGain = ctx.createGain();
+    binauralGain.gain.setValueAtTime(0, ctx.currentTime);
+    binauralGain.gain.linearRampToValueAtTime(selectedAmbient==='solo' ? 0.22 : 0.13, ctx.currentTime + 5);
     binauralGain.connect(masterGain);
-
-    oscL = audioCtx.createOscillator();
-    oscL.type = 'sine'; oscL.frequency.value = cfg.carrier;
-
-    oscR = audioCtx.createOscillator();
-    oscR.type = 'sine'; oscR.frequency.value = cfg.carrier + cfg.freq;
-
-    const panL = audioCtx.createStereoPanner(); panL.pan.value = -1;
-    const panR = audioCtx.createStereoPanner(); panR.pan.value = 1;
-
-    oscL.connect(panL); panL.connect(binauralGain);
-    oscR.connect(panR); panR.connect(binauralGain);
-
+    oscL = ctx.createOscillator(); oscL.type='sine'; oscL.frequency.value = cfg.carrier;
+    oscR = ctx.createOscillator(); oscR.type='sine'; oscR.frequency.value = cfg.carrier + cfg.freq;
+    const merger = ctx.createChannelMerger(2);
+    oscL.connect(merger, 0, 0); oscR.connect(merger, 0, 1);
+    merger.connect(binauralGain);
     oscL.start(); oscR.start();
+
+    if(selectedAmbient !== 'solo') buildAmbient(ctx, masterGain, cfg);
   } catch(e){ console.log('Audio not available', e); }
 }
 
 function stopAudio(){
-  if(audioCtx){
+  clearInterval(bowlTimer); bowlTimer = null;
+  const ctx = audioCtx, mg = masterGain;
+  audioCtx = null; masterGain = null;
+  if(ctx){
     try {
-      masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime+2);
-      setTimeout(()=>{ audioCtx.close(); audioCtx=null; }, 2500);
-    } catch(e){}
+      mg.gain.cancelScheduledValues(ctx.currentTime);
+      mg.gain.setValueAtTime(mg.gain.value, ctx.currentTime);
+      mg.gain.linearRampToValueAtTime(0, ctx.currentTime+1.5);
+      setTimeout(()=>{ try{ ctx.close(); }catch(e){} }, 1800);
+    } catch(e){ try{ ctx.close(); }catch(_){} }
   }
+  if(unlockAudioEl) try{ unlockAudioEl.pause(); }catch(e){}
+  releaseScreen();
+}
+
+function startTicking(){
+  clearInterval(timerInterval); clearInterval(breathInterval);
+  timerInterval = setInterval(()=>{
+    secondsLeft--;
+    updateTimer();
+    if(secondsLeft<=0){ endSession(); }
+  }, 1000);
+  breathInterval = setInterval(()=>{
+    breathStep = (breathStep+1)%breathCycle.length;
+    document.getElementById('breath-word').textContent = breathCycle[breathStep];
+  }, 1000);
 }
 
 function togglePause(){
@@ -634,38 +758,40 @@ function togglePause(){
   isPaused = !isPaused;
   if(isPaused){
     if(audioCtx) audioCtx.suspend();
-    if(window.speechSynthesis) window.speechSynthesis.cancel();
-    clearTimeout(whisperTimer);
-    clearInterval(timerInterval);
+    clearInterval(timerInterval); clearInterval(breathInterval);
+    releaseScreen();
     btn.textContent = '▶ Reanudar sonido';
     btn.style.borderColor = 'var(--gold)';
     btn.style.color = 'var(--gold)';
     waves.style.opacity = '0.2';
     status.textContent = '⏸ En pausa';
   } else {
+    unlockIOSAudio();
     if(audioCtx) audioCtx.resume();
-    setTimeout(whisperMantra, 1500);
-    timerInterval = setInterval(()=>{
-      secondsLeft--;
-      updateTimer();
-      if(secondsLeft<=0){ endSession(); }
-    }, 1000);
+    keepScreenOn();
+    startTicking();
     btn.textContent = '⏸ Pausar sonido';
     btn.style.borderColor = 'rgba(255,255,255,0.2)';
     btn.style.color = 'var(--white)';
     waves.style.opacity = '1';
-    status.textContent = '🎵 Ondas alfa activas — 10Hz';
+    status.textContent = SOUNDS[selectedSound].statusTxt;
   }
 }
 
-// ══════════════════════════ SESSION ══════════════════════════
-const MANTRA = "Vivo al cien con salud plena";
+// Si la paciente sale de la app o bloquea el celular, la sesión se pausa (no sigue el reloj sin sonido)
+let sessionActive = false;
+document.addEventListener('visibilitychange', ()=>{
+  if(!sessionActive) return;
+  if(document.hidden && !isPaused) togglePause();
+});
 
+// ══════════════════════════ SESSION ══════════════════════════
 const SOUNDS = {
   morning: { freq: 14, carrier: 396, label: '🌅 Despertar — 14Hz', statusTxt: '🎵 Ondas alfa activas — 14Hz' },
   calm:    { freq: 10, carrier: 396, label: '🌿 Calma — 10Hz',     statusTxt: '🎵 Ondas alfa activas — 10Hz' },
   night:   { freq:  6, carrier: 288, label: '🌙 Noche — 6Hz Theta',statusTxt: '🎵 Ondas theta activas — 6Hz' }
 };
+const AMBIENT_LABELS = { mar:'🌊 Mar', lluvia:'🌧️ Lluvia', cuenco:'🔔 Cuenco', solo:'Solo tono' };
 let selectedSound = 'calm';
 
 const breathCycle = ['INHALA','INHALA','INHALA','INHALA','SOSTÉN','SOSTÉN','EXHALA','EXHALA','EXHALA','EXHALA','EXHALA','EXHALA'];
@@ -676,25 +802,21 @@ let breathStep = 0;
 let isPaused = false;
 
 function startSession(){
+  if(audioCtx) stopAudio();
+  isPaused = false; sessionActive = true;
+  unlockIOSAudio();
   showScreen('screen-session');
   initAudio();
-  secondsLeft = 300;
+  keepScreenOn();
+  secondsLeft = 300; breathStep = 0;
+  document.getElementById('breath-word').textContent = breathCycle[0];
+  const btn = document.getElementById('btn-pause');
+  btn.textContent = '⏸ Pausar sonido';
+  btn.style.borderColor = 'rgba(255,255,255,0.2)';
+  btn.style.color = 'var(--white)';
+  document.getElementById('wave-viz').style.opacity = '1';
   updateTimer();
-  showAffirmation(0);
-
-  timerInterval = setInterval(()=>{
-    secondsLeft--;
-    updateTimer();
-    if(secondsLeft<=0){ endSession(); }
-  }, 1000);
-
-  breathInterval = setInterval(()=>{
-    breathStep = (breathStep+1)%breathCycle.length;
-    document.getElementById('breath-word').textContent = breathCycle[breathStep];
-  }, 1000);
-
-  // Start whisper mantra after 4s (let binaural settle first)
-  setTimeout(whisperMantra, 4000);
+  startTicking();
 }
 
 function updateTimer(){
@@ -704,44 +826,24 @@ function updateTimer(){
 }
 
 let masterVolume = 0.60;
-let selectedVoice = null;
-let whisperTimer = null;
-
-function loadVoice(){
-  const voices = window.speechSynthesis.getVoices();
-  selectedVoice =
-    voices.find(v => v.lang.startsWith('es') && /paulina|monica|ioana|lucia|elena|female|mujer|jorge/i.test(v.name)) ||
-    voices.find(v => v.lang === 'es-CO') ||
-    voices.find(v => v.lang === 'es-ES') ||
-    voices.find(v => v.lang.startsWith('es')) ||
-    null;
-}
-
-window.speechSynthesis.onvoiceschanged = loadVoice;
-loadVoice();
 
 function changeVolume(val){
   masterVolume = val / 100;
   document.getElementById('vol-label').textContent = val + '%';
   if(audioCtx && masterGain){
-    masterGain.gain.linearRampToValueAtTime(masterVolume * 0.30, audioCtx.currentTime + 0.1);
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(masterVolume, audioCtx.currentTime + 0.15);
   }
 }
 
-function whisperMantra(){
-  if(!window.speechSynthesis || isPaused) return;
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(MANTRA);
-  utter.lang = 'es-CO';
-  utter.rate = 0.60;
-  utter.pitch = 1.1;
-  utter.volume = 0.28;
-  if(selectedVoice) utter.voice = selectedVoice;
-  utter.onend = () => {
-    if(!isPaused) whisperTimer = setTimeout(whisperMantra, 22000);
-  };
-  window.speechSynthesis.speak(utter);
+function selectAmbient(key){
+  selectedAmbient = key;
+  try { localStorage.setItem('reset21_ambient', key); } catch(e){}
+  document.querySelectorAll('.amb-chip').forEach(el=>el.classList.toggle('on', el.dataset.k===key));
 }
+selectAmbient(selectedAmbient);
+window.addEventListener('load', ()=>selectAmbient(selectedAmbient));
 
 // Keep legacy name for compatibility
 function showAffirmation(idx){ /* no-op — visual removed */ }
@@ -750,8 +852,7 @@ function endSession(){
   clearInterval(timerInterval);
   clearInterval(breathInterval);
   clearInterval(affirmInterval);
-  clearTimeout(whisperTimer);
-  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  sessionActive = false;
   stopAudio();
   showResults();
 }
@@ -827,8 +928,7 @@ function completeDay(){
 function backToSoundSelector(){
   clearInterval(timerInterval);
   clearInterval(breathInterval);
-  clearTimeout(whisperTimer);
-  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  sessionActive = false;
   stopAudio();
   isPaused = false;
   secondsLeft = 300;
@@ -854,7 +954,7 @@ function showScreen(id){
   if(id==='screen-session'){
     const cfg = SOUNDS[selectedSound];
     document.getElementById('sound-status').textContent = cfg.statusTxt;
-    document.getElementById('session-sound-label').textContent = cfg.label;
+    document.getElementById('session-sound-label').textContent = cfg.label + ' · ' + AMBIENT_LABELS[selectedAmbient];
   }
 }
 </script>
